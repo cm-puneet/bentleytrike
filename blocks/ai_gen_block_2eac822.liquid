@@ -1,0 +1,1378 @@
+{% doc %}
+  @prompt
+    I want a similar section but I can put a video when hover and image as cover and the background section can be changed, it should be a carousel of product cards but if only if 4 images added it will convert to carousel, I do not want a featured product. I want something like a collection list but I can still have the freedom to either choose product or collection or page link. I want the shop now button inside the product card, this is better. Add a feature where I can add a cover image and video when hover, there is an error showing up
+    Liquid error (temp/ai_gen_block_9c5bcb7 line 368): wrong number of arguments (given 3, expected 2)
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-carousel-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.section_background }};
+    padding: {{ block.settings.section_padding }}px 0;
+  }
+
+  .ai-product-carousel-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.desktop_width_percent }}%;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-product-carousel-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-product-carousel-track-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.card_gap }}px;
+    transition: transform 0.5s ease;
+  }
+
+  .ai-product-carousel-track-{{ ai_gen_id }}.no-carousel {
+    flex-wrap: wrap;
+  }
+
+  .ai-product-card-{{ ai_gen_id }} {
+    flex: 0 0 calc((100% - ({{ block.settings.cards_per_view | minus: 1 }} * {{ block.settings.card_gap }}px)) / {{ block.settings.cards_per_view }});
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ai-product-card-media-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .ai-product-card-image-{{ ai_gen_id }},
+  .ai-product-card-video-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-product-card-image-{{ ai_gen_id }} {
+    opacity: 1;
+  }
+
+  .ai-product-card-video-{{ ai_gen_id }} {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ai-product-card-{{ ai_gen_id }}:hover .ai-product-card-image-{{ ai_gen_id }} {
+    opacity: 0;
+  }
+
+  .ai-product-card-{{ ai_gen_id }}:hover .ai-product-card-video-{{ ai_gen_id }} {
+    opacity: 1;
+  }
+
+  .ai-product-card-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+  }
+
+  .ai-product-card-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-product-card-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.card_padding }}px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-product-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .ai-product-card-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.8;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .ai-product-card-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+
+  .ai-product-card-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: {{ block.settings.nav_background }};
+    color: {{ block.settings.nav_color }};
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }}:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }}:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .ai-carousel-nav-prev-{{ ai_gen_id }} {
+    left: -20px;
+  }
+
+  .ai-carousel-nav-next-{{ ai_gen_id }} {
+    right: -20px;
+  }
+
+  .ai-carousel-nav-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  .ai-carousel-dots-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .ai-carousel-dot-{{ ai_gen_id }} {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: {{ block.settings.dot_color }};
+    opacity: 0.3;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-carousel-dot-{{ ai_gen_id }}.active {
+    opacity: 1;
+  }
+
+  .ai-carousel-dots-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  .ai-empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.6;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-product-card-{{ ai_gen_id }} {
+      flex: 0 0 calc((100% - {{ block.settings.card_gap }}px) / 2);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-card-{{ ai_gen_id }} {
+      flex: 0 0 100%;
+    }
+
+    .ai-carousel-nav-{{ ai_gen_id }} {
+      width: 32px;
+      height: 32px;
+    }
+
+    .ai-carousel-nav-prev-{{ ai_gen_id }} {
+      left: 10px;
+    }
+
+    .ai-carousel-nav-next-{{ ai_gen_id }} {
+      right: 10px;
+    }
+  }
+{% endstyle %}
+
+<product-carousel-{{ ai_gen_id }}
+  class="ai-product-carousel-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+  data-cards-per-view="{{ block.settings.cards_per_view }}"
+>
+  <div class="ai-product-carousel-container-{{ ai_gen_id }}">
+    {% assign total_cards = 0 %}
+    {% for i in (1..8) %}
+      {% assign card_enabled_key = 'card_' | append: i | append: '_enabled' %}
+      {% if block.settings[card_enabled_key] %}
+        {% assign total_cards = total_cards | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+
+    {% if total_cards > 0 %}
+      <div class="ai-product-carousel-wrapper-{{ ai_gen_id }}">
+        <div class="ai-product-carousel-track-{{ ai_gen_id }}" data-total-cards="{{ total_cards }}">
+          {% for i in (1..8) %}
+            {% liquid
+              assign card_enabled_key = 'card_' | append: i | append: '_enabled'
+              assign card_type_key = 'card_' | append: i | append: '_type'
+              assign card_product_key = 'card_' | append: i | append: '_product'
+              assign card_collection_key = 'card_' | append: i | append: '_collection'
+              assign card_page_key = 'card_' | append: i | append: '_page'
+              assign card_url_key = 'card_' | append: i | append: '_url'
+              assign card_title_key = 'card_' | append: i | append: '_title'
+              assign card_description_key = 'card_' | append: i | append: '_description'
+              assign card_image_key = 'card_' | append: i | append: '_image'
+              assign card_video_key = 'card_' | append: i | append: '_video'
+              assign card_button_text_key = 'card_' | append: i | append: '_button_text'
+
+              assign card_enabled = block.settings[card_enabled_key]
+              assign card_type = block.settings[card_type_key]
+              assign card_product = block.settings[card_product_key]
+              assign card_collection = block.settings[card_collection_key]
+              assign card_page = block.settings[card_page_key]
+              assign card_url = block.settings[card_url_key]
+              assign card_title = block.settings[card_title_key]
+              assign card_description = block.settings[card_description_key]
+              assign card_image = block.settings[card_image_key]
+              assign card_video = block.settings[card_video_key]
+              assign card_button_text = block.settings[card_button_text_key]
+            %}
+
+            {% if card_enabled %}
+              {% liquid
+                assign link_url = ''
+                assign display_title = card_title
+                assign display_description = card_description
+                assign display_image = card_image
+
+                if card_type == 'product' and card_product != blank
+                  assign link_url = card_product.url
+                  if card_title == blank
+                    assign display_title = card_product.title
+                  endif
+                  if card_description == blank
+                    assign display_description = card_product.description | strip_html | truncate: 120
+                  endif
+                  if card_image == blank
+                    assign display_image = card_product.featured_image
+                  endif
+                elsif card_type == 'collection' and card_collection != blank
+                  assign link_url = card_collection.url
+                  if card_title == blank
+                    assign display_title = card_collection.title
+                  endif
+                  if card_description == blank
+                    assign display_description = card_collection.description | strip_html | truncate: 120
+                  endif
+                  if card_image == blank
+                    assign display_image = card_collection.featured_image
+                  endif
+                elsif card_type == 'page' and card_page != blank
+                  assign link_url = card_page.url
+                  if card_title == blank
+                    assign display_title = card_page.title
+                  endif
+                  if card_description == blank
+                    assign display_description = card_page.content | strip_html | truncate: 120
+                  endif
+                elsif card_type == 'custom' and card_url != blank
+                  assign link_url = card_url
+                endif
+              %}
+
+              <div class="ai-product-card-{{ ai_gen_id }}">
+                <div class="ai-product-card-media-{{ ai_gen_id }}">
+                  {% if display_image != blank %}
+                    <img
+                      src="{{ display_image | image_url: width: 800 }}"
+                      alt="{{ display_image.alt | escape }}"
+                      class="ai-product-card-image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="800"
+                      height="{{ 800 | times: block.settings.image_aspect_ratio | divided_by: 100 }}"
+                    >
+                  {% else %}
+                    <div class="ai-product-card-placeholder-{{ ai_gen_id }}">
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    </div>
+                  {% endif %}
+
+                  {% if card_video != blank %}
+                    <video
+                      class="ai-product-card-video-{{ ai_gen_id }}"
+                      src="{{ card_video }}"
+                      muted
+                      loop
+                      playsinline
+                    ></video>
+                  {% endif %}
+                </div>
+
+                <div class="ai-product-card-content-{{ ai_gen_id }}">
+                  {% if display_title != blank %}
+                    <h3 class="ai-product-card-title-{{ ai_gen_id }}">{{ display_title }}</h3>
+                  {% endif %}
+
+                  {% if display_description != blank %}
+                    <p class="ai-product-card-description-{{ ai_gen_id }}">{{ display_description }}</p>
+                  {% endif %}
+
+                  {% if link_url != blank %}
+                    <a
+                      href="{{ link_url }}"
+                      class="ai-product-card-button-{{ ai_gen_id }}"
+                    >
+                      {% if card_button_text != blank %}
+                        {{ card_button_text }}
+                      {% else %}
+                        Shop now
+                      {% endif %}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <button
+          class="ai-carousel-nav-{{ ai_gen_id }} ai-carousel-nav-prev-{{ ai_gen_id }}"
+          aria-label="Previous"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <button
+          class="ai-carousel-nav-{{ ai_gen_id }} ai-carousel-nav-next-{{ ai_gen_id }}"
+          aria-label="Next"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="ai-carousel-dots-{{ ai_gen_id }}"></div>
+      </div>
+    {% else %}
+      <div class="ai-empty-state-{{ ai_gen_id }}">
+        <p>Enable at least one card to display the carousel</p>
+      </div>
+    {% endif %}
+  </div>
+</product-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+        this.cardsPerView = parseInt(this.dataset.cardsPerView) || 3;
+        this.isCarouselMode = false;
+      }
+
+      connectedCallback() {
+        this.track = this.querySelector('.ai-product-carousel-track-{{ ai_gen_id }}');
+        this.prevButton = this.querySelector('.ai-carousel-nav-prev-{{ ai_gen_id }}');
+        this.nextButton = this.querySelector('.ai-carousel-nav-next-{{ ai_gen_id }}');
+        this.dotsContainer = this.querySelector('.ai-carousel-dots-{{ ai_gen_id }}');
+        this.cards = this.querySelectorAll('.ai-product-card-{{ ai_gen_id }}');
+        this.videos = this.querySelectorAll('.ai-product-card-video-{{ ai_gen_id }}');
+
+        if (!this.track) return;
+
+        const totalCards = parseInt(this.track.dataset.totalCards) || 0;
+        this.isCarouselMode = totalCards >= 4;
+
+        if (this.isCarouselMode) {
+          this.setupCarousel();
+          this.setupVideoHover();
+        } else {
+          this.track.classList.add('no-carousel');
+          this.prevButton.classList.add('hidden');
+          this.nextButton.classList.add('hidden');
+          this.dotsContainer.classList.add('hidden');
+          this.setupVideoHover();
+        }
+      }
+
+      setupCarousel() {
+        this.totalSlides = Math.ceil(this.cards.length / this.cardsPerView);
+
+        this.prevButton.addEventListener('click', () => this.prev());
+        this.nextButton.addEventListener('click', () => this.next());
+
+        this.createDots();
+        this.updateCarousel();
+
+        window.addEventListener('resize', () => this.handleResize());
+      }
+
+      setupVideoHover() {
+        this.cards.forEach((card) => {
+          const video = card.querySelector('.ai-product-card-video-{{ ai_gen_id }}');
+          if (video) {
+            card.addEventListener('mouseenter', () => {
+              video.play().catch(() => {});
+            });
+
+            card.addEventListener('mouseleave', () => {
+              video.pause();
+              video.currentTime = 0;
+            });
+          }
+        });
+      }
+
+      createDots() {
+        this.dotsContainer.innerHTML = '';
+        for (let i = 0; i < this.totalSlides; i++) {
+          const dot = document.createElement('button');
+          dot.classList.add('ai-carousel-dot-{{ ai_gen_id }}');
+          dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+          dot.addEventListener('click', () => this.goToSlide(i));
+          this.dotsContainer.appendChild(dot);
+        }
+      }
+
+      updateCarousel() {
+        const offset = -(this.currentIndex * 100);
+        this.track.style.transform = `translateX(${offset}%)`;
+
+        this.prevButton.disabled = this.currentIndex === 0;
+        this.nextButton.disabled = this.currentIndex >= this.totalSlides - 1;
+
+        const dots = this.dotsContainer.querySelectorAll('.ai-carousel-dot-{{ ai_gen_id }}');
+        dots.forEach((dot, index) => {
+          if (index === this.currentIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+
+      prev() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.updateCarousel();
+        }
+      }
+
+      next() {
+        if (this.currentIndex < this.totalSlides - 1) {
+          this.currentIndex++;
+          this.updateCarousel();
+        }
+      }
+
+      goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+      }
+
+      handleResize() {
+        this.updateCarousel();
+      }
+    }
+
+    customElements.define('product-carousel-{{ ai_gen_id }}', ProductCarousel{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product carousel",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Background",
+      "default": "#f8f4ef"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Carousel settings"
+    },
+    {
+      "type": "range",
+      "id": "cards_per_view",
+      "label": "Cards per view (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Text style"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#00221c"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#f8f4ef"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Navigation style"
+    },
+    {
+      "type": "color",
+      "id": "nav_background",
+      "label": "Navigation background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Navigation color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_1_enabled",
+      "label": "Enable card 1",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "card_1_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_1_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_1_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_1_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_1_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_1_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_1_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_2_enabled",
+      "label": "Enable card 2",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "card_2_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_2_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_2_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_2_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_2_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_2_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_2_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_3_enabled",
+      "label": "Enable card 3",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "card_3_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_3_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_3_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_3_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_3_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_3_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_3_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_3_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_3_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Card 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_4_enabled",
+      "label": "Enable card 4",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "card_4_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_4_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_4_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_4_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_4_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_4_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_4_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_4_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_4_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_4_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Card 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_5_enabled",
+      "label": "Enable card 5",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "card_5_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_5_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_5_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_5_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_5_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_5_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_5_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_5_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_5_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_5_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Card 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_6_enabled",
+      "label": "Enable card 6",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "card_6_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_6_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_6_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_6_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_6_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_6_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_6_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_6_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_6_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_6_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Card 7"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_7_enabled",
+      "label": "Enable card 7",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "card_7_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_7_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_7_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_7_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_7_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_7_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_7_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_7_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_7_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_7_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "header",
+      "content": "Card 8"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_8_enabled",
+      "label": "Enable card 8",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "card_8_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "product",
+          "label": "Product"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "custom",
+          "label": "Custom URL"
+        }
+      ],
+      "default": "product"
+    },
+    {
+      "type": "product",
+      "id": "card_8_product",
+      "label": "Product"
+    },
+    {
+      "type": "collection",
+      "id": "card_8_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "card_8_page",
+      "label": "Page"
+    },
+    {
+      "type": "url",
+      "id": "card_8_url",
+      "label": "Custom URL"
+    },
+    {
+      "type": "text",
+      "id": "card_8_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_8_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_8_image",
+      "label": "Cover image"
+    },
+    {
+      "type": "text",
+      "id": "card_8_video",
+      "label": "Video URL (hover)"
+    },
+    {
+      "type": "text",
+      "id": "card_8_button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product carousel"
+    }
+  ]
+}
+{% endschema %}

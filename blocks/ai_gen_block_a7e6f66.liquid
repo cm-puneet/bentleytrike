@@ -1,0 +1,674 @@
+{% doc %}
+  @prompt
+    I need a video instruction page where we can put  video URL links from Youtube. In this section, it should feature where we can put poster images or if the image is not added then the youtube thumbnail will automatically added. The layout can be the same as the multi-column section of this theme but we need to duplicate that section and not directly change it.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-video-instructions-{{ ai_gen_id }} {
+    padding: 40px 20px;
+  }
+
+  .ai-video-instructions__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-video-instructions__header-{{ ai_gen_id }} {
+    text-align: {{ block.settings.heading_alignment }};
+    margin-bottom: 40px;
+  }
+
+  .ai-video-instructions__heading-{{ ai_gen_id }} {
+    font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};
+    font-weight: {{ block.settings.heading_font.weight }};
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 16px 0;
+  }
+
+  .ai-video-instructions__subheading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subheading_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+  }
+
+  .ai-video-instructions__grid-{{ ai_gen_id }} {
+    display: grid;
+    gap: {{ block.settings.column_gap }}px;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+  }
+
+  .ai-video-instructions__column-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-video-instructions__video-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background-color: #000000;
+    border-radius: {{ block.settings.video_border_radius }}px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .ai-video-instructions__poster-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-video-instructions__poster-{{ ai_gen_id }}:hover {
+    opacity: 0.8;
+  }
+
+  .ai-video-instructions__play-button-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 68px;
+    background-color: {{ block.settings.play_button_color }};
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .ai-video-instructions__video-wrapper-{{ ai_gen_id }}:hover .ai-video-instructions__play-button-{{ ai_gen_id }} {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: {{ block.settings.play_button_hover_color }};
+  }
+
+  .ai-video-instructions__play-icon-{{ ai_gen_id }} {
+    width: 0;
+    height: 0;
+    border-left: 20px solid {{ block.settings.play_button_icon_color }};
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    margin-left: 4px;
+  }
+
+  .ai-video-instructions__iframe-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .ai-video-instructions__content-{{ ai_gen_id }} {
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-video-instructions__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 8px 0;
+  }
+
+  .ai-video-instructions__description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.text_color }};
+    line-height: 1.6;
+  }
+
+  .ai-video-instructions__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #999999;
+    font-size: 14px;
+    width: 80%;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-video-instructions__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+
+    .ai-video-instructions__heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-video-instructions__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+      gap: {{ block.settings.column_gap | times: 0.7 }}px;
+    }
+
+    .ai-video-instructions__heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.7);
+    }
+
+    .ai-video-instructions__subheading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subheading_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<video-instructions-{{ ai_gen_id }} class="ai-video-instructions-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-video-instructions__container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank or block.settings.subheading != blank %}
+      <div class="ai-video-instructions__header-{{ ai_gen_id }}">
+        {% if block.settings.heading != blank %}
+          <h2 class="ai-video-instructions__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+        {% endif %}
+        {% if block.settings.subheading != blank %}
+          <div class="ai-video-instructions__subheading-{{ ai_gen_id }}">{{ block.settings.subheading }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-video-instructions__grid-{{ ai_gen_id }}">
+      {% for i in (1..6) %}
+        {% liquid
+          assign video_url_key = 'video_url_' | append: i
+          assign poster_image_key = 'poster_image_' | append: i
+          assign title_key = 'title_' | append: i
+          assign description_key = 'description_' | append: i
+
+          assign video_url = block.settings[video_url_key]
+          assign poster_image = block.settings[poster_image_key]
+          assign title = block.settings[title_key]
+          assign description = block.settings[description_key]
+        %}
+
+        {% if video_url != blank %}
+          <div class="ai-video-instructions__column-{{ ai_gen_id }}">
+            <div class="ai-video-instructions__video-wrapper-{{ ai_gen_id }}" data-video-index="{{ i }}">
+              {% if poster_image != blank %}
+                <img
+                  src="{{ poster_image | image_url: width: 800 }}"
+                  alt="{{ title | escape }}"
+                  class="ai-video-instructions__poster-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="800"
+                  height="450"
+                >
+              {% else %}
+                {% liquid
+                  assign youtube_id = ''
+                  if video_url contains 'youtube.com/watch?v='
+                    assign youtube_id = video_url | split: 'v=' | last | split: '&' | first
+                  elsif video_url contains 'youtu.be/'
+                    assign youtube_id = video_url | split: 'youtu.be/' | last | split: '?' | first
+                  endif
+                %}
+                {% if youtube_id != blank %}
+                  <img
+                    src="https://img.youtube.com/vi/{{ youtube_id }}/maxresdefault.jpg"
+                    alt="{{ title | escape }}"
+                    class="ai-video-instructions__poster-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="800"
+                    height="450"
+                  >
+                {% endif %}
+              {% endif %}
+
+              <div class="ai-video-instructions__play-button-{{ ai_gen_id }}">
+                <div class="ai-video-instructions__play-icon-{{ ai_gen_id }}"></div>
+              </div>
+            </div>
+
+            {% if title != blank or description != blank %}
+              <div class="ai-video-instructions__content-{{ ai_gen_id }}">
+                {% if title != blank %}
+                  <h3 class="ai-video-instructions__title-{{ ai_gen_id }}">{{ title }}</h3>
+                {% endif %}
+                {% if description != blank %}
+                  <div class="ai-video-instructions__description-{{ ai_gen_id }}">{{ description }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</video-instructions-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VideoInstructions{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.videoWrappers = this.querySelectorAll('.ai-video-instructions__video-wrapper-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.videoWrappers.forEach((wrapper) => {
+          wrapper.addEventListener('click', () => {
+            this.loadVideo(wrapper);
+          });
+        });
+      }
+
+      loadVideo(wrapper) {
+        const videoIndex = wrapper.dataset.videoIndex;
+        const videoUrlKey = 'video_url_' + videoIndex;
+        const videoUrl = this.getVideoUrl(videoIndex);
+
+        if (!videoUrl) return;
+
+        const youtubeId = this.extractYouTubeId(videoUrl);
+        if (!youtubeId) return;
+
+        const iframe = document.createElement('iframe');
+        iframe.className = 'ai-video-instructions__iframe-{{ ai_gen_id }}';
+        iframe.src = 'https://www.youtube.com/embed/' + youtubeId + '?autoplay=1&rel=0';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+
+        wrapper.innerHTML = '';
+        wrapper.appendChild(iframe);
+      }
+
+      getVideoUrl(index) {
+        const videoUrls = {
+          '1': '{{ block.settings.video_url_1 }}',
+          '2': '{{ block.settings.video_url_2 }}',
+          '3': '{{ block.settings.video_url_3 }}',
+          '4': '{{ block.settings.video_url_4 }}',
+          '5': '{{ block.settings.video_url_5 }}',
+          '6': '{{ block.settings.video_url_6 }}'
+        };
+        return videoUrls[index] || '';
+      }
+
+      extractYouTubeId(url) {
+        let videoId = '';
+        if (url.includes('youtube.com/watch?v=')) {
+          videoId = url.split('v=')[1].split('&')[0];
+        } else if (url.includes('youtu.be/')) {
+          videoId = url.split('youtu.be/')[1].split('?')[0];
+        }
+        return videoId;
+      }
+    }
+
+    customElements.define('video-instructions-{{ ai_gen_id }}', VideoInstructions{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Video instructions",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Video Instructions"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Watch our helpful video guides"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "label": "Container width",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Columns on tablet",
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between columns",
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Video 1"
+    },
+    {
+      "type": "url",
+      "id": "video_url_1",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image_1",
+      "label": "Poster image"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description_1",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Video 2"
+    },
+    {
+      "type": "url",
+      "id": "video_url_2",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image_2",
+      "label": "Poster image"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description_2",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Video 3"
+    },
+    {
+      "type": "url",
+      "id": "video_url_3",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image_3",
+      "label": "Poster image"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description_3",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Video 4"
+    },
+    {
+      "type": "url",
+      "id": "video_url_4",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image_4",
+      "label": "Poster image"
+    },
+    {
+      "type": "text",
+      "id": "title_4",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description_4",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Video 5"
+    },
+    {
+      "type": "url",
+      "id": "video_url_5",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image_5",
+      "label": "Poster image"
+    },
+    {
+      "type": "text",
+      "id": "title_5",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description_5",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Video 6"
+    },
+    {
+      "type": "url",
+      "id": "video_url_6",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image_6",
+      "label": "Poster image"
+    },
+    {
+      "type": "text",
+      "id": "title_6",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description_6",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Video title size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "video_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Video border radius",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1c0e29"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1c0e29"
+    },
+    {
+      "type": "color",
+      "id": "play_button_color",
+      "label": "Play button color",
+      "default": "#394d46"
+    },
+    {
+      "type": "color",
+      "id": "play_button_hover_color",
+      "label": "Play button hover color",
+      "default": "#1c0e29"
+    },
+    {
+      "type": "color",
+      "id": "play_button_icon_color",
+      "label": "Play button icon color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video instructions"
+    }
+  ]
+}
+{% endschema %}

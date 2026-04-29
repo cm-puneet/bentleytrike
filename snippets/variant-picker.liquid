@@ -1,0 +1,383 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+VARIANT PICKER
+----------------------------------------------------------------------------------------------------------------------
+
+Render the variant picker option selectors.
+
+********************************************
+Supported variables
+********************************************
+
+* product: the product for which to render the selector (required)
+* form_id: the ID of the form to which the variant picker belongs (required)
+* update_url: if set to true, the URL is updated when the variant changes (usually used for product page)
+* hide_sold_out_variants: if set to true, the sold out or unavailable variants are hidden
+* hide_size_chart: if set to true, size chart is always hidden
+* force_dropdown_as_block: if set to true, the dropdown selectors are replaced by blocks, which is useful for quick buy where dropdown are not convenient to use
+* block: the block itself, for theme-specific options (such as selector types)
+{%- endcomment -%}
+<!-- Add Font Awesome CDN (if it's not included already) -->
+{%  if block.settings.varients_in_slider  %}
+  {% if content_for_header contains 'custom-product-slider.css' %}
+  <!-- Stylesheet already included, do not load again -->
+{% else %}
+{{ 'custom-product-slider.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+  {% endif %}
+{%- assign color_label_list = 'general.label.color' | t | replace: ', ', ',' | downcase | split: ',' -%}
+{%- assign size_label_list = 'general.label.size' | t | replace: ', ', ',' | downcase | split: ',' -%}
+{%- assign variant_image_options = block.settings.variant_image_options | replace: ', ', ',' | downcase | split: ',' -%}
+{%- unless product.has_only_default_variant -%}
+ 
+    <variant-picker class="variant-picker" section-id="{{ section.id }}" handle="{{ product.handle }}" form-id="{{ form_id }}" {% if update_url %}update-url{% endif %} >
+    {%- comment -%}
+    The variant data is outputted as a JSON, which allows the theme to emit an event with the data when the variant changes. This must not be removed.
+    {%- endcomment -%}
+    <script data-variant type="application/json">
+      {{- product.selected_or_first_available_variant | json -}}
+    </script>
+
+    {%- for option in product.options_with_values -%}
+      {% liquid
+        assign option_downcase = option.name | downcase
+        assign resolved_option_selector_style = block.settings.selector_style
+
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+
+        if swatch_count > 0 and block.settings.swatch_selector_style != 'none'
+          # Use the swatch selector type only if we have at least one swatch and a supported swatch selector type
+          assign resolved_option_selector_style = block.settings.swatch_selector_style
+        endif
+
+        # Implementation note: if the option value has no native swatch, BUT that the option name matches a hardcoded list of color names,
+        # we fallback to the legacy config-based system. This allows to keep compatibility with stores that were using the config-based, and
+        # allow those merchants to upgrade to the new system at their own pace.
+        if swatch_count == 0 and color_label_list contains option_downcase and block.settings.swatch_selector_style != 'none'
+          assign resolved_option_selector_style = block.settings.swatch_selector_style
+        endif
+
+        if resolved_option_selector_style == 'dropdown' and force_dropdown_as_block
+          assign resolved_option_selector_style = 'block'
+        endif
+
+        if variant_image_options contains option_downcase
+          assign resolved_option_selector_style = 'variant_image'
+        endif
+      %}
+      <fieldset class="variant-picker__option">
+        <div class="variant-picker__option-info">
+          <div class="h-stack gap-2">
+            <legend class="text-subdued">{{ option.name }}:</legend>
+            <span>{{ option.selected_value }}</span>
+          </div>
+
+          {%- if hide_size_chart != true and block.settings.size_chart_page != blank and size_label_list contains option_downcase -%}
+            {%- capture drawer_id -%}size-chart-{{ option.position }}-{{ form_id }}{%- endcapture -%}
+
+            <button type="button" class="text-sm text-subdued" aria-controls="{{ drawer_id | escape }}" aria-expanded="false">
+              <span class="link">{{ 'product.general.size_chart' | t }}</span>
+            </button>
+
+            <x-drawer id="{{ drawer_id }}" class="drawer drawer--lg">
+              <span class="h5" slot="header">{{ block.settings.size_chart_page.title }}</span>
+
+              <div class="prose">
+                {{- block.settings.size_chart_page.content -}}
+              </div>
+            </x-drawer>
+          {%- endif -%}
+        </div>
+        {%- if resolved_option_selector_style == 'dropdown' -%}
+          {%- capture popover_id -%}popover-variant-picker-{{ section.id }}-{{ product.id }}-{{ option.position }}{%- endcapture -%}
+
+          <div class="relative">
+            <button type="button" class="select" aria-controls="{{ popover_id }}" aria-expanded="false">
+              <span id="{{ popover_id }}-selected-value">{{- option.selected_value -}}</span>
+              {%- render 'icon' with 'chevron-bottom', class: 'select-chevron' -%}
+            </button>
+
+            <x-popover id="{{ popover_id }}" class="popover" initial-focus="[aria-selected='true']" close-on-listbox-select anchor-horizontal="start" anchor-vertical="end">
+              <p class="h5" slot="title">{{ option.name }}</p>
+
+              {%- assign param_name = form_id | append: '-option' | append: option.position -%}
+
+              <div data-option-selector class="popover-listbox">
+                {%- for option_value in option.values -%}
+                  {%- if hide_sold_out_variants == false or option_value.available or option_value.selected -%}
+                    {%- if update_url and option_value.product_url != blank -%}
+                      {%- if option_value.selected -%}
+                        <input class="sr-only" type="radio" id="{{ param_name }}-{{ option_value.id }}" form="{{ form_id }}" name="{{ param_name }}" data-option-position="{{ option.position }}" value="{{ option_value.id }}" checked>
+                      {%- endif -%}
+
+                      <a href="{{ option_value.variant.url | default: option_value.product_url }}" class="popover-listbox__option {% unless option_value.available %}is-disabled{% endunless %}">
+                        {{- option_value.name -}}
+                      </a>
+                    {%- else -%}
+                      <label class="popover-listbox__option {% unless option_value.available %}is-disabled{% endunless %}" for="{{ param_name }}-{{ option_value.id }}">
+                        <input class="sr-only" form="{{ form_id }}" type="radio" id="{{ param_name }}-{{ option_value.id }}" name="{{ param_name }}" {% if option_value.product_url != blank %}data-product-url="{{ option_value.product_url | escape }}"{% endif %} data-option-position="{{ option.position }}" value="{{ option_value.id }}" {% if option_value.selected %}checked{% endif %}>
+
+                        {{- option_value.name -}}
+                      </label>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </x-popover>
+          </div>
+        {%- else -%}
+          {%  if block.settings.varients_in_slider  %}
+            
+      <div class="product-variant-slider-wrapper">
+  <div class="product-variant-slider">
+    
+     {% liquid
+        assign displayed_variant_ids = ''
+                assign name = form_id | append: '-option' | append: option.position
+                assign matched_variant = null
+                for option_value in option.values
+       unless displayed_variant_ids contains variant.id 
+          for variant in product.variants 
+       assign option_index = option_position | minus: 1 
+         if variant.options [ option_index] == option_value 
+       
+          assign matched_variant = variant
+       assign displayed_variant_ids = displayed_variant_ids | append: variant.id | append: ','
+      
+           break 
+           endif 
+          endfor 
+            echo '<div class="variant-item" data-variant-id="' | append: matched_variant.id | append: '" data-option-id="' | append: option_value | append: '" >'
+                  case resolved_option_selector_style
+                    when 'variant_image'
+                echo '<div class="variant-item-inner">'
+                      render 'option-value', type: 'thumbnail', form: form_id,variant_id: matched_variant.id, option_value: option_value, param_name: name, option_position: option.position, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index, bordered: true
+              echo '</div>'
+                    when 'swatch'
+              echo '<div class"variant-item-inner">'
+                      render 'option-value', type: 'swatch', form: form_id, variant_id: matched_variant.id,option_value: option_value, param_name: name, option_position: option.position, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index
+          echo '</div>'
+                    when 'block'
+                echo '<div class="variant-item-inner">'
+                      render 'option-value', type: 'block', form: form_id, variant_id: matched_variant.id,option_value: option_value, param_name: name, option_position: option.position, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index
+                  echo '</div>'
+                    when 'block_swatch'
+                  echo '<div class="variant-item-inner">'
+                      render 'option-value', type: 'block', form: form_id, variant_id: matched_variant.id,option_value: option_value, param_name: name, option_position: option.position, show_swatch: true, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index
+                    echo '</div>'
+                  endcase
+        echo'</div>'
+              endunless
+                endfor
+              %}
+   
+  </div>
+ 
+</div>
+             <button class="slider-prev" id="slider-prev" ><i class="fas fa-chevron-left"></i></button>
+  <button class="slider-next" id="slider-next" ><i class="fas fa-chevron-right"></i></button>
+            {% else %}
+                 <div {% unless block.settings.stack_blocks %}class="scroll-area bleed sm:unbleed"{% endunless %}>
+            <div class="variant-picker__option-values {% if block.settings.stack_blocks %}wrap{% else %}scroll-area bleed sm:unbleed{% endif %} {% if resolved_option_selector_style == 'swatch' and settings.color_swatch_style == 'rectangle' %}variant-picker__option-values--color gap-4{% else %}gap-2{% endif %}">
+              {% liquid
+                assign name = form_id | append: '-option' | append: option.position
+
+                for option_value in option.values
+                  case resolved_option_selector_style
+                    when 'variant_image'
+                         render 'option-value', type: 'thumbnail', form: form_id, option_value: option_value, param_name: name, option_position: option.position, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index, bordered: true
+                    when 'swatch'
+                         render 'option-value', type: 'swatch', form: form_id, option_value: option_value, param_name: name, option_position: option.position, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index
+                    when 'block'
+                          render 'option-value', type: 'block', form: form_id, option_value: option_value, param_name: name, option_position: option.position, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index
+                    when 'block_swatch'
+                      render 'option-value', type: 'block', form: form_id, option_value: option_value, param_name: name, option_position: option.position, show_swatch: true, hide_if_disabled: hide_sold_out_variants, reload_page_for_combined_products: update_url, id_prefix: forloop.index
+                  endcase
+                endfor
+              %}
+            </div>
+          </div>
+            {% endif %}
+        {%- endif -%}
+      </fieldset>
+    {%- endfor -%}
+  </variant-picker>
+    
+{%- endunless -%}
+
+  <script>
+   // document.addEventListener("DOMContentLoaded", function () {
+  window.variants = {{ product.variants | json }};
+var currentIndex = 1;
+var variantCount =  window.variants.length;;
+   var screenWidth = screen.width;
+  //alert(variantId);
+  function initSlider() {
+  
+    const prevButton = document.querySelector('.slider-prev');
+    const nextButton = document.querySelector('.slider-next');
+    const slider = document.querySelector('.product-variant-slider');
+    const originalItems = Array.from(document.querySelectorAll('.variant-item'));
+// remove duplicate element ////
+    
+    if (!slider || !originalItems.length) return;
+
+    const itemWidth = originalItems[0].offsetWidth + 9;
+    
+    // Clear existing clones if any
+    slider.querySelectorAll('.clone').forEach(clone => clone.remove());
+
+    // Clone first and last items
+    const firstClone = originalItems[0].cloneNode(true);
+    const lastClone = originalItems[originalItems.length - 1].cloneNode(true);
+
+    firstClone.classList.add('clone');
+    lastClone.classList.add('clone');
+
+    slider.insertBefore(lastClone, originalItems[0]);
+   // slider.appendChild(firstClone);
+   
+
+    const allItems = Array.from(slider.querySelectorAll('.variant-item'));
+
+    // Check for variant in URL and set index
+const urlParams = new URLSearchParams(window.location.search);
+const variantFromUrl = urlParams.get('variant');
+
+if (variantFromUrl) {
+  const index = window.variants.findIndex(v => v.id == variantFromUrl);
+  if (index !== -1 && index >1) {
+    if(index < 5){
+    currentIndex = index;
+    }else{
+      currentIndex = 6;
+    }
+  }else{
+    currentIndex = 1;
+  }
+  
+}
+
+    // Set initial transform
+    slider.style.transform = `translateX(${-itemWidth * currentIndex}px)`;
+    slider.style.transition = 'transform 0.3s ease';
+
+    function updateSliderPosition() {
+      slider.style.transition = 'transform 0.3s ease';
+      slider.style.transform = `translateX(${-itemWidth * currentIndex}px)`;
+    }
+
+    function updateButtonStates() {
+      const realItemsCount = allItems.length - 2;
+      const remainingItems = realItemsCount - currentIndex;
+     // alert(index);
+      //if(screenWidth >=1366){
+        // nextButton.disabled = remainingItems <=9
+     // }
+       if(screenWidth < 740){
+        nextButton.disabled = remainingItems <= 3;
+      //  document.getElementById('slider-next').style.display = 'none';
+       }else if(screenWidth >= 740 && screenWidth <1024){
+         // alert(screenWidth);
+         nextButton.disabled = remainingItems <=8
+      //   document.getElementById('slider-next').style.display = 'none';
+       }
+      else{
+        nextButton.disabled = remainingItems <= 5
+      //   document.getElementById('slider-next').style.display = 'none';
+     }
+      //;
+      prevButton.disabled = currentIndex <= 1;
+
+       if(currentIndex <=1)
+        {
+          document.getElementById('slider-prev').style.display = 'none';
+         document.getElementById('slider-prev').disabled = true;
+          
+        }else{
+          document.getElementById('slider-prev').style.display = '';
+          document.getElementById('slider-prev').disabled = false;
+        }
+      if(nextButton.disabled){
+       document.getElementById('slider-next').style.display = 'none';
+        document.getElementById('slider-next').disabled = true;
+        
+      }else{
+        document.getElementById('slider-next').style.display = '';
+        document.getElementById('slider-next').disabled = false;
+      }
+      const prevButtonEl = document.getElementById('slider-prev');
+      const nextButtonEl = document.getElementById('slider-next');
+
+     
+    }
+
+    nextButton.addEventListener('click', () => {
+      if (currentIndex >= allItems.length - 1) return;
+      currentIndex++;
+      updateSliderPosition();
+      updateButtonStates();
+    });
+
+    prevButton.addEventListener('click', () => {
+      if (currentIndex <= 0) return;
+      currentIndex--;
+      updateSliderPosition();
+      updateButtonStates();
+    });
+
+    slider.addEventListener('transitionend', () => {
+      if (allItems[currentIndex].classList.contains('clone')) {
+        slider.style.transition = 'none';
+
+        if (currentIndex === allItems.length - 1) currentIndex = 1;
+        else if (currentIndex === 0) currentIndex = allItems.length ;
+
+        slider.style.transform = `translateX(${-itemWidth * currentIndex}px)`;
+        void slider.offsetWidth;
+        slider.style.transition = 'transform 0.3s ease';
+      }
+    });
+
+    // Handle variant item click (ignore clones)
+    slider.querySelectorAll('.variant-item:not(.clone)').forEach(item => {
+      item.addEventListener('click', function () {
+        const variantId = this.getAttribute('data-variant-id');
+        const selectedVariant = window.variants.find(v => v.id == variantId);
+        currentIndex = window.variants.findIndex(v => v.id == variantId);
+        
+      
+      });
+    });
+
+    function updateVariantSelection(variant) {
+      const selectElement = document.querySelector('select[name="id"]');
+      if (selectElement) {
+        selectElement.value = variant.id;
+        selectElement.dispatchEvent(new Event('change'));
+
+        // Update URL without reload
+        const newUrl = `${window.location.pathname}?variant=${variant.id}`;
+        history.pushState({ path: newUrl }, '', newUrl);
+
+        // Reinit slider after slight delay (let Shopify DOM changes settle)
+        setTimeout(initSlider, 200);
+      }
+    }
+
+    updateButtonStates();
+  }
+
+
+  // Initial setup
+  initSlider();
+//});
+   
+
+// Detect URL changes caused by history push/replace
+window.addEventListener('popstate', () => {
+  setTimeout(() => initSlider(), 100); // slight delay for DOM re-render
+});
+
+
+  </script>
