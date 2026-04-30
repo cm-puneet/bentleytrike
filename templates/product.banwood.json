@@ -186,7 +186,7 @@
             "icon": "none",
             "icon_width": 20,
             "title": "DETAILS",
-            "content": "{{ product.metafields.custom.product_sections.value.details_banwod_ | metafield_tag }}",
+            "content": "",
             "page": ""
           }
         },

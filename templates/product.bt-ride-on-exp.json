@@ -285,7 +285,7 @@
         "video_q6eGWw": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/BT - Mega Menu.mp4",
+            "video": null,
             "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
             "autoplay": true,
             "media_width": 60,
