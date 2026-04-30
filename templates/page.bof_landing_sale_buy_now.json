@@ -297,7 +297,7 @@
         "video_ThLJxd": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/5528fa5554b64e7db95b2ed696d9781c (1).mp4",
+            "video": null,
             "content_max_width": 740,
             "mobile_text_position": "place-self-end-start text-start",
             "desktop_text_position": "sm:place-self-end-start sm:text-start",
