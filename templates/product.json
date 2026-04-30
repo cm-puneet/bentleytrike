@@ -1,1 +1,343 @@
-{"sections":{"main":{"type":"main-product","blocks":{"title":{"type":"title","settings":{"heading_tag":"h3"}},"badges":{"type":"badges","settings":{}},"price":{"type":"price","settings":{"show_taxes_notice":false}},"rating":{"type":"rating","settings":{"show_empty":false,"show_rating_pos":true}},"inventory_Cibqgw":{"type":"inventory","settings":{"low_inventory_threshold":0}},"product_variations_WFpMqc":{"type":"product_variations","settings":{"option_name":"COLOR","option_value_metafield":"Color","products":[],"selector_style":"variant_image"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"text_q6Hc7E":{"type":"text","disabled":true,"settings":{"text":"<p>The luxury stroller that grows with your child. Designed in collaboration with Bentley Motors and your toddler’s needs in mind, the Bentley 6-in-1 Stroller \/ Tricycle is the perfect combination of elegance and function.<\/p>"}},"description":{"type":"description","disabled":true,"settings":{"icon":"none","icon_width":20,"collapse_content":false}},"variant_picker":{"type":"variant_picker","settings":{"hide_sold_out_variants":false,"stack_blocks":true,"selector_style":"block","swatch_selector_style":"swatch","variant_image_options":"Color","size_chart_page":""}},"buy_buttons":{"type":"buy_buttons","settings":{"show_payment_button":true,"show_gift_card_recipient":true,"atc_button_background":"","atc_button_text_color":"","payment_button_background":"","payment_button_text_color":""}},"payment_terms":{"type":"payment_terms","settings":{}},"associated_products_YXTBbY":{"type":"associated_products","settings":{"title":"Buy it with","stack_products":true,"products_count":5,"background":"","text_color":""}}},"block_order":["title","badges","price","rating","inventory_Cibqgw","product_variations_WFpMqc","quantity_selector","text_q6Hc7E","description","variant_picker","buy_buttons","payment_terms","associated_products_YXTBbY"],"settings":{"full_width":true,"show_fixed_add_to_cart":true,"desktop_media_width":55,"desktop_media_layout":"carousel_thumbnails_bottom","mobile_media_size":"contained","mobile_carousel_control":"thumbnails","enable_video_autoplay":true,"enable_video_looping":true,"enable_image_zoom":true,"max_image_zoom_level":3,"background":"","background_gradient":"","text_color":"","input_background":"rgba(0,0,0,0)","input_text_color":""}},"accordion_content_EGhnWC":{"type":"accordion-content","blocks":{"item_xPccUw":{"type":"item","settings":{"icon":"none","icon_width":20,"title":"DETAILS","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}},"item_tVpzTf":{"type":"item","settings":{"icon":"none","icon_width":20,"title":"HOW TO ASSEMBLE","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":"bentley-trike-assembly"}},"item_LLNwn9":{"type":"item","settings":{"icon":"none","icon_width":20,"title":"WARRANTY","content":"<p>Write content to help your customers to better understand your products or policies.<\/p>","page":""}}},"block_order":["item_xPccUw","item_tVpzTf","item_LLNwn9"],"disabled":true,"settings":{"full_width":true,"subheading":"DESCRIPTION","title":"Luxury in Every Detail","content":"<p>Inspired by the Bentley Continental GT, a luxury limited edition car  designed by the famous Bentley Motors LTD. The Bentley Mulliner Trike for kids is an exceptional, luxurious tricycle combining style, comfort, and functionality. Designed with utmost attention to detail, this tricycle is perfect for children who appreciate the finer things in life.<\/p>","button_text":"","button_url":"","text_position":"start","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","button_background":"","button_text_color":"","accordion_background":"","accordion_text_color":""}},"video_jdAKz9":{"type":"video","blocks":{"play_wiMKpx":{"type":"play","settings":{}},"heading_TT7nKU":{"type":"heading","settings":{"text":"","heading_tag":"h1"}}},"block_order":["play_wiMKpx","heading_TT7nKU"],"disabled":true,"settings":{"full_width":true,"allow_transparent_header":false,"autoplay":true,"video_size":"auto","video":"shopify:\/\/files\/videos\/mill 01.mp4","external_video_url":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"collection_list_8DP9UY":{"type":"collection-list","blocks":{"collection_wwmE9F":{"type":"collection","settings":{"collection":"","image":"shopify:\/\/shop_images\/Untitled_1500_x_1800_px.png","subheading":"Trike","title":"","url":"","heading_tag":"h2","text_position":"place-self-end-center text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"collection_8PKKQA":{"type":"collection","settings":{"collection":"","image":"shopify:\/\/shop_images\/Untitled_1500_x_1800_px_e2479239-e45d-44c1-b67d-f678e7e36826.png","subheading":"Balance Bike","title":"","url":"","heading_tag":"h2","text_position":"place-self-end-center text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"collection_iAy37R":{"type":"collection","settings":{"collection":"","image":"shopify:\/\/shop_images\/Untitled_1500_x_1800_px_e2479239-e45d-44c1-b67d-f678e7e36826.png","subheading":"Ride-on Cars","title":"","url":"","heading_tag":"h2","text_position":"place-self-end-center text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"collection_FCKnVh":{"type":"collection","settings":{"collection":"","subheading":"","title":"","url":"","heading_tag":"h2","text_position":"place-self-center text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}}},"block_order":["collection_wwmE9F","collection_8PKKQA","collection_iAy37R","collection_FCKnVh"],"disabled":true,"settings":{"full_width":true,"stack_collections":false,"collections_per_row_mobile":"2","collections_per_row":3,"show_progress_bar":false,"subheading":"","title":"","content":"","link_url":"","link_text":"View all","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"related-products":{"type":"related-products","settings":{"recommendations_count":4,"products":[],"full_width":true,"stack_products":true,"show_progress_bar":true,"products_per_row_mobile":"2","products_per_row_desktop":4,"subheading":"","title":"You May Also Like","content":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}}},"order":["main","accordion_content_EGhnWC","video_jdAKz9","collection_list_8DP9UY","related-products"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h3"
+          }
+        },
+        "badges": {
+          "type": "badges",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+            "show_empty": false,
+            "show_rating_pos": true
+          }
+        },
+        "inventory_Cibqgw": {
+          "type": "inventory",
+          "settings": {
+            "low_inventory_threshold": 0
+          }
+        },
+        "product_variations_WFpMqc": {
+          "type": "product_variations",
+          "settings": {
+            "option_name": "COLOR",
+            "option_value_metafield": "Color",
+            "products": [],
+            "selector_style": "variant_image"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "text_q6Hc7E": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>The luxury stroller that grows with your child. Designed in collaboration with Bentley Motors and your toddler’s needs in mind, the Bentley 6-in-1 Stroller / Tricycle is the perfect combination of elegance and function.</p>"
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "collapse_content": false
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "stack_blocks": true,
+            "selector_style": "block",
+            "swatch_selector_style": "swatch",
+            "variant_image_options": "Color",
+            "size_chart_page": ""
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true,
+            "show_gift_card_recipient": true,
+            "atc_button_background": "",
+            "atc_button_text_color": "",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
+        },
+        "associated_products_YXTBbY": {
+          "type": "associated_products",
+          "settings": {
+            "title": "Buy it with",
+            "stack_products": true,
+            "products_count": 5,
+            "background": "",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "badges",
+        "price",
+        "rating",
+        "inventory_Cibqgw",
+        "product_variations_WFpMqc",
+        "quantity_selector",
+        "text_q6Hc7E",
+        "description",
+        "variant_picker",
+        "buy_buttons",
+        "payment_terms",
+        "associated_products_YXTBbY"
+      ],
+      "settings": {
+        "full_width": true,
+        "show_fixed_add_to_cart": true,
+        "desktop_media_width": 55,
+        "desktop_media_layout": "carousel_thumbnails_bottom",
+        "mobile_media_size": "contained",
+        "mobile_carousel_control": "thumbnails",
+        "enable_video_autoplay": true,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3,
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "input_background": "rgba(0,0,0,0)",
+        "input_text_color": ""
+      }
+    },
+    "accordion_content_EGhnWC": {
+      "type": "accordion-content",
+      "blocks": {
+        "item_xPccUw": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "DETAILS",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_tVpzTf": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "HOW TO ASSEMBLE",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": "bentley-trike-assembly"
+          }
+        },
+        "item_LLNwn9": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "WARRANTY",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_xPccUw",
+        "item_tVpzTf",
+        "item_LLNwn9"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "subheading": "DESCRIPTION",
+        "title": "Luxury in Every Detail",
+        "content": "<p>Inspired by the Bentley Continental GT, a luxury limited edition car  designed by the famous Bentley Motors LTD. The Bentley Mulliner Trike for kids is an exceptional, luxurious tricycle combining style, comfort, and functionality. Designed with utmost attention to detail, this tricycle is perfect for children who appreciate the finer things in life.</p>",
+        "button_text": "",
+        "button_url": "",
+        "text_position": "start",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "button_background": "",
+        "button_text_color": "",
+        "accordion_background": "",
+        "accordion_text_color": ""
+      }
+    },
+    "video_jdAKz9": {
+      "type": "video",
+      "blocks": {
+        "play_wiMKpx": {
+          "type": "play",
+          "settings": {}
+        },
+        "heading_TT7nKU": {
+          "type": "heading",
+          "settings": {
+            "text": "",
+            "heading_tag": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "play_wiMKpx",
+        "heading_TT7nKU"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "autoplay": true,
+        "video_size": "auto",
+        "video": null,
+        "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "collection_list_8DP9UY": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_wwmE9F": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/Untitled_1500_x_1800_px.png",
+            "subheading": "Trike",
+            "title": "",
+            "url": "",
+            "heading_tag": "h2",
+            "text_position": "place-self-end-center text-center",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "collection_8PKKQA": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/Untitled_1500_x_1800_px_e2479239-e45d-44c1-b67d-f678e7e36826.png",
+            "subheading": "Balance Bike",
+            "title": "",
+            "url": "",
+            "heading_tag": "h2",
+            "text_position": "place-self-end-center text-center",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "collection_iAy37R": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/Untitled_1500_x_1800_px_e2479239-e45d-44c1-b67d-f678e7e36826.png",
+            "subheading": "Ride-on Cars",
+            "title": "",
+            "url": "",
+            "heading_tag": "h2",
+            "text_position": "place-self-end-center text-center",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        },
+        "collection_FCKnVh": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "subheading": "",
+            "title": "",
+            "url": "",
+            "heading_tag": "h2",
+            "text_position": "place-self-center text-center",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "collection_wwmE9F",
+        "collection_8PKKQA",
+        "collection_iAy37R",
+        "collection_FCKnVh"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "stack_collections": false,
+        "collections_per_row_mobile": "2",
+        "collections_per_row": 3,
+        "show_progress_bar": false,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "View all",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "recommendations_count": 4,
+        "products": [],
+        "full_width": true,
+        "stack_products": true,
+        "show_progress_bar": true,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "subheading": "",
+        "title": "You May Also Like",
+        "content": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "accordion_content_EGhnWC",
+    "video_jdAKz9",
+    "collection_list_8DP9UY",
+    "related-products"
+  ]
+}

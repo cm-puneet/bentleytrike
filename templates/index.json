@@ -1,1 +1,1505 @@
-{"sections":{"slideshow_yQqxE8":{"type":"slideshow","blocks":{"video_p6hBpc":{"type":"video","disabled":true,"settings":{"video":"shopify:\/\/files\/videos\/web screen .mp4","mobile_video":"shopify:\/\/files\/videos\/mobile header .mp4","content_max_width":600,"mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-center-start sm:text-start","subheading":"Experience True Luxury With","title":"The Bentley Kids Collection","heading_tag":"h2","button_text":"SHOP NOW","button_link":"shopify:\/\/pages\/bentley-collection","text_color":"#ffffff","button_background":"#394d46","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30,"background":"","background_gradient":""}},"image_XiWCHQ":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/Bentley_HP_Trike.png","mobile_image":"shopify:\/\/shop_images\/bt_01_1-100.jpg","content_max_width":600,"mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-center-start sm:text-start","subheading":"Experience True Luxury With","title":"The Bentley Kids Collection","heading_tag":"h2","button_text":"SHOP NOW","button_link":"shopify:\/\/pages\/bentley-collection","text_color":"#ffffff","button_background":"#a83f2f","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0,"button_border":"no","background":"","background_gradient":""}},"image_bqCfkD":{"type":"image","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/kive-image-1768937889956.png","mobile_image":"shopify:\/\/shop_images\/kive-image-1768937889956.png","content_max_width":600,"mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-center-start sm:text-start","subheading":"Limited Time Offer","title":"Save 50% on Mulliner Celeste & Cool Stone","heading_tag":"h2","button_text":"SHOP MULLINER TRIKES","button_link":"shopify:\/\/pages\/bentley-trike-sale","text_color":"#ffffff","button_background":"#394d46","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":15,"button_border":"no","background":"","background_gradient":""}},"image_Qb33zB":{"type":"image","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/new_banner_desktop_2.png","mobile_image":"shopify:\/\/shop_images\/BENTLEY_NEW_BANNER_MOBILE_2.png","content_max_width":600,"mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-center-start sm:text-start","subheading":"","title":"EXTENDED CYBER WEEK SALE!","heading_tag":"h0","button_text":"SHOP OUR BIGGEST SALE EVER","button_link":"shopify:\/\/pages\/bentley-trike-sale","text_color":"#ffffff","button_background":"#394d46","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30,"button_border":"no","background":"","background_gradient":""}}},"block_order":["video_p6hBpc","image_XiWCHQ","image_bqCfkD","image_Qb33zB"],"settings":{"full_width":true,"allow_transparent_header":true,"show_initial_transition":false,"image_size":"lg","controls_type":"dots","transition_type":"fade_with_text","autoplay":false,"cycle_speed":6,"background":"#f2f2f2","background_gradient":""}},"video_z6PwFG":{"type":"video","blocks":{"heading_z7nk8t":{"type":"heading","disabled":true,"settings":{"text":"BENTLEY","heading_tag":"h0"}},"subheading_LwCBiC":{"type":"subheading","disabled":true,"settings":{"text":"ALL NEW KIDS COLLECTION"}}},"block_order":["heading_z7nk8t","subheading_LwCBiC"],"disabled":true,"settings":{"full_width":true,"allow_transparent_header":true,"autoplay":true,"video_size":"fill","video":"shopify:\/\/files\/videos\/web screen .mp4","mobile_video":"shopify:\/\/files\/videos\/mobile header .mp4","external_video_url":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":15}},"rich_text_7YeDLk":{"type":"rich-text","blocks":{"heading_xMiJC8":{"type":"heading","settings":{"text":"Designed in collaboration with Bentley Motors","heading_tag":"h3","text_color":"","gradient":""}},"richtext_J9JEki":{"type":"richtext","settings":{"content":"<p>For parents who appreciate timeless luxury and refuse to compromise. Enjoy the sophistication and elegance of the Bentley legacy.<\/p>"}}},"block_order":["heading_xMiJC8","richtext_J9JEki"],"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"#f8f4ef","background_gradient":"","text_color":""}},"ss_collection_13_nmaRRb":{"type":"ss-collection-13","blocks":{"collection_c63abp":{"type":"collection","settings":{"media_type":"image","image":"shopify:\/\/shop_images\/HP_-_Bentley_Trike.png","video":"shopify:\/\/files\/videos\/White saten_911ce30f-7ddd-413f-a480-900d6c272019.mp4","video_url":"","title":"Bentley Trikes","text":"<p>6-in-1 convertible Stroller\/Trike<\/p>","media_url":"shopify:\/\/products\/bentley-6-in-1-stroller-trike","button_url":"shopify:\/\/products\/bentley-6-in-1-stroller-trike"}},"collection_XqghJy":{"type":"collection","settings":{"media_type":"image","image":"shopify:\/\/shop_images\/HP-_Bentley_Cars.png","video":"shopify:\/\/files\/videos\/car infloincer5 (2).mp4","video_url":"","poster_image":"shopify:\/\/shop_images\/car_1.png","title":"Bentley Cars","text":"<p>Electric Ride-on Cars<\/p>","media_url":"shopify:\/\/collections\/bentley-ride-on-electric-cars","button_url":"shopify:\/\/collections\/bentley-ride-on-electric-cars"}},"collection_qYwLya":{"type":"collection","settings":{"media_type":"image","image":"shopify:\/\/shop_images\/HP_-_Bentley_Bike.png","video":"shopify:\/\/files\/videos\/bike final.mp4","video_url":"","poster_image":"shopify:\/\/shop_images\/Artboard_1-100.jpg","title":"Bentley Bikes","text":"<p>Your Kid's first Balance Bike<\/p>","media_url":"shopify:\/\/products\/bentley-balance-bikes","button_url":"shopify:\/\/products\/bentley-balance-bikes"}}},"block_order":["collection_c63abp","collection_XqghJy","collection_qYwLya"],"settings":{"heading":"","heading_custom":true,"heading_font":"poppins_n4","heading_size":48,"heading_size_mobile":32,"heading_height":130,"heading_align":"center","heading_align_mobile":"center","slider_view":3,"slider_view_mobile":1.1,"slider_gap":20,"slider_gap_mobile":6,"slider_mt":0,"slider_mt_mobile":6,"media_radius":0,"media_border_thickness":0,"media_ratio":"portrait","media_ratio_mobile":"original","content_align":"center","content_align_mobile":"center","title_custom":true,"title_font":"playfair_display_n4","title_size":26,"title_size_mobile":22,"title_height":150,"title_mt":12,"title_mt_mobile":14,"text_custom":false,"text_font":"playfair_display_n4","text_size":16,"text_size_mobile":15,"text_height":150,"text_mt":4,"text_mt_mobile":4,"button":"SHOP NOW","button_custom":true,"button_font":"inter_n7","button_size":16,"button_size_mobile":14,"button_height":100,"button_padding_horizontal":20,"button_padding_horizontal_mobile":16,"button_padding_vertical":16,"button_padding_vertical_mobile":10,"button_radius":0,"button_border_thickness":2,"button_mt":10,"button_mt_mobile":10,"button_style":"non_outline","play_size":20,"play_radius":100,"arrow_size":48,"arrow_size_mobile":38,"arrow_icon_size":10,"arrow_icon_size_mobile":8,"arrow_border_thickness":1,"arrow_radius":100,"arrow_hover_effect":"color","arrow_mt":32,"arrow_mt_mobile":28,"arrow_show_desktop":false,"arrow_show_mobile":false,"title_color":"#1c0e29","text_color":"#1c0e29","media_border_color":"#480d2a","button_color":"#ffffff","button_hover_color":"#ffffff","button_bg_color":"#a83f2f","button_bg_hover_color":"#a83f2f","button_border_color":"#a83f2f","button_border_hover_color":"#a83f2f","play_color":"#ffffff","play_bg_color":"#620a12","arrow_color":"#121212","arrow_hover_color":"#121212","arrow_bg_color":"","arrow_bg_hover_color":"","arrow_border_color":"#c7c7c7","arrow_border_hover_color":"#121212","heading_color":"#480d2a","background_color":"#f8f4ef","background_gradient":"","border_color":"#121212","margin_top":0,"margin_bottom":0,"margin_horizontal":0,"margin_horizontal_mobile":0,"padding_top":12,"padding_bottom":12,"padding_horizontal":5,"padding_horizontal_mobile":1.5,"full_width":false,"content_width":1200,"border_thickness":0,"section_radius":0,"lazy":true}},"blocks_nT4rJH":{"type":"_blocks","blocks":{"ai_gen_block_2eac822_YKRMWD":{"type":"ai_gen_block_2eac822","disabled":true,"settings":{"section_background":"rgba(0,0,0,0)","section_padding":40,"desktop_width_percent":90,"cards_per_view":3,"card_gap":20,"card_background":"#e7ded3","card_border_radius":8,"card_padding":20,"image_aspect_ratio":100,"text_color":"#1a1a1a","title_size":18,"description_size":14,"button_background":"#00221c","button_text_color":"#f8f4ef","button_hover_background":"#1a1a1a","button_hover_text_color":"#ffffff","button_border_radius":4,"button_text_size":14,"nav_background":"#ffffff","nav_color":"#1a1a1a","dot_color":"#1a1a1a","card_1_enabled":true,"card_1_type":"product","card_1_product":"bentley-6-in-1-stroller-trike","card_1_collection":"","card_1_page":"","card_1_url":"","card_1_title":"Bentley Trike","card_1_description":"6-in-1 convertible stroller\/trike","card_1_image":"shopify:\/\/shop_images\/BT_collection_trike_fc7c9c2b-f20a-41b7-abd0-4a4bbe843179.png","card_1_video":"","card_1_button_text":"SHOP NOW","card_2_enabled":true,"card_2_type":"collection","card_2_product":"","card_2_collection":"bentley-ride-on-electric-cars","card_2_page":"","card_2_url":"","card_2_title":"Bentley Cars","card_2_description":"Electric Ride-on Cars","card_2_image":"shopify:\/\/shop_images\/Bentley_Redesign_2026_4.png","card_2_video":"https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/1513f5ef8aa44bc2898bdfb61a0b33ec.mp4","card_2_button_text":"SHOP NOW","card_3_enabled":true,"card_3_type":"product","card_3_product":"bentley-balance-bikes","card_3_collection":"","card_3_page":"","card_3_url":"","card_3_title":"Bentley Bikes","card_3_description":"Your Kid's first Balance Bike","card_3_image":"shopify:\/\/shop_images\/balance_bike_v4.png","card_3_video":"https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/5f0204355e95464993639f2f73343c5c.mp4","card_3_button_text":"SHOP NOW","card_4_enabled":false,"card_4_type":"product","card_4_product":"","card_4_collection":"","card_4_page":"","card_4_url":"","card_4_title":"","card_4_description":"","card_4_video":"","card_4_button_text":"Shop now","card_5_enabled":false,"card_5_type":"product","card_5_product":"","card_5_collection":"","card_5_page":"","card_5_url":"","card_5_title":"","card_5_description":"","card_5_video":"","card_5_button_text":"Shop now","card_6_enabled":false,"card_6_type":"product","card_6_product":"","card_6_collection":"","card_6_page":"","card_6_url":"","card_6_title":"","card_6_description":"","card_6_video":"","card_6_button_text":"Shop now","card_7_enabled":false,"card_7_type":"product","card_7_product":"","card_7_collection":"","card_7_page":"","card_7_url":"","card_7_title":"","card_7_description":"","card_7_video":"","card_7_button_text":"Shop now","card_8_enabled":false,"card_8_type":"product","card_8_product":"","card_8_collection":"","card_8_page":"","card_8_url":"","card_8_title":"","card_8_description":"","card_8_video":"","card_8_button_text":"SHOP NOW"},"blocks":{}}},"block_order":["ai_gen_block_2eac822_YKRMWD"],"name":"Product carousel","settings":{}},"17752051696ea75ce8":{"type":"_blocks","blocks":{"ai_gen_block_2eac822_gG4kNn":{"type":"ai_gen_block_2eac822","disabled":true,"settings":{"section_background":"rgba(0,0,0,0)","section_padding":40,"desktop_width_percent":90,"cards_per_view":3,"card_gap":20,"card_background":"#e7ded3","card_border_radius":8,"card_padding":20,"image_aspect_ratio":100,"text_color":"#1a1a1a","title_size":18,"description_size":14,"button_background":"#00221c","button_text_color":"#f8f4ef","button_hover_background":"#1a1a1a","button_hover_text_color":"#ffffff","button_border_radius":4,"button_text_size":14,"nav_background":"#ffffff","nav_color":"#1a1a1a","dot_color":"#1a1a1a","card_1_enabled":true,"card_1_type":"product","card_1_product":"bentley-6-in-1-stroller-trike","card_1_collection":"","card_1_page":"","card_1_url":"","card_1_title":"Bentley Trike","card_1_description":"6-in-1 convertible stroller\/trike","card_1_image":"shopify:\/\/shop_images\/5_dc425909-ff9b-4f15-84f0-3e57665c384e.png","card_1_video":"https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/50526f217b594c27b7c3f35d55589c72.mp4","card_1_button_text":"SHOP NOW","card_2_enabled":true,"card_2_type":"collection","card_2_product":"","card_2_collection":"bentley-ride-on-electric-cars","card_2_page":"","card_2_url":"","card_2_title":"Bentley Cars","card_2_description":"Electric Ride-on Cars","card_2_image":"shopify:\/\/shop_images\/Bentley_Redesign_2026_4.png","card_2_video":"https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/1513f5ef8aa44bc2898bdfb61a0b33ec.mp4","card_2_button_text":"SHOP NOW","card_3_enabled":true,"card_3_type":"product","card_3_product":"bentley-balance-bikes","card_3_collection":"","card_3_page":"","card_3_url":"","card_3_title":"Bentley Bikes","card_3_description":"Your Kid's first Balance Bike","card_3_image":"shopify:\/\/shop_images\/balance_bike_v4.png","card_3_video":"https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/5f0204355e95464993639f2f73343c5c.mp4","card_3_button_text":"SHOP NOW","card_4_enabled":false,"card_4_type":"product","card_4_product":"","card_4_collection":"","card_4_page":"","card_4_url":"","card_4_title":"","card_4_description":"","card_4_video":"","card_4_button_text":"Shop now","card_5_enabled":false,"card_5_type":"product","card_5_product":"","card_5_collection":"","card_5_page":"","card_5_url":"","card_5_title":"","card_5_description":"","card_5_video":"","card_5_button_text":"Shop now","card_6_enabled":false,"card_6_type":"product","card_6_product":"","card_6_collection":"","card_6_page":"","card_6_url":"","card_6_title":"","card_6_description":"","card_6_video":"","card_6_button_text":"Shop now","card_7_enabled":false,"card_7_type":"product","card_7_product":"","card_7_collection":"","card_7_page":"","card_7_url":"","card_7_title":"","card_7_description":"","card_7_video":"","card_7_button_text":"Shop now","card_8_enabled":false,"card_8_type":"product","card_8_product":"","card_8_collection":"","card_8_page":"","card_8_url":"","card_8_title":"","card_8_description":"","card_8_video":"","card_8_button_text":"SHOP NOW"},"blocks":{}}},"block_order":["ai_gen_block_2eac822_gG4kNn"],"settings":{}},"collection-list":{"type":"collection-list","blocks":{"collection_EpUQmH":{"type":"collection","settings":{"collection":"","image":"shopify:\/\/shop_images\/Bentley_Trike_9243865b-e1f1-408f-b14e-dc2024fad33e.png","subheading":"TRIKE","title":"","url":"shopify:\/\/products\/bentley-6-in-1-convertible-stroller-trike","heading_tag":"h2","text_position":"place-self-end-center text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"collection_JHnw7f":{"type":"collection","settings":{"collection":"","image":"shopify:\/\/shop_images\/Bentley_Car.png","subheading":"RIDE-ON CARS","title":"","url":"shopify:\/\/collections\/bentley-ride-on-electric-cars","heading_tag":"h2","text_position":"place-self-end-center text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"collection_6QyWrd":{"type":"collection","settings":{"collection":"","image":"shopify:\/\/shop_images\/Bentley_Bike_7917e307-f774-4af5-bb65-7b71424ffcf8.png","subheading":"BALANCE BIKE","title":"","url":"shopify:\/\/products\/bentley-balance-bikes","heading_tag":"h2","text_position":"place-self-end-center text-center","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}}},"block_order":["collection_EpUQmH","collection_JHnw7f","collection_6QyWrd"],"disabled":true,"settings":{"full_width":true,"stack_collections":false,"collections_per_row_mobile":"1","collections_per_row":3,"show_progress_bar":false,"subheading":"","title":"","content":"","link_url":"shopify:\/\/products\/bentley-balance-bikes","link_text":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":""}},"video_gwrtTz":{"type":"video","blocks":{"play_YJGeTm":{"type":"play","settings":{}}},"block_order":["play_YJGeTm"],"disabled":true,"name":"Video","settings":{"full_width":false,"allow_transparent_header":false,"autoplay":true,"video_size":"lg","video":"shopify:\/\/files\/videos\/webland.mp4","mobile_video":"shopify:\/\/files\/videos\/Portrait_webland.mp4","external_video_url":"","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"rich_text_3z89EG":{"type":"rich-text","blocks":{"heading_VPTH4G":{"type":"heading","settings":{"text":"The Bentley Experience","heading_tag":"h3","text_color":"","gradient":""}},"richtext_yxTXyz":{"type":"richtext","settings":{"content":"<p>4.8 stars out of 5, Based on 1017 reviews<\/p>"}}},"block_order":["heading_VPTH4G","richtext_yxTXyz"],"disabled":true,"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"","background_gradient":"","text_color":""}},"featured-collection":{"type":"featured-collection","disabled":true,"settings":{"collection":"","products":["bentley-bacalar-electric-ride-on-car-for-kids","bentley-bentayga-electric-ride-on-car-for-kids","bentley-exp-12-electric-ride-on-speed-car-for-kids","bentley-mulsanne-electric-ride-on-car-for-kids"],"full_width":true,"stack_products":false,"show_progress_bar":false,"products_count":6,"products_per_row_mobile":"2","products_per_row_desktop":4,"subheading":"","title":"","content":"","link_url":"","link_text":"View all","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}},"rich_text_jpDJzQ":{"type":"rich-text","blocks":{"subheading_YPQFxj":{"type":"subheading","disabled":true,"settings":{"text":"BENTLEY 6-IN-1 STROLLER\/TRIKE"}},"heading_pRVJRV":{"type":"heading","settings":{"text":"The luxury stroller that grows with your child","heading_tag":"h2","text_color":"","gradient":""}},"richtext_jyRWYg":{"type":"richtext","settings":{"content":"<p>A luxurious aesthetic option for parents looking to keep their child safe and comfortable, while giving them room to learn over the course of their early years. <\/p>"}}},"block_order":["subheading_YPQFxj","heading_pRVJRV","richtext_jyRWYg"],"disabled":true,"settings":{"full_width":true,"content_width":"medium","text_position":"center","background":"","background_gradient":"","text_color":""}},"multiple_images_with_text_P3dkUC":{"type":"multiple-images-with-text","blocks":{"item_XbVicJ":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/Generated_with_Kive.ai_-_Photorealistic_lifestyle_photograph_of_a_male_toddler__approximately_2_3_years_old__standing_beside_or_being_gently_pushed_in_a_Bentley_6-in-1_Trike_Stroller.png","image_rotation_degrees":15,"subheading":"","title":"Heading 1","content":"<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.<\/p>","button_url":"","button_text":""}},"item_zqaRcw":{"type":"item","settings":{"image":"shopify:\/\/shop_images\/Trike_V2.png","image_rotation_degrees":5.5,"subheading":"","title":"Heading 2","content":"<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.<\/p>","button_url":"","button_text":""}}},"block_order":["item_XbVicJ","item_zqaRcw"],"disabled":true,"custom_css":[],"name":"Multiple images with text","settings":{"full_width":true,"images_layout":"stacked","collage_images_alignment":"shifted","background":"#00221c","background_gradient":"","text_color":"#ffffff","button_background":"","button_text_color":""}},"media_grid_zqVX76":{"type":"media-grid","blocks":{"image_Fd36r8":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/Benltey_Trike_White_Satin_Media_Grid_88ac8d09-f597-4653-91a0-a70248faa020.png","title":"","heading_tag":"h4","link_url":"shopify:\/\/products\/white-satin-bentley-6-in-1-stroller-trike","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":2,"desktop_row_span":1,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"image_bNbcKi":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/HP_Jetstream.png","title":"","heading_tag":"h4","link_url":"shopify:\/\/products\/jetstream-blue-bentley-6-in-1-stroller-trike","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":2,"desktop_row_span":2,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"image_UiirXC":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/HP_Mulliner_Mandarin_9394d9ee-66c3-4262-ade8-0d2c5255074d.png","title":"","heading_tag":"h4","link_url":"shopify:\/\/products\/mulliner-mandarin-bentley-6-in-1-stroller-trike","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":2,"desktop_row_span":2,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"image_rkcLX9":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/HP_Bentley_Trike_Media_Grid_c29e8a70-0b6a-49ab-ae18-ca500ffba081.png","title":"","heading_tag":"h4","link_url":"shopify:\/\/products\/fuscia-pink-bentley-stroller-trike","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":2,"desktop_row_span":1,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}}},"block_order":["image_Fd36r8","image_bNbcKi","image_UiirXC","image_rkcLX9"],"name":"Media grid","settings":{"full_width":true,"reduce_width":false,"desktop_row_height":290,"mobile_row_height":150,"background":"","background_gradient":""}},"testimonials_NKm8c7":{"type":"testimonials","blocks":{"testimonial_Dxpfxh":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":5,"author":"Autumn R.","title":"A must-have stroller","content":"<p><em>\"Absolutely love this product—so rich and classy! I get so many compliments. I wish I could afford a Bentley, but my daughter definitely can with this stroller! <\/em><\/p>"}},"testimonial_TyR6mY":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":5,"author":"Irina D.","title":"Luxury on Wheels for My Little One!","content":"<p><em>\"I bought this beautiful green Bentley car for my son and it has been an absolute joy! A fantastic gift that combines style, fun, and comfort—highly recommend!\"<\/em><\/p>"}},"testimonial_pfd9Up":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":5,"author":"James G.","title":"Great price","content":"<p><em>\"The kids' car is nicely built. Features like the front and rear lights are cool, and the gauge area is well-designed. Easy to assemble and a great car for the price.\"<\/em><\/p>"}},"testimonial_hxNaYr":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":5,"author":"Vedant S.","title":"Versatile, ergonomic and elegant","content":"<p><em>\"We love the utilitarian aspects of the trike. The small compartments and thoughtful modifications make it really useful on all sorts of trips. I<\/em>It has really become<em> an essential companion<\/em> <em>\"<\/em><\/p>"}},"testimonial_YazCdJ":{"type":"testimonial","settings":{"round_avatar":true,"show_rating":true,"rating":5,"author":"Raquel L.","title":"Happy customer","content":"<p><em>\"<\/em>We really enjoy our Bentley trike. It has turned our daily walks into a <strong>cherished routine<\/strong>. Beyond its performance, it's a total head-turner with craftsmanship that truly stands out.<\/p>"}}},"block_order":["testimonial_Dxpfxh","testimonial_TyR6mY","testimonial_pfd9Up","testimonial_hxNaYr","testimonial_YazCdJ"],"settings":{"full_width":true,"stack_testimonials":false,"subheading":"","title":"","content":"","link_url":"","link_text":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","testimonial_card_background":"#d9d0c5","testimonial_card_text_color":""}},"slideshow_MmGWdb":{"type":"slideshow","blocks":{"image_yzXA7J":{"type":"image","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/BT_Collection_Banner_BT_Trike.png","mobile_image":"shopify:\/\/shop_images\/BT_Collection_BT_Trike_Mobile_2.png","content_max_width":600,"mobile_text_position":"place-self-end-center text-center","desktop_text_position":"sm:place-self-center-start sm:text-start","subheading":"Designed to Grow with Your Child","title":"Bentley 6-in-1 Stroller\/Trike","heading_tag":"h2","button_text":"SHOP NOW","button_link":"shopify:\/\/products\/bentley-6-in-1-stroller-trike","text_color":"#ffffff","button_background":"#a83f2f","button_text_color":"#000000","overlay_color":"#000000","overlay_opacity":0,"button_border":"no","background":"","background_gradient":""}},"image_m33Rem":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BT_Collection_Bentley_Cars_fe09b770-1c2a-4d95-9ed6-7ccbabc1a62b.png","mobile_image":"shopify:\/\/shop_images\/BT_Collection_Ride_On_Car_Mobile_1.png","content_max_width":600,"mobile_text_position":"place-self-start text-start","desktop_text_position":"sm:place-self-center-end sm:text-end","subheading":"Explore Bentley Ride-on Cars","title":"Bring Style and Fun to Your Kid's Ride","heading_tag":"h3","button_text":"SHOP NOW","button_link":"shopify:\/\/collections\/bentley-ride-on-electric-cars","text_color":"#ffffff","button_background":"#a83f2f","button_text_color":"#000000","overlay_color":"#000000","overlay_opacity":0,"button_border":"no","background":"","background_gradient":""}},"image_fcfwRJ":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BT_collection_-_BT_Bike.png","mobile_image":"shopify:\/\/shop_images\/BT_Collection_Balance_Bike_Mobile_54bf572e-3235-4f49-9a52-c25065521651.png","content_max_width":600,"mobile_text_position":"place-self-start text-start","desktop_text_position":"sm:place-self-center-start sm:text-start","subheading":"Explore Bentley Balance Bike","title":"Your Kid's First Balance Bike","heading_tag":"h3","button_text":"SHOP NOW","button_link":"shopify:\/\/products\/bentley-balance-bikes","text_color":"#ffffff","button_background":"#a83f2f","button_text_color":"#000000","overlay_color":"#000000","overlay_opacity":0,"button_border":"no","background":"","background_gradient":""}}},"block_order":["image_yzXA7J","image_m33Rem","image_fcfwRJ"],"name":"Slideshow","settings":{"full_width":false,"allow_transparent_header":true,"show_initial_transition":false,"image_size":"auto","controls_type":"dots","transition_type":"fade_with_text","autoplay":true,"cycle_speed":6,"background":"rgba(0,0,0,0)","background_gradient":""}},"174259779279421f63":{"type":"apps","blocks":{"tolstoy_shoppable_video_quiz_carousel_block_wCxJAE":{"type":"shopify:\/\/apps\/tolstoy-ads-image-video\/blocks\/carousel-block\/06fa8282-42ff-403e-b67c-1936776aed11","settings":{"publishId":"5ig1jxrobid59"}}},"block_order":["tolstoy_shoppable_video_quiz_carousel_block_wCxJAE"],"settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"rgba(0,0,0,0)","background_gradient":"","text_color":""}},"ss_slider_VrdnnT":{"type":"ss-slider","blocks":{"custom_ijG7gX":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_1A.png","title":"Infant Stroller","sub_title":"Stage 1: FOR 6 MONTHS & UP","url":""}},"custom_PcMQFU":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_1B.png","title":"Front-Facing Stroller","sub_title":"Stage 2: FOR 6 MONTHS & UP","url":""}},"custom_Q8HGEX":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_2_83445dae-bb9a-4a32-a952-7857ef222c76.png","title":"Guided Trike","sub_title":"Stage 3: FOR 12 MONTHS & UP","url":""}},"custom_9wWcd4":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_4_b229a295-7d2c-4304-a222-6f256f4def1a.png","title":"Training Trike","sub_title":"Stage 4: 24 MONTHS & UP","url":""}},"custom_zykhpt":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_5.png","title":"Solo Ride","sub_title":"STAGE 4: 48 MONTHS & UP","url":""}}},"block_order":["custom_ijG7gX","custom_PcMQFU","custom_Q8HGEX","custom_9wWcd4","custom_zykhpt"],"disabled":true,"settings":{"body_padding_vertical":70,"body_padding_vertical_mobile":30,"body_padding_horizontal":70,"body_padding_horizontal_mobile":30,"body_radius":0,"body_border_thickness":0,"layout_gap":20,"layout_gap_mobile":20,"heading":"<h5>Designed to Grow with Your Child <\/h5>","heading_custom":true,"heading_font":"playfair_display_n4","heading_size":44,"heading_size_mobile":22,"heading_height":130,"heading_align":"left","heading_align_mobile":"center","sub_heading":"A luxurious aesthetic option for parents looking to keep their child safe and comfortable, while giving them room to learn over the course of their early years.","sub_heading_custom":false,"sub_heading_font":"poppins_n4","sub_heading_size":18,"sub_heading_size_mobile":18,"sub_heading_height":150,"sub_heading_align":"left","sub_heading_align_mobile":"center","sub_heading_mt":16,"slider_width":68,"slider_width_mobile":100,"slider_view":3,"slider_view_mobile":1.3,"slider_gap":16,"slider_gap_mobile":16,"arrow_size":40,"arrow_size_mobile":40,"arrow_icon_size":16,"arrow_icon_size_mobile":16,"arrow_border_thickness":0,"arrow_show_desktop":true,"arrow_show_mobile":true,"scrollbar_height":2,"scrollbar_mt":20,"scrollbar_show_desktop":true,"scrollbar_show_mobile":true,"card_padding_vertical":0,"card_padding_vertical_mobile":0,"card_padding_horizontal":0,"card_padding_horizontal_mobile":0,"card_radius":8,"card_border_thickness":0,"image_radius":8,"image_border_thickness":0,"image_ratio":"portrait","radius_top":true,"content_padding_vertical":16,"content_padding_vertical_mobile":16,"content_padding_horizontal":16,"content_padding_horizontal_mobile":16,"content_radius":8,"content_border_thickness":0,"slide_title_custom":false,"slide_title_font":"playfair_display_n4","slide_title_size":14,"slide_title_size_mobile":14,"slide_title_height":130,"slide_title_align":"left","slide_title_mt":4,"slide_sub_title_custom":false,"slide_sub_title_font":"josefin_sans_n4","slide_sub_title_size":12,"slide_sub_title_size_mobile":12,"slide_sub_title_height":130,"slide_sub_title_align":"left","card_bg_color":"#fef6ee","card_border_color":"#000000","image_border_color":"#000000","content_bg_color":"#ffffff","content_border_color":"#000000","slide_title_color":"#000000","slide_sub_title_color":"#000000","arrow_color":"#ffffff","arrow_hover_color":"#ffffff","arrow_bg_color":"#394d46","arrow_bg_hover_color":"#454545","arrow_border_color":"#111111","arrow_border_hover_color":"#454545","scrollbar_bg_color":"#f0efd5","scrollbar_drag_bg_color":"#111111","body_bg_color":"#d4d2cd","body_border_color":"#000000","heading_color":"#121212","sub_heading_color":"#f0efd5","background_color":"#fef6ee","background_gradient":"","border_color":"#000000","margin_top":12,"margin_bottom":0,"padding_top":36,"padding_bottom":36,"padding_horizontal":8,"padding_horizontal_mobile":1.5,"full_width":false,"content_width":120,"border_thickness":0,"lazy":true}},"image_with_text_overlay_cGjVBF":{"type":"image-with-text-overlay","blocks":{"subheading_yY4ngB":{"type":"subheading","settings":{"text":"New Collection"}},"heading_dMmyxC":{"type":"heading","settings":{"text":"Ride-on Cars","heading_tag":"h2"}},"richtext_p4RG7y":{"type":"richtext","settings":{"content":"<p>Crafted for parents and kids who embrace timeless elegance.<\/p>"}},"button_e6YUKp":{"type":"button","settings":{"style":"fill","size":"lg","text":"SHOP NOW","url":"shopify:\/\/collections\/bentley-ride-on-electric-cars","background":"#00221c","text_color":"#ffffff"}}},"block_order":["subheading_yY4ngB","heading_dMmyxC","richtext_p4RG7y","button_e6YUKp"],"disabled":true,"custom_css":[],"settings":{"full_width":false,"allow_transparent_header":false,"enable_parallax":false,"image_size":"auto","image":"shopify:\/\/shop_images\/bentley_Cars_1.png","mobile_image":"shopify:\/\/shop_images\/Bentley_cars_mobile_4.png","mobile_text_position":"place-self-start text-start","desktop_text_position":"sm:place-self-end-start sm:text-start","text_color":"#ffffff","overlay_color":"#ffffff","overlay_opacity":8}},"media_with_text_yVqAxc":{"type":"media-with-text","blocks":{"video_ViFVn8":{"type":"video","settings":{"video":"shopify:\/\/files\/videos\/helments1.mp4","external_video_url":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","autoplay":true,"media_width":55,"media_position":"end","text_position":"place-self-center text-center","icon":"none","icon_width":48,"subheading":"","title":"Bentley Helmet","content":"<p>Bentley Kids Helmet blends sophistication with advanced features for comfort and safety. Pair it seamlessly with Bentley trikes and balance bikes for a refined and secure ride.<\/p>","link_text":"SHOP NOW","link_url":"shopify:\/\/products\/bentley-helmet-collection","background":"#e7ded3","background_gradient":"","text_color":"#000000","text_gradient":"","button_background":"#a83f2f","button_text_color":"#ffffff"}},"video_8H9HQb":{"type":"video","settings":{"video":"shopify:\/\/files\/videos\/Bentley Projector.mp4","external_video_url":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","autoplay":true,"media_width":55,"media_position":"end","text_position":"place-self-center text-center","icon":"none","icon_width":48,"subheading":"","title":"Bentley Projector","content":"<p>Add a touch of luxury and personalization to your Bentley 6-in-1 Stroller Trike with the official Bentley Logo Light Projector. This sleek accessory effortlessly projects the iconic Bentley logo onto the ground, elevating every stroll with a dash of style and sophistication.<\/p>","link_text":"SHOP NOW","link_url":"shopify:\/\/products\/bentley-logo-light-projector-for-6-in-1-stroller-trike","background":"#e7ded3","background_gradient":"","text_color":"#000000","text_gradient":"","button_background":"#a83f2f","button_text_color":"#ffffff"}}},"block_order":["video_ViFVn8","video_8H9HQb"],"custom_css":[],"settings":{"full_width":true,"alternate_media_position":true,"spacing":"small"}},"rich_text_9CaXBf":{"type":"rich-text","blocks":{"heading_Up3pY8":{"type":"heading","settings":{"text":"Share the Legacy","heading_tag":"h2","text_color":"","gradient":""}},"richtext_qHgxnV":{"type":"richtext","settings":{"content":"<p>Capture the elegance of your little one’s adventures and tag <a href=\"https:\/\/www.instagram.com\/bentleytrike\/?hl=en\" target=\"_blank\" title=\"https:\/\/www.instagram.com\/bentleytrike\/?hl=en\"><strong>#BentleyTrike<\/strong><\/a> to be part of our global community.<\/p>"}}},"block_order":["heading_Up3pY8","richtext_qHgxnV"],"disabled":true,"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"","background_gradient":"","text_color":""}},"174180357643579c9e":{"type":"apps","disabled":true,"settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"","background_gradient":"","text_color":""}},"newsletter_B9ym8W":{"type":"newsletter","name":"Newsletter","settings":{"full_width":false,"image":"shopify:\/\/shop_images\/HP_Newsletter.png","show_icon":false,"title":"Join the Bentley Trike  Inner Circle","content":"<p>Get exclusive deals, new launches, and Bentley Trike news delivered straight to your inbox.<\/p>","button_text":"Subscribe","subtext":"By completing this form you are signing up to receive our emails and can unsubscribe at any time.","background":"#d9d0c5","background_gradient":"","text_color":"#000000","button_background":"#ffffff","button_text_color":"#ffffff"}}},"order":["slideshow_yQqxE8","video_z6PwFG","rich_text_7YeDLk","ss_collection_13_nmaRRb","blocks_nT4rJH","17752051696ea75ce8","collection-list","video_gwrtTz","rich_text_3z89EG","featured-collection","rich_text_jpDJzQ","multiple_images_with_text_P3dkUC","media_grid_zqVX76","testimonials_NKm8c7","slideshow_MmGWdb","174259779279421f63","ss_slider_VrdnnT","image_with_text_overlay_cGjVBF","media_with_text_yVqAxc","rich_text_9CaXBf","174180357643579c9e","newsletter_B9ym8W"]}
+{
+  "sections": {
+    "slideshow_yQqxE8": {
+      "type": "slideshow",
+      "blocks": {
+        "video_p6hBpc": {
+          "type": "video",
+          "disabled": true,
+          "settings": {
+            "video": null,
+            "mobile_video": null,
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Experience True Luxury With",
+            "title": "The Bentley Kids Collection",
+            "heading_tag": "h2",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://pages/bentley-collection",
+            "text_color": "#ffffff",
+            "button_background": "#394d46",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_XiWCHQ": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Bentley_HP_Trike.png",
+            "mobile_image": "shopify://shop_images/bt_01_1-100.jpg",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Experience True Luxury With",
+            "title": "The Bentley Kids Collection",
+            "heading_tag": "h2",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://pages/bentley-collection",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_bqCfkD": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/kive-image-1768937889956.png",
+            "mobile_image": "shopify://shop_images/kive-image-1768937889956.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Limited Time Offer",
+            "title": "Save 50% on Mulliner Celeste & Cool Stone",
+            "heading_tag": "h2",
+            "button_text": "SHOP MULLINER TRIKES",
+            "button_link": "shopify://pages/bentley-trike-sale",
+            "text_color": "#ffffff",
+            "button_background": "#394d46",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 15,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_Qb33zB": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/new_banner_desktop_2.png",
+            "mobile_image": "shopify://shop_images/BENTLEY_NEW_BANNER_MOBILE_2.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "",
+            "title": "EXTENDED CYBER WEEK SALE!",
+            "heading_tag": "h0",
+            "button_text": "SHOP OUR BIGGEST SALE EVER",
+            "button_link": "shopify://pages/bentley-trike-sale",
+            "text_color": "#ffffff",
+            "button_background": "#394d46",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_p6hBpc",
+        "image_XiWCHQ",
+        "image_bqCfkD",
+        "image_Qb33zB"
+      ],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "show_initial_transition": false,
+        "image_size": "lg",
+        "controls_type": "dots",
+        "transition_type": "fade_with_text",
+        "autoplay": false,
+        "cycle_speed": 6,
+        "background": "#f2f2f2",
+        "background_gradient": ""
+      }
+    },
+    "video_z6PwFG": {
+      "type": "video",
+      "blocks": {
+        "heading_z7nk8t": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "text": "BENTLEY",
+            "heading_tag": "h0"
+          }
+        },
+        "subheading_LwCBiC": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "ALL NEW KIDS COLLECTION"
+          }
+        }
+      },
+      "block_order": [
+        "heading_z7nk8t",
+        "subheading_LwCBiC"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "autoplay": true,
+        "video_size": "fill",
+        "video": null,
+        "mobile_video": null,
+        "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15
+      }
+    },
+    "rich_text_7YeDLk": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xMiJC8": {
+          "type": "heading",
+          "settings": {
+            "text": "Designed in collaboration with Bentley Motors",
+            "heading_tag": "h3",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_J9JEki": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>For parents who appreciate timeless luxury and refuse to compromise. Enjoy the sophistication and elegance of the Bentley legacy.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xMiJC8",
+        "richtext_J9JEki"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "#f8f4ef",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "ss_collection_13_nmaRRb": {
+      "type": "ss-collection-13",
+      "blocks": {
+        "collection_c63abp": {
+          "type": "collection",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/HP_-_Bentley_Trike.png",
+            "video": null,
+            "video_url": "",
+            "title": "Bentley Trikes",
+            "text": "<p>6-in-1 convertible Stroller/Trike</p>",
+            "media_url": "shopify://products/bentley-6-in-1-stroller-trike",
+            "button_url": "shopify://products/bentley-6-in-1-stroller-trike"
+          }
+        },
+        "collection_XqghJy": {
+          "type": "collection",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/HP-_Bentley_Cars.png",
+            "video": null,
+            "video_url": "",
+            "poster_image": "shopify://shop_images/car_1.png",
+            "title": "Bentley Cars",
+            "text": "<p>Electric Ride-on Cars</p>",
+            "media_url": "shopify://collections/bentley-ride-on-electric-cars",
+            "button_url": "shopify://collections/bentley-ride-on-electric-cars"
+          }
+        },
+        "collection_qYwLya": {
+          "type": "collection",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/HP_-_Bentley_Bike.png",
+            "video": null,
+            "video_url": "",
+            "poster_image": "shopify://shop_images/Artboard_1-100.jpg",
+            "title": "Bentley Bikes",
+            "text": "<p>Your Kid's first Balance Bike</p>",
+            "media_url": "shopify://products/bentley-balance-bikes",
+            "button_url": "shopify://products/bentley-balance-bikes"
+          }
+        }
+      },
+      "block_order": [
+        "collection_c63abp",
+        "collection_XqghJy",
+        "collection_qYwLya"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_custom": true,
+        "heading_font": "poppins_n4",
+        "heading_size": 48,
+        "heading_size_mobile": 32,
+        "heading_height": 130,
+        "heading_align": "center",
+        "heading_align_mobile": "center",
+        "slider_view": 3,
+        "slider_view_mobile": 1.1,
+        "slider_gap": 20,
+        "slider_gap_mobile": 6,
+        "slider_mt": 0,
+        "slider_mt_mobile": 6,
+        "media_radius": 0,
+        "media_border_thickness": 0,
+        "media_ratio": "portrait",
+        "media_ratio_mobile": "original",
+        "content_align": "center",
+        "content_align_mobile": "center",
+        "title_custom": true,
+        "title_font": "playfair_display_n4",
+        "title_size": 26,
+        "title_size_mobile": 22,
+        "title_height": 150,
+        "title_mt": 12,
+        "title_mt_mobile": 14,
+        "text_custom": false,
+        "text_font": "playfair_display_n4",
+        "text_size": 16,
+        "text_size_mobile": 15,
+        "text_height": 150,
+        "text_mt": 4,
+        "text_mt_mobile": 4,
+        "button": "SHOP NOW",
+        "button_custom": true,
+        "button_font": "inter_n7",
+        "button_size": 16,
+        "button_size_mobile": 14,
+        "button_height": 100,
+        "button_padding_horizontal": 20,
+        "button_padding_horizontal_mobile": 16,
+        "button_padding_vertical": 16,
+        "button_padding_vertical_mobile": 10,
+        "button_radius": 0,
+        "button_border_thickness": 2,
+        "button_mt": 10,
+        "button_mt_mobile": 10,
+        "button_style": "non_outline",
+        "play_size": 20,
+        "play_radius": 100,
+        "arrow_size": 48,
+        "arrow_size_mobile": 38,
+        "arrow_icon_size": 10,
+        "arrow_icon_size_mobile": 8,
+        "arrow_border_thickness": 1,
+        "arrow_radius": 100,
+        "arrow_hover_effect": "color",
+        "arrow_mt": 32,
+        "arrow_mt_mobile": 28,
+        "arrow_show_desktop": false,
+        "arrow_show_mobile": false,
+        "title_color": "#1c0e29",
+        "text_color": "#1c0e29",
+        "media_border_color": "#480d2a",
+        "button_color": "#ffffff",
+        "button_hover_color": "#ffffff",
+        "button_bg_color": "#a83f2f",
+        "button_bg_hover_color": "#a83f2f",
+        "button_border_color": "#a83f2f",
+        "button_border_hover_color": "#a83f2f",
+        "play_color": "#ffffff",
+        "play_bg_color": "#620a12",
+        "arrow_color": "#121212",
+        "arrow_hover_color": "#121212",
+        "arrow_bg_color": "",
+        "arrow_bg_hover_color": "",
+        "arrow_border_color": "#c7c7c7",
+        "arrow_border_hover_color": "#121212",
+        "heading_color": "#480d2a",
+        "background_color": "#f8f4ef",
+        "background_gradient": "",
+        "border_color": "#121212",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 12,
+        "padding_bottom": 12,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 1200,
+        "border_thickness": 0,
+        "section_radius": 0,
+        "lazy": true
+      }
+    },
+    "blocks_nT4rJH": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_2eac822_YKRMWD": {
+          "type": "ai_gen_block_2eac822",
+          "disabled": true,
+          "settings": {
+            "section_background": "rgba(0,0,0,0)",
+            "section_padding": 40,
+            "desktop_width_percent": 90,
+            "cards_per_view": 3,
+            "card_gap": 20,
+            "card_background": "#e7ded3",
+            "card_border_radius": 8,
+            "card_padding": 20,
+            "image_aspect_ratio": 100,
+            "text_color": "#1a1a1a",
+            "title_size": 18,
+            "description_size": 14,
+            "button_background": "#00221c",
+            "button_text_color": "#f8f4ef",
+            "button_hover_background": "#1a1a1a",
+            "button_hover_text_color": "#ffffff",
+            "button_border_radius": 4,
+            "button_text_size": 14,
+            "nav_background": "#ffffff",
+            "nav_color": "#1a1a1a",
+            "dot_color": "#1a1a1a",
+            "card_1_enabled": true,
+            "card_1_type": "product",
+            "card_1_product": "bentley-6-in-1-stroller-trike",
+            "card_1_collection": "",
+            "card_1_page": "",
+            "card_1_url": "",
+            "card_1_title": "Bentley Trike",
+            "card_1_description": "6-in-1 convertible stroller/trike",
+            "card_1_image": "shopify://shop_images/BT_collection_trike_fc7c9c2b-f20a-41b7-abd0-4a4bbe843179.png",
+            "card_1_video": "",
+            "card_1_button_text": "SHOP NOW",
+            "card_2_enabled": true,
+            "card_2_type": "collection",
+            "card_2_product": "",
+            "card_2_collection": "bentley-ride-on-electric-cars",
+            "card_2_page": "",
+            "card_2_url": "",
+            "card_2_title": "Bentley Cars",
+            "card_2_description": "Electric Ride-on Cars",
+            "card_2_image": "shopify://shop_images/Bentley_Redesign_2026_4.png",
+            "card_2_video": "https://cdn.shopify.com/videos/c/o/v/1513f5ef8aa44bc2898bdfb61a0b33ec.mp4",
+            "card_2_button_text": "SHOP NOW",
+            "card_3_enabled": true,
+            "card_3_type": "product",
+            "card_3_product": "bentley-balance-bikes",
+            "card_3_collection": "",
+            "card_3_page": "",
+            "card_3_url": "",
+            "card_3_title": "Bentley Bikes",
+            "card_3_description": "Your Kid's first Balance Bike",
+            "card_3_image": "shopify://shop_images/balance_bike_v4.png",
+            "card_3_video": "https://cdn.shopify.com/videos/c/o/v/5f0204355e95464993639f2f73343c5c.mp4",
+            "card_3_button_text": "SHOP NOW",
+            "card_4_enabled": false,
+            "card_4_type": "product",
+            "card_4_product": "",
+            "card_4_collection": "",
+            "card_4_page": "",
+            "card_4_url": "",
+            "card_4_title": "",
+            "card_4_description": "",
+            "card_4_video": "",
+            "card_4_button_text": "Shop now",
+            "card_5_enabled": false,
+            "card_5_type": "product",
+            "card_5_product": "",
+            "card_5_collection": "",
+            "card_5_page": "",
+            "card_5_url": "",
+            "card_5_title": "",
+            "card_5_description": "",
+            "card_5_video": "",
+            "card_5_button_text": "Shop now",
+            "card_6_enabled": false,
+            "card_6_type": "product",
+            "card_6_product": "",
+            "card_6_collection": "",
+            "card_6_page": "",
+            "card_6_url": "",
+            "card_6_title": "",
+            "card_6_description": "",
+            "card_6_video": "",
+            "card_6_button_text": "Shop now",
+            "card_7_enabled": false,
+            "card_7_type": "product",
+            "card_7_product": "",
+            "card_7_collection": "",
+            "card_7_page": "",
+            "card_7_url": "",
+            "card_7_title": "",
+            "card_7_description": "",
+            "card_7_video": "",
+            "card_7_button_text": "Shop now",
+            "card_8_enabled": false,
+            "card_8_type": "product",
+            "card_8_product": "",
+            "card_8_collection": "",
+            "card_8_page": "",
+            "card_8_url": "",
+            "card_8_title": "",
+            "card_8_description": "",
+            "card_8_video": "",
+            "card_8_button_text": "SHOP NOW"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_2eac822_YKRMWD"
+      ],
+      "name": "Product carousel",
+      "settings": {}
+    },
+    "17752051696ea75ce8": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_2eac822_gG4kNn": {
+          "type": "ai_gen_block_2eac822",
+          "disabled": true,
+          "settings": {
+            "section_background": "rgba(0,0,0,0)",
+            "section_padding": 40,
+            "desktop_width_percent": 90,
+            "cards_per_view": 3,
+            "card_gap": 20,
+            "card_background": "#e7ded3",
+            "card_border_radius": 8,
+            "card_padding": 20,
+            "image_aspect_ratio": 100,
+            "text_color": "#1a1a1a",
+            "title_size": 18,
+            "description_size": 14,
+            "button_background": "#00221c",
+            "button_text_color": "#f8f4ef",
+            "button_hover_background": "#1a1a1a",
+            "button_hover_text_color": "#ffffff",
+            "button_border_radius": 4,
+            "button_text_size": 14,
+            "nav_background": "#ffffff",
+            "nav_color": "#1a1a1a",
+            "dot_color": "#1a1a1a",
+            "card_1_enabled": true,
+            "card_1_type": "product",
+            "card_1_product": "bentley-6-in-1-stroller-trike",
+            "card_1_collection": "",
+            "card_1_page": "",
+            "card_1_url": "",
+            "card_1_title": "Bentley Trike",
+            "card_1_description": "6-in-1 convertible stroller/trike",
+            "card_1_image": "shopify://shop_images/5_dc425909-ff9b-4f15-84f0-3e57665c384e.png",
+            "card_1_video": "https://cdn.shopify.com/videos/c/o/v/50526f217b594c27b7c3f35d55589c72.mp4",
+            "card_1_button_text": "SHOP NOW",
+            "card_2_enabled": true,
+            "card_2_type": "collection",
+            "card_2_product": "",
+            "card_2_collection": "bentley-ride-on-electric-cars",
+            "card_2_page": "",
+            "card_2_url": "",
+            "card_2_title": "Bentley Cars",
+            "card_2_description": "Electric Ride-on Cars",
+            "card_2_image": "shopify://shop_images/Bentley_Redesign_2026_4.png",
+            "card_2_video": "https://cdn.shopify.com/videos/c/o/v/1513f5ef8aa44bc2898bdfb61a0b33ec.mp4",
+            "card_2_button_text": "SHOP NOW",
+            "card_3_enabled": true,
+            "card_3_type": "product",
+            "card_3_product": "bentley-balance-bikes",
+            "card_3_collection": "",
+            "card_3_page": "",
+            "card_3_url": "",
+            "card_3_title": "Bentley Bikes",
+            "card_3_description": "Your Kid's first Balance Bike",
+            "card_3_image": "shopify://shop_images/balance_bike_v4.png",
+            "card_3_video": "https://cdn.shopify.com/videos/c/o/v/5f0204355e95464993639f2f73343c5c.mp4",
+            "card_3_button_text": "SHOP NOW",
+            "card_4_enabled": false,
+            "card_4_type": "product",
+            "card_4_product": "",
+            "card_4_collection": "",
+            "card_4_page": "",
+            "card_4_url": "",
+            "card_4_title": "",
+            "card_4_description": "",
+            "card_4_video": "",
+            "card_4_button_text": "Shop now",
+            "card_5_enabled": false,
+            "card_5_type": "product",
+            "card_5_product": "",
+            "card_5_collection": "",
+            "card_5_page": "",
+            "card_5_url": "",
+            "card_5_title": "",
+            "card_5_description": "",
+            "card_5_video": "",
+            "card_5_button_text": "Shop now",
+            "card_6_enabled": false,
+            "card_6_type": "product",
+            "card_6_product": "",
+            "card_6_collection": "",
+            "card_6_page": "",
+            "card_6_url": "",
+            "card_6_title": "",
+            "card_6_description": "",
+            "card_6_video": "",
+            "card_6_button_text": "Shop now",
+            "card_7_enabled": false,
+            "card_7_type": "product",
+            "card_7_product": "",
+            "card_7_collection": "",
+            "card_7_page": "",
+            "card_7_url": "",
+            "card_7_title": "",
+            "card_7_description": "",
+            "card_7_video": "",
+            "card_7_button_text": "Shop now",
+            "card_8_enabled": false,
+            "card_8_type": "product",
+            "card_8_product": "",
+            "card_8_collection": "",
+            "card_8_page": "",
+            "card_8_url": "",
+            "card_8_title": "",
+            "card_8_description": "",
+            "card_8_video": "",
+            "card_8_button_text": "SHOP NOW"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_2eac822_gG4kNn"
+      ],
+      "settings": {}
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_EpUQmH": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/Bentley_Trike_9243865b-e1f1-408f-b14e-dc2024fad33e.png",
+            "subheading": "TRIKE",
+            "title": "",
+            "url": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
+            "heading_tag": "h2",
+            "text_position": "place-self-end-center text-center",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "collection_JHnw7f": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/Bentley_Car.png",
+            "subheading": "RIDE-ON CARS",
+            "title": "",
+            "url": "shopify://collections/bentley-ride-on-electric-cars",
+            "heading_tag": "h2",
+            "text_position": "place-self-end-center text-center",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "collection_6QyWrd": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/Bentley_Bike_7917e307-f774-4af5-bb65-7b71424ffcf8.png",
+            "subheading": "BALANCE BIKE",
+            "title": "",
+            "url": "shopify://products/bentley-balance-bikes",
+            "heading_tag": "h2",
+            "text_position": "place-self-end-center text-center",
+            "text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "collection_EpUQmH",
+        "collection_JHnw7f",
+        "collection_6QyWrd"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "stack_collections": false,
+        "collections_per_row_mobile": "1",
+        "collections_per_row": 3,
+        "show_progress_bar": false,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "shopify://products/bentley-balance-bikes",
+        "link_text": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": ""
+      }
+    },
+    "video_gwrtTz": {
+      "type": "video",
+      "blocks": {
+        "play_YJGeTm": {
+          "type": "play",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "play_YJGeTm"
+      ],
+      "disabled": true,
+      "name": "Video",
+      "settings": {
+        "full_width": false,
+        "allow_transparent_header": false,
+        "autoplay": true,
+        "video_size": "lg",
+        "video": null,
+        "mobile_video": null
+        "external_video_url": "",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "rich_text_3z89EG": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VPTH4G": {
+          "type": "heading",
+          "settings": {
+            "text": "The Bentley Experience",
+            "heading_tag": "h3",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_yxTXyz": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>4.8 stars out of 5, Based on 1017 reviews</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VPTH4G",
+        "richtext_yxTXyz"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "collection": "",
+        "products": [
+          "bentley-bacalar-electric-ride-on-car-for-kids",
+          "bentley-bentayga-electric-ride-on-car-for-kids",
+          "bentley-exp-12-electric-ride-on-speed-car-for-kids",
+          "bentley-mulsanne-electric-ride-on-car-for-kids"
+        ],
+        "full_width": true,
+        "stack_products": false,
+        "show_progress_bar": false,
+        "products_count": 6,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "View all",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "rich_text_jpDJzQ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_YPQFxj": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "BENTLEY 6-IN-1 STROLLER/TRIKE"
+          }
+        },
+        "heading_pRVJRV": {
+          "type": "heading",
+          "settings": {
+            "text": "The luxury stroller that grows with your child",
+            "heading_tag": "h2",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_jyRWYg": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>A luxurious aesthetic option for parents looking to keep their child safe and comfortable, while giving them room to learn over the course of their early years. </p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_YPQFxj",
+        "heading_pRVJRV",
+        "richtext_jyRWYg"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "content_width": "medium",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "multiple_images_with_text_P3dkUC": {
+      "type": "multiple-images-with-text",
+      "blocks": {
+        "item_XbVicJ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Generated_with_Kive.ai_-_Photorealistic_lifestyle_photograph_of_a_male_toddler__approximately_2_3_years_old__standing_beside_or_being_gently_pushed_in_a_Bentley_6-in-1_Trike_Stroller.png",
+            "image_rotation_degrees": 15,
+            "subheading": "",
+            "title": "Heading 1",
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "button_url": "",
+            "button_text": ""
+          }
+        },
+        "item_zqaRcw": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Trike_V2.png",
+            "image_rotation_degrees": 5.5,
+            "subheading": "",
+            "title": "Heading 2",
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "button_url": "",
+            "button_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_XbVicJ",
+        "item_zqaRcw"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "name": "Multiple images with text",
+      "settings": {
+        "full_width": true,
+        "images_layout": "stacked",
+        "collage_images_alignment": "shifted",
+        "background": "#00221c",
+        "background_gradient": "",
+        "text_color": "#ffffff",
+        "button_background": "",
+        "button_text_color": ""
+      }
+    },
+    "media_grid_zqVX76": {
+      "type": "media-grid",
+      "blocks": {
+        "image_Fd36r8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Benltey_Trike_White_Satin_Media_Grid_88ac8d09-f597-4653-91a0-a70248faa020.png",
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "shopify://products/white-satin-bentley-6-in-1-stroller-trike",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 2,
+            "desktop_row_span": 1,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_bNbcKi": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HP_Jetstream.png",
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "shopify://products/jetstream-blue-bentley-6-in-1-stroller-trike",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 2,
+            "desktop_row_span": 2,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_UiirXC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HP_Mulliner_Mandarin_9394d9ee-66c3-4262-ade8-0d2c5255074d.png",
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "shopify://products/mulliner-mandarin-bentley-6-in-1-stroller-trike",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 2,
+            "desktop_row_span": 2,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_rkcLX9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HP_Bentley_Trike_Media_Grid_c29e8a70-0b6a-49ab-ae18-ca500ffba081.png",
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "shopify://products/fuscia-pink-bentley-stroller-trike",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 2,
+            "desktop_row_span": 1,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_Fd36r8",
+        "image_bNbcKi",
+        "image_UiirXC",
+        "image_rkcLX9"
+      ],
+      "name": "Media grid",
+      "settings": {
+        "full_width": true,
+        "reduce_width": false,
+        "desktop_row_height": 290,
+        "mobile_row_height": 150,
+        "background": "",
+        "background_gradient": ""
+      }
+    },
+    "testimonials_NKm8c7": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_Dxpfxh": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Autumn R.",
+            "title": "A must-have stroller",
+            "content": "<p><em>\"Absolutely love this product—so rich and classy! I get so many compliments. I wish I could afford a Bentley, but my daughter definitely can with this stroller! </em></p>"
+          }
+        },
+        "testimonial_TyR6mY": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Irina D.",
+            "title": "Luxury on Wheels for My Little One!",
+            "content": "<p><em>\"I bought this beautiful green Bentley car for my son and it has been an absolute joy! A fantastic gift that combines style, fun, and comfort—highly recommend!\"</em></p>"
+          }
+        },
+        "testimonial_pfd9Up": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "James G.",
+            "title": "Great price",
+            "content": "<p><em>\"The kids' car is nicely built. Features like the front and rear lights are cool, and the gauge area is well-designed. Easy to assemble and a great car for the price.\"</em></p>"
+          }
+        },
+        "testimonial_hxNaYr": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Vedant S.",
+            "title": "Versatile, ergonomic and elegant",
+            "content": "<p><em>\"We love the utilitarian aspects of the trike. The small compartments and thoughtful modifications make it really useful on all sorts of trips. I</em>It has really become<em> an essential companion</em> <em>\"</em></p>"
+          }
+        },
+        "testimonial_YazCdJ": {
+          "type": "testimonial",
+          "settings": {
+            "round_avatar": true,
+            "show_rating": true,
+            "rating": 5,
+            "author": "Raquel L.",
+            "title": "Happy customer",
+            "content": "<p><em>\"</em>We really enjoy our Bentley trike. It has turned our daily walks into a <strong>cherished routine</strong>. Beyond its performance, it's a total head-turner with craftsmanship that truly stands out.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_Dxpfxh",
+        "testimonial_TyR6mY",
+        "testimonial_pfd9Up",
+        "testimonial_hxNaYr",
+        "testimonial_YazCdJ"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_testimonials": false,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "testimonial_card_background": "#d9d0c5",
+        "testimonial_card_text_color": ""
+      }
+    },
+    "slideshow_MmGWdb": {
+      "type": "slideshow",
+      "blocks": {
+        "image_yzXA7J": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/BT_Collection_Banner_BT_Trike.png",
+            "mobile_image": "shopify://shop_images/BT_Collection_BT_Trike_Mobile_2.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Designed to Grow with Your Child",
+            "title": "Bentley 6-in-1 Stroller/Trike",
+            "heading_tag": "h2",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://products/bentley-6-in-1-stroller-trike",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_m33Rem": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BT_Collection_Bentley_Cars_fe09b770-1c2a-4d95-9ed6-7ccbabc1a62b.png",
+            "mobile_image": "shopify://shop_images/BT_Collection_Ride_On_Car_Mobile_1.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-start text-start",
+            "desktop_text_position": "sm:place-self-center-end sm:text-end",
+            "subheading": "Explore Bentley Ride-on Cars",
+            "title": "Bring Style and Fun to Your Kid's Ride",
+            "heading_tag": "h3",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/bentley-ride-on-electric-cars",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_fcfwRJ": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BT_collection_-_BT_Bike.png",
+            "mobile_image": "shopify://shop_images/BT_Collection_Balance_Bike_Mobile_54bf572e-3235-4f49-9a52-c25065521651.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-start text-start",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Explore Bentley Balance Bike",
+            "title": "Your Kid's First Balance Bike",
+            "heading_tag": "h3",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://products/bentley-balance-bikes",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_yzXA7J",
+        "image_m33Rem",
+        "image_fcfwRJ"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "full_width": false,
+        "allow_transparent_header": true,
+        "show_initial_transition": false,
+        "image_size": "auto",
+        "controls_type": "dots",
+        "transition_type": "fade_with_text",
+        "autoplay": true,
+        "cycle_speed": 6,
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": ""
+      }
+    },
+    "174259779279421f63": {
+      "type": "apps",
+      "blocks": {
+        "tolstoy_shoppable_video_quiz_carousel_block_wCxJAE": {
+          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "settings": {
+            "publishId": "5ig1jxrobid59"
+          }
+        }
+      },
+      "block_order": [
+        "tolstoy_shoppable_video_quiz_carousel_block_wCxJAE"
+      ],
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "ss_slider_VrdnnT": {
+      "type": "ss-slider",
+      "blocks": {
+        "custom_ijG7gX": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_1A.png",
+            "title": "Infant Stroller",
+            "sub_title": "Stage 1: FOR 6 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_PcMQFU": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_1B.png",
+            "title": "Front-Facing Stroller",
+            "sub_title": "Stage 2: FOR 6 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_Q8HGEX": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_2_83445dae-bb9a-4a32-a952-7857ef222c76.png",
+            "title": "Guided Trike",
+            "sub_title": "Stage 3: FOR 12 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_9wWcd4": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_4_b229a295-7d2c-4304-a222-6f256f4def1a.png",
+            "title": "Training Trike",
+            "sub_title": "Stage 4: 24 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_zykhpt": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_5.png",
+            "title": "Solo Ride",
+            "sub_title": "STAGE 4: 48 MONTHS & UP",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_ijG7gX",
+        "custom_PcMQFU",
+        "custom_Q8HGEX",
+        "custom_9wWcd4",
+        "custom_zykhpt"
+      ],
+      "disabled": true,
+      "settings": {
+        "body_padding_vertical": 70,
+        "body_padding_vertical_mobile": 30,
+        "body_padding_horizontal": 70,
+        "body_padding_horizontal_mobile": 30,
+        "body_radius": 0,
+        "body_border_thickness": 0,
+        "layout_gap": 20,
+        "layout_gap_mobile": 20,
+        "heading": "<h5>Designed to Grow with Your Child </h5>",
+        "heading_custom": true,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 44,
+        "heading_size_mobile": 22,
+        "heading_height": 130,
+        "heading_align": "left",
+        "heading_align_mobile": "center",
+        "sub_heading": "A luxurious aesthetic option for parents looking to keep their child safe and comfortable, while giving them room to learn over the course of their early years.",
+        "sub_heading_custom": false,
+        "sub_heading_font": "poppins_n4",
+        "sub_heading_size": 18,
+        "sub_heading_size_mobile": 18,
+        "sub_heading_height": 150,
+        "sub_heading_align": "left",
+        "sub_heading_align_mobile": "center",
+        "sub_heading_mt": 16,
+        "slider_width": 68,
+        "slider_width_mobile": 100,
+        "slider_view": 3,
+        "slider_view_mobile": 1.3,
+        "slider_gap": 16,
+        "slider_gap_mobile": 16,
+        "arrow_size": 40,
+        "arrow_size_mobile": 40,
+        "arrow_icon_size": 16,
+        "arrow_icon_size_mobile": 16,
+        "arrow_border_thickness": 0,
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": true,
+        "scrollbar_height": 2,
+        "scrollbar_mt": 20,
+        "scrollbar_show_desktop": true,
+        "scrollbar_show_mobile": true,
+        "card_padding_vertical": 0,
+        "card_padding_vertical_mobile": 0,
+        "card_padding_horizontal": 0,
+        "card_padding_horizontal_mobile": 0,
+        "card_radius": 8,
+        "card_border_thickness": 0,
+        "image_radius": 8,
+        "image_border_thickness": 0,
+        "image_ratio": "portrait",
+        "radius_top": true,
+        "content_padding_vertical": 16,
+        "content_padding_vertical_mobile": 16,
+        "content_padding_horizontal": 16,
+        "content_padding_horizontal_mobile": 16,
+        "content_radius": 8,
+        "content_border_thickness": 0,
+        "slide_title_custom": false,
+        "slide_title_font": "playfair_display_n4",
+        "slide_title_size": 14,
+        "slide_title_size_mobile": 14,
+        "slide_title_height": 130,
+        "slide_title_align": "left",
+        "slide_title_mt": 4,
+        "slide_sub_title_custom": false,
+        "slide_sub_title_font": "josefin_sans_n4",
+        "slide_sub_title_size": 12,
+        "slide_sub_title_size_mobile": 12,
+        "slide_sub_title_height": 130,
+        "slide_sub_title_align": "left",
+        "card_bg_color": "#fef6ee",
+        "card_border_color": "#000000",
+        "image_border_color": "#000000",
+        "content_bg_color": "#ffffff",
+        "content_border_color": "#000000",
+        "slide_title_color": "#000000",
+        "slide_sub_title_color": "#000000",
+        "arrow_color": "#ffffff",
+        "arrow_hover_color": "#ffffff",
+        "arrow_bg_color": "#394d46",
+        "arrow_bg_hover_color": "#454545",
+        "arrow_border_color": "#111111",
+        "arrow_border_hover_color": "#454545",
+        "scrollbar_bg_color": "#f0efd5",
+        "scrollbar_drag_bg_color": "#111111",
+        "body_bg_color": "#d4d2cd",
+        "body_border_color": "#000000",
+        "heading_color": "#121212",
+        "sub_heading_color": "#f0efd5",
+        "background_color": "#fef6ee",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "margin_top": 12,
+        "margin_bottom": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 8,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 120,
+        "border_thickness": 0,
+        "lazy": true
+      }
+    },
+    "image_with_text_overlay_cGjVBF": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "subheading_yY4ngB": {
+          "type": "subheading",
+          "settings": {
+            "text": "New Collection"
+          }
+        },
+        "heading_dMmyxC": {
+          "type": "heading",
+          "settings": {
+            "text": "Ride-on Cars",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_p4RG7y": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Crafted for parents and kids who embrace timeless elegance.</p>"
+          }
+        },
+        "button_e6YUKp": {
+          "type": "button",
+          "settings": {
+            "style": "fill",
+            "size": "lg",
+            "text": "SHOP NOW",
+            "url": "shopify://collections/bentley-ride-on-electric-cars",
+            "background": "#00221c",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_yY4ngB",
+        "heading_dMmyxC",
+        "richtext_p4RG7y",
+        "button_e6YUKp"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "full_width": false,
+        "allow_transparent_header": false,
+        "enable_parallax": false,
+        "image_size": "auto",
+        "image": "shopify://shop_images/bentley_Cars_1.png",
+        "mobile_image": "shopify://shop_images/Bentley_cars_mobile_4.png",
+        "mobile_text_position": "place-self-start text-start",
+        "desktop_text_position": "sm:place-self-end-start sm:text-start",
+        "text_color": "#ffffff",
+        "overlay_color": "#ffffff",
+        "overlay_opacity": 8
+      }
+    },
+    "media_with_text_yVqAxc": {
+      "type": "media-with-text",
+      "blocks": {
+        "video_ViFVn8": {
+          "type": "video",
+          "settings": {
+            "video": null,
+            "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "autoplay": true,
+            "media_width": 55,
+            "media_position": "end",
+            "text_position": "place-self-center text-center",
+            "icon": "none",
+            "icon_width": 48,
+            "subheading": "",
+            "title": "Bentley Helmet",
+            "content": "<p>Bentley Kids Helmet blends sophistication with advanced features for comfort and safety. Pair it seamlessly with Bentley trikes and balance bikes for a refined and secure ride.</p>",
+            "link_text": "SHOP NOW",
+            "link_url": "shopify://products/bentley-helmet-collection",
+            "background": "#e7ded3",
+            "background_gradient": "",
+            "text_color": "#000000",
+            "text_gradient": "",
+            "button_background": "#a83f2f",
+            "button_text_color": "#ffffff"
+          }
+        },
+        "video_8H9HQb": {
+          "type": "video",
+          "settings": {
+            "video": null,
+            "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "autoplay": true,
+            "media_width": 55,
+            "media_position": "end",
+            "text_position": "place-self-center text-center",
+            "icon": "none",
+            "icon_width": 48,
+            "subheading": "",
+            "title": "Bentley Projector",
+            "content": "<p>Add a touch of luxury and personalization to your Bentley 6-in-1 Stroller Trike with the official Bentley Logo Light Projector. This sleek accessory effortlessly projects the iconic Bentley logo onto the ground, elevating every stroll with a dash of style and sophistication.</p>",
+            "link_text": "SHOP NOW",
+            "link_url": "shopify://products/bentley-logo-light-projector-for-6-in-1-stroller-trike",
+            "background": "#e7ded3",
+            "background_gradient": "",
+            "text_color": "#000000",
+            "text_gradient": "",
+            "button_background": "#a83f2f",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "video_ViFVn8",
+        "video_8H9HQb"
+      ],
+      "custom_css": [],
+      "settings": {
+        "full_width": true,
+        "alternate_media_position": true,
+        "spacing": "small"
+      }
+    },
+    "rich_text_9CaXBf": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Up3pY8": {
+          "type": "heading",
+          "settings": {
+            "text": "Share the Legacy",
+            "heading_tag": "h2",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_qHgxnV": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Capture the elegance of your little one’s adventures and tag <a href=\"https://www.instagram.com/bentleytrike/?hl=en\" target=\"_blank\" title=\"https://www.instagram.com/bentleytrike/?hl=en\"><strong>#BentleyTrike</strong></a> to be part of our global community.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Up3pY8",
+        "richtext_qHgxnV"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "174180357643579c9e": {
+      "type": "apps",
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "newsletter_B9ym8W": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "full_width": false,
+        "image": "shopify://shop_images/HP_Newsletter.png",
+        "show_icon": false,
+        "title": "Join the Bentley Trike  Inner Circle",
+        "content": "<p>Get exclusive deals, new launches, and Bentley Trike news delivered straight to your inbox.</p>",
+        "button_text": "Subscribe",
+        "subtext": "By completing this form you are signing up to receive our emails and can unsubscribe at any time.",
+        "background": "#d9d0c5",
+        "background_gradient": "",
+        "text_color": "#000000",
+        "button_background": "#ffffff",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "slideshow_yQqxE8",
+    "video_z6PwFG",
+    "rich_text_7YeDLk",
+    "ss_collection_13_nmaRRb",
+    "blocks_nT4rJH",
+    "17752051696ea75ce8",
+    "collection-list",
+    "video_gwrtTz",
+    "rich_text_3z89EG",
+    "featured-collection",
+    "rich_text_jpDJzQ",
+    "multiple_images_with_text_P3dkUC",
+    "media_grid_zqVX76",
+    "testimonials_NKm8c7",
+    "slideshow_MmGWdb",
+    "174259779279421f63",
+    "ss_slider_VrdnnT",
+    "image_with_text_overlay_cGjVBF",
+    "media_with_text_yVqAxc",
+    "rich_text_9CaXBf",
+    "174180357643579c9e",
+    "newsletter_B9ym8W"
+  ]
+}
