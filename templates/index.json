@@ -193,7 +193,7 @@
           "type": "collection",
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/HP_-_Bentley_Trike.png",
+            "image": null,
             "video": null,
             "video_url": "",
             "title": "Bentley Trikes",
@@ -668,7 +668,7 @@
         "autoplay": true,
         "video_size": "lg",
         "video": null,
-        "mobile_video": null
+        "mobile_video": null,
         "external_video_url": "",
         "text_color": "#ffffff",
         "overlay_color": "#000000",
