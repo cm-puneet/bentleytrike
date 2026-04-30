@@ -345,7 +345,7 @@
           "settings": {
             "image": "{{ product.metafields.custom.product_sections.value.image_upgrade_1_rito_.value }}",
             "column_size": "3",
-            "title": "{{ product.metafields.custom.product_sections.value.edition_title_1_rito_.value }}",
+            "title": "",
             "heading_tag": "h4",
             "content": "",
             "link_url": "",
