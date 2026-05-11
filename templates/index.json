@@ -1433,6 +1433,7 @@
       "name": "Newsletter",
       "settings": {
         "full_width": false,
+        "image": "shopify://shop_images/HP_Newsletter.png",
         "show_icon": false,
         "title": "Join the Bentley Trike  Inner Circle",
         "content": "<p>Get exclusive deals, new launches, and Bentley Trike news delivered straight to your inbox.</p>",
