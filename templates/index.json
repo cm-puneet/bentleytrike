@@ -190,21 +190,11 @@
     "ss_collection_13_nmaRRb": {
       "type": "ss-collection-13",
       "blocks": {
-        "collection_XLRiqV": {
-          "type": "collection",
-          "settings": {
-            "media_type": "video",
-            "video_url": "",
-            "title": "Collection",
-            "text": "<p>Describe a collection.</p>",
-            "media_url": "",
-            "button_url": ""
-          }
-        },
         "collection_c63abp": {
           "type": "collection",
           "settings": {
             "media_type": "image",
+            "image": "shopify://shop_images/01_ca_bentley_web_138.png",
             "video_url": "",
             "title": "Bentley Trikes",
             "text": "<p>6-in-1 convertible Stroller/Trike</p>",
@@ -240,7 +230,6 @@
         }
       },
       "block_order": [
-        "collection_XLRiqV",
         "collection_c63abp",
         "collection_XqghJy",
         "collection_qYwLya"
