@@ -1026,9 +1026,10 @@
         "image_m33Rem": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/Generated_with_Kive.ai_-_kive-image_48.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-start text-start",
-            "desktop_text_position": "sm:place-self-center-end sm:text-end",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
             "subheading": "Explore Bentley Ride-on Cars",
             "title": "Bring Style and Fun to Your Kid's Ride",
             "heading_tag": "h3",
