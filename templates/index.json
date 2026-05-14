@@ -190,6 +190,17 @@
     "ss_collection_13_nmaRRb": {
       "type": "ss-collection-13",
       "blocks": {
+        "collection_XLRiqV": {
+          "type": "collection",
+          "settings": {
+            "media_type": "video",
+            "video_url": "",
+            "title": "Collection",
+            "text": "<p>Describe a collection.</p>",
+            "media_url": "",
+            "button_url": ""
+          }
+        },
         "collection_c63abp": {
           "type": "collection",
           "settings": {
@@ -205,7 +216,7 @@
           "type": "collection",
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/HP-_Bentley_Cars.png",
+            "image": "shopify://shop_images/01_ca_bentley_web_324.png",
             "video_url": "",
             "poster_image": "shopify://shop_images/car_1.png",
             "title": "Bentley Cars",
@@ -218,7 +229,7 @@
           "type": "collection",
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/HP_-_Bentley_Bike.png",
+            "image": "shopify://shop_images/01_ca_bentley_web_280.png",
             "video_url": "",
             "poster_image": "shopify://shop_images/Artboard_1-100.jpg",
             "title": "Bentley Bikes",
@@ -229,6 +240,7 @@
         }
       },
       "block_order": [
+        "collection_XLRiqV",
         "collection_c63abp",
         "collection_XqghJy",
         "collection_qYwLya"
