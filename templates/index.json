@@ -36,6 +36,7 @@
         "image_XiWCHQ": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BT_CA_-_HP_2_2.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-end-center text-center",
             "desktop_text_position": "sm:place-self-center-start sm:text-start",
