@@ -1054,6 +1054,7 @@
         "image_fcfwRJ": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BT_CA_Balance_Bike_1.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-start text-start",
             "desktop_text_position": "sm:place-self-center-start sm:text-start",
