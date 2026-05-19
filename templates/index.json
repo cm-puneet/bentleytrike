@@ -819,6 +819,7 @@
         "image_Fd36r8": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/Benltey_Trike_White_Satin_Media_Grid_-_CA.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "shopify://products/white-satin-bentley-6-in-1-stroller-trike",
@@ -884,9 +885,10 @@
         "image_rkcLX9": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/Benltey_Trike_White_Satin_Media_Grid_-_CA_1.png",
             "title": "",
             "heading_tag": "h4",
-            "link_url": "shopify://products/fuscia-pink-bentley-stroller-trike",
+            "link_url": "shopify://products/jetstream-blue-bentley-6-in-1-stroller-trike",
             "link_text": "",
             "mobile_text_position": "place-self-center text-center",
             "desktop_column_span": 2,
