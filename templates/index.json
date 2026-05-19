@@ -1033,8 +1033,9 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/Generated_with_Kive.ai_-_kive-image_48.png",
+            "mobile_image": "shopify://shop_images/BT_CA_Balance_Ride-on_car.png",
             "content_max_width": 600,
-            "mobile_text_position": "place-self-start text-start",
+            "mobile_text_position": "place-self-end-start text-start",
             "desktop_text_position": "sm:place-self-center-start sm:text-start",
             "subheading": "Explore Bentley Ride-on Cars",
             "title": "Bring Style and Fun to Your Kid's Ride",
@@ -1055,8 +1056,9 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/BT_CA_Balance_Bike_1.png",
+            "mobile_image": "shopify://shop_images/BT_CA_Balance_Bike_Mobile.png",
             "content_max_width": 600,
-            "mobile_text_position": "place-self-start text-start",
+            "mobile_text_position": "place-self-end-start text-start",
             "desktop_text_position": "sm:place-self-center-start sm:text-start",
             "subheading": "Explore Bentley Balance Bike",
             "title": "Your Kid's First Balance Bike",
