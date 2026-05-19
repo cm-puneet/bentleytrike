@@ -840,9 +840,10 @@
         "image_bNbcKi": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_234.png",
             "title": "",
             "heading_tag": "h4",
-            "link_url": "shopify://products/jetstream-blue-bentley-6-in-1-stroller-trike",
+            "link_url": "shopify://products/fuscia-pink-bentley-stroller-trike",
             "link_text": "",
             "mobile_text_position": "place-self-center text-center",
             "desktop_column_span": 2,
@@ -861,9 +862,10 @@
         "image_UiirXC": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_155.png",
             "title": "",
             "heading_tag": "h4",
-            "link_url": "shopify://products/mulliner-mandarin-bentley-6-in-1-stroller-trike",
+            "link_url": "shopify://products/mulliner-cool-stone-bentley-6-in-1-stroller-trike",
             "link_text": "",
             "mobile_text_position": "place-self-center text-center",
             "desktop_column_span": 2,
