@@ -607,6 +607,7 @@
         "custom_rgqgFB": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_136.png",
             "title": "Mulliner Gold",
             "sub_title": "",
             "url": "shopify://products/bentley-mulliner-trike"
@@ -615,14 +616,16 @@
         "custom_DgbeFE": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_158.png",
             "title": "Mandarin",
             "sub_title": "",
-            "url": "shopify://products/mulliner-mandarin-bentley-6-in-1-stroller-trike"
+            "url": "shopify://products/mulliner-mandarin-bentley-6-in-1-stroller-trike-copy"
           }
         },
         "custom_pDr8D4": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_166.png",
             "title": "Celeste",
             "sub_title": "",
             "url": "shopify://products/mulliner-celeste-bentley-6-in-1-stroller-trike"
@@ -631,6 +634,7 @@
         "custom_KXiFdb": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_154.png",
             "title": "Cool Stone",
             "sub_title": "",
             "url": "shopify://products/mulliner-cool-stone-bentley-6-in-1-stroller-trike"
@@ -755,6 +759,7 @@
         "custom_a6nQ34": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_214.png",
             "title": "Onyx Black",
             "sub_title": "",
             "url": "shopify://products/onyx-black-bentley-stroller-trike"
@@ -763,6 +768,7 @@
         "custom_8QYcKh": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_135.png",
             "title": "White Satin",
             "sub_title": "",
             "url": "shopify://products/white-satin-bentley-6-in-1-stroller-trike"
@@ -771,6 +777,7 @@
         "custom_tQTcMP": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_194.png",
             "title": "Centennial",
             "sub_title": "",
             "url": "shopify://products/limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike"
@@ -779,6 +786,7 @@
         "custom_HkgNFM": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_191.png",
             "title": "Spruce Green",
             "sub_title": "",
             "url": "shopify://products/spruce-green-6-in-1-stroller-trike"
@@ -787,6 +795,7 @@
         "custom_JCjPd3": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_186.png",
             "title": "Jetstream Blue ",
             "sub_title": "",
             "url": "shopify://products/jetstream-blue-bentley-6-in-1-stroller-trike"
@@ -795,6 +804,7 @@
         "custom_NFreMM": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_183.png",
             "title": "Fuchsia Pink",
             "sub_title": "",
             "url": "shopify://products/fuscia-pink-bentley-stroller-trike"
@@ -803,6 +813,7 @@
         "custom_z9HYPa": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_126.png",
             "title": "Sequin Blue",
             "sub_title": "",
             "url": "shopify://products/sequin-blue-bentley-stroller-trike"
@@ -811,6 +822,7 @@
         "custom_WrPcKx": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_131.png",
             "title": "Dragon Red",
             "sub_title": "",
             "url": "shopify://products/dragon-red-bentley-stroller-trike"
