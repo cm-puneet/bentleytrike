@@ -1235,6 +1235,7 @@
         "image_zFnQ9k": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BBT_Trike_White_Satin_UGC2.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1256,7 +1257,7 @@
         "image_hJwdyw": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BBT_Trike_White_Satin_UGC2.png",
+            "image": "shopify://shop_images/BTTrikeMullinerGoldUGC2.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
