@@ -1064,6 +1064,7 @@
         "custom_NcQLjh": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/BT_Collection_Ride-0n_Car_Bacalar.png",
             "title": "Bacalar",
             "sub_title": "",
             "url": "shopify://products/bentley-bacalar-electric-ride-on-car-for-kids"
@@ -1072,6 +1073,7 @@
         "custom_CqqRc9": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/EXp_12_V2.png",
             "title": "EXP 12 Speed 6e",
             "sub_title": "",
             "url": "shopify://products/bentley-exp-12-electric-ride-on-speed-car-for-kids"
@@ -1080,6 +1082,7 @@
         "custom_ThGAcD": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/Mulsanne_V2_1.png",
             "title": "Mulsanne",
             "sub_title": "",
             "url": "shopify://products/bentley-mulsanne-electric-ride-on-car-for-kids"
@@ -1088,6 +1091,7 @@
         "custom_FFftQJ": {
           "type": "custom",
           "settings": {
+            "image": "shopify://shop_images/Bentayga_1.png",
             "title": "Bentayga",
             "sub_title": "",
             "url": "shopify://products/bentley-bentayga-electric-ride-on-car-for-kids"
