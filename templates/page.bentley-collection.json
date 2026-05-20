@@ -1242,6 +1242,7 @@
         "image_BkKHRk": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BT_CA_highlight_images.png",
             "media_width": 50,
             "media_position": "start",
             "text_position": "place-self-center text-center",
@@ -1308,6 +1309,7 @@
         "item_RaCNzJ": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/BT_Helmet_1.png",
             "icon": "none",
             "icon_width": 48,
             "title": "Helmets",
@@ -1324,6 +1326,7 @@
         "item_hmGbYM": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/ProjectorUGC1.png",
             "icon": "none",
             "icon_width": 48,
             "title": "Bentley Logo Light Projector",
