@@ -1,1 +1,159 @@
-{"sections":{"main":{"type":"main-page","disabled":true,"settings":{"content_width":"80ch"}},"contact":{"type":"contact","settings":{"full_width":true,"subheading":"","title":"Contact Us","content":"<p>We're here to help. If you have any questions, you can reach us through the contact form.<br\/><\/p>","text_position":"center","contact_form_size":"large","background":"","background_gradient":"","text_color":"#000000","heading_color":"","heading_gradient":"","contact_background":"","contact_text_color":"#000000","button_background":"","button_text_color":""}},"rich_text_ADCPPY":{"type":"rich-text","blocks":{"heading_KczGyH":{"type":"heading","settings":{"text":"We'd love to hear from you","heading_tag":"h2","text_color":"","gradient":""}},"richtext_NJbwfa":{"type":"richtext","settings":{"content":"<p>Send us your message or ideas<\/p>"}}},"block_order":["heading_KczGyH","richtext_NJbwfa"],"disabled":true,"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"","background_gradient":"","text_color":""}},"text_with_icons_UjtaJP":{"type":"text-with-icons","blocks":{"item_cGJjHT":{"type":"item","settings":{"icon":"picto-document","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Bentley Warranty","content":"<p><a href=\"https:\/\/bentleytrike.com\/pages\/warranty-request-form\" target=\"_blank\" title=\"https:\/\/bentleytrike.com\/pages\/warranty-request-form\">Submit a warranty claim for your Bentley Trike<\/a><\/p>"}},"item_DQhXqJ":{"type":"item","settings":{"icon":"picto-envelope","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"Email Us","content":"<p><a href=\"mailto:\/\/sales@bentleytrike.com\" target=\"_blank\" title=\"mailto:\/\/sales@bentleytrike.com\">sales@bentleytrike.com<\/a><\/p>"}},"item_9pw4Bi":{"type":"item","settings":{"icon":"picto-question","mobile_icon_width":24,"icon_width":32,"icon_background_type":"circle","icon_background":"","icon_color":"","title":"FAQs","content":"<p><a href=\"https:\/\/bentleytrike.com\/pages\/bentley-trike-faq\" target=\"_blank\" title=\"https:\/\/bentleytrike.com\/pages\/frequently-asked-questions\">Have Questions? Visit Our FAQ Page<\/a><\/p>"}}},"block_order":["item_cGJjHT","item_DQhXqJ","item_9pw4Bi"],"settings":{"full_width":true,"stack_on_mobile":false,"title":"","heading_tag":"h5","text_alignment":"center","icon_spacing":"medium","background":"","background_gradient":"","text_color":""}},"newsletter_eHLyf8":{"type":"newsletter","name":"Newsletter","settings":{"full_width":false,"image":"shopify:\/\/shop_images\/HP_Newsletter.png","show_icon":false,"title":"Join the Bentley Inner Circle","content":"<p>Get exclusive deals, new launches, and Bentley Trike news delivered straight to your inbox.<\/p>","button_text":"Subscribe","subtext":"By completing this form you are signing up to receive our emails and can unsubscribe at any time.","background":"#d9d0c5","background_gradient":"","text_color":"#000000","button_background":"#a83f2f","button_text_color":"#ffffff"}}},"order":["main","contact","rich_text_ADCPPY","text_with_icons_UjtaJP","newsletter_eHLyf8"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "80ch"
+      }
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "full_width": true,
+        "subheading": "",
+        "title": "Contact Us",
+        "content": "<p>We're here to help. If you have any questions, you can reach us through the contact form.<br/></p>",
+        "text_position": "center",
+        "contact_form_size": "large",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "#000000",
+        "heading_color": "",
+        "heading_gradient": "",
+        "contact_background": "",
+        "contact_text_color": "#000000",
+        "button_background": "",
+        "button_text_color": ""
+      }
+    },
+    "rich_text_ADCPPY": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_KczGyH": {
+          "type": "heading",
+          "settings": {
+            "text": "We'd love to hear from you",
+            "heading_tag": "h2",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_NJbwfa": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Send us your message or ideas</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_KczGyH",
+        "richtext_NJbwfa"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "text_with_icons_UjtaJP": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_cGJjHT": {
+          "type": "item",
+          "disabled": true,
+          "settings": {
+            "icon": "picto-document",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Bentley Warranty",
+            "content": "<p><a href=\"https://bentleytrike.com/pages/warranty-request-form\" target=\"_blank\" title=\"https://bentleytrike.com/pages/warranty-request-form\">Submit a warranty claim for your Bentley Trike</a></p>"
+          }
+        },
+        "item_DQhXqJ": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-envelope",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "Email Us",
+            "content": "<p><a href=\"mailto://sales@bentleytrike.com\" target=\"_blank\" title=\"mailto://sales@bentleytrike.com\">sales@bentleytrike.com</a></p>"
+          }
+        },
+        "item_9pw4Bi": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-question",
+            "mobile_icon_width": 24,
+            "icon_width": 32,
+            "icon_background_type": "circle",
+            "icon_background": "",
+            "icon_color": "",
+            "title": "FAQs",
+            "content": "<p><a href=\"/pages/faq\" target=\"_blank\" title=\"FAQ\">Have Questions? Visit Our FAQ Page</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_cGJjHT",
+        "item_DQhXqJ",
+        "item_9pw4Bi"
+      ],
+      "settings": {
+        "full_width": true,
+        "stack_on_mobile": false,
+        "title": "",
+        "heading_tag": "h5",
+        "text_alignment": "center",
+        "icon_spacing": "medium",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "newsletter_eHLyf8": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "full_width": false,
+        "image": "shopify://shop_images/HP_Newsletter.png",
+        "show_icon": false,
+        "title": "Join the Bentley Inner Circle",
+        "content": "<p>Get exclusive deals, new launches, and Bentley Trike news delivered straight to your inbox.</p>",
+        "button_text": "Subscribe",
+        "subtext": "By completing this form you are signing up to receive our emails and can unsubscribe at any time.",
+        "background": "#d9d0c5",
+        "background_gradient": "",
+        "text_color": "#000000",
+        "button_background": "#a83f2f",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "contact",
+    "rich_text_ADCPPY",
+    "text_with_icons_UjtaJP",
+    "newsletter_eHLyf8"
+  ]
+}
