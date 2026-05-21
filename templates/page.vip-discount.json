@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "scrolling_text_k73Qba": {
@@ -284,7 +293,7 @@
         "allow_transparent_header": false,
         "autoplay": true,
         "video_size": "auto",
-        "video": null,
+        "video": "shopify://files/videos/White saten.mp4",
         "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "text_color": "#ffffff",
         "overlay_color": "#000000",
@@ -297,7 +306,6 @@
         "video_ThLJxd": {
           "type": "video",
           "settings": {
-            "video": null,
             "content_max_width": 740,
             "mobile_text_position": "place-self-end-start text-start",
             "desktop_text_position": "sm:place-self-end-start sm:text-start",
@@ -566,7 +574,6 @@
         "toggle_kgNmJM": {
           "type": "toggle",
           "settings": {
-            "image": "shopify://shop_images/Premium_Comfort_Seat.png",
             "badge": "",
             "time": "",
             "title": "Premium Comfort Seat",
@@ -1320,20 +1327,13 @@
         "text_color": "#000000"
       }
     },
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {
-        "content_width": "80ch"
-      }
-    },
-    "slideshow_6YMB3C": {
+    "slideshow_iaPL9r": {
       "type": "slideshow",
       "blocks": {
-        "image_4AAp7W": {
+        "image_xxzGRh": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BT_Collection_Banner_BT_Trike.png",
+            "image": "shopify://shop_images/BT_Collection_Banner_BT_Trike_4.png",
             "mobile_image": "shopify://shop_images/BT_Collection_BT_Trike_Mobile_2.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-end-center text-center",
@@ -1353,7 +1353,7 @@
             "background_gradient": ""
           }
         },
-        "image_LtjL4L": {
+        "image_kYLG3T": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/BT_Collection_Bentley_Cars_fe09b770-1c2a-4d95-9ed6-7ccbabc1a62b.png",
@@ -1376,10 +1376,10 @@
             "background_gradient": ""
           }
         },
-        "image_HXWeWY": {
+        "image_34JH4g": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BT_collection_-_BT_Bike.png",
+            "image": "shopify://shop_images/BT_collection_-_BT_Bike_3.png",
             "mobile_image": "shopify://shop_images/BT_Collection_Balance_Bike_Mobile_54bf572e-3235-4f49-9a52-c25065521651.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-start text-start",
@@ -1401,22 +1401,29 @@
         }
       },
       "block_order": [
-        "image_4AAp7W",
-        "image_LtjL4L",
-        "image_HXWeWY"
+        "image_xxzGRh",
+        "image_kYLG3T",
+        "image_34JH4g"
       ],
       "name": "Slideshow",
       "settings": {
         "full_width": true,
         "allow_transparent_header": true,
         "show_initial_transition": false,
-        "image_size": "auto",
+        "image_size": "lg",
         "controls_type": "dots",
         "transition_type": "fade_with_text",
-        "autoplay": false,
+        "autoplay": true,
         "cycle_speed": 6,
-        "background": "#f2f2f2",
+        "background": "rgba(0,0,0,0)",
         "background_gradient": ""
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "80ch"
       }
     },
     "collection_list_zh7QEK": {
@@ -1567,79 +1574,6 @@
         "product_card_text_color": ""
       }
     },
-    "images_with_text_scrolling_QyAikA": {
-      "type": "images-with-text-scrolling",
-      "blocks": {
-        "item_qpwx33": {
-          "type": "item",
-          "settings": {
-            "icon": "none",
-            "icon_width": 48,
-            "title": "Heading",
-            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
-            "link_text": "",
-            "link_url": "",
-            "background_gradient": "",
-            "button_text_color": "",
-            "text_gradient": "",
-            "button_background": "",
-            "button_place": "none"
-          }
-        },
-        "item_mULBkc": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Menu_-_Ride_on_Car.jpg",
-            "icon": "none",
-            "icon_width": 48,
-            "title": "A First Taste of Luxury Driving",
-            "content": "<p>Give your child the ultimate ride with the Bentley Electric Ride-On Car. This officially licensed mini Bentley features LED lights, engine sounds, and scissor doors for a true luxury feel. Powered by a 12V battery, it ensures smooth, safe fun with dual speeds, remote control, and 4-wheel suspension.<br/><br/><a href=\"/collections/bentley-ride-on-electric-cars\" title=\"Bentley Ride On Electric Cars\"><strong>SHOP NOW</strong></a></p>",
-            "link_text": "",
-            "link_url": "",
-            "background_gradient": "",
-            "button_text_color": "",
-            "text_gradient": "",
-            "button_background": "",
-            "button_place": "none"
-          }
-        },
-        "item_rdgdFj": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Banner_bike.jpg",
-            "icon": "none",
-            "icon_width": 48,
-            "title": "Designed for Little Explorers",
-            "content": "<p>Inspired by the Bentley Continental GT, the Bentley Balance Bike blends elegance with function. Designed for kids 18 months and up, it builds balance and confidence for a smooth, stylish ride.<br/><br/><a href=\"/products/bentley-balance-bikes\" title=\"The Bentley Balance Bike\"><strong>SHOP NOW</strong></a></p>",
-            "link_text": "",
-            "link_url": "",
-            "background_gradient": "",
-            "button_text_color": "",
-            "text_gradient": "",
-            "button_background": "",
-            "button_place": "none"
-          }
-        }
-      },
-      "block_order": [
-        "item_qpwx33",
-        "item_mULBkc",
-        "item_rdgdFj"
-      ],
-      "disabled": true,
-      "settings": {
-        "full_width": true,
-        "stack_on_mobile": false,
-        "show_counter": false,
-        "desktop_image_effect": "reveal",
-        "image_position": "end",
-        "background": "",
-        "background_gradient": "",
-        "text_color": "",
-        "heading_color": "",
-        "heading_gradient": ""
-      }
-    },
     "rich_text_3wXmzT": {
       "type": "rich-text",
       "blocks": {
@@ -1672,69 +1606,13 @@
         "text_color": "#000000"
       }
     },
-    "images_with_text_scrolling_3tU7pr": {
-      "type": "images-with-text-scrolling",
-      "blocks": {
-        "item_RaCNzJ": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Sequin_Blue_LF1.png",
-            "icon": "none",
-            "icon_width": 48,
-            "title": "Helmets",
-            "content": "<p>Inspired by Bentley’s craftsmanship, each helmet combines comfort, protection, and sleek design to complement Bentley trikes and balance bikes<br/></p>",
-            "link_text": "SHOP NOW",
-            "link_url": "shopify://products/bentley-helmet-collection",
-            "background_gradient": "",
-            "button_text_color": "",
-            "text_gradient": "",
-            "button_background": "#480d2a",
-            "button_place": "none"
-          }
-        },
-        "item_hmGbYM": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/BentleyLogoLightProjectorfor6-in-1StrollerTrikev3_1080x_webp.webp",
-            "icon": "none",
-            "icon_width": 48,
-            "title": "Bentley Logo Light Projector",
-            "content": "<p>Illuminate your child's adventure with the Bentley Projector Light. Designed for the Bentley Trike, it projects the iconic Bentley logo, adding a touch of sophistication to every ride.<br/></p>",
-            "link_text": "SHOP NOW",
-            "link_url": "shopify://products/bentley-logo-light-projector-for-6-in-1-stroller-trike",
-            "background_gradient": "",
-            "button_text_color": "",
-            "text_gradient": "",
-            "button_background": "#480d2a",
-            "button_place": "none"
-          }
-        }
-      },
-      "block_order": [
-        "item_RaCNzJ",
-        "item_hmGbYM"
-      ],
-      "disabled": true,
-      "settings": {
-        "full_width": true,
-        "stack_on_mobile": false,
-        "show_counter": false,
-        "desktop_image_effect": "reveal",
-        "image_position": "end",
-        "background": "",
-        "background_gradient": "",
-        "text_color": "",
-        "heading_color": "",
-        "heading_gradient": ""
-      }
-    },
     "images_with_text_scrolling_V4GPV4": {
       "type": "images-with-text-scrolling",
       "blocks": {
         "item_aAXAVA": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Helmet_7482a5f8-d18a-4874-b1d9-ebf200c195d0.png",
+            "image": "shopify://shop_images/BT_Bike_UGC_4.png",
             "icon": "none",
             "icon_width": 48,
             "title": "Helmets",
@@ -1915,14 +1793,12 @@
     "ss_slider_ezWWrQ",
     "ss_slider_UbUBpc",
     "rich_text_7UtMJQ",
+    "slideshow_iaPL9r",
     "main",
-    "slideshow_6YMB3C",
     "collection_list_zh7QEK",
     "rich_text_iVYmAg",
     "featured_collection_fmJPVQ",
-    "images_with_text_scrolling_QyAikA",
     "rich_text_3wXmzT",
-    "images_with_text_scrolling_3tU7pr",
     "images_with_text_scrolling_V4GPV4",
     "rich_text_a4Xbgk",
     "1742599831512432a1",
