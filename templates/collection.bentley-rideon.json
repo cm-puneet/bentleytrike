@@ -63,7 +63,7 @@
         "show_collection_description": true,
         "show_collection_image": true,
         "collection_title_size": "h2",
-        "image_size": "auto",
+        "image_size": "lg",
         "image": "shopify://shop_images/Bentley_Ride_On_Landing_Page_V2.png",
         "mobile_image": "shopify://shop_images/Ride-on_Collection_LP_Mobile_1.png",
         "mobile_text_position": "place-self-end-start text-start",
