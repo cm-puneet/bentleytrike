@@ -1,1 +1,1014 @@
-{"sections":{"slideshow_XqWQEr":{"type":"slideshow","blocks":{"image_7d9wKC":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/Artboard_3-100_921f9a6f-ea66-429b-9c40-df11afdc4813.jpg","mobile_image":"shopify:\/\/shop_images\/Bentley_mobile_1.png","content_max_width":600,"mobile_text_position":"place-self-end-start text-start","desktop_text_position":"sm:place-self-center-start sm:text-start","subheading":"Only one worth the badge","title":"Bentley Trike","heading_tag":"h0","button_text":"","button_link":"","text_color":"#ffffff","button_background":"#ffffff","button_text_color":"#000000","overlay_color":"#000000","overlay_opacity":19,"button_border":"no","background":"","background_gradient":""}}},"block_order":["image_7d9wKC"],"settings":{"full_width":true,"allow_transparent_header":true,"show_initial_transition":false,"image_size":"auto","controls_type":"dots","transition_type":"fade_with_text","autoplay":false,"cycle_speed":6,"background":"#f2f2f2","background_gradient":""}},"rich_text_bHyaaf":{"type":"rich-text","blocks":{"heading_j7FVtk":{"type":"heading","settings":{"text":"Unparalleled Luxury","heading_tag":"h3","text_color":"","gradient":""}},"richtext_9jtewX":{"type":"richtext","settings":{"content":"<p>More than a tricycle—this is the most refined stroller-trike ever created. Designed for those who demand excellence at every stage.<\/p>"}}},"block_order":["heading_j7FVtk","richtext_9jtewX"],"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"","background_gradient":"","text_color":""}},"ss_slider_8_aBNMDz":{"type":"ss-slider-8","blocks":{"toggle_8Xca44":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Replica_Bentley_wheels.jpg","badge":"","time":"","title":"Iconic Mulliner Wheels","text":"<p>Air-filled tires modeled after the Continental GT Mulliner offer a quiet, effortless glide, giving your child a smooth, stable ride, while turning every walk into a statement of luxury for parents.<\/p>","button":"","button_url":""}},"toggle_gEqpQL":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/cross_stiches-100.jpg","badge":"","time":"","title":"Handcrafted Diamond-Quilted Seats","text":"<p>Wrapped in Bentley’s signature Double Diamond stitching, the padded seat and embroidered headrest deliver first-class comfort for your little passenger.<\/p>","button":"","button_url":""}},"toggle_7XPYyD":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Bentley_BadgeB.jpg","badge":"","time":"","title":"Signature Emblem","text":"<p>The Bentley logo is a symbol of craftsmanship. It reflects your taste for excellence while introducing your child to a world of refined design from the very beginning.<\/p>","button":"","button_url":""}},"toggle_8wL4bt":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Handle_bag.jpg","badge":"","time":"","title":"Quilted Bag for Mom","text":"<p>A refined companion for every stroll. Quilted, easy to clean, and thoughtfully designed for comfort, style, and everyday practicality.<\/p>","button":"","button_url":""}},"toggle_JnqbXA":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/footrest.jpg","badge":"","time":"","title":"Bentley-Engineered Pedals","text":"<p>Crafted after Bentley performance pedals, these anti-slip footrests support your child’s early coordination and balance, giving them the confidence to pedal like a pro with every ride.<\/p>","button":"","button_url":""}},"toggle_ikaTPX":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/5_Point_Safety_Harness_Firm_Safety_Guards.jpg","badge":"","time":"","title":"One-Touch Magnetic Buckle System","text":"<p>The Bentley-labeled magnetic buckle and 5-point harness offer easy, one-handed safety, making outings easier for parents while the five-point harness keeps your child snug and safe in comfort.<\/p>","button":"","button_url":""}},"toggle_MBRgYg":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Soft_leatherette_touchpoints_1x1-100.jpg","badge":"","time":"","title":"Leather Touchpoints","text":"<p>Hand-stitched vegan leather accents on the handlebar, guard, and steering bar add comfort and class at every grip, ensuring that every touchpoint feels intentionally premium.<\/p>","button":"","button_url":""}}},"block_order":["toggle_8Xca44","toggle_gEqpQL","toggle_7XPYyD","toggle_8wL4bt","toggle_JnqbXA","toggle_ikaTPX","toggle_MBRgYg"],"settings":{"slider_gap":100,"slider_gap_mobile":40,"slider_view_mobile":1.2,"slide_gap":50,"slide_gap_mobile":20,"image_radius":0,"image_border_thickness":0,"image_ratio":"square","image_ratio_mobile":"square","slide_content_align":"left","slide_content_align_mobile":"center","slide_content_vertical_align":"center","badge_padding_horizontal":20,"badge_padding_horizontal_mobile":16,"badge_padding_vertical":8,"badge_padding_vertical_mobile":8,"badge_radius":100,"badge_border_thickness":0,"badge_custom":false,"badge_font":"playfair_display_n4","badge_size":18,"badge_size_mobile":12,"badge_height":100,"time_custom":false,"time_font":"playfair_display_n4","time_size":18,"time_size_mobile":12,"time_height":100,"title_custom":true,"title_font":"playfair_display_n4","title_size":28,"title_size_mobile":22,"title_height":130,"title_mt":24,"title_mt_mobile":16,"text_custom":true,"text_font":"poppins_n4","text_size":15,"text_size_mobile":14,"text_height":150,"text_mt":40,"text_mt_mobile":16,"button_custom":false,"button_font":"josefin_sans_n4","button_size":18,"button_size_mobile":15,"button_height":100,"button_padding_vertical":26,"button_padding_vertical_mobile":20,"button_padding_horizontal":52,"button_padding_horizontal_mobile":52,"button_radius":100,"button_border_thickness":1,"button_mt":40,"button_mt_mobile":24,"button_style":"outline","arrow_size":40,"arrow_size_mobile":40,"arrow_icon_size":10,"arrow_icon_size_mobile":10,"arrow_border_thickness":0,"arrow_radius":22,"arrow_hover_effect":"color","arrow_show_desktop":true,"arrow_show_mobile":false,"image_border_color":"#000000","badge_color":"#000000","badge_bg_color":"#d9d0c5","badge_border_color":"#000000","time_color":"#82807b","title_color":"#000000","text_color":"#000000","button_color":"#000000","button_hover_color":"#ffffff","button_bg_color":"","button_bg_hover_color":"#000000","button_border_color":"#000000","button_border_hover_color":"#000000","arrow_color":"#394d46","arrow_hover_color":"#ffffff","arrow_bg_color":"#ffffff","arrow_bg_hover_color":"#a83f2f","arrow_border_color":"#000000","arrow_border_hover_color":"#000000","background_color":"#d9d0c5","background_gradient":"","border_color":"#000000","margin_top":0,"margin_bottom":0,"margin_horizontal":0,"margin_horizontal_mobile":0,"padding_top":36,"padding_bottom":36,"padding_horizontal":2,"padding_horizontal_mobile":1.5,"full_width":false,"content_width":1500,"border_thickness":0,"section_radius":0,"lazy":true}},"featured_collection_YnXwTa":{"type":"featured-collection","name":"Featured collection","settings":{"collection":"the-bentley-trike","products":[],"full_width":false,"stack_products":false,"show_progress_bar":true,"products_count":10,"products_per_row_mobile":"2","products_per_row_desktop":5,"subheading":"","title":"Order Your Bentley Trike","content":"","link_url":"","link_text":"View all","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}},"video_YB43Y3":{"type":"video","blocks":{"play_bFpWbF":{"type":"play","settings":{}}},"block_order":["play_bFpWbF"],"settings":{"full_width":true,"allow_transparent_header":false,"autoplay":true,"video_size":"auto","video":"shopify:\/\/files\/videos\/White saten.mp4","external_video_url":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":30}},"ss_slider_ezWWrQ":{"type":"ss-slider","blocks":{"custom_rgqgFB":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_1_-_BT_7416e7ee-c3b9-48f3-aa23-51dfd43d3f50.png","title":"Infant Stroller","sub_title":"Stage 1A: FOR 6 MONTHS & UP","url":""}},"custom_DgbeFE":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_1B_2.png","title":"Front-Facing Stroller","sub_title":"Stage 1B: FOR 6 MONTHS & UP","url":""}},"custom_pDr8D4":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_2_41ef4f3d-478c-4354-80dc-6eaf929bfc84.png","title":"Guided Trike","sub_title":"Stage 2: FOR 12 MONTHS & UP","url":""}},"custom_KXiFdb":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_3_2.png","title":"Training Trike","sub_title":"Stage 3: 24 MONTHS & UP","url":""}},"custom_WWwdFb":{"type":"custom","settings":{"image":"shopify:\/\/shop_images\/Stage_4_c63c3db5-1813-4852-906f-5e554049c8e1.png","title":"Solo Ride","sub_title":"STAGE 4: 48 MONTHS & UP","url":""}}},"block_order":["custom_rgqgFB","custom_DgbeFE","custom_pDr8D4","custom_KXiFdb","custom_WWwdFb"],"settings":{"body_padding_vertical":70,"body_padding_vertical_mobile":30,"body_padding_horizontal":36,"body_padding_horizontal_mobile":28,"body_radius":0,"body_border_thickness":0,"layout_gap":20,"layout_gap_mobile":20,"heading":"<h5>Designed to Grow with Your Child <\/h5>","heading_custom":true,"heading_font":"playfair_display_n4","heading_size":28,"heading_size_mobile":30,"heading_height":130,"heading_align":"left","heading_align_mobile":"center","sub_heading":"A luxurious aesthetic option for parents looking to keep their child safe and comfortable, while giving them room to learn over the course of their early years.","sub_heading_custom":true,"sub_heading_font":"poppins_n4","sub_heading_size":18,"sub_heading_size_mobile":18,"sub_heading_height":150,"sub_heading_align":"left","sub_heading_align_mobile":"center","sub_heading_mt":16,"slider_width":66,"slider_width_mobile":100,"slider_view":3,"slider_view_mobile":1.3,"slider_gap":16,"slider_gap_mobile":16,"arrow_size":40,"arrow_size_mobile":40,"arrow_icon_size":16,"arrow_icon_size_mobile":16,"arrow_border_thickness":0,"arrow_show_desktop":true,"arrow_show_mobile":true,"scrollbar_height":2,"scrollbar_mt":20,"scrollbar_show_desktop":true,"scrollbar_show_mobile":true,"card_padding_vertical":0,"card_padding_vertical_mobile":0,"card_padding_horizontal":0,"card_padding_horizontal_mobile":0,"card_radius":0,"card_border_thickness":0,"image_radius":0,"image_border_thickness":0,"image_ratio":"portrait","radius_top":false,"content_padding_vertical":16,"content_padding_vertical_mobile":16,"content_padding_horizontal":16,"content_padding_horizontal_mobile":16,"content_radius":0,"content_border_thickness":0,"slide_title_custom":true,"slide_title_font":"playfair_display_n7","slide_title_size":16,"slide_title_size_mobile":14,"slide_title_height":130,"slide_title_align":"left","slide_title_mt":4,"slide_sub_title_custom":false,"slide_sub_title_font":"josefin_sans_n4","slide_sub_title_size":12,"slide_sub_title_size_mobile":12,"slide_sub_title_height":130,"slide_sub_title_align":"left","card_bg_color":"rgba(0,0,0,0)","card_border_color":"#000000","image_border_color":"#000000","content_bg_color":"#d9d0c5","content_border_color":"#000000","slide_title_color":"#000000","slide_sub_title_color":"#000000","arrow_color":"#ffffff","arrow_hover_color":"#ffffff","arrow_bg_color":"#a83f2f","arrow_bg_hover_color":"#a83f2f","arrow_border_color":"#111111","arrow_border_hover_color":"#454545","scrollbar_bg_color":"#d2d5d8","scrollbar_drag_bg_color":"#111111","body_bg_color":"rgba(0,0,0,0)","body_border_color":"#000000","heading_color":"#000000","sub_heading_color":"#000000","background_color":"rgba(0,0,0,0)","background_gradient":"","border_color":"#000000","margin_top":0,"margin_bottom":0,"padding_top":12,"padding_bottom":12,"padding_horizontal":8,"padding_horizontal_mobile":1.5,"full_width":false,"content_width":120,"border_thickness":0,"lazy":true}},"rich_text_cE4AEC":{"type":"rich-text","blocks":{"heading_wnEXEQ":{"type":"heading","settings":{"text":"Share the Legacy","heading_tag":"h3","text_color":"","gradient":""}},"richtext_gcmqAz":{"type":"richtext","settings":{"content":"<p>Capture the elegance of your little one’s adventures and tag <a href=\"https:\/\/www.instagram.com\/bentleytrike\/?hl=en\" target=\"_blank\" title=\"https:\/\/www.instagram.com\/bentleytrike\/?hl=en\"><strong>#BentleyTrike<\/strong><\/a> to be part of our global community.<\/p>"}}},"block_order":["heading_wnEXEQ","richtext_gcmqAz"],"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"","background_gradient":"","text_color":""}},"17425999230e1549cd":{"type":"apps","blocks":{"tolstoy_shoppable_video_quiz_carousel_block_br4HeY":{"type":"shopify:\/\/apps\/tolstoy-shoppable-video-quiz\/blocks\/carousel-block\/06fa8282-42ff-403e-b67c-1936776aed11","settings":{"publishId":"vlgy6zzuljecp"}}},"block_order":["tolstoy_shoppable_video_quiz_carousel_block_br4HeY"],"settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"","background_gradient":"","text_color":""}},"ss_slider_8_tUrQ3W":{"type":"ss-slider-8","blocks":{"toggle_fqhPbz":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Artboard_2-100.jpg","badge":"","time":"","title":"Cross-Stitched Seats","text":"<p>Comfortable, high-quality cross-stitched seats along with a UV blocking heavy-duty canopy to keep your baby safe and comfortable.<\/p>","button":"","button_url":""}},"toggle_tJzGUa":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Artboard_4-100.jpg","badge":"","time":"","title":"The Bentley Badge","text":"<p>A chrome emblem at the hood of the trike is modeled after the Bentley Chrome emblem found on the Continental GT cars. It represents our commitment to luxury and perfection in each trike.<\/p>","button":"","button_url":""}},"toggle_ydyNcJ":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Artboard_14-100_12066400-a4dc-48b7-a963-e9136ec7bce2.jpg","badge":"","time":"","title":"Handlebar Grips","text":"<p>This trike carries forward a signature touch of luxury with leather inserts on the handlebar grips, safety guard, and parent remote control — ensuring comfort and elegance in every ride.<\/p>","button":"","button_url":""}},"toggle_G6cDm7":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Artboard_17-100.jpg","badge":"","time":"","title":"Parent's Bag","text":"<p>Offers stylish storage for all your essentials. With a sleek design that complements your Bentley Trike, it features ample space for snacks, toys, and personal items. It keeps everything within reach during your strolls.<\/p>","button":"","button_url":""}},"toggle_jHgyFm":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Artboard_11-100.jpg","badge":"","time":"","title":"Replica Continental GT Mulliner Wheels","text":"<p>The tricycle’s wheels precisely replicate the iconic Mulliner GT rims, complete with the Bentley logo at the center and \"Bentley Mulliner\" engraving. <br\/><br\/>For an exclusive touch, the self-leveling wheel cap keeps the Bentley \"B\" upright as it moves — a true masterpiece in motion.<\/p>","button":"","button_url":""}},"toggle_tTBcBM":{"type":"toggle","settings":{"image":"shopify:\/\/shop_images\/Artboard_7-100.jpg","badge":"","time":"","title":"Anti-Slide Pedals","text":"<p>The new metal pedals with anti-slide surface design to prevent accidents.<\/p>","button":"","button_url":""}}},"block_order":["toggle_fqhPbz","toggle_tJzGUa","toggle_ydyNcJ","toggle_G6cDm7","toggle_jHgyFm","toggle_tTBcBM"],"disabled":true,"settings":{"slider_gap":100,"slider_gap_mobile":40,"slider_view_mobile":1.2,"slide_gap":50,"slide_gap_mobile":20,"image_radius":0,"image_border_thickness":0,"image_ratio":"square","image_ratio_mobile":"square","slide_content_align":"left","slide_content_align_mobile":"center","slide_content_vertical_align":"center","badge_padding_horizontal":20,"badge_padding_horizontal_mobile":16,"badge_padding_vertical":8,"badge_padding_vertical_mobile":8,"badge_radius":100,"badge_border_thickness":0,"badge_custom":false,"badge_font":"josefin_sans_n4","badge_size":18,"badge_size_mobile":12,"badge_height":100,"time_custom":false,"time_font":"josefin_sans_n4","time_size":18,"time_size_mobile":12,"time_height":100,"title_custom":true,"title_font":"playfair_display_n4","title_size":30,"title_size_mobile":22,"title_height":130,"title_mt":24,"title_mt_mobile":16,"text_custom":true,"text_font":"poppins_n4","text_size":15,"text_size_mobile":14,"text_height":150,"text_mt":40,"text_mt_mobile":16,"button_custom":false,"button_font":"josefin_sans_n4","button_size":18,"button_size_mobile":15,"button_height":100,"button_padding_vertical":26,"button_padding_vertical_mobile":20,"button_padding_horizontal":52,"button_padding_horizontal_mobile":52,"button_radius":100,"button_border_thickness":1,"button_mt":40,"button_mt_mobile":24,"button_style":"outline","arrow_size":50,"arrow_size_mobile":50,"arrow_icon_size":10,"arrow_icon_size_mobile":10,"arrow_border_thickness":1,"arrow_radius":100,"arrow_hover_effect":"color","arrow_show_desktop":true,"arrow_show_mobile":false,"image_border_color":"#000000","badge_color":"#000000","badge_bg_color":"#fef6ee","badge_border_color":"#000000","time_color":"#82807b","title_color":"#000000","text_color":"#000000","button_color":"#000000","button_hover_color":"#ffffff","button_bg_color":"#394d46","button_bg_hover_color":"#394d46","button_border_color":"#000000","button_border_hover_color":"#000000","arrow_color":"#ffffff","arrow_hover_color":"#ffffff","arrow_bg_color":"#394d46","arrow_bg_hover_color":"#394d46","arrow_border_color":"#394d46","arrow_border_hover_color":"#000000","background_color":"#fef6ee","background_gradient":"","border_color":"#000000","margin_top":0,"margin_bottom":0,"margin_horizontal":0,"margin_horizontal_mobile":0,"padding_top":36,"padding_bottom":4,"padding_horizontal":2,"padding_horizontal_mobile":1.5,"full_width":false,"content_width":1500,"border_thickness":0,"section_radius":0,"lazy":true}},"main":{"type":"main-page","disabled":true,"settings":{"content_width":"80ch"}},"rich_text_dQmNnc":{"type":"rich-text","blocks":{"heading_7ykkU9":{"type":"heading","settings":{"text":"Electric Ride-on Cars","heading_tag":"h2","text_color":"","gradient":""}},"richtext_RQWJPw":{"type":"richtext","settings":{"content":"<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.<\/p>"}}},"block_order":["heading_7ykkU9","richtext_RQWJPw"],"disabled":true,"settings":{"full_width":false,"content_width":"medium","text_position":"center","background":"#f2e9e4","background_gradient":"","text_color":"#000000"}},"featured_collection_cqCjcy":{"type":"featured-collection","disabled":true,"settings":{"collection":"bentley-ride-on-electric-cars","products":[],"full_width":true,"stack_products":true,"show_progress_bar":false,"products_count":4,"products_per_row_mobile":"2","products_per_row_desktop":4,"subheading":"","title":"","content":"","link_url":"","link_text":"","background":"","background_gradient":"","text_color":"","heading_color":"","heading_gradient":"","product_card_background":"","product_card_text_color":""}},"media_grid_JCTKjD":{"type":"media-grid","blocks":{"image_XkNPBr":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BT_Collection_Mulliner_Celeste.png","title":"","heading_tag":"h4","link_url":"","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":1,"desktop_row_span":1,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"image_KbJkrW":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BT_Collection_White_Satin_97e84f90-c90d-4af9-af31-07620dfd53b1.png","title":"","heading_tag":"h4","link_url":"","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":2,"desktop_row_span":2,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"image_Ry9T8b":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BT_Collection_Mulliner_Cool_Stone.png","title":"","heading_tag":"h4","link_url":"","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":1,"desktop_row_span":1,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"image_xNEV4E":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/BT_Collection_Spruce_Green.png","title":"","heading_tag":"h4","link_url":"","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":1,"desktop_row_span":1,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}},"image_6ha9gA":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/HP_Mulliner_Mandarin_9394d9ee-66c3-4262-ade8-0d2c5255074d.png","title":"","heading_tag":"h4","link_url":"","link_text":"","mobile_text_position":"place-self-center text-center","desktop_column_span":1,"desktop_row_span":1,"desktop_text_position":"sm:place-self-center sm:text-center","background":"#000000","background_gradient":"","text_color":"#ffffff","text_gradient":"","button_background":"#000000","button_text_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0}}},"block_order":["image_XkNPBr","image_KbJkrW","image_Ry9T8b","image_xNEV4E","image_6ha9gA"],"name":"Media grid","settings":{"full_width":true,"reduce_width":false,"desktop_row_height":290,"mobile_row_height":150,"background":"","background_gradient":""}},"rich_text_EnJAVM":{"type":"rich-text","blocks":{"subheading_G7T49N":{"type":"subheading","disabled":true,"settings":{"text":"Subheading"}},"heading_nB6rrV":{"type":"heading","settings":{"text":"The Bentley Experience","heading_tag":"h3","text_color":"","gradient":""}},"richtext_pEQRkg":{"type":"richtext","disabled":true,"settings":{"content":"<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.<\/p>"}}},"block_order":["subheading_G7T49N","heading_nB6rrV","richtext_pEQRkg"],"settings":{"full_width":true,"content_width":"small","text_position":"center","background":"","background_gradient":"","text_color":""}},"1742407502aa3ddb37":{"type":"apps","blocks":{"okendo_reviews_widget_ggUXVB":{"type":"shopify:\/\/apps\/okendo\/blocks\/reviews-widget\/bb689e69-ea70-4661-8fb7-ad24a2e23c29","settings":{"product":"","widget_type":"reviews_widget"}}},"block_order":["okendo_reviews_widget_ggUXVB"],"settings":{"full_width":true,"remove_vertical_spacing":false,"remove_horizontal_spacing":false,"background":"","background_gradient":"","text_color":""}}},"order":["slideshow_XqWQEr","rich_text_bHyaaf","ss_slider_8_aBNMDz","featured_collection_YnXwTa","video_YB43Y3","ss_slider_ezWWrQ","rich_text_cE4AEC","17425999230e1549cd","ss_slider_8_tUrQ3W","main","rich_text_dQmNnc","featured_collection_cqCjcy","media_grid_JCTKjD","rich_text_EnJAVM","1742407502aa3ddb37"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_XqWQEr": {
+      "type": "slideshow",
+      "blocks": {
+        "image_7d9wKC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Artboard_3-100_921f9a6f-ea66-429b-9c40-df11afdc4813.jpg",
+            "mobile_image": "shopify://shop_images/Bentley_mobile_1.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-start text-start",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Only one worth the badge",
+            "title": "Bentley Trike",
+            "heading_tag": "h0",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 19,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_7d9wKC"
+      ],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "show_initial_transition": false,
+        "image_size": "auto",
+        "controls_type": "dots",
+        "transition_type": "fade_with_text",
+        "autoplay": false,
+        "cycle_speed": 6,
+        "background": "#f2f2f2",
+        "background_gradient": ""
+      }
+    },
+    "rich_text_bHyaaf": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_j7FVtk": {
+          "type": "heading",
+          "settings": {
+            "text": "Unparalleled Luxury",
+            "heading_tag": "h3",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_9jtewX": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>More than a tricycle—this is the most refined stroller-trike ever created. Designed for those who demand excellence at every stage.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_j7FVtk",
+        "richtext_9jtewX"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "ss_slider_8_aBNMDz": {
+      "type": "ss-slider-8",
+      "blocks": {
+        "toggle_8Xca44": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Replica_Bentley_wheels.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Iconic Mulliner Wheels",
+            "text": "<p>Air-filled tires modeled after the Continental GT Mulliner offer a quiet, effortless glide, giving your child a smooth, stable ride, while turning every walk into a statement of luxury for parents.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_gEqpQL": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/cross_stiches-100.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Handcrafted Diamond-Quilted Seats",
+            "text": "<p>Wrapped in Bentley’s signature Double Diamond stitching, the padded seat and embroidered headrest deliver first-class comfort for your little passenger.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_7XPYyD": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Bentley_BadgeB.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Signature Emblem",
+            "text": "<p>The Bentley logo is a symbol of craftsmanship. It reflects your taste for excellence while introducing your child to a world of refined design from the very beginning.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_8wL4bt": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Handle_bag.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Quilted Bag for Mom",
+            "text": "<p>A refined companion for every stroll. Quilted, easy to clean, and thoughtfully designed for comfort, style, and everyday practicality.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_JnqbXA": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/footrest.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Bentley-Engineered Pedals",
+            "text": "<p>Crafted after Bentley performance pedals, these anti-slip footrests support your child’s early coordination and balance, giving them the confidence to pedal like a pro with every ride.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_ikaTPX": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/5_Point_Safety_Harness_Firm_Safety_Guards.jpg",
+            "badge": "",
+            "time": "",
+            "title": "One-Touch Magnetic Buckle System",
+            "text": "<p>The Bentley-labeled magnetic buckle and 5-point harness offer easy, one-handed safety, making outings easier for parents while the five-point harness keeps your child snug and safe in comfort.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_MBRgYg": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Soft_leatherette_touchpoints_1x1-100.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Leather Touchpoints",
+            "text": "<p>Hand-stitched vegan leather accents on the handlebar, guard, and steering bar add comfort and class at every grip, ensuring that every touchpoint feels intentionally premium.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "toggle_8Xca44",
+        "toggle_gEqpQL",
+        "toggle_7XPYyD",
+        "toggle_8wL4bt",
+        "toggle_JnqbXA",
+        "toggle_ikaTPX",
+        "toggle_MBRgYg"
+      ],
+      "settings": {
+        "slider_gap": 100,
+        "slider_gap_mobile": 40,
+        "slider_view_mobile": 1.2,
+        "slide_gap": 50,
+        "slide_gap_mobile": 20,
+        "image_radius": 0,
+        "image_border_thickness": 0,
+        "image_ratio": "square",
+        "image_ratio_mobile": "square",
+        "slide_content_align": "left",
+        "slide_content_align_mobile": "center",
+        "slide_content_vertical_align": "center",
+        "badge_padding_horizontal": 20,
+        "badge_padding_horizontal_mobile": 16,
+        "badge_padding_vertical": 8,
+        "badge_padding_vertical_mobile": 8,
+        "badge_radius": 100,
+        "badge_border_thickness": 0,
+        "badge_custom": false,
+        "badge_font": "playfair_display_n4",
+        "badge_size": 18,
+        "badge_size_mobile": 12,
+        "badge_height": 100,
+        "time_custom": false,
+        "time_font": "playfair_display_n4",
+        "time_size": 18,
+        "time_size_mobile": 12,
+        "time_height": 100,
+        "title_custom": true,
+        "title_font": "playfair_display_n4",
+        "title_size": 28,
+        "title_size_mobile": 22,
+        "title_height": 130,
+        "title_mt": 24,
+        "title_mt_mobile": 16,
+        "text_custom": true,
+        "text_font": "poppins_n4",
+        "text_size": 15,
+        "text_size_mobile": 14,
+        "text_height": 150,
+        "text_mt": 40,
+        "text_mt_mobile": 16,
+        "button_custom": false,
+        "button_font": "josefin_sans_n4",
+        "button_size": 18,
+        "button_size_mobile": 15,
+        "button_height": 100,
+        "button_padding_vertical": 26,
+        "button_padding_vertical_mobile": 20,
+        "button_padding_horizontal": 52,
+        "button_padding_horizontal_mobile": 52,
+        "button_radius": 100,
+        "button_border_thickness": 1,
+        "button_mt": 40,
+        "button_mt_mobile": 24,
+        "button_style": "outline",
+        "arrow_size": 40,
+        "arrow_size_mobile": 40,
+        "arrow_icon_size": 10,
+        "arrow_icon_size_mobile": 10,
+        "arrow_border_thickness": 0,
+        "arrow_radius": 22,
+        "arrow_hover_effect": "color",
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": false,
+        "image_border_color": "#000000",
+        "badge_color": "#000000",
+        "badge_bg_color": "#d9d0c5",
+        "badge_border_color": "#000000",
+        "time_color": "#82807b",
+        "title_color": "#000000",
+        "text_color": "#000000",
+        "button_color": "#000000",
+        "button_hover_color": "#ffffff",
+        "button_bg_color": "",
+        "button_bg_hover_color": "#000000",
+        "button_border_color": "#000000",
+        "button_border_hover_color": "#000000",
+        "arrow_color": "#394d46",
+        "arrow_hover_color": "#ffffff",
+        "arrow_bg_color": "#ffffff",
+        "arrow_bg_hover_color": "#a83f2f",
+        "arrow_border_color": "#000000",
+        "arrow_border_hover_color": "#000000",
+        "background_color": "#d9d0c5",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 2,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 1500,
+        "border_thickness": 0,
+        "section_radius": 0,
+        "lazy": true
+      }
+    },
+    "featured_collection_YnXwTa": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "the-bentley-trike",
+        "products": [],
+        "full_width": false,
+        "stack_products": false,
+        "show_progress_bar": true,
+        "products_count": 10,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 5,
+        "subheading": "",
+        "title": "Order Your Bentley Trike",
+        "content": "",
+        "link_url": "",
+        "link_text": "View all",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "video_YB43Y3": {
+      "type": "video",
+      "blocks": {
+        "play_bFpWbF": {
+          "type": "play",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "play_bFpWbF"
+      ],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "autoplay": true,
+        "video_size": "auto",
+        "video": "shopify://files/videos/White saten.mp4",
+        "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "ss_slider_ezWWrQ": {
+      "type": "ss-slider",
+      "blocks": {
+        "custom_rgqgFB": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_1_-_BT_7416e7ee-c3b9-48f3-aa23-51dfd43d3f50.png",
+            "title": "Infant Stroller",
+            "sub_title": "Stage 1A: FOR 6 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_DgbeFE": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_1B_2.png",
+            "title": "Front-Facing Stroller",
+            "sub_title": "Stage 1B: FOR 6 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_pDr8D4": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_2_41ef4f3d-478c-4354-80dc-6eaf929bfc84.png",
+            "title": "Guided Trike",
+            "sub_title": "Stage 2: FOR 12 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_KXiFdb": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_3_2.png",
+            "title": "Training Trike",
+            "sub_title": "Stage 3: 24 MONTHS & UP",
+            "url": ""
+          }
+        },
+        "custom_WWwdFb": {
+          "type": "custom",
+          "settings": {
+            "image": "shopify://shop_images/Stage_4_c63c3db5-1813-4852-906f-5e554049c8e1.png",
+            "title": "Solo Ride",
+            "sub_title": "STAGE 4: 48 MONTHS & UP",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_rgqgFB",
+        "custom_DgbeFE",
+        "custom_pDr8D4",
+        "custom_KXiFdb",
+        "custom_WWwdFb"
+      ],
+      "settings": {
+        "body_padding_vertical": 70,
+        "body_padding_vertical_mobile": 30,
+        "body_padding_horizontal": 36,
+        "body_padding_horizontal_mobile": 28,
+        "body_radius": 0,
+        "body_border_thickness": 0,
+        "layout_gap": 20,
+        "layout_gap_mobile": 20,
+        "heading": "<h5>Designed to Grow with Your Child </h5>",
+        "heading_custom": true,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 28,
+        "heading_size_mobile": 30,
+        "heading_height": 130,
+        "heading_align": "left",
+        "heading_align_mobile": "center",
+        "sub_heading": "A luxurious aesthetic option for parents looking to keep their child safe and comfortable, while giving them room to learn over the course of their early years.",
+        "sub_heading_custom": true,
+        "sub_heading_font": "poppins_n4",
+        "sub_heading_size": 18,
+        "sub_heading_size_mobile": 18,
+        "sub_heading_height": 150,
+        "sub_heading_align": "left",
+        "sub_heading_align_mobile": "center",
+        "sub_heading_mt": 16,
+        "slider_width": 66,
+        "slider_width_mobile": 100,
+        "slider_view": 3,
+        "slider_view_mobile": 1.3,
+        "slider_gap": 16,
+        "slider_gap_mobile": 16,
+        "arrow_size": 40,
+        "arrow_size_mobile": 40,
+        "arrow_icon_size": 16,
+        "arrow_icon_size_mobile": 16,
+        "arrow_border_thickness": 0,
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": true,
+        "scrollbar_height": 2,
+        "scrollbar_mt": 20,
+        "scrollbar_show_desktop": true,
+        "scrollbar_show_mobile": true,
+        "card_padding_vertical": 0,
+        "card_padding_vertical_mobile": 0,
+        "card_padding_horizontal": 0,
+        "card_padding_horizontal_mobile": 0,
+        "card_radius": 0,
+        "card_border_thickness": 0,
+        "image_radius": 0,
+        "image_border_thickness": 0,
+        "image_ratio": "portrait",
+        "radius_top": false,
+        "content_padding_vertical": 16,
+        "content_padding_vertical_mobile": 16,
+        "content_padding_horizontal": 16,
+        "content_padding_horizontal_mobile": 16,
+        "content_radius": 0,
+        "content_border_thickness": 0,
+        "slide_title_custom": true,
+        "slide_title_font": "playfair_display_n7",
+        "slide_title_size": 16,
+        "slide_title_size_mobile": 14,
+        "slide_title_height": 130,
+        "slide_title_align": "left",
+        "slide_title_mt": 4,
+        "slide_sub_title_custom": false,
+        "slide_sub_title_font": "josefin_sans_n4",
+        "slide_sub_title_size": 12,
+        "slide_sub_title_size_mobile": 12,
+        "slide_sub_title_height": 130,
+        "slide_sub_title_align": "left",
+        "card_bg_color": "rgba(0,0,0,0)",
+        "card_border_color": "#000000",
+        "image_border_color": "#000000",
+        "content_bg_color": "#d9d0c5",
+        "content_border_color": "#000000",
+        "slide_title_color": "#000000",
+        "slide_sub_title_color": "#000000",
+        "arrow_color": "#ffffff",
+        "arrow_hover_color": "#ffffff",
+        "arrow_bg_color": "#a83f2f",
+        "arrow_bg_hover_color": "#a83f2f",
+        "arrow_border_color": "#111111",
+        "arrow_border_hover_color": "#454545",
+        "scrollbar_bg_color": "#d2d5d8",
+        "scrollbar_drag_bg_color": "#111111",
+        "body_bg_color": "rgba(0,0,0,0)",
+        "body_border_color": "#000000",
+        "heading_color": "#000000",
+        "sub_heading_color": "#000000",
+        "background_color": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 12,
+        "padding_bottom": 12,
+        "padding_horizontal": 8,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 120,
+        "border_thickness": 0,
+        "lazy": true
+      }
+    },
+    "rich_text_cE4AEC": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_wnEXEQ": {
+          "type": "heading",
+          "settings": {
+            "text": "Share the Legacy",
+            "heading_tag": "h3",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_gcmqAz": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Capture the elegance of your little one’s adventures and tag <a href=\"https://www.instagram.com/bentleytrike/?hl=en\" target=\"_blank\" title=\"https://www.instagram.com/bentleytrike/?hl=en\"><strong>#BentleyTrike</strong></a> to be part of our global community.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wnEXEQ",
+        "richtext_gcmqAz"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "17425999230e1549cd": {
+      "type": "apps",
+      "blocks": {
+        "tolstoy_shoppable_video_quiz_carousel_block_br4HeY": {
+          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "settings": {
+            "publishId": "vlgy6zzuljecp"
+          }
+        }
+      },
+      "block_order": [
+        "tolstoy_shoppable_video_quiz_carousel_block_br4HeY"
+      ],
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "ss_slider_8_tUrQ3W": {
+      "type": "ss-slider-8",
+      "blocks": {
+        "toggle_fqhPbz": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Artboard_2-100.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Cross-Stitched Seats",
+            "text": "<p>Comfortable, high-quality cross-stitched seats along with a UV blocking heavy-duty canopy to keep your baby safe and comfortable.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_tJzGUa": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Artboard_4-100.jpg",
+            "badge": "",
+            "time": "",
+            "title": "The Bentley Badge",
+            "text": "<p>A chrome emblem at the hood of the trike is modeled after the Bentley Chrome emblem found on the Continental GT cars. It represents our commitment to luxury and perfection in each trike.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_ydyNcJ": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Artboard_14-100_12066400-a4dc-48b7-a963-e9136ec7bce2.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Handlebar Grips",
+            "text": "<p>This trike carries forward a signature touch of luxury with leather inserts on the handlebar grips, safety guard, and parent remote control — ensuring comfort and elegance in every ride.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_G6cDm7": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Artboard_17-100.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Parent's Bag",
+            "text": "<p>Offers stylish storage for all your essentials. With a sleek design that complements your Bentley Trike, it features ample space for snacks, toys, and personal items. It keeps everything within reach during your strolls.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_jHgyFm": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Artboard_11-100.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Replica Continental GT Mulliner Wheels",
+            "text": "<p>The tricycle’s wheels precisely replicate the iconic Mulliner GT rims, complete with the Bentley logo at the center and \"Bentley Mulliner\" engraving. <br/><br/>For an exclusive touch, the self-leveling wheel cap keeps the Bentley \"B\" upright as it moves — a true masterpiece in motion.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        },
+        "toggle_tTBcBM": {
+          "type": "toggle",
+          "settings": {
+            "image": "shopify://shop_images/Artboard_7-100.jpg",
+            "badge": "",
+            "time": "",
+            "title": "Anti-Slide Pedals",
+            "text": "<p>The new metal pedals with anti-slide surface design to prevent accidents.</p>",
+            "button": "",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "toggle_fqhPbz",
+        "toggle_tJzGUa",
+        "toggle_ydyNcJ",
+        "toggle_G6cDm7",
+        "toggle_jHgyFm",
+        "toggle_tTBcBM"
+      ],
+      "disabled": true,
+      "settings": {
+        "slider_gap": 100,
+        "slider_gap_mobile": 40,
+        "slider_view_mobile": 1.2,
+        "slide_gap": 50,
+        "slide_gap_mobile": 20,
+        "image_radius": 0,
+        "image_border_thickness": 0,
+        "image_ratio": "square",
+        "image_ratio_mobile": "square",
+        "slide_content_align": "left",
+        "slide_content_align_mobile": "center",
+        "slide_content_vertical_align": "center",
+        "badge_padding_horizontal": 20,
+        "badge_padding_horizontal_mobile": 16,
+        "badge_padding_vertical": 8,
+        "badge_padding_vertical_mobile": 8,
+        "badge_radius": 100,
+        "badge_border_thickness": 0,
+        "badge_custom": false,
+        "badge_font": "josefin_sans_n4",
+        "badge_size": 18,
+        "badge_size_mobile": 12,
+        "badge_height": 100,
+        "time_custom": false,
+        "time_font": "josefin_sans_n4",
+        "time_size": 18,
+        "time_size_mobile": 12,
+        "time_height": 100,
+        "title_custom": true,
+        "title_font": "playfair_display_n4",
+        "title_size": 30,
+        "title_size_mobile": 22,
+        "title_height": 130,
+        "title_mt": 24,
+        "title_mt_mobile": 16,
+        "text_custom": true,
+        "text_font": "poppins_n4",
+        "text_size": 15,
+        "text_size_mobile": 14,
+        "text_height": 150,
+        "text_mt": 40,
+        "text_mt_mobile": 16,
+        "button_custom": false,
+        "button_font": "josefin_sans_n4",
+        "button_size": 18,
+        "button_size_mobile": 15,
+        "button_height": 100,
+        "button_padding_vertical": 26,
+        "button_padding_vertical_mobile": 20,
+        "button_padding_horizontal": 52,
+        "button_padding_horizontal_mobile": 52,
+        "button_radius": 100,
+        "button_border_thickness": 1,
+        "button_mt": 40,
+        "button_mt_mobile": 24,
+        "button_style": "outline",
+        "arrow_size": 50,
+        "arrow_size_mobile": 50,
+        "arrow_icon_size": 10,
+        "arrow_icon_size_mobile": 10,
+        "arrow_border_thickness": 1,
+        "arrow_radius": 100,
+        "arrow_hover_effect": "color",
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": false,
+        "image_border_color": "#000000",
+        "badge_color": "#000000",
+        "badge_bg_color": "#fef6ee",
+        "badge_border_color": "#000000",
+        "time_color": "#82807b",
+        "title_color": "#000000",
+        "text_color": "#000000",
+        "button_color": "#000000",
+        "button_hover_color": "#ffffff",
+        "button_bg_color": "#394d46",
+        "button_bg_hover_color": "#394d46",
+        "button_border_color": "#000000",
+        "button_border_hover_color": "#000000",
+        "arrow_color": "#ffffff",
+        "arrow_hover_color": "#ffffff",
+        "arrow_bg_color": "#394d46",
+        "arrow_bg_hover_color": "#394d46",
+        "arrow_border_color": "#394d46",
+        "arrow_border_hover_color": "#000000",
+        "background_color": "#fef6ee",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 36,
+        "padding_bottom": 4,
+        "padding_horizontal": 2,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 1500,
+        "border_thickness": 0,
+        "section_radius": 0,
+        "lazy": true
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "content_width": "80ch"
+      }
+    },
+    "rich_text_dQmNnc": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_7ykkU9": {
+          "type": "heading",
+          "settings": {
+            "text": "Electric Ride-on Cars",
+            "heading_tag": "h2",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_RQWJPw": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_7ykkU9",
+        "richtext_RQWJPw"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "content_width": "medium",
+        "text_position": "center",
+        "background": "#f2e9e4",
+        "background_gradient": "",
+        "text_color": "#000000"
+      }
+    },
+    "featured_collection_cqCjcy": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "collection": "bentley-ride-on-electric-cars",
+        "products": [],
+        "full_width": true,
+        "stack_products": true,
+        "show_progress_bar": false,
+        "products_count": 4,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "link_url": "",
+        "link_text": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "product_card_background": "",
+        "product_card_text_color": ""
+      }
+    },
+    "media_grid_JCTKjD": {
+      "type": "media-grid",
+      "blocks": {
+        "image_XkNPBr": {
+          "type": "image",
+          "settings": {
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 1,
+            "desktop_row_span": 1,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_KbJkrW": {
+          "type": "image",
+          "settings": {
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 2,
+            "desktop_row_span": 2,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_Ry9T8b": {
+          "type": "image",
+          "settings": {
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 1,
+            "desktop_row_span": 1,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_xNEV4E": {
+          "type": "image",
+          "settings": {
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 1,
+            "desktop_row_span": 1,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "image_6ha9gA": {
+          "type": "image",
+          "settings": {
+            "title": "",
+            "heading_tag": "h4",
+            "link_url": "",
+            "link_text": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_column_span": 1,
+            "desktop_row_span": 1,
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "background": "#000000",
+            "background_gradient": "",
+            "text_color": "#ffffff",
+            "text_gradient": "",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_XkNPBr",
+        "image_KbJkrW",
+        "image_Ry9T8b",
+        "image_xNEV4E",
+        "image_6ha9gA"
+      ],
+      "name": "Media grid",
+      "settings": {
+        "full_width": true,
+        "reduce_width": false,
+        "desktop_row_height": 290,
+        "mobile_row_height": 150,
+        "background": "",
+        "background_gradient": ""
+      }
+    },
+    "rich_text_EnJAVM": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_G7T49N": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_nB6rrV": {
+          "type": "heading",
+          "settings": {
+            "text": "The Bentley Experience",
+            "heading_tag": "h3",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "richtext_pEQRkg": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_G7T49N",
+        "heading_nB6rrV",
+        "richtext_pEQRkg"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "small",
+        "text_position": "center",
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "1742407502aa3ddb37": {
+      "type": "apps",
+      "blocks": {
+        "okendo_reviews_widget_ggUXVB": {
+          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "",
+            "widget_type": "reviews_widget"
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_widget_ggUXVB"
+      ],
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    }
+  },
+  "order": [
+    "slideshow_XqWQEr",
+    "rich_text_bHyaaf",
+    "ss_slider_8_aBNMDz",
+    "featured_collection_YnXwTa",
+    "video_YB43Y3",
+    "ss_slider_ezWWrQ",
+    "rich_text_cE4AEC",
+    "17425999230e1549cd",
+    "ss_slider_8_tUrQ3W",
+    "main",
+    "rich_text_dQmNnc",
+    "featured_collection_cqCjcy",
+    "media_grid_JCTKjD",
+    "rich_text_EnJAVM",
+    "1742407502aa3ddb37"
+  ]
+}
