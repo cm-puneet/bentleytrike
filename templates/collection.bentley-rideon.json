@@ -95,7 +95,6 @@
         "toggle_VnPkEU": {
           "type": "toggle",
           "settings": {
-            "image": "shopify://shop_images/Mulsanne.jpg",
             "badge": "",
             "time": "",
             "title": "Mulsanne",
@@ -294,7 +293,7 @@
         "image_9jUyr9": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Ride-on_Collection_LP_Mobile_65d438bf-0d0f-45c9-8b15-2a5f8b7ca569.png",
+            "image": "shopify://shop_images/Mulsanne_UGC2.png",
             "media_width": 50,
             "media_position": "start",
             "text_position": "place-self-center text-center",
@@ -316,7 +315,7 @@
         "image_NHnBg4": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/055_168_974ee57b-b714-4ce7-8f25-eade743c19cd.png",
+            "image": "shopify://shop_images/Bentayga_UGC1.png",
             "media_width": 50,
             "media_position": "start",
             "text_position": "place-self-center text-center",
@@ -452,7 +451,7 @@
         "image_tbYYem": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bt_01_221.png",
+            "image": "shopify://shop_images/EXPUGC2.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -521,7 +520,7 @@
         "image_bWfFx8": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/055_13.png",
+            "image": "shopify://shop_images/Bentayga_UGC3.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
