@@ -1,1 +1,169 @@
-{"type":"header","name":"Header group","sections":{"announcement-bar":{"type":"announcement-bar","blocks":{"message_q8PWyk":{"type":"message","settings":{"text":"Give the Gift of Style this Mother's Day. 30% OFF with code MOTHERVIP","url":"shopify:\/\/pages\/bentley-trike-sale"}},"message_iYjNbN":{"type":"message","disabled":true,"settings":{"text":"Official USA Distributor: Our Bentley Products for Kids are produced under an official license from Bentley Motors","url":"https:\/\/bentleytrike.com\/products\/bentley-6-in-1-stroller-trike"}},"message_VEx9HD":{"type":"message","disabled":true,"settings":{"text":"SHIPPING CUT-OFF for Christmas delivery on in stock items (non guaranteed) - Dec 16.","url":"shopify:\/\/pages\/holiday-shipping-update-keeping-you-informed"}}},"block_order":["message_q8PWyk","message_iYjNbN","message_VEx9HD"],"custom_css":[],"settings":{"enable_sticky":true,"autoplay":true,"cycle_speed":6,"text_size":"text-xs","navigation_mode":"scrolling","scrolling_speed":16,"background":"#000000","background_gradient":"","text_color":"#d9d0c5"}},"header":{"type":"header","blocks":{"mega_menu_nKNzFf":{"type":"mega_menu","settings":{"menu_item":"BENTLEY COLLECTION","layout":"horizontal","submenu_style":"bold_heading","image_1":"shopify:\/\/shop_images\/Navi_bentley_trike_b15c4565-0925-47ac-a6f1-f27d0cfb3a99.png","image_heading_1":"Bentley Trike","image_link_1":"shopify:\/\/products\/bentley-6-in-1-stroller-trike","image_text_color_1":"#ffffff","image_2":"shopify:\/\/shop_images\/Generated_with_Kive.ai_-_kive-image_8.png","image_heading_2":"Bentley Ride-on Cars","image_link_2":"shopify:\/\/collections\/bentley-ride-on-electric-cars","image_text_color_2":"#ffffff","image_3":"shopify:\/\/shop_images\/Navi_Bentley_Bike.png","image_heading_3":"Bentley Balance Bike","image_link_3":"shopify:\/\/products\/bentley-balance-bikes","image_text_color_3":"#ffffff","product":"","product_card_background":"","product_card_text_color":"","promo_content_layout":"carousel","stretch_promo":false,"drawer_link_image":"show"}},"mega_menu_mXHt99":{"type":"mega_menu","settings":{"menu_item":"","layout":"horizontal","submenu_style":"bold_heading","image_heading_1":"","image_link_1":"","image_text_color_1":"#ffffff","image_heading_2":"","image_link_2":"","image_text_color_2":"#ffffff","image_heading_3":"","image_link_3":"","image_text_color_3":"#ffffff","product":"","product_card_background":"","product_card_text_color":"","promo_content_layout":"grid","stretch_promo":false,"drawer_link_image":"hide"}},"mega_menu_j8JMBA":{"type":"mega_menu","settings":{"menu_item":"PARTNER BRANDS","layout":"horizontal","submenu_style":"bold_text","image_1":"shopify:\/\/shop_images\/Mclaren_Mega_Menu.jpg","image_heading_1":"McLaren Scooters & Bike","image_link_1":"shopify:\/\/pages\/mclaren-products","image_text_color_1":"#ffffff","image_2":"shopify:\/\/shop_images\/Baghera_Mega_Menu.jpg","image_heading_2":"Baghera Ride-on Cars","image_link_2":"shopify:\/\/collections\/baghera-ride-on-cars","image_text_color_2":"#ffffff","image_3":"shopify:\/\/shop_images\/Rito_Mega_Menu.jpg","image_heading_3":"Rito Folding Trike","image_link_3":"shopify:\/\/collections\/rito-trike-2023","image_text_color_3":"#ffffff","product":"","product_card_background":"","product_card_text_color":"","promo_content_layout":"grid","stretch_promo":false,"drawer_link_image":"hide"}}},"block_order":["mega_menu_nKNzFf","mega_menu_mXHt99","mega_menu_j8JMBA"],"settings":{"enable_sticky":true,"hide_on_scroll":false,"logo":"shopify:\/\/shop_images\/Bentley_offical_Logo_4a8b8887-596a-4279-a728-a3a2fa7de2c6.jpg","logo_max_width":80,"logo_mobile_max_width":65,"menu":"bentley-collection","sidebar_menu":"bentley-collection","secondary_menu":"","menu_open_trigger":"hover","opening_from":"left","layout":"logo_left_navigation_center","show_social_media":true,"show_locale_selector":true,"show_country_selector":false,"show_country_flag":false,"show_country_name":false,"transparent_header_text_color":"#ffffff","transparent_logo":"shopify:\/\/shop_images\/Bentley_offical_Logo.jpg","reduce_padding":true,"background_opacity":100,"background_blur_radius":0}}},"order":["announcement-bar","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "message_q8PWyk": {
+          "type": "message",
+          "settings": {
+            "text": "Give the Gift of Style this Mother's Day. 30% OFF with code MOTHERVIP",
+            "url": "shopify://pages/bentley-trike-sale"
+          }
+        },
+        "message_iYjNbN": {
+          "type": "message",
+          "disabled": true,
+          "settings": {
+            "text": "Official USA Distributor: Our Bentley Products for Kids are produced under an official license from Bentley Motors",
+            "url": "https://bentleytrike.com/products/bentley-6-in-1-stroller-trike"
+          }
+        },
+        "message_VEx9HD": {
+          "type": "message",
+          "disabled": true,
+          "settings": {
+            "text": "SHIPPING CUT-OFF for Christmas delivery on in stock items (non guaranteed) - Dec 16.",
+            "url": "shopify://pages/holiday-shipping-update-keeping-you-informed"
+          }
+        }
+      },
+      "block_order": [
+        "message_q8PWyk",
+        "message_iYjNbN",
+        "message_VEx9HD"
+      ],
+      "custom_css": [],
+      "settings": {
+        "enable_sticky": true,
+        "autoplay": true,
+        "cycle_speed": 6,
+        "text_size": "text-xs",
+        "navigation_mode": "scrolling",
+        "scrolling_speed": 16,
+        "background": "#000000",
+        "background_gradient": "",
+        "text_color": "#d9d0c5"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_nKNzFf": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "BENTLEY COLLECTION",
+            "layout": "horizontal",
+            "submenu_style": "bold_heading",
+            "image_heading_1": "Bentley Trike",
+            "image_link_1": "shopify://products/bentley-6-in-1-stroller-trike",
+            "image_text_color_1": "#ffffff",
+            "image_heading_2": "Bentley Ride-on Cars",
+            "image_link_2": "shopify://collections/bentley-ride-on-electric-cars",
+            "image_text_color_2": "#ffffff",
+            "image_heading_3": "Bentley Balance Bike",
+            "image_link_3": "shopify://products/bentley-balance-bikes",
+            "image_text_color_3": "#ffffff",
+            "product": "",
+            "product_card_background": "",
+            "product_card_text_color": "",
+            "promo_content_layout": "carousel",
+            "stretch_promo": false,
+            "drawer_link_image": "show"
+          }
+        },
+        "mega_menu_mXHt99": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "",
+            "layout": "horizontal",
+            "submenu_style": "bold_heading",
+            "image_heading_1": "",
+            "image_link_1": "",
+            "image_text_color_1": "#ffffff",
+            "image_heading_2": "",
+            "image_link_2": "",
+            "image_text_color_2": "#ffffff",
+            "image_heading_3": "",
+            "image_link_3": "",
+            "image_text_color_3": "#ffffff",
+            "product": "",
+            "product_card_background": "",
+            "product_card_text_color": "",
+            "promo_content_layout": "grid",
+            "stretch_promo": false,
+            "drawer_link_image": "hide"
+          }
+        },
+        "mega_menu_j8JMBA": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "PARTNER BRANDS",
+            "layout": "horizontal",
+            "submenu_style": "bold_text",
+            "image_1": "shopify://shop_images/Mclaren_Mega_Menu.jpg",
+            "image_heading_1": "McLaren Scooters & Bike",
+            "image_link_1": "shopify://pages/mclaren-products",
+            "image_text_color_1": "#ffffff",
+            "image_2": "shopify://shop_images/Baghera_Mega_Menu.jpg",
+            "image_heading_2": "Baghera Ride-on Cars",
+            "image_link_2": "shopify://collections/baghera-ride-on-cars",
+            "image_text_color_2": "#ffffff",
+            "image_3": "shopify://shop_images/Rito_Mega_Menu.jpg",
+            "image_heading_3": "Rito Folding Trike",
+            "image_link_3": "shopify://collections/rito-trike-2023",
+            "image_text_color_3": "#ffffff",
+            "product": "",
+            "product_card_background": "",
+            "product_card_text_color": "",
+            "promo_content_layout": "grid",
+            "stretch_promo": false,
+            "drawer_link_image": "hide"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_nKNzFf",
+        "mega_menu_mXHt99",
+        "mega_menu_j8JMBA"
+      ],
+      "settings": {
+        "enable_sticky": true,
+        "hide_on_scroll": false,
+        "logo": "shopify://shop_images/Bentley_offical_Logo_4a8b8887-596a-4279-a728-a3a2fa7de2c6.jpg",
+        "logo_max_width": 80,
+        "logo_mobile_max_width": 65,
+        "menu": "new-menu-impact",
+        "sidebar_menu": "new-menu-impact",
+        "secondary_menu": "",
+        "menu_open_trigger": "hover",
+        "opening_from": "left",
+        "layout": "logo_left_navigation_center",
+        "show_social_media": true,
+        "show_locale_selector": true,
+        "show_country_selector": false,
+        "show_country_flag": false,
+        "show_country_name": false,
+        "transparent_header_text_color": "#ffffff",
+        "transparent_logo": "shopify://shop_images/Bentley_offical_Logo.jpg",
+        "reduce_padding": true,
+        "background_opacity": 100,
+        "background_blur_radius": 0
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}
