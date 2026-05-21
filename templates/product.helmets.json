@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -35,6 +44,7 @@
         "product_variations_WFpMqc": {
           "type": "product_variations",
           "settings": {
+            "varient_in_slider": false,
             "option_name": "COLOR",
             "option_value_metafield": "",
             "products": [
@@ -69,6 +79,7 @@
           "type": "variant_picker",
           "settings": {
             "hide_sold_out_variants": false,
+            "varients_in_slider": false,
             "stack_blocks": true,
             "selector_style": "block",
             "swatch_selector_style": "swatch",
@@ -285,7 +296,7 @@
         "allow_transparent_header": false,
         "autoplay": true,
         "video_size": "auto",
-        "video": null,
+        "video": "shopify://files/videos/videoplayback_3.mp4",
         "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "text_color": "#ffffff",
         "overlay_color": "#000000",
@@ -378,7 +389,6 @@
         "item_ehyqMF": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Stroller.png",
             "image_rotation_degrees": -2,
             "subheading": "",
             "title": "Infant Stroller",
@@ -435,7 +445,6 @@
         "slide_g44kbY": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Stroller.png",
             "navigation_label": "Stage 1",
             "subheading": "SUITABLE FOR 6 MONTHS+",
             "title": "Infant Stroller",
@@ -504,7 +513,6 @@
         "toggle_J7U8zB": {
           "type": "toggle",
           "settings": {
-            "image": "shopify://shop_images/Magnetic_Fastener_Fidlock_German_Patented_Buckles.png",
             "badge": "",
             "time": "",
             "title": "Secure, Hassle-Free Magnetic Fastening System",
@@ -543,7 +551,6 @@
           "type": "toggle",
           "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/10_96f27264-ef75-4e59-a4ce-4ae492082de3.jpg",
             "badge": "",
             "time": "",
             "title": "Replica Continental GT Mulliner Wheels",
@@ -685,7 +692,6 @@
         "custom_FJCBRr": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_1A.png",
             "title": "Infant Stroller",
             "sub_title": "Stage 1A: FOR 6 MONTHS & UP",
             "url": ""
@@ -694,7 +700,6 @@
         "custom_Q7cyFW": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_1B.png",
             "title": "Front-Facing Stroller",
             "sub_title": "Stage 1B: FOR 6 MONTHS & UP",
             "url": ""
@@ -703,7 +708,6 @@
         "custom_ygUDja": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_2_83445dae-bb9a-4a32-a952-7857ef222c76.png",
             "title": "Guided Trike",
             "sub_title": "Stage 2: FOR 12 MONTHS & UP",
             "url": ""
@@ -712,7 +716,6 @@
         "custom_RHPgqm": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_4_b229a295-7d2c-4304-a222-6f256f4def1a.png",
             "title": "Training Trike",
             "sub_title": "Stage 3: 24 MONTHS & UP",
             "url": ""
@@ -721,7 +724,6 @@
         "custom_mcpW74": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_5.png",
             "title": "Solo Ride",
             "sub_title": "STAGE 4: 48 MONTHS & UP",
             "url": ""
@@ -978,7 +980,6 @@
         "image_FY486D": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/LuxExpose-Bentley_Trike_Mulliner_Collection.webp",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1044,7 +1045,6 @@
         "image_Xdkmne": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Mulliner-_53.jpg",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1087,7 +1087,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Trike_9243865b-e1f1-408f-b14e-dc2024fad33e.png",
             "subheading": "TRIKE",
             "title": "",
             "url": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
@@ -1102,7 +1101,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Car.png",
             "subheading": "RIDE-ON CARS",
             "title": "",
             "url": "shopify://collections/bentley-ride-on-electric-cars",
@@ -1117,7 +1115,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Bike_7917e307-f774-4af5-bb65-7b71424ffcf8.png",
             "subheading": "BALANCE BIKE",
             "title": "",
             "url": "shopify://products/bentley-balance-bikes",
