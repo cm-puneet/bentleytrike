@@ -1279,6 +1279,7 @@
         "image_kkVkJE": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BTTrikeSpruceGreenUGC1.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
