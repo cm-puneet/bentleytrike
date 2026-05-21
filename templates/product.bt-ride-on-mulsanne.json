@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -272,7 +281,7 @@
         "allow_transparent_header": false,
         "autoplay": true,
         "video_size": "auto",
-        "video": null,
+        "video": "shopify://files/videos/Car (1).mp4",
         "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "text_color": "#ffffff",
         "overlay_color": "#000000",
@@ -285,7 +294,6 @@
         "video_q6eGWw": {
           "type": "video",
           "settings": {
-            "video": null,
             "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
             "autoplay": true,
             "media_width": 60,
@@ -362,7 +370,6 @@
         "item_ehyqMF": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Stroller.png",
             "image_rotation_degrees": -2,
             "subheading": "",
             "title": "Infant Stroller",
@@ -419,7 +426,6 @@
         "slide_g44kbY": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Stroller.png",
             "navigation_label": "Stage 1",
             "subheading": "SUITABLE FOR 6 MONTHS+",
             "title": "Infant Stroller",
@@ -768,7 +774,7 @@
         "image_zFnQ9k": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bt_01_309.png",
+            "image": "shopify://shop_images/Mulsanne_UGC3.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -790,7 +796,7 @@
         "image_hJwdyw": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/055_102.png",
+            "image": "shopify://shop_images/Mulsanne_UGC1.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -812,7 +818,7 @@
         "image_kkVkJE": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bt_01_334.png",
+            "image": "shopify://shop_images/Mulsanne_UGC2.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -834,7 +840,7 @@
         "image_QNhJLg": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Ride-on_Collection_LP_Mobile.png",
+            "image": "shopify://shop_images/Mulsanne_UGC4.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -856,7 +862,7 @@
         "image_CXWRdr": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/bt_01_310.png",
+            "image": "shopify://shop_images/Mulsanne_UGC5.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -898,7 +904,6 @@
         "custom_FJCBRr": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_1A.png",
             "title": "Infant Stroller",
             "sub_title": "Stage 1A: FOR 6 MONTHS & UP",
             "url": ""
@@ -907,7 +912,6 @@
         "custom_Q7cyFW": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_1B.png",
             "title": "Front-Facing Stroller",
             "sub_title": "Stage 1B: FOR 6 MONTHS & UP",
             "url": ""
@@ -916,7 +920,6 @@
         "custom_ygUDja": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_2_83445dae-bb9a-4a32-a952-7857ef222c76.png",
             "title": "Guided Trike",
             "sub_title": "Stage 2: FOR 12 MONTHS & UP",
             "url": ""
@@ -925,7 +928,6 @@
         "custom_RHPgqm": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_4_b229a295-7d2c-4304-a222-6f256f4def1a.png",
             "title": "Training Trike",
             "sub_title": "Stage 3: 24 MONTHS & UP",
             "url": ""
@@ -934,7 +936,6 @@
         "custom_mcpW74": {
           "type": "custom",
           "settings": {
-            "image": "shopify://shop_images/Stage_5.png",
             "title": "Solo Ride",
             "sub_title": "STAGE 4: 48 MONTHS & UP",
             "url": ""
@@ -1091,7 +1092,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_9Pg3iP": {
-          "type": "shopify://apps/tolstoy-shoppable-video-quiz/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "9kfn5j9qggsac"
           }
@@ -1115,7 +1116,6 @@
         "image_FY486D": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/LuxExpose-Bentley_Trike_Mulliner_Collection.webp",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1181,7 +1181,6 @@
         "image_Xdkmne": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Mulliner-_53.jpg",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1224,7 +1223,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Trike_9243865b-e1f1-408f-b14e-dc2024fad33e.png",
             "subheading": "TRIKE",
             "title": "",
             "url": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
@@ -1239,7 +1237,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Car.png",
             "subheading": "RIDE-ON CARS",
             "title": "",
             "url": "shopify://collections/bentley-ride-on-electric-cars",
@@ -1254,7 +1251,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Bike_7917e307-f774-4af5-bb65-7b71424ffcf8.png",
             "subheading": "BALANCE BIKE",
             "title": "",
             "url": "shopify://products/bentley-balance-bikes",
