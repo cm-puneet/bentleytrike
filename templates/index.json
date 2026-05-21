@@ -1032,11 +1032,11 @@
         "image_m33Rem": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BT_Collection_CA.png",
-            "mobile_image": "shopify://shop_images/BT_CA_Balance_Ride-on_car.png",
+            "image": "shopify://shop_images/BT_Collection_Bentley_Cars_fe09b770-1c2a-4d95-9ed6-7ccbabc1a62b.png",
+            "mobile_image": "shopify://shop_images/BT_Collection_Ride_On_Car_Mobile_1.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-end-start text-start",
-            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "desktop_text_position": "sm:place-self-center-end sm:text-end",
             "subheading": "Explore Bentley Ride-on Cars",
             "title": "Bring Style and Fun to Your Kid's Ride",
             "heading_tag": "h3",
