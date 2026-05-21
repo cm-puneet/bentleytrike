@@ -542,6 +542,7 @@
         "toggle_8kFNXA": {
           "type": "toggle",
           "settings": {
+            "image": "shopify://shop_images/EXPLifestyleimages3.png",
             "badge": "",
             "time": "",
             "title": "Longer Battery Life",
@@ -714,6 +715,7 @@
         "image_i69tQj": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/055_24_1.png",
             "media_width": 50,
             "media_position": "start",
             "text_position": "place-self-center text-center",
@@ -771,6 +773,7 @@
         "image_zFnQ9k": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/EXPUGC3.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -792,6 +795,7 @@
         "image_hJwdyw": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/EXPUGC1.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -813,6 +817,7 @@
         "image_kkVkJE": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/EXPUGC2.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -834,6 +839,7 @@
         "image_QNhJLg": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/EXPUGC4.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -855,6 +861,7 @@
         "image_CXWRdr": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/EXPUGC5.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
