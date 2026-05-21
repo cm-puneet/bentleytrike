@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -302,8 +311,7 @@
         "allow_transparent_header": false,
         "autoplay": true,
         "video_size": "auto",
-        "video": null,
-        "mobile_video": null,
+        "video": "shopify://files/videos/webland.mp4",
         "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "text_color": "#ffffff",
         "overlay_color": "#000000",
@@ -395,7 +403,6 @@
         "item_ehyqMF": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Stroller.png",
             "image_rotation_degrees": -2,
             "subheading": "",
             "title": "Infant Stroller",
@@ -452,7 +459,6 @@
         "slide_g44kbY": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Stroller.png",
             "navigation_label": "Stage 1",
             "subheading": "SUITABLE FOR 6 MONTHS+",
             "title": "Infant Stroller",
@@ -1554,7 +1560,6 @@
         "image_FY486D": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/LuxExpose-Bentley_Trike_Mulliner_Collection.webp",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1620,7 +1625,6 @@
         "image_Xdkmne": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Mulliner-_53.jpg",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1663,7 +1667,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Trike_9243865b-e1f1-408f-b14e-dc2024fad33e.png",
             "subheading": "TRIKE",
             "title": "",
             "url": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
@@ -1678,7 +1681,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Car.png",
             "subheading": "RIDE-ON CARS",
             "title": "",
             "url": "shopify://collections/bentley-ride-on-electric-cars",
@@ -1693,7 +1695,6 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Bentley_Bike_7917e307-f774-4af5-bb65-7b71424ffcf8.png",
             "subheading": "BALANCE BIKE",
             "title": "",
             "url": "shopify://products/bentley-balance-bikes",
@@ -1765,7 +1766,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_ECEE8A": {
-          "type": "shopify://apps/tolstoy-shoppable-video-quiz/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "08cawi3nxdp4j"
           }
