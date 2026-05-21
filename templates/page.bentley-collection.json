@@ -325,6 +325,98 @@
       "name": "Product carousel",
       "settings": {}
     },
+    "slideshow_UUQrn3": {
+      "type": "slideshow",
+      "blocks": {
+        "image_wMXahV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BT_Collection_Banner_BT_Trike_4.png",
+            "mobile_image": "shopify://shop_images/BT_Collection_BT_Trike_Mobile_2.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Designed to Grow with Your Child",
+            "title": "Bentley 6-in-1 Stroller/Trike",
+            "heading_tag": "h2",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://products/bentley-6-in-1-stroller-trike",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_BRCPNt": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BT_Collection_Bentley_Cars_fe09b770-1c2a-4d95-9ed6-7ccbabc1a62b.png",
+            "mobile_image": "shopify://shop_images/BT_Collection_Ride_On_Car_Mobile_1.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-start text-start",
+            "desktop_text_position": "sm:place-self-center-end sm:text-end",
+            "subheading": "Bring Style and Fun to Your Kid's Ride",
+            "title": "Bentley Ride-on Car",
+            "heading_tag": "h1",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/bentley-ride-on-electric-cars",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_KMeAxL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BT_collection_-_BT_Bike_3.png",
+            "mobile_image": "shopify://shop_images/BT_Collection_Balance_Bike_Mobile_54bf572e-3235-4f49-9a52-c25065521651.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-start text-start",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Your Kid's First Balance Bike",
+            "title": "Bentley Balance Bike",
+            "heading_tag": "h2",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://products/bentley-balance-bikes",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_wMXahV",
+        "image_BRCPNt",
+        "image_KMeAxL"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "show_initial_transition": false,
+        "image_size": "md",
+        "controls_type": "dots",
+        "transition_type": "fade_with_text",
+        "autoplay": true,
+        "cycle_speed": 6,
+        "background": "rgba(0,0,0,0)",
+        "background_gradient": ""
+      }
+    },
     "slideshow_etKJD9": {
       "type": "slideshow",
       "blocks": {
@@ -399,6 +491,7 @@
         "image_f4rG7k",
         "image_9bXYR9"
       ],
+      "disabled": true,
       "name": "Slideshow",
       "settings": {
         "full_width": true,
@@ -1418,6 +1511,7 @@
     "main",
     "ss_collection_13_fBr3DD",
     "blocks_tFMcJE",
+    "slideshow_UUQrn3",
     "slideshow_etKJD9",
     "collection_list_zh7QEK",
     "featured_collection_JGhFQh",
