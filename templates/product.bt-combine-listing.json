@@ -1301,6 +1301,7 @@
         "image_QNhJLg": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BTTrikePinkUGC2.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1322,6 +1323,7 @@
         "image_CXWRdr": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BTTrikeOnyxUGC1.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
