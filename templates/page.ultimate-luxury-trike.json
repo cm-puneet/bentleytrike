@@ -288,7 +288,7 @@
       "type": "featured-collection",
       "name": "Featured collection",
       "settings": {
-        "collection": "the-bentley-trike",
+        "collection": "bentley-trike",
         "products": [],
         "full_width": false,
         "stack_products": false,
