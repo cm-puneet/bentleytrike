@@ -662,6 +662,69 @@
         "background_gradient": ""
       }
     },
+    "rich_text_cnaJP8": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_CWJejp": {
+          "type": "heading",
+          "settings": {
+            "text": "STROLL IN STYLE WITH OUR SPRING RIDES SALE",
+            "heading_tag": "h3",
+            "text_color": "#ffffff",
+            "gradient": ""
+          }
+        },
+        "heading_AK46LN": {
+          "type": "heading",
+          "settings": {
+            "text": "Choose between getting a 30% off with the code VICTORIA30 or getting a FREE Bentley Electric Car with your Bentley Trike purchase",
+            "heading_tag": "h6",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "button_eAPMyD": {
+          "type": "button",
+          "settings": {
+            "style": "fill",
+            "size": "xl",
+            "text": "SHOP NOW",
+            "url": "shopify://pages/bentley-trike-sale",
+            "background": "",
+            "text_color": ""
+          }
+        },
+        "button_DzWwPq": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "style": "outline",
+            "size": "xl",
+            "text": "USE CODE: SPRING30",
+            "url": "",
+            "background": "",
+            "text_color": "#fbeddc"
+          }
+        }
+      },
+      "block_order": [
+        "heading_CWJejp",
+        "heading_AK46LN",
+        "button_eAPMyD",
+        "button_DzWwPq"
+      ],
+      "custom_css": [
+        "{padding-top: 20px;}"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "large",
+        "text_position": "center",
+        "background": "#d9d0c5",
+        "background_gradient": "linear-gradient(188deg, rgba(168, 63, 47, 1) 25%, rgba(0, 0, 0, 1) 91%)",
+        "text_color": "#ffffff"
+      }
+    },
     "rich_text_iVYmAg": {
       "type": "rich-text",
       "blocks": {
@@ -1516,6 +1579,7 @@
     "collection_list_zh7QEK",
     "featured_collection_JGhFQh",
     "slideshow_XqWQEr",
+    "rich_text_cnaJP8",
     "rich_text_iVYmAg",
     "ss_slider_ezWWrQ",
     "ss_slider_QUGYkD",
