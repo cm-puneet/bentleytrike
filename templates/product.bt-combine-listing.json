@@ -9,6 +9,54 @@
  */
 {
   "sections": {
+    "rich_text_bQJtqR": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_hhgzXD": {
+          "type": "heading",
+          "settings": {
+            "text": "STROLL IN STYLE WITH OUR SPRING RIDES SALE",
+            "heading_tag": "h3",
+            "text_color": "#ffffff",
+            "gradient": ""
+          }
+        },
+        "heading_q7Lg96": {
+          "type": "heading",
+          "settings": {
+            "text": "Choose between getting a 30% off with the code VICTORIA30 or getting a FREE Bentley Electric Car with your Bentley Trike purchase",
+            "heading_tag": "h6",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "button_zEWdRz": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "style": "outline",
+            "size": "xl",
+            "text": "USE CODE: SPRING30",
+            "url": "",
+            "background": "",
+            "text_color": "#fbeddc"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hhgzXD",
+        "heading_q7Lg96",
+        "button_zEWdRz"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "large",
+        "text_position": "center",
+        "background": "#d9d0c5",
+        "background_gradient": "linear-gradient(188deg, rgba(168, 63, 47, 1) 25%, rgba(0, 0, 0, 1) 91%)",
+        "text_color": "#ffffff"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -37,16 +85,15 @@
         },
         "offer_hGMrdA": {
           "type": "offer",
-          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 24,
-            "title": "CHOOSE YOUR BLACK FRIDAY OFFER",
-            "content": "<p>Option 1: Get a Free Electric Bentley Ride-On Car with your Bentley Trike Today (Add Below)<br/><br/>Option 2: Get 30% off site-wide with the code BF30VIP</p>",
-            "background": "#1c0e29",
-            "text_color": "#fef6ee"
+            "title": "CHOOSE YOUR OFFER",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>VICTORIA30 </strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
+            "background": "#d9d0c5",
+            "text_color": "#000000"
           }
         },
         "payment_terms": {
@@ -69,6 +116,18 @@
             "selector_style": "variant_image"
           }
         },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "varients_in_slider": true,
+            "stack_blocks": true,
+            "selector_style": "block",
+            "swatch_selector_style": "swatch",
+            "variant_image_options": "Color",
+            "size_chart_page": ""
+          }
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -89,22 +148,10 @@
             "collapse_content": false
           }
         },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "hide_sold_out_variants": false,
-            "varients_in_slider": true,
-            "stack_blocks": true,
-            "selector_style": "block",
-            "swatch_selector_style": "swatch",
-            "variant_image_options": "Color",
-            "size_chart_page": ""
-          }
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_payment_button": true,
+            "show_payment_button": false,
             "show_gift_card_recipient": true,
             "atc_button_background": "",
             "atc_button_text_color": "",
@@ -157,7 +204,7 @@
         "associated_products_YXTBbY": {
           "type": "associated_products",
           "settings": {
-            "title": "COMPLETE THE BENTLEY EXPERIENCE",
+            "title": "ADD YOUR FREE BENTLEY RIDE-ON CAR",
             "stack_products": false,
             "products_count": 5,
             "background": "",
@@ -166,9 +213,8 @@
         },
         "text_DXPhKT": {
           "type": "text",
-          "disabled": true,
           "settings": {
-            "text": "<p>* Please note that the Bentley Electric Cars are currently on Pre-order and will ship once stock is available.<br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
+            "text": "<p>* Please note that the Bentley Electric Cars are currently on Pre-order and will ship once stock is available. <br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
           }
         }
       },
@@ -181,10 +227,10 @@
         "payment_terms",
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
+        "variant_picker",
         "quantity_selector",
         "text_q6Hc7E",
         "description",
-        "variant_picker",
         "buy_buttons",
         "offer_TCPYbU",
         "offer_WtbX38",
@@ -1644,6 +1690,7 @@
     }
   },
   "order": [
+    "rich_text_bQJtqR",
     "main",
     "accordion_content_EGhnWC",
     "video_jdAKz9",
