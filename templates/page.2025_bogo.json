@@ -618,12 +618,36 @@
       "block_order": [
         "play_bFpWbF"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "allow_transparent_header": false,
         "autoplay": true,
         "video_size": "auto",
         "video": "shopify://files/videos/White saten.mp4",
+        "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "video_RLXEtT": {
+      "type": "video",
+      "blocks": {
+        "play_rwQDHi": {
+          "type": "play",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "play_rwQDHi"
+      ],
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": false,
+        "autoplay": true,
+        "video_size": "auto",
+        "video": "shopify://files/videos/web.mp4",
         "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "text_color": "#ffffff",
         "overlay_color": "#000000",
@@ -1625,6 +1649,7 @@
     "ss_slider_AhBmp6",
     "accordion_content_NbwLxx",
     "video_YB43Y3",
+    "video_RLXEtT",
     "rich_text_UfRQLX",
     "slideshow_XqWQEr",
     "rich_text_bHyaaf",
