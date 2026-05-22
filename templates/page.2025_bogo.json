@@ -230,8 +230,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "CELEBRATE VICTORIA DAY IN STYLE! 🇨🇦",
-            "content": "<p><strong>Save 30% Sitewide.</strong> Use Code: <strong>VICTORIA30</strong></p>",
+            "title": "CHOOSE YOUR OFFER",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>MEMORIAL30</strong> <br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
@@ -301,7 +301,7 @@
         "associated_products_bmKfEi": {
           "type": "associated_products",
           "settings": {
-            "title": "COMPLETE THE BENTLEY EXPERIENCE",
+            "title": "ADD YOUR FREE BENTLEY RIDE-ON CAR",
             "stack_products": false,
             "products_count": 5,
             "background": "rgba(0,0,0,0)",
@@ -310,9 +310,8 @@
         },
         "text_jd4DCA": {
           "type": "text",
-          "disabled": true,
           "settings": {
-            "text": "<p>* Please note that the Bentley Electric Cars are currently on Pre-order and will ship once stock is available. Only Bacalar and EXP-12 models are available with this offer. <br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
+            "text": "<p>* Please note that the Bentley Electric Cars are currently on Pre-order and will ship once stock is available. <br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
           }
         },
         "offer_FBNGpV": {
