@@ -41,7 +41,31 @@
             "content_max_width": 600,
             "mobile_text_position": "place-self-end-center text-center",
             "desktop_text_position": "sm:place-self-center-start sm:text-start",
-            "subheading": "Experience True Luxury With",
+            "subheading": "Stroll in style with our Spring Rides Sale",
+            "title": "Get 30% off or a FREE Bentley Electric Ride-on Car!",
+            "heading_tag": "h2",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://pages/bentley-collection",
+            "text_color": "#ffffff",
+            "button_background": "#a83f2f",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_GwV6Xh": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/BT_CA_-_HP_2_4.png",
+            "mobile_image": "shopify://shop_images/Bentley_CA_-_Mobile.png",
+            "content_max_width": 600,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-center-start sm:text-start",
+            "subheading": "Stroll in style with our Spring Rides Sale",
             "title": "The Bentley Kids Collection",
             "heading_tag": "h2",
             "button_text": "SHOP NOW",
@@ -106,6 +130,7 @@
       "block_order": [
         "video_p6hBpc",
         "image_XiWCHQ",
+        "image_GwV6Xh",
         "image_bqCfkD",
         "image_Qb33zB"
       ],
