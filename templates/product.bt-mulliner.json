@@ -9,6 +9,54 @@
  */
 {
   "sections": {
+    "rich_text_K3B3Ta": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_QkgqcH": {
+          "type": "heading",
+          "settings": {
+            "text": "STROLL IN STYLE WITH OUR SPRING RIDES SALE",
+            "heading_tag": "h3",
+            "text_color": "#ffffff",
+            "gradient": ""
+          }
+        },
+        "heading_FzKirb": {
+          "type": "heading",
+          "settings": {
+            "text": "Choose between getting a 30% off with the code VICTORIA30 or getting a FREE Bentley Electric Car with your Bentley Trike purchase",
+            "heading_tag": "h6",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "button_gNWGyt": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "style": "outline",
+            "size": "xl",
+            "text": "USE CODE: SPRING30",
+            "url": "",
+            "background": "",
+            "text_color": "#fbeddc"
+          }
+        }
+      },
+      "block_order": [
+        "heading_QkgqcH",
+        "heading_FzKirb",
+        "button_gNWGyt"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "large",
+        "text_position": "center",
+        "background": "#d9d0c5",
+        "background_gradient": "linear-gradient(188deg, rgba(168, 63, 47, 1) 25%, rgba(0, 0, 0, 1) 91%)",
+        "text_color": "#ffffff"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -41,16 +89,15 @@
         },
         "offer_WtbX38": {
           "type": "offer",
-          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "Today Special offer",
-            "content": "<p><strong>Get 50% off the Mulliner Celeste and Mulliner Cool Stone Colors.</strong><br/>Discount automatically applied at checkout.</p>",
-            "background": "#0d1a27",
-            "text_color": "#fef6ee"
+            "title": "CHOOSE YOUR OFFER",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>VICTORIA30 </strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
+            "background": "#d9d0c5",
+            "text_color": "#000000"
           }
         },
         "inventory_Cibqgw": {
@@ -154,7 +201,7 @@
         "associated_products_YXTBbY": {
           "type": "associated_products",
           "settings": {
-            "title": "COMPLETE THE BENTLEY EXPERIENCE",
+            "title": "ADD YOUR FREE BENTLEY RIDE-ON CAR",
             "stack_products": false,
             "products_count": 5,
             "background": "",
@@ -163,9 +210,8 @@
         },
         "text_rW8hRU": {
           "type": "text",
-          "disabled": true,
           "settings": {
-            "text": "<p>* Please note that the Bentley Electric Cars are currently on Pre-order and will ship once stock is available. Only Bacalar and EXP-12 models are available with this offer. <br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
+            "text": "<p>* Please note that the Bentley Electric Cars are currently on Pre-order and will ship once stock is available. <br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
           }
         }
       },
@@ -204,54 +250,6 @@
         "text_color": "",
         "input_background": "rgba(0,0,0,0)",
         "input_text_color": ""
-      }
-    },
-    "rich_text_K3B3Ta": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_QkgqcH": {
-          "type": "heading",
-          "settings": {
-            "text": "STROLL IN STYLE WITH OUR SPRING RIDES SALE",
-            "heading_tag": "h3",
-            "text_color": "#ffffff",
-            "gradient": ""
-          }
-        },
-        "heading_FzKirb": {
-          "type": "heading",
-          "settings": {
-            "text": "Choose between getting a 30% off with the code VICTORIA30 or getting a FREE Bentley Electric Car with your Bentley Trike purchase",
-            "heading_tag": "h6",
-            "text_color": "",
-            "gradient": ""
-          }
-        },
-        "button_gNWGyt": {
-          "type": "button",
-          "disabled": true,
-          "settings": {
-            "style": "outline",
-            "size": "xl",
-            "text": "USE CODE: SPRING30",
-            "url": "",
-            "background": "",
-            "text_color": "#fbeddc"
-          }
-        }
-      },
-      "block_order": [
-        "heading_QkgqcH",
-        "heading_FzKirb",
-        "button_gNWGyt"
-      ],
-      "settings": {
-        "full_width": true,
-        "content_width": "large",
-        "text_position": "center",
-        "background": "#d9d0c5",
-        "background_gradient": "linear-gradient(188deg, rgba(168, 63, 47, 1) 25%, rgba(0, 0, 0, 1) 91%)",
-        "text_color": "#ffffff"
       }
     },
     "accordion_content_EGhnWC": {
