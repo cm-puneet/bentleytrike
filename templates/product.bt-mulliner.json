@@ -117,7 +117,7 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_payment_button": true,
+            "show_payment_button": false,
             "show_gift_card_recipient": true,
             "atc_button_background": "",
             "atc_button_text_color": "",
@@ -204,6 +204,54 @@
         "text_color": "",
         "input_background": "rgba(0,0,0,0)",
         "input_text_color": ""
+      }
+    },
+    "rich_text_K3B3Ta": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_QkgqcH": {
+          "type": "heading",
+          "settings": {
+            "text": "STROLL IN STYLE WITH OUR SPRING RIDES SALE",
+            "heading_tag": "h3",
+            "text_color": "#ffffff",
+            "gradient": ""
+          }
+        },
+        "heading_FzKirb": {
+          "type": "heading",
+          "settings": {
+            "text": "Choose between getting a 30% off with the code VICTORIA30 or getting a FREE Bentley Electric Car with your Bentley Trike purchase",
+            "heading_tag": "h6",
+            "text_color": "",
+            "gradient": ""
+          }
+        },
+        "button_gNWGyt": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "style": "outline",
+            "size": "xl",
+            "text": "USE CODE: SPRING30",
+            "url": "",
+            "background": "",
+            "text_color": "#fbeddc"
+          }
+        }
+      },
+      "block_order": [
+        "heading_QkgqcH",
+        "heading_FzKirb",
+        "button_gNWGyt"
+      ],
+      "settings": {
+        "full_width": true,
+        "content_width": "large",
+        "text_position": "center",
+        "background": "#d9d0c5",
+        "background_gradient": "linear-gradient(188deg, rgba(168, 63, 47, 1) 25%, rgba(0, 0, 0, 1) 91%)",
+        "text_color": "#ffffff"
       }
     },
     "accordion_content_EGhnWC": {
@@ -1831,6 +1879,7 @@
     }
   },
   "order": [
+    "rich_text_K3B3Ta",
     "main",
     "accordion_content_EGhnWC",
     "video_jdAKz9",
