@@ -86,14 +86,13 @@
         },
         "offer_hGMrdA": {
           "type": "offer",
-          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 24,
             "title": "CHOOSE YOUR OFFER",
-            "content": "<p>OFFER 1: Get 30% off with the code <strong>VICTORIA30 </strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>LUCKYDAD</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
@@ -206,7 +205,7 @@
         "associated_products_YXTBbY": {
           "type": "associated_products",
           "settings": {
-            "title": "COMPLETE YOUR BENTLEY EXPERIENCE",
+            "title": "ADD YOUR FREE BENTLEY RIDE-ON CAR",
             "stack_products": false,
             "products_count": 5,
             "background": "",
@@ -218,6 +217,12 @@
           "disabled": true,
           "settings": {
             "text": "<p>* Please note that the Bentley Electric Cars are currently on Pre-order and will ship once stock is available. <br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
+          }
+        },
+        "text_tj43wf": {
+          "type": "text",
+          "settings": {
+            "text": "<p>* Please note that Bentley Electric Cars are available in limited stocks only. Offer is valid while supplies last.<br/><br/>* Free Car offer cannot be combined with any other discount codes or offers.</p>"
           }
         }
       },
@@ -239,7 +244,8 @@
         "offer_WtbX38",
         "offer_EWXTY8",
         "associated_products_YXTBbY",
-        "text_DXPhKT"
+        "text_DXPhKT",
+        "text_tj43wf"
       ],
       "settings": {
         "full_width": true,
