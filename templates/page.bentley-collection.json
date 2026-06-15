@@ -668,7 +668,7 @@
         "heading_CWJejp": {
           "type": "heading",
           "settings": {
-            "text": "STROLL IN STYLE WITH OUR SPRING RIDES SALE",
+            "text": "FATHER’S DAY BENTLEY TRIKE SALE",
             "heading_tag": "h3",
             "text_color": "#ffffff",
             "gradient": ""
@@ -677,7 +677,7 @@
         "heading_AK46LN": {
           "type": "heading",
           "settings": {
-            "text": "Choose between getting a 30% off with the code VICTORIA30 or getting a FREE Bentley Electric Car with your Bentley Trike purchase",
+            "text": "Choose your Father’s Day deal: get 30% OFF with code LUCKYDAD or receive a FREE Bentley Electric Car with your Bentley Trike purchase.",
             "heading_tag": "h6",
             "text_color": "",
             "gradient": ""
@@ -713,7 +713,6 @@
         "button_eAPMyD",
         "button_DzWwPq"
       ],
-      "disabled": true,
       "custom_css": [
         "{padding-top: 20px;}"
       ],
