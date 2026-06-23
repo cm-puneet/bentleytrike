@@ -668,16 +668,23 @@
         "heading_CWJejp": {
           "type": "heading",
           "settings": {
-            "text": "FATHER’S DAY BENTLEY TRIKE SALE",
+            "text": "CHOOSE YOUR PRIME DAY DEAL",
             "heading_tag": "h3",
             "text_color": "#ffffff",
             "gradient": ""
           }
         },
+        "richtext_9KLkUB": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Get a <strong>FREE Electric Ride-On Car</strong> with purchase of a Bentley Trike OR save <strong>30% sitewide</strong>! Code: <strong>PRIMEDAY</strong></p>"
+          }
+        },
         "heading_AK46LN": {
           "type": "heading",
+          "disabled": true,
           "settings": {
-            "text": "Choose your Father’s Day deal: get 30% OFF with code LUCKYDAD or receive a FREE Bentley Electric Car with your Bentley Trike purchase.",
+            "text": "Get a FREE Electric Ride-On Car with purchase of a Bentley Trike OR save 30% sitewide! Code: PRIMEDAY",
             "heading_tag": "h6",
             "text_color": "",
             "gradient": ""
@@ -709,6 +716,7 @@
       },
       "block_order": [
         "heading_CWJejp",
+        "richtext_9KLkUB",
         "heading_AK46LN",
         "button_eAPMyD",
         "button_DzWwPq"
