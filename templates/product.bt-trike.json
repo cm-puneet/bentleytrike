@@ -15,8 +15,8 @@
         "heading_qeQfAK": {
           "type": "heading",
           "settings": {
-            "text": "Father's Day Sale",
-            "heading_tag": "h1",
+            "text": "CHOOSE YOUR PRIME DAY DEAL",
+            "heading_tag": "h3",
             "text_color": "#ffffff",
             "gradient": ""
           }
@@ -24,7 +24,7 @@
         "richtext_nwiEyF": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Choose your Father’s Day deal: get 30% OFF with code <strong>LUCKYDAD </strong>or receive a FREE Bentley Electric Car with your Bentley Trike purchase.</p>"
+            "content": "<p>Get a <strong>FREE Electric Ride-On Car</strong> with purchase of a Bentley Trike OR save <strong>30% sitewide</strong>! Code: <strong>PRIMEDAY</strong></p>"
           }
         },
         "heading_gxDWgG": {
