@@ -14,15 +14,14 @@
       "blocks": {
         "image_XiWCHQ": {
           "type": "image",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/BT_CA_-_HP_2_4.png",
             "mobile_image": "shopify://shop_images/Bentley_CA_-_Mobile.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-end-center text-center",
             "desktop_text_position": "sm:place-self-center-start sm:text-start",
-            "subheading": "Stroll in style with our Spring Rides Sale",
-            "title": "Get 30% off or a FREE Bentley Electric Ride-on Car!",
+            "subheading": "Celebrate Canada Day in Style",
+            "title": "Get 30% Off Sitewide or a FREE Bentley Ride-On Car!",
             "heading_tag": "h2",
             "button_text": "SHOP NOW",
             "button_link": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
@@ -38,6 +37,7 @@
         },
         "image_GwV6Xh": {
           "type": "image",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/BT_CA_-_HP_2_4.png",
             "mobile_image": "shopify://shop_images/Bentley_CA_-_Mobile.png",
