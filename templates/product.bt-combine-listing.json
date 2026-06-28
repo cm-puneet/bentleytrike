@@ -15,7 +15,7 @@
         "heading_hhgzXD": {
           "type": "heading",
           "settings": {
-            "text": "CHOOSE YOUR PRIME DAY DEAL",
+            "text": "Celebrate Canada Day in Style",
             "heading_tag": "h3",
             "text_color": "#ffffff",
             "gradient": ""
@@ -24,7 +24,7 @@
         "richtext_BF3h8M": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Get a <strong>FREE Electric Ride-On Car</strong> with purchase of a Bentley Trike OR save <strong>30% sitewide</strong>! Code: <strong>PRIMEDAY</strong></p>"
+            "content": "<p>Get a <strong>FREE Bentley Electric Ride-On Car </strong>with purchase of Bentley Trike OR <strong>30% OFF </strong>sitewide with code: <strong>CANADA30</strong></p>"
           }
         },
         "heading_q7Lg96": {
@@ -99,7 +99,7 @@
             "icon": "picto-gift",
             "icon_width": 24,
             "title": "CHOOSE YOUR OFFER",
-            "content": "<p>OFFER 1: Get 30% off with the code <strong>PRIMEDAY</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>CANADA30</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
