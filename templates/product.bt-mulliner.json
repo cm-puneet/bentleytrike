@@ -102,8 +102,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "CHOOSE YOUR OFFER",
-            "content": "<p>OFFER 1: Get 30% off with the code <strong>SUMMERTRIKES</strong></p>",
+            "title": "OFFER",
+            "content": "<p>Get 30% off with the code <strong>SUMMERTRIKES</strong></p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
