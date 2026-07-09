@@ -209,7 +209,7 @@
         "associated_products_YXTBbY": {
           "type": "associated_products",
           "settings": {
-            "title": "COMPLETE THE BENTLEY GARAGE",
+            "title": "COMPLETE THE BENTLEY EXPERIENCE",
             "stack_products": false,
             "products_count": 5,
             "background": "",
@@ -225,6 +225,7 @@
         },
         "text_YFTp3C": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "<p>* Please note that some Bentley Electric Cars are currently on Pre-order and will ship once stock is available. </p>"
           }
