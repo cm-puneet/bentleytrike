@@ -668,8 +668,8 @@
         "heading_CWJejp": {
           "type": "heading",
           "settings": {
-            "text": "Welcome Summer in Style",
-            "heading_tag": "h3",
+            "text": "Sunset Sessions Sale",
+            "heading_tag": "h2",
             "text_color": "#ffffff",
             "gradient": ""
           }
@@ -677,7 +677,7 @@
         "richtext_9KLkUB": {
           "type": "richtext",
           "settings": {
-            "content": "<p><strong>30% OFF </strong>sitewide with code: <strong>SUMMERTRIKES</strong></p>"
+            "content": "<p>End summer days in style! Take <strong>30% OFF</strong> sitewide with code: <strong>SUMMERTRIKES</strong></p>"
           }
         },
         "heading_AK46LN": {
