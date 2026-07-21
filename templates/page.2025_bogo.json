@@ -152,8 +152,8 @@
         "heading_MLMq4i": {
           "type": "heading",
           "settings": {
-            "text": "🔥 HOT SUMMER DEALS",
-            "heading_tag": "h3",
+            "text": "SUNSET SESSIONS SALE",
+            "heading_tag": "h2",
             "text_color": "#ffffff",
             "gradient": ""
           }
@@ -161,7 +161,7 @@
         "richtext_3HKUM4": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Score <strong>30% OFF</strong> the ultimate luxury kids' trike. Code: <strong>SUMMERTRIKES</strong></p>"
+            "content": "<p>End summer days in style! Take <strong>30% OFF</strong> sitewide with code: <strong>SUMMERTRIKES</strong></p>"
           }
         },
         "heading_NKCgwn": {
@@ -238,8 +238,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "🔥 HOT SUMMER DEALS",
-            "content": "<p>Score <strong>30% OFF</strong> the ultimate luxury kids' trike. Code: <strong>SUMMERTRIKES</strong></p>",
+            "title": "SUNSET SESSIONS SALE",
+            "content": "<p>End summer days in style! Take <strong>30% OFF</strong> sitewide with code: <strong>SUMMERTRIKES</strong></p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
