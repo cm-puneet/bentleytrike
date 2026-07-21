@@ -15,7 +15,7 @@
         "heading_qeQfAK": {
           "type": "heading",
           "settings": {
-            "text": "Welcome Summer in Style",
+            "text": "Sunset Sessions Sale",
             "heading_tag": "h3",
             "text_color": "#ffffff",
             "gradient": ""
@@ -98,8 +98,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "HOT SUMMER DEALS",
-            "content": "<p>Get 30% off with the code <strong>SUMMERTRIKES</strong></p>",
+            "title": "SUNSET SESSIONS SALE",
+            "content": "<p>End summer days in style! Take <strong>30% OFF</strong> sitewide with code: <strong>SUMMERTRIKES</strong></p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
