@@ -10150,3 +10150,4 @@ z-index:9999 !important;
   --content-over-media-height: inherit;
 }
 }
+#chat-button{z-index:0 !important}
