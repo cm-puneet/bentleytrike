@@ -15,7 +15,7 @@
         "heading_hhgzXD": {
           "type": "heading",
           "settings": {
-            "text": "Sunset Sessions",
+            "text": "THE ULTIMATE SUMMER DEAL",
             "heading_tag": "h3",
             "text_color": "#ffffff",
             "gradient": ""
@@ -24,7 +24,7 @@
         "richtext_BF3h8M": {
           "type": "richtext",
           "settings": {
-            "content": "<p>End summer days in style! Take <strong>30% OFF</strong> sitewide with code: <strong>SUMMERTRIKES</strong></p>"
+            "content": "<p>Choose a <strong>FREE Electric Ride-On </strong>with trike purchase OR take 30% OFF with code: <strong>SUMMERTRIKES</strong></p>"
           }
         },
         "heading_q7Lg96": {
@@ -98,8 +98,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 24,
-            "title": "SUNSET SESSIONS",
-            "content": "<p>End summer days in style! Take <strong>30% OFF</strong> sitewide with code: <strong>SUMMERTRIKES</strong></p>",
+            "title": "CHOOSE YOUR OFFER",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>SUMMERTRIKES</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car</strong> with the purchase of a Bentley Trike at full price.</p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
@@ -212,7 +212,7 @@
         "associated_products_YXTBbY": {
           "type": "associated_products",
           "settings": {
-            "title": "COMPLETE THE BENTLEY EXPERIENCE",
+            "title": "ADD YOUR FREE BENTLEY RIDE-ON CAR",
             "stack_products": false,
             "products_count": 5,
             "background": "",
