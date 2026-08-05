@@ -152,7 +152,7 @@
         "heading_MLMq4i": {
           "type": "heading",
           "settings": {
-            "text": "THE ULTIMATE SUMMER DEAL",
+            "text": "THE BACK TO SCHOOL SPECIAL",
             "heading_tag": "h2",
             "text_color": "#ffffff",
             "gradient": ""
@@ -161,7 +161,7 @@
         "richtext_3HKUM4": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Choose a <strong>FREE Electric Ride-On </strong>with trike purchase OR take 30% OFF with code: <strong>SUMMERTRIKES</strong></p>"
+            "content": "<p>30% OFF sitewide using code SCHOOL30 OR a FREE electric ride-on with your Trike purchase</p>"
           }
         },
         "heading_NKCgwn": {
@@ -239,7 +239,7 @@
             "icon": "picto-gift",
             "icon_width": 20,
             "title": "CHOOSE YOUR OFFER",
-            "content": "<p>OFFER 1: Get 30% off with the code <strong>SUMMERTRIKES</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car</strong> with the purchase of a Bentley Trike at full price.</p>",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>SCHOOL30</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car</strong> with the purchase of a Bentley Trike at full price.</p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
