@@ -161,7 +161,7 @@
         "richtext_3HKUM4": {
           "type": "richtext",
           "settings": {
-            "content": "<p>30% OFF sitewide using code SCHOOL30 OR a FREE electric ride-on with your Trike purchase</p>"
+            "content": "<p>30% OFF sitewide using code <strong>SCHOOL30</strong> OR a FREE electric ride-on with your Trike purchase</p>"
           }
         },
         "heading_NKCgwn": {
