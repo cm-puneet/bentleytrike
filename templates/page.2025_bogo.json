@@ -152,7 +152,7 @@
         "heading_MLMq4i": {
           "type": "heading",
           "settings": {
-            "text": "LABOUR DAY SALE",
+            "text": "AUTUMN STROLLS EVENT",
             "heading_tag": "h2",
             "text_color": "#ffffff",
             "gradient": ""
@@ -161,7 +161,7 @@
         "richtext_3HKUM4": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Score <strong>30% OFF</strong> the ultimate luxury kids' trike. Use code: <strong>LABOUR30</strong></p>"
+            "content": "<p>Elevate your daily stroll with <strong>30% OFF</strong> using code: <strong>FALLVIP</strong></p>"
           }
         },
         "heading_NKCgwn": {
@@ -238,8 +238,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "LABOUR DAY SALE",
-            "content": "<p>Score <strong>30% OFF</strong> the ultimate luxury kids' trike. Use code: <strong>LABOUR30</strong></p>",
+            "title": "AUTUMN STROLLS EVENT",
+            "content": "<p>Elevate your daily stroll with <strong>30% OFF</strong> using code: <strong>FALLVIP</strong></p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
