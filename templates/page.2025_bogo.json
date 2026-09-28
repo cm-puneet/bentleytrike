@@ -152,7 +152,7 @@
         "heading_MLMq4i": {
           "type": "heading",
           "settings": {
-            "text": "AUTUMN STROLLS EVENT",
+            "text": "THANKSGIVING SALE",
             "heading_tag": "h2",
             "text_color": "#ffffff",
             "gradient": ""
@@ -161,7 +161,7 @@
         "richtext_3HKUM4": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Elevate your daily stroll with <strong>30% OFF</strong> using code: <strong>FALLVIP</strong></p>"
+            "content": "<p>Get a <strong>FREE Electric Car</strong> with your trike purchase OR take <strong>30% OFF</strong> sitewide with code: <strong>THANKS30</strong></p>"
           }
         },
         "heading_NKCgwn": {
@@ -238,8 +238,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "AUTUMN STROLLS EVENT",
-            "content": "<p>Elevate your daily stroll with <strong>30% OFF</strong> using code: <strong>FALLVIP</strong></p>",
+            "title": "THANKSGIVING SALE",
+            "content": "<p>Get a <strong>FREE Electric Car</strong> with your trike purchase OR take <strong>30% OFF</strong> sitewide with code: <strong>THANKS30</strong></p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
