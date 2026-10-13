@@ -135,18 +135,22 @@
           "type": "badges",
           "settings": {}
         },
-        "price": {
-          "type": "price",
-          "settings": {
-            "show_taxes_notice": false
-          }
-        },
         "rating": {
           "type": "rating",
           "settings": {
             "show_empty": false,
             "show_rating_pos": true
           }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
         },
         "offer_hGMrdA": {
           "type": "offer",
@@ -174,10 +178,6 @@
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
-        },
-        "payment_terms": {
-          "type": "payment_terms",
-          "settings": {}
         },
         "inventory_Cibqgw": {
           "type": "inventory",
@@ -315,11 +315,11 @@
       "block_order": [
         "title",
         "badges",
-        "price",
         "rating",
+        "price",
+        "payment_terms",
         "offer_hGMrdA",
         "offer_Krbwa8",
-        "payment_terms",
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
         "variant_picker",

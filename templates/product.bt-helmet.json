@@ -22,18 +22,22 @@
           "type": "badges",
           "settings": {}
         },
-        "price": {
-          "type": "price",
-          "settings": {
-            "show_taxes_notice": false
-          }
-        },
         "rating": {
           "type": "rating",
           "settings": {
             "show_empty": false,
             "show_rating_pos": false
           }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
         },
         "inventory_Cibqgw": {
           "type": "inventory",
@@ -99,10 +103,6 @@
             "payment_button_text_color": ""
           }
         },
-        "payment_terms": {
-          "type": "payment_terms",
-          "settings": {}
-        },
         "offer_TCPYbU": {
           "type": "offer",
           "settings": {
@@ -158,8 +158,9 @@
       "block_order": [
         "title",
         "badges",
-        "price",
         "rating",
+        "price",
+        "payment_terms",
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
         "quantity_selector",
@@ -167,7 +168,6 @@
         "description",
         "variant_picker",
         "buy_buttons",
-        "payment_terms",
         "offer_TCPYbU",
         "offer_WtbX38",
         "offer_EWXTY8",
