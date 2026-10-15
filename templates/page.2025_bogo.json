@@ -152,7 +152,7 @@
         "heading_MLMq4i": {
           "type": "heading",
           "settings": {
-            "text": "THANKSGIVING SALE",
+            "text": "HALLOWEEN SALE",
             "heading_tag": "h2",
             "text_color": "#ffffff",
             "gradient": ""
@@ -161,7 +161,7 @@
         "richtext_3HKUM4": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Get a <strong>FREE Electric Car</strong> with your trike purchase OR take <strong>30% OFF</strong> sitewide with code: <strong>THANKS30</strong></p>"
+            "content": "<p>Score 30% OFF your entire order for a limited time. Use code: HALLO30</p>"
           }
         },
         "heading_NKCgwn": {
@@ -238,8 +238,8 @@
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
-            "title": "THANKSGIVING SALE",
-            "content": "<p>Get a <strong>FREE Electric Car</strong> with your trike purchase OR take <strong>30% OFF</strong> sitewide with code: <strong>THANKS30</strong></p>",
+            "title": "HALLOWEEN SALE",
+            "content": "<p>Score 30% OFF your entire order for a limited time. Use code: HALLO30</p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
