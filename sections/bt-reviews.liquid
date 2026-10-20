@@ -1,0 +1,538 @@
+{% comment %}
+  Bentley Trike – Reviews ("What families tell us"). Centred, card-free columns with
+  initial avatars. Joins the sticky hero's right column when placed after it.
+{% endcomment %}
+
+{%- assign s = section.settings -%}
+
+<div data-bt-col>
+  <section
+    class="bt-rv bt-rv--d-{{ s.desktop_layout }} bt-rv--m-{{ s.mobile_layout }}{% if s.top_line %} bt-rv--line{% endif %}"
+    aria-label="{{ s.heading | strip_html | escape }}"
+    style="--bt-rv-bg: {{ s.c_bg }}; --bt-rv-text: {{ s.c_text }}; --bt-rv-muted: {{ s.c_text | color_modify: 'alpha', 0.72 }}; --bt-rv-faint: {{ s.c_text | color_modify: 'alpha', 0.55 }}; --bt-rv-line: {{ s.c_text | color_modify: 'alpha', 0.12 }}; --bt-rv-accent: {{ s.c_accent }}; --bt-rv-star: {{ s.c_stars }}; --bt-rv-av-bg: {{ s.c_avatar_bg }}; --bt-rv-av-text: {{ s.c_avatar_text }}; --bt-rv-per: {{ s.per_view }}; --bt-rv-pt: {{ s.pad_top }}px; --bt-rv-pb: {{ s.pad_bottom }}px;"
+  >
+    <div class="bt-rv__head">
+      {%- if s.eyebrow != blank -%}
+        <p class="bt-rv__eyebrow">{{ s.eyebrow }}</p>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 class="bt-rv__h">{{ s.heading }}</h2>
+      {%- endif -%}
+      {%- if s.show_summary -%}
+        <div class="bt-rv__summary">
+          <span class="bt-rv__stars bt-rv__stars--lg" role="img" aria-label="5 out of 5 stars">
+            {%- for i in (1..5) -%}
+              <svg width="18" height="18" viewBox="0 0 15 15" fill="currentColor" aria-hidden="true"><path d="M7.5 0l2.2 4.8 5.3.6-3.9 3.6 1.1 5.2-4.7-2.7-4.7 2.7 1.1-5.2L0 5.4l5.3-.6z"></path></svg>
+            {%- endfor -%}
+          </span>
+          {%- if s.summary_text != blank -%}
+            <span class="bt-rv__summary-t">{{ s.summary_text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="bt-rv__grid" data-rv-track>
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        {%- assign stars = b.rating -%}
+        {%- assign initial = b.author | strip | slice: 0 | upcase -%}
+        <figure class="bt-rv__item" {{ block.shopify_attributes }}>
+          <figcaption class="bt-rv__who">
+            <span class="bt-rv__avatar" aria-hidden="true">
+              {%- if b.avatar != blank -%}
+                {{ b.avatar | image_url: width: 120 | image_tag: loading: 'lazy', alt: '', width: 48, height: 48 }}
+              {%- else -%}
+                {{ initial }}
+              {%- endif -%}
+            </span>
+            <span class="bt-rv__name">{{ b.author }}</span>
+            {%- if b.verified and s.verified_label != blank -%}
+              <span class="bt-rv__verified">{{ s.verified_label }}</span>
+            {%- endif -%}
+          </figcaption>
+          <span class="bt-rv__stars" role="img" aria-label="{{ stars }} out of 5 stars">
+            {%- for i in (1..5) -%}
+              <svg class="{% if i > stars %}is-off{% endif %}" width="13" height="13" viewBox="0 0 15 15" fill="currentColor" aria-hidden="true"><path d="M7.5 0l2.2 4.8 5.3.6-3.9 3.6 1.1 5.2-4.7-2.7-4.7 2.7 1.1-5.2L0 5.4l5.3-.6z"></path></svg>
+            {%- endfor -%}
+          </span>
+          {%- if b.title != blank -%}
+            <h3 class="bt-rv__t">{{ b.title }}</h3>
+          {%- endif -%}
+          <blockquote class="bt-rv__q">{{ b.quote }}</blockquote>
+          {%- if b.note != blank -%}
+            <span class="bt-rv__note">{{ b.note }}</span>
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+    </div>
+    {%- if section.blocks.size > 1 -%}
+      <div class="bt-rv__nav">
+        <button type="button" class="bt-rv__arrow" data-rv-prev aria-label="Previous reviews">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+        </button>
+        <div class="bt-rv__dots">
+          {%- for block in section.blocks -%}
+            <button type="button" class="bt-rv__dot" data-rv-dot="{{ forloop.index0 }}" aria-label="Show review {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>
+          {%- endfor -%}
+        </div>
+        <button type="button" class="bt-rv__arrow" data-rv-next aria-label="Next reviews">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg>
+        </button>
+      </div>
+    {%- endif -%}
+  </section>
+</div>
+
+{% style %}
+  .bt-rv {
+    box-sizing: border-box;
+    display: block;
+    padding: var(--bt-rv-pt, 80px) clamp(20px, 4vw, 72px) var(--bt-rv-pb, 80px);
+    background: var(--bt-rv-bg);
+    color: var(--bt-rv-text);
+  }
+  .bt-rv * {
+    box-sizing: border-box;
+  }
+  .bt-rv--line {
+    border-top: 1px solid var(--bt-rv-line);
+  }
+  .bt-rv__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+    text-align: center;
+  }
+  .bt-rv__eyebrow {
+    margin: 0;
+    color: var(--bt-rv-accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .bt-rv__h {
+    margin: 0;
+    color: var(--bt-rv-text);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(30px, 3.2vw, 46px);
+    font-weight: 400;
+    line-height: 1.08;
+  }
+  .bt-rv__summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .bt-rv__summary-t {
+    color: var(--bt-rv-faint);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .bt-rv__stars {
+    display: inline-flex;
+    gap: 4px;
+    color: var(--bt-rv-star);
+  }
+  .bt-rv__stars--lg {
+    gap: 6px;
+  }
+  .bt-rv__stars .is-off {
+    opacity: 0.25;
+  }
+  .bt-rv__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 48px 40px;
+  }
+  .bt-rv__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    text-align: center;
+  }
+  .bt-rv__who {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .bt-rv__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bt-rv-av-bg);
+    color: var(--bt-rv-av-text);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 18px;
+    line-height: 1;
+  }
+  .bt-rv__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bt-rv__name {
+    color: var(--bt-rv-text);
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+  .bt-rv__verified {
+    color: var(--bt-rv-faint);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .bt-rv__t {
+    margin: 0;
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  .bt-rv__q {
+    max-width: 34ch;
+    margin: 0;
+    color: var(--bt-rv-muted);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  .bt-rv__note {
+    color: var(--bt-rv-faint);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  /* Slider controls */
+  .bt-rv__grid::-webkit-scrollbar {
+    display: none;
+  }
+  .bt-rv__nav {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .bt-rv__dots {
+    display: flex;
+    gap: 2px;
+  }
+  .bt-rv__dot {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .bt-rv__dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bt-rv-text);
+    opacity: 0.2;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s ease, opacity 0.25s ease, border-radius 0.25s ease;
+  }
+  .bt-rv__dot[aria-current='true']::after {
+    width: 18px;
+    border-radius: 3px;
+    opacity: 0.85;
+  }
+  .bt-rv__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--bt-rv-line);
+    color: var(--bt-rv-text);
+    cursor: pointer;
+    transition: box-shadow 0.15s ease-in-out, opacity 0.15s ease-in-out;
+  }
+  .bt-rv__arrow:hover {
+    box-shadow: inset 0 0 0 1px var(--bt-rv-text);
+  }
+  .bt-rv__arrow[disabled] {
+    cursor: default;
+    opacity: 0.3;
+  }
+  .bt-rv__dot:focus-visible,
+  .bt-rv__arrow:focus-visible {
+    outline: 2px solid var(--bt-rv-accent);
+    outline-offset: 2px;
+  }
+
+  /* Desktop slider */
+  @media (min-width: 750px) {
+    .bt-rv--d-slider .bt-rv__grid {
+      display: flex;
+      gap: 40px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .bt-rv--d-slider .bt-rv__item {
+      flex: 0 0 calc((100% - (var(--bt-rv-per, 3) - 1) * 40px) / var(--bt-rv-per, 3));
+      scroll-snap-align: start;
+    }
+    .bt-rv--d-slider .bt-rv__nav {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .bt-rv {
+      padding: calc(var(--bt-rv-pt, 80px) * 0.7) 16px calc(var(--bt-rv-pb, 80px) * 0.7);
+    }
+    .bt-rv__head {
+      margin-bottom: 36px;
+    }
+    .bt-rv__q {
+      font-size: 15px;
+    }
+    /* Phone swipe: one review at a time, the next one peeking in */
+    .bt-rv--m-swipe .bt-rv__grid {
+      display: flex;
+      gap: 16px;
+      margin: 0 -16px;
+      padding: 0 16px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding: 0 16px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .bt-rv--m-swipe .bt-rv__item {
+      flex: 0 0 86%;
+      padding: 4px 8px 0;
+      scroll-snap-align: center;
+    }
+    .bt-rv--m-swipe .bt-rv__nav {
+      display: flex;
+      margin-top: 24px;
+    }
+    .bt-rv__arrow {
+      display: none;
+    }
+    /* Phone stacked */
+    .bt-rv--m-stack .bt-rv__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .bt-rv--m-stack .bt-rv__item {
+      padding: 40px 0;
+      border-top: 1px solid var(--bt-rv-line);
+    }
+    .bt-rv--m-stack .bt-rv__item:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    function init(root) {
+      var track = root.querySelector('[data-rv-track]');
+      if (!track || track.dataset.rvReady) return;
+      track.dataset.rvReady = '1';
+      var dots = root.querySelectorAll('[data-rv-dot]');
+      var prev = root.querySelector('[data-rv-prev]');
+      var next = root.querySelector('[data-rv-next]');
+      var items = track.children;
+      var centred = function () {
+        return items[0] && getComputedStyle(items[0]).scrollSnapAlign.indexOf('center') > -1;
+      };
+      // offset of item i from where it would rest when snapped
+      var offset = function (i) {
+        var t = track.getBoundingClientRect();
+        var r = items[i].getBoundingClientRect();
+        if (centred()) return r.left + r.width / 2 - (t.left + t.width / 2);
+        return r.left - t.left - (parseFloat(getComputedStyle(track).paddingLeft) || 0);
+      };
+      var current = function () {
+        var best = 0;
+        var dist = Infinity;
+        for (var i = 0; i < items.length; i++) {
+          var d = Math.abs(offset(i));
+          if (d < dist) {
+            dist = d;
+            best = i;
+          }
+        }
+        return best;
+      };
+      var go = function (i) {
+        i = Math.max(0, Math.min(items.length - 1, i));
+        track.scrollBy({ left: offset(i), behavior: 'smooth' });
+      };
+      var sync = function () {
+        var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        // with several reviews in view the last ones can't snap to the start, so light the last dot at the end
+        var idx = atEnd && !centred() ? items.length - 1 : current();
+        dots.forEach(function (d, i) {
+          if (i === idx) d.setAttribute('aria-current', 'true');
+          else d.removeAttribute('aria-current');
+        });
+        if (prev) prev.disabled = track.scrollLeft < 4;
+        if (next) next.disabled = atEnd;
+      };
+      var raf = 0;
+      track.addEventListener(
+        'scroll',
+        function () {
+          if (raf) return;
+          raf = requestAnimationFrame(function () {
+            raf = 0;
+            sync();
+          });
+        },
+        { passive: true }
+      );
+      window.addEventListener('resize', sync);
+      dots.forEach(function (d, i) {
+        d.addEventListener('click', function () {
+          go(i);
+        });
+      });
+      if (prev)
+        prev.addEventListener('click', function () {
+          go(current() - 1);
+        });
+      if (next)
+        next.addEventListener('click', function () {
+          go(current() + 1);
+        });
+      sync();
+    }
+    function all() {
+      document.querySelectorAll('.bt-rv').forEach(init);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', all);
+    else all();
+    document.addEventListener('shopify:section:load', all);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Reviews",
+  "tag": "section",
+  "class": "bt-reviews-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Owner stories" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What families tell us." },
+    { "type": "checkbox", "id": "show_summary", "label": "Show overall rating", "default": true },
+    { "type": "text", "id": "summary_text", "label": "Overall rating text", "default": "4.8 / 5 from 972 reviews" },
+    { "type": "text", "id": "verified_label", "label": "Verified label", "default": "Verified customer" },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "All reviews in a row" },
+        { "value": "slider", "label": "Slider with arrows" }
+      ]
+    },
+    { "type": "range", "id": "per_view", "label": "Reviews in view (desktop slider)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Phone layout",
+      "default": "swipe",
+      "options": [
+        { "value": "swipe", "label": "Swipe one at a time" },
+        { "value": "stack", "label": "Stacked" }
+      ]
+    },
+    { "type": "checkbox", "id": "top_line", "label": "Show divider line on top", "default": true },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_accent", "label": "Small label", "default": "#a83f2f" },
+    { "type": "color", "id": "c_stars", "label": "Stars", "default": "#a83f2f" },
+    { "type": "color", "id": "c_avatar_bg", "label": "Avatar background", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_avatar_text", "label": "Avatar letter", "default": "#d9d0c5" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "author", "label": "Name", "default": "Autumn R." },
+        { "type": "checkbox", "id": "verified", "label": "Verified customer", "default": true },
+        { "type": "image_picker", "id": "avatar", "label": "Photo (optional)", "info": "Leave empty to show the first letter of the name" },
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Headline (optional)" },
+        { "type": "textarea", "id": "quote", "label": "Review", "default": "Absolutely love this product—so rich and classy!" },
+        { "type": "text", "id": "note", "label": "Small note", "info": "e.g. Owner since March, a city, or Bought as a gift" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "author": "Autumn R.",
+            "quote": "Absolutely love this product—so rich and classy! I get so many compliments. I wish I could afford a Bentley, but my daughter definitely can with this stroller!"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Irina D.",
+            "quote": "I bought this beautiful green Bentley car for my son and it has been an absolute joy! A fantastic gift that combines style, fun, and comfort—highly recommend!"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Raquel L.",
+            "quote": "We really enjoy our Bentley trike. It has turned our daily walks into a cherished routine. Beyond its performance, it’s a total head-turner with craftsmanship that truly stands out."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
