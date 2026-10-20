@@ -1,0 +1,1180 @@
+{% comment %}
+  Bentley Trike – Trike + Free Ride-On bundle builder.
+  Step 1: pick a Trike. Step 2: pick the free car. The summary shows "You pay / You save"
+  and adds both products to the cart in one click (optionally applying a discount code).
+  Joins the sticky hero's right column when placed directly after it.
+{% endcomment %}
+
+{%- liquid
+  assign s = section.settings
+  assign got_trike = false
+  assign got_car = false
+  for block in section.blocks
+    if block.type == 'trike' and block.settings.product != blank and got_trike == false
+      assign first_trike = block.settings.product
+      assign got_trike = true
+    elsif block.type == 'car' and block.settings.product != blank and got_car == false
+      assign first_car = block.settings.product
+      assign got_car = true
+    endif
+  endfor
+-%}
+
+<div data-bt-col>
+  <bt-bundle
+    class="bt-bb bt-bb--mt-{{ s.m_layout_trikes }} bt-bb--mc-{{ s.m_layout_cars }} bt-bb--mv-{{ s.m_per_view }}"
+    id="bt-claim"
+    data-code="{{ s.discount_code | strip | escape }}"
+    data-after="{{ s.after_add }}"
+    data-currency="{{ cart.currency.iso_code }}"
+    data-locale="{{ request.locale.iso_code }}"
+    style="--bt-bb-bg: {{ s.c_bg }}; --bt-bb-card: {{ s.c_card }}; --bt-bb-summary: {{ s.c_summary_bg }}; --bt-bb-text: {{ s.c_text }}; --bt-bb-muted: {{ s.c_text | color_modify: 'alpha', 0.7 }}; --bt-bb-line: {{ s.c_text | color_modify: 'alpha', 0.12 }}; --bt-bb-accent: {{ s.c_accent }}; --bt-bb-sale: {{ s.c_sale }}; --bt-bb-badge: {{ s.c_badge }}; --bt-bb-btn-bg: {{ s.c_btn_bg }}; --bt-bb-btn-text: {{ s.c_btn_text }}; --bt-bb-cols-t: {{ s.cols_trikes }}; --bt-bb-cols-c: {{ s.cols_cars }}; --bt-bb-pt: {{ s.pad_top }}px; --bt-bb-pb: {{ s.pad_bottom }}px;"
+  >
+    <div class="bt-bb__step">
+      <div class="bt-bb__head">
+        <div>
+          {%- if s.step1_eyebrow != blank -%}
+            <p class="bt-bb__eyebrow">{{ s.step1_eyebrow }}</p>
+          {%- endif -%}
+          <h2 class="bt-bb__h">{{ s.step1_heading }}</h2>
+        </div>
+        <span class="bt-bb__sel">{{ s.selected_label }} <strong data-sel-trike></strong></span>
+      </div>
+      {%- if s.m_layout_trikes == 'swipe' and s.swipe_hint != blank -%}
+        <p class="bt-bb__swipe-hint bt-bb__swipe-hint--t">{{ s.swipe_hint }}</p>
+      {%- endif -%}
+      <div class="bt-bb__grid bt-bb__grid--t">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'trike' -%}
+            {%- assign p = block.settings.product -%}
+            {%- if p != blank -%}
+              {%- assign v = p.selected_or_first_available_variant -%}
+              {%- liquid
+                assign show_sw = s.show_colors_trikes
+                assign only_name = ''
+                assign only = block.settings.only_variant | strip | downcase
+                if only != blank
+                  for vv in p.variants
+                    assign vt = vv.title | downcase
+                    if vt == only or vt contains only
+                      assign v = vv
+                      assign only_name = vv.title
+                      break
+                    endif
+                  endfor
+                  assign show_sw = false
+                endif
+                if show_sw == false and only_name == '' and p.has_only_default_variant == false
+                  assign only_name = v.title
+                endif
+              -%}
+              {%- assign label = block.settings.label | default: p.title -%}
+              {%- assign on_sale = false -%}
+              {%- if v.compare_at_price > v.price -%}
+                {%- assign on_sale = true -%}
+              {%- endif -%}
+              {%- assign v_img = v.featured_image | default: p.featured_image -%}
+              <div class="bt-bb__cell" {{ block.shopify_attributes }}>
+                <button
+                  type="button"
+                  class="bt-bb__pick"
+                  aria-pressed="false"
+                  data-pick="trike"
+                  data-variant="{{ v.id }}"
+                  data-price="{{ v.price }}"
+                  data-compare="{% if on_sale %}{{ v.compare_at_price }}{% else %}0{% endif %}"
+                  data-title="{{ p.title | escape }}"
+                  data-label="{{ label | escape }}"
+                  data-vname="{{ only_name | escape }}"
+                  data-img="{{ v_img | image_url: width: 700 }}"
+                  data-available="{% if v.available %}1{% else %}0{% endif %}"
+                >
+                  <span class="bt-bb__badges">
+                    {%- if block.settings.badge != blank -%}
+                      <span class="bt-bb__badge">{{ block.settings.badge }}</span>
+                    {%- endif -%}
+                    {%- if on_sale and s.show_save -%}
+                      <span class="bt-bb__badge bt-bb__badge--sale">{{ s.save_label }} {{ v.compare_at_price | minus: v.price | money_without_trailing_zeros }}</span>
+                    {%- endif -%}
+                    {%- unless p.available -%}
+                      <span class="bt-bb__badge">{{ s.soldout_label }}</span>
+                    {%- endunless -%}
+                  </span>
+                  <span class="bt-bb__tick" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                  </span>
+                  <span class="bt-bb__img">
+                    {%- if v_img -%}
+                      {%- assign img_alt = v_img.alt | default: p.title | escape -%}
+                      {{ v_img | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '(min-width: 750px) 20vw, 45vw', alt: img_alt }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    {%- endif -%}
+                  </span>
+                  <span class="bt-bb__meta">
+                    {%- if block.settings.swatch != blank -%}
+                      <span class="bt-bb__swatch"><i style="background: {{ block.settings.swatch }};"></i>{{ label }}</span>
+                    {%- endif -%}
+                    <span class="bt-bb__title">{{ p.title }}</span>
+                    <span class="bt-bb__price">
+                      <b data-card-price{% if on_sale %} class="is-sale"{% endif %}>{{ v.price | money }}</b>
+                      <s data-card-compare{% unless on_sale %} hidden{% endunless %}>{% if on_sale %}{{ v.compare_at_price | money }}{% endif %}</s>
+                    </span>
+                  </span>
+                </button>
+                {%- if show_sw and p.has_only_default_variant == false -%}
+                  {%- liquid
+                    assign copt_pos = 0
+                    for opt in p.options_with_values
+                      assign oname = opt.name | downcase
+                      if oname contains 'colo'
+                        assign copt_pos = forloop.index
+                        assign copt = opt
+                        break
+                      endif
+                    endfor
+                  -%}
+                  <div class="bt-bb__swatches" role="group" aria-label="{{ s.color_label | escape }}">
+                    {%- for vv in p.variants limit: 12 -%}
+                      {%- liquid
+                        assign vname = vv.title
+                        assign sw_color = blank
+                        assign sw_img = blank
+                        if copt_pos > 0
+                          assign idx = copt_pos | minus: 1
+                          assign vname = vv.options[idx]
+                          for val in copt.values
+                            if val.name == vname
+                              if val.swatch.color
+                                assign sw_color = val.swatch.color
+                              elsif val.swatch.image
+                                assign sw_img = val.swatch.image | image_url: width: 80
+                              endif
+                              break
+                            endif
+                          endfor
+                        endif
+                        if sw_color == blank and sw_img == blank and vv.featured_image
+                          assign sw_img = vv.featured_image | image_url: width: 80
+                        endif
+                        assign vv_img = vv.featured_image | default: p.featured_image
+                        assign sw_cls = 'bt-bb__sw'
+                        if sw_color == blank and sw_img == blank
+                          assign sw_cls = sw_cls | append: ' bt-bb__sw--text'
+                        endif
+                        unless vv.available
+                          assign sw_cls = sw_cls | append: ' is-out'
+                        endunless
+                      -%}
+                      <button
+                        type="button"
+                        class="{{ sw_cls }}"
+                        data-swatch
+                        data-variant="{{ vv.id }}"
+                        data-price="{{ vv.price }}"
+                        data-compare="{% if vv.compare_at_price > vv.price %}{{ vv.compare_at_price }}{% else %}0{% endif %}"
+                        data-img="{{ vv_img | image_url: width: 700 }}"
+                        data-available="{% if vv.available %}1{% else %}0{% endif %}"
+                        data-name="{{ vname | escape }}"
+                        aria-pressed="{% if vv.id == v.id %}true{% else %}false{% endif %}"
+                        aria-label="{{ vname | escape }}{% unless vv.available %} – {{ s.soldout_label | escape }}{% endunless %}"
+                        title="{{ vname | escape }}"
+                      >
+                        {%- if sw_color != blank -%}
+                          <span class="bt-bb__sw-dot" style="background-color: {{ sw_color }};"></span>
+                        {%- elsif sw_img != blank -%}
+                          <span class="bt-bb__sw-dot" style="background-image: url('{{ sw_img }}');"></span>
+                        {%- else -%}
+                          <span class="bt-bb__sw-txt">{{ vname }}</span>
+                        {%- endif -%}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- else -%}
+              <div class="bt-bb__cell" {{ block.shopify_attributes }}>
+                <div class="bt-bb__pick">
+                  <span class="bt-bb__img">{{ 'product-1' | placeholder_svg_tag }}</span>
+                  <span class="bt-bb__meta"><span class="bt-bb__title">Choose a Trike product</span></span>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="bt-bb__step">
+      <div class="bt-bb__head">
+        <div>
+          {%- if s.step2_eyebrow != blank -%}
+            <p class="bt-bb__eyebrow">{{ s.step2_eyebrow }}</p>
+          {%- endif -%}
+          <h2 class="bt-bb__h">{{ s.step2_heading }}</h2>
+        </div>
+        <span class="bt-bb__sel">{{ s.selected_label }} <strong data-sel-car></strong></span>
+      </div>
+      {%- if s.m_layout_cars == 'swipe' and s.swipe_hint != blank -%}
+        <p class="bt-bb__swipe-hint bt-bb__swipe-hint--c">{{ s.swipe_hint }}</p>
+      {%- endif -%}
+      <div class="bt-bb__grid bt-bb__grid--c">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'car' -%}
+            {%- assign p = block.settings.product -%}
+            {%- if p != blank -%}
+              {%- assign v = p.selected_or_first_available_variant -%}
+              {%- liquid
+                assign show_sw = s.show_colors_cars
+                assign only_name = ''
+                assign only = block.settings.only_variant | strip | downcase
+                if only != blank
+                  for vv in p.variants
+                    assign vt = vv.title | downcase
+                    if vt == only or vt contains only
+                      assign v = vv
+                      assign only_name = vv.title
+                      break
+                    endif
+                  endfor
+                  assign show_sw = false
+                endif
+                if show_sw == false and only_name == '' and p.has_only_default_variant == false
+                  assign only_name = v.title
+                endif
+              -%}
+              {%- assign label = block.settings.label | default: p.title -%}
+              {%- assign v_img = v.featured_image | default: p.featured_image -%}
+              <div class="bt-bb__cell" {{ block.shopify_attributes }}>
+                <button
+                  type="button"
+                  class="bt-bb__pick"
+                  aria-pressed="false"
+                  data-pick="car"
+                  data-variant="{{ v.id }}"
+                  data-price="{{ v.price }}"
+                  data-compare="0"
+                  data-title="{{ p.title | escape }}"
+                  data-label="{{ label | escape }}"
+                  data-vname="{{ only_name | escape }}"
+                  data-img="{{ v_img | image_url: width: 700 }}"
+                  data-available="{% if v.available %}1{% else %}0{% endif %}"
+                >
+                  <span class="bt-bb__badges">
+                    <span class="bt-bb__badge bt-bb__badge--free">{{ s.free_badge }}</span>
+                    {%- unless p.available -%}
+                      <span class="bt-bb__badge">{{ s.soldout_label }}</span>
+                    {%- endunless -%}
+                  </span>
+                  <span class="bt-bb__tick" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                  </span>
+                  <span class="bt-bb__img">
+                    {%- if v_img -%}
+                      {%- assign img_alt = v_img.alt | default: p.title | escape -%}
+                      {{ v_img | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '(min-width: 750px) 20vw, 45vw', alt: img_alt }}
+                    {%- else -%}
+                      {{ 'product-2' | placeholder_svg_tag }}
+                    {%- endif -%}
+                  </span>
+                  <span class="bt-bb__meta">
+                    <span class="bt-bb__title">{{ p.title }}</span>
+                    <span class="bt-bb__price"><span class="bt-bb__free">{{ s.free_word }}</span><s data-card-price>{{ v.price | money }}</s></span>
+                  </span>
+                </button>
+                {%- if show_sw and p.has_only_default_variant == false -%}
+                  {%- liquid
+                    assign copt_pos = 0
+                    for opt in p.options_with_values
+                      assign oname = opt.name | downcase
+                      if oname contains 'colo'
+                        assign copt_pos = forloop.index
+                        assign copt = opt
+                        break
+                      endif
+                    endfor
+                  -%}
+                  <div class="bt-bb__swatches" role="group" aria-label="{{ s.color_label | escape }}">
+                    {%- for vv in p.variants limit: 12 -%}
+                      {%- liquid
+                        assign vname = vv.title
+                        assign sw_color = blank
+                        assign sw_img = blank
+                        if copt_pos > 0
+                          assign idx = copt_pos | minus: 1
+                          assign vname = vv.options[idx]
+                          for val in copt.values
+                            if val.name == vname
+                              if val.swatch.color
+                                assign sw_color = val.swatch.color
+                              elsif val.swatch.image
+                                assign sw_img = val.swatch.image | image_url: width: 80
+                              endif
+                              break
+                            endif
+                          endfor
+                        endif
+                        if sw_color == blank and sw_img == blank and vv.featured_image
+                          assign sw_img = vv.featured_image | image_url: width: 80
+                        endif
+                        assign vv_img = vv.featured_image | default: p.featured_image
+                        assign sw_cls = 'bt-bb__sw'
+                        if sw_color == blank and sw_img == blank
+                          assign sw_cls = sw_cls | append: ' bt-bb__sw--text'
+                        endif
+                        unless vv.available
+                          assign sw_cls = sw_cls | append: ' is-out'
+                        endunless
+                      -%}
+                      <button
+                        type="button"
+                        class="{{ sw_cls }}"
+                        data-swatch
+                        data-variant="{{ vv.id }}"
+                        data-price="{{ vv.price }}"
+                        data-compare="{% if vv.compare_at_price > vv.price %}{{ vv.compare_at_price }}{% else %}0{% endif %}"
+                        data-img="{{ vv_img | image_url: width: 700 }}"
+                        data-available="{% if vv.available %}1{% else %}0{% endif %}"
+                        data-name="{{ vname | escape }}"
+                        aria-pressed="{% if vv.id == v.id %}true{% else %}false{% endif %}"
+                        aria-label="{{ vname | escape }}{% unless vv.available %} – {{ s.soldout_label | escape }}{% endunless %}"
+                        title="{{ vname | escape }}"
+                      >
+                        {%- if sw_color != blank -%}
+                          <span class="bt-bb__sw-dot" style="background-color: {{ sw_color }};"></span>
+                        {%- elsif sw_img != blank -%}
+                          <span class="bt-bb__sw-dot" style="background-image: url('{{ sw_img }}');"></span>
+                        {%- else -%}
+                          <span class="bt-bb__sw-txt">{{ vname }}</span>
+                        {%- endif -%}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- else -%}
+              <div class="bt-bb__cell" {{ block.shopify_attributes }}>
+                <div class="bt-bb__pick">
+                  <span class="bt-bb__img">{{ 'product-2' | placeholder_svg_tag }}</span>
+                  <span class="bt-bb__meta"><span class="bt-bb__title">Choose a Ride-On product</span></span>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="bt-bb__summary">
+      <div class="bt-bb__pair">
+        {%- if got_trike and first_trike.featured_image -%}
+          <img
+            data-sum-trike-img
+            src="{{ first_trike.featured_image | image_url: width: 700 }}"
+            width="700"
+            height="700"
+            loading="lazy"
+            alt="{{ first_trike.title | escape }}"
+          >
+        {%- endif -%}
+        <span class="bt-bb__plus" aria-hidden="true">+</span>
+        {%- if got_car and first_car.featured_image -%}
+          <img
+            data-sum-car-img
+            src="{{ first_car.featured_image | image_url: width: 700 }}"
+            width="700"
+            height="700"
+            loading="lazy"
+            alt="{{ first_car.title | escape }}"
+          >
+        {%- endif -%}
+      </div>
+      <div class="bt-bb__box">
+        {%- if s.summary_eyebrow != blank -%}
+          <p class="bt-bb__eyebrow bt-bb__eyebrow--tight">{{ s.summary_eyebrow }}</p>
+        {%- endif -%}
+        <h3 class="bt-bb__box-h" data-sum-head>—</h3>
+        <div class="bt-bb__lines">
+          <div class="bt-bb__line">
+            <span data-sum-trike-title>—</span><span><b data-sum-trike-price></b></span>
+          </div>
+          <div class="bt-bb__line">
+            <span data-sum-car-title>—</span><span><s data-sum-car-price></s><b class="bt-bb__free">{{ s.free_word }}</b></span>
+          </div>
+          <div class="bt-bb__total">
+            <span>{{ s.you_pay_label }}</span><span data-sum-total></span>
+          </div>
+          <div class="bt-bb__save">{{ s.you_save_label }} <span data-sum-save></span></div>
+        </div>
+        <button type="button" class="bt-bb__btn" data-add>{{ s.button_label }}</button>
+        <p class="bt-bb__err" data-err role="alert"></p>
+        {%- if s.fine_print != blank -%}
+          <p class="bt-bb__fine">{{ s.fine_print }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </bt-bundle>
+</div>
+
+{% style %}
+  .bt-bb {
+    display: block;
+    background: var(--bt-bb-bg);
+    color: var(--bt-bb-text);
+  }
+  .bt-bb * {
+    box-sizing: border-box;
+  }
+  .bt-bb__step {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: var(--bt-bb-pt, 80px) clamp(20px, 4vw, 72px) 40px;
+  }
+  .bt-bb__step + .bt-bb__step {
+    padding-top: 40px;
+  }
+  .bt-bb__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .bt-bb__eyebrow {
+    margin: 0 0 8px;
+    color: var(--bt-bb-accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .bt-bb__eyebrow--tight {
+    margin: 0;
+  }
+  .bt-bb__h {
+    margin: 0;
+    color: var(--bt-bb-text);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(26px, 2.6vw, 38px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .bt-bb__sel {
+    color: var(--bt-bb-muted);
+    font-size: 13px;
+  }
+  .bt-bb__sel strong {
+    color: var(--bt-bb-text);
+  }
+  .bt-bb__grid {
+    display: grid;
+    gap: 10px;
+  }
+  .bt-bb__grid--t {
+    grid-template-columns: repeat(var(--bt-bb-cols-t, 4), minmax(0, 1fr));
+  }
+  .bt-bb__grid--c {
+    grid-template-columns: repeat(var(--bt-bb-cols-c, 3), minmax(0, 1fr));
+  }
+  .bt-bb__cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--bt-bb-card);
+    box-shadow: inset 0 0 0 1px var(--bt-bb-line);
+    transition: box-shadow 0.15s ease-in-out, background 0.15s ease-in-out;
+  }
+  .bt-bb__cell:hover {
+    box-shadow: inset 0 0 0 1px var(--bt-bb-text);
+  }
+  .bt-bb__cell.is-on {
+    background: #fff;
+    box-shadow: inset 0 0 0 2px var(--bt-bb-text);
+  }
+  .bt-bb__pick {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 12px 12px 14px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--bt-bb-text);
+    cursor: pointer;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    text-transform: none;
+  }
+  .bt-bb__pick:focus-visible,
+  .bt-bb__sw:focus-visible {
+    outline: 2px solid var(--bt-bb-accent);
+    outline-offset: 2px;
+  }
+  .bt-bb__swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 12px 14px;
+  }
+  .bt-bb__sw {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    padding: 3px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--bt-bb-line);
+    color: var(--bt-bb-text);
+    cursor: pointer;
+    font: inherit;
+  }
+  .bt-bb__sw:hover {
+    box-shadow: inset 0 0 0 1px var(--bt-bb-text);
+  }
+  .bt-bb__sw[aria-pressed='true'] {
+    box-shadow: inset 0 0 0 2px var(--bt-bb-text);
+  }
+  .bt-bb__sw-dot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #ddd;
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  }
+  .bt-bb__sw--text {
+    width: auto;
+    height: 32px;
+    padding: 0 10px;
+    border-radius: 0;
+  }
+  .bt-bb__sw-txt {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .bt-bb__sw.is-out {
+    opacity: 0.45;
+  }
+  .bt-bb__sw.is-out::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    left: 2px;
+    height: 1px;
+    background: var(--bt-bb-text);
+    transform: rotate(-45deg);
+  }
+  .bt-bb__img {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  .bt-bb__img img,
+  .bt-bb__img svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .bt-bb__cell:hover .bt-bb__img img {
+    transform: scale(1.05);
+  }
+  .bt-bb__badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .bt-bb__badge {
+    padding: 3px 6px;
+    background: var(--bt-bb-badge);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .bt-bb__badge--sale {
+    background: var(--bt-bb-sale);
+  }
+  .bt-bb__badge--free {
+    background: var(--bt-bb-accent);
+  }
+  .bt-bb__tick {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bt-bb-text);
+    color: #fff;
+  }
+  .bt-bb__cell.is-on .bt-bb__tick {
+    display: flex;
+  }
+  .bt-bb__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .bt-bb__swatch {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--bt-bb-muted);
+    font-size: 11px;
+  }
+  .bt-bb__swatch i {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.2);
+  }
+  .bt-bb__title {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .bt-bb__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 8px;
+    font-size: 13px;
+  }
+  .bt-bb__price b {
+    font-weight: 700;
+  }
+  .bt-bb__price b.is-sale {
+    color: var(--bt-bb-sale);
+  }
+  .bt-bb__price s {
+    color: var(--bt-bb-muted);
+    font-size: 12px;
+  }
+  .bt-bb__free {
+    color: var(--bt-bb-accent);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .bt-bb__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 32px;
+    margin: 40px clamp(20px, 4vw, 72px) var(--bt-bb-pb, 80px);
+    padding: clamp(20px, 3vw, 40px);
+    background: var(--bt-bb-summary);
+  }
+  .bt-bb__pair {
+    display: flex;
+    flex: 1 1 280px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .bt-bb__pair img {
+    width: 44%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+  }
+  .bt-bb__plus {
+    color: var(--bt-bb-accent);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 40px;
+    line-height: 1;
+  }
+  .bt-bb__box {
+    display: flex;
+    flex: 1 1 320px;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+  .bt-bb__box-h {
+    margin: 0;
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(22px, 2.2vw, 32px);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+  .bt-bb__lines {
+    border-top: 1px solid var(--bt-bb-line);
+  }
+  .bt-bb__line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--bt-bb-line);
+    font-size: 14px;
+  }
+  .bt-bb__line span:last-child {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .bt-bb__line s {
+    margin-right: 8px;
+    color: var(--bt-bb-muted);
+    font-size: 12px;
+  }
+  .bt-bb__total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+  }
+  .bt-bb__total span:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .bt-bb__total span:last-child {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 32px;
+    line-height: 1;
+  }
+  .bt-bb__save {
+    padding-top: 6px;
+    color: var(--bt-bb-sale);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+  }
+  .bt-bb__btn {
+    width: 100%;
+    min-height: 56px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 0;
+    background: var(--bt-bb-btn-bg);
+    color: var(--bt-bb-btn-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: filter 0.15s ease-in-out;
+  }
+  .bt-bb__btn:hover {
+    filter: brightness(0.88);
+  }
+  .bt-bb__btn[disabled] {
+    cursor: wait;
+    opacity: 0.6;
+  }
+  .bt-bb__fine {
+    margin: 0;
+    color: var(--bt-bb-muted);
+    font-size: 11px;
+    text-align: center;
+  }
+  .bt-bb__err {
+    margin: 0;
+    color: var(--bt-bb-sale);
+    font-size: 13px;
+    text-align: center;
+  }
+  .bt-bb__err:empty {
+    display: none;
+  }
+  @media (max-width: 749px) {
+    .bt-bb__step {
+      padding: calc(var(--bt-bb-pt, 80px) * 0.7) 16px 28px;
+    }
+    .bt-bb__grid--t,
+    .bt-bb__grid--c {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    /* Phone swipe rows (set per step in the section settings) */
+    .bt-bb--mt-swipe .bt-bb__grid--t,
+    .bt-bb--mc-swipe .bt-bb__grid--c {
+      display: flex;
+      gap: 10px;
+      margin: 0 -16px;
+      padding: 2px 16px 6px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding: 0 16px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .bt-bb--mt-swipe .bt-bb__grid--t::-webkit-scrollbar,
+    .bt-bb--mc-swipe .bt-bb__grid--c::-webkit-scrollbar {
+      display: none;
+    }
+    .bt-bb--mt-swipe .bt-bb__grid--t > .bt-bb__cell,
+    .bt-bb--mc-swipe .bt-bb__grid--c > .bt-bb__cell {
+      flex: 0 0 var(--bt-bb-mw, 78%);
+      scroll-snap-align: start;
+    }
+    .bt-bb--mv-one {
+      --bt-bb-mw: 78%;
+    }
+    .bt-bb--mv-two {
+      --bt-bb-mw: 44%;
+    }
+    .bt-bb__swipe-hint {
+      display: none;
+    }
+    .bt-bb--mt-swipe .bt-bb__swipe-hint--t,
+    .bt-bb--mc-swipe .bt-bb__swipe-hint--c {
+      display: block;
+      margin: -12px 0 0;
+      color: var(--bt-bb-muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .bt-bb__summary {
+      margin: 28px 0 calc(var(--bt-bb-pb, 80px) * 0.7);
+      padding: 20px 16px 24px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bt-bb__img img {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    if (customElements.get('bt-bundle')) return;
+    customElements.define(
+      'bt-bundle',
+      class extends HTMLElement {
+        connectedCallback() {
+          var self = this;
+          var fmtr;
+          try {
+            fmtr = new Intl.NumberFormat(this.dataset.locale || undefined, { style: 'currency', currency: this.dataset.currency || 'USD' });
+          } catch (e) {
+            fmtr = {
+              format: function (n) {
+                return '$' + n.toFixed(2);
+              },
+            };
+          }
+          this.money = function (cents) {
+            return fmtr.format((cents || 0) / 100);
+          };
+          this.picks = { trike: null, car: null };
+          this.querySelectorAll('[data-pick]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              self.select(btn.dataset.pick, btn);
+            });
+          });
+          this.querySelectorAll('[data-swatch]').forEach(function (sw) {
+            sw.addEventListener('click', function () {
+              self.applySwatch(sw, true);
+            });
+          });
+          // sync each card with its pre-selected colour
+          this.querySelectorAll('.bt-bb__swatches').forEach(function (group) {
+            var on = group.querySelector('[data-swatch][aria-pressed="true"]') || group.querySelector('[data-swatch]');
+            if (on) self.applySwatch(on, false);
+          });
+          ['trike', 'car'].forEach(function (kind) {
+            var first = self.querySelector('[data-pick="' + kind + '"][data-available="1"]') || self.querySelector('[data-pick="' + kind + '"]');
+            if (first) self.select(kind, first);
+          });
+          var add = this.querySelector('[data-add]');
+          if (add)
+            add.addEventListener('click', function () {
+              self.addBundle(add);
+            });
+          this.render();
+        }
+        select(kind, btn) {
+          this.querySelectorAll('[data-pick="' + kind + '"]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+            var cell = b.closest('.bt-bb__cell');
+            if (cell) cell.classList.toggle('is-on', b === btn);
+          });
+          this.picks[kind] = btn;
+          this.render();
+        }
+        // A colour swatch updates its card (variant, price, photo) and selects that card.
+        applySwatch(sw, doSelect) {
+          var cell = sw.closest('.bt-bb__cell');
+          var pick = cell && cell.querySelector('[data-pick]');
+          if (!pick) return;
+          cell.querySelectorAll('[data-swatch]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b === sw ? 'true' : 'false');
+          });
+          ['variant', 'price', 'compare', 'img', 'available'].forEach(function (k) {
+            if (sw.dataset[k] !== undefined) pick.dataset[k] = sw.dataset[k];
+          });
+          if (pick.dataset.pick === 'car') pick.dataset.compare = '0';
+          pick.dataset.vname = sw.dataset.name || '';
+          var img = pick.querySelector('.bt-bb__img img');
+          if (img && sw.dataset.img && img.getAttribute('src') !== sw.dataset.img) {
+            img.removeAttribute('srcset');
+            img.removeAttribute('sizes');
+            img.src = sw.dataset.img;
+          }
+          var price = +sw.dataset.price;
+          var compare = +sw.dataset.compare;
+          var pEl = pick.querySelector('[data-card-price]');
+          var cEl = pick.querySelector('[data-card-compare]');
+          if (pEl) pEl.textContent = this.money(price);
+          if (pEl && cEl) {
+            var sale = compare > price;
+            pEl.classList.toggle('is-sale', sale);
+            cEl.hidden = !sale;
+            cEl.textContent = sale ? this.money(compare) : '';
+          }
+          if (doSelect) this.select(pick.dataset.pick, pick);
+          else if (this.picks[pick.dataset.pick] === pick) this.render();
+        }
+        fullLabel(btn) {
+          if (!btn) return '—';
+          return btn.dataset.label + (btn.dataset.vname ? ' · ' + btn.dataset.vname : '');
+        }
+        fullTitle(btn) {
+          if (!btn) return '—';
+          return btn.dataset.title + (btn.dataset.vname ? ' – ' + btn.dataset.vname : '');
+        }
+        setText(sel, txt) {
+          var el = this.querySelector(sel);
+          if (el) el.textContent = txt;
+        }
+        swapImg(sel, btn) {
+          var img = this.querySelector(sel);
+          if (!img || !btn || !btn.dataset.img) return;
+          if (img.getAttribute('src') !== btn.dataset.img) img.src = btn.dataset.img;
+          img.alt = btn.dataset.title;
+        }
+        render() {
+          var t = this.picks.trike;
+          var c = this.picks.car;
+          var tPrice = t ? +t.dataset.price : 0;
+          var tCompare = t ? +t.dataset.compare : 0;
+          var cPrice = c ? +c.dataset.price : 0;
+          this.setText('[data-sel-trike]', this.fullLabel(t));
+          this.setText('[data-sel-car]', this.fullLabel(c));
+          this.setText('[data-sum-head]', (t ? t.dataset.label : '—') + ' + ' + (c ? c.dataset.label : '—'));
+          this.setText('[data-sum-trike-title]', this.fullTitle(t));
+          this.setText('[data-sum-car-title]', this.fullTitle(c));
+          this.setText('[data-sum-trike-price]', this.money(tPrice));
+          this.setText('[data-sum-car-price]', this.money(cPrice));
+          this.setText('[data-sum-total]', this.money(tPrice));
+          this.setText('[data-sum-save]', this.money(cPrice + (tCompare > tPrice ? tCompare - tPrice : 0)));
+          this.swapImg('[data-sum-trike-img]', t);
+          this.swapImg('[data-sum-car-img]', c);
+        }
+        addBundle(btn) {
+          var t = this.picks.trike;
+          var c = this.picks.car;
+          var err = this.querySelector('[data-err]');
+          if (err) err.textContent = '';
+          if (!t || !c) {
+            if (err) err.textContent = 'Please choose a Trike and a Ride-On Car.';
+            return;
+          }
+          if (t.dataset.available !== '1' || c.dataset.available !== '1') {
+            if (err) err.textContent = 'That item is sold out. Please choose another.';
+            return;
+          }
+          var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+          var code = this.dataset.code;
+          var dest = this.dataset.after === 'cart' ? root + 'cart' : '/checkout';
+          var label = btn.textContent;
+          btn.disabled = true;
+          btn.textContent = 'Adding…';
+          fetch(root + 'cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              items: [
+                { id: +t.dataset.variant, quantity: 1 },
+                { id: +c.dataset.variant, quantity: 1, properties: { _bundle: 'Secret deal free ride-on' } },
+              ],
+            }),
+          })
+            .then(function (r) {
+              return r.json().then(function (j) {
+                if (!r.ok) throw j;
+                return j;
+              });
+            })
+            .then(function () {
+              window.location.href = code ? root + 'discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(dest) : dest;
+            })
+            .catch(function (e) {
+              btn.disabled = false;
+              btn.textContent = label;
+              if (err) err.textContent = (e && (e.description || e.message)) || 'Something went wrong. Please try again.';
+            });
+        }
+      }
+    );
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Bundle Builder",
+  "tag": "section",
+  "class": "bt-bundle-section",
+  "settings": [
+    { "type": "header", "content": "Step 1 – Trike" },
+    { "type": "text", "id": "step1_eyebrow", "label": "Small label", "default": "Step 1" },
+    { "type": "inline_richtext", "id": "step1_heading", "label": "Heading", "default": "Choose your Bentley Trike" },
+    { "type": "range", "id": "cols_trikes", "label": "Trike columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_save", "label": "Show “Save” badge on sale items", "default": true },
+    { "type": "checkbox", "id": "show_colors_trikes", "label": "Show colour choices on trikes", "default": true, "info": "Off = each trike shows one colour only" },
+    { "type": "text", "id": "save_label", "label": "Save badge word", "default": "Save" },
+    { "type": "header", "content": "Step 2 – Free Ride-On" },
+    { "type": "text", "id": "step2_eyebrow", "label": "Small label", "default": "Step 2" },
+    { "type": "inline_richtext", "id": "step2_heading", "label": "Heading", "default": "Pick your <em>free</em> Ride-On Car" },
+    { "type": "range", "id": "cols_cars", "label": "Car columns (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_colors_cars", "label": "Show colour choices on cars", "default": true, "info": "Off = each car shows one colour only" },
+    { "type": "text", "id": "free_badge", "label": "Car badge", "default": "Free with Trike" },
+    { "type": "text", "id": "free_word", "label": "“Free” word", "default": "FREE" },
+    { "type": "header", "content": "Phone layout" },
+    {
+      "type": "select",
+      "id": "m_layout_trikes",
+      "label": "Trikes on phones",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "Grid (2 columns)" },
+        { "value": "swipe", "label": "Swipe row" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "m_layout_cars",
+      "label": "Cars on phones",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "Grid (2 columns)" },
+        { "value": "swipe", "label": "Swipe row" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "m_per_view",
+      "label": "Cards in view when swiping",
+      "default": "one",
+      "options": [
+        { "value": "one", "label": "One at a time (next one peeks in)" },
+        { "value": "two", "label": "Two at a time" }
+      ]
+    },
+    { "type": "text", "id": "swipe_hint", "label": "Swipe hint text", "default": "Swipe to see all →", "info": "Shown above swipe rows on phones. Leave empty to hide." },
+    { "type": "header", "content": "Bundle summary" },
+    { "type": "text", "id": "summary_eyebrow", "label": "Small label", "default": "Your secret bundle" },
+    { "type": "text", "id": "selected_label", "label": "“Selected” label", "default": "Selected:" },
+    { "type": "text", "id": "you_pay_label", "label": "“You pay” label", "default": "You pay" },
+    { "type": "text", "id": "you_save_label", "label": "“You save” label", "default": "You save" },
+    { "type": "text", "id": "button_label", "label": "Button text", "default": "Add bundle to cart" },
+    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "While supplies last · One free car per Trike" },
+    { "type": "text", "id": "soldout_label", "label": "Sold out badge", "default": "Sold out" },
+    { "type": "text", "id": "color_label", "label": "Colour picker label", "default": "Colour", "info": "Colour dots appear under any product with more than one variant" },
+    { "type": "header", "content": "Checkout" },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount code",
+      "info": "Your Buy X Get Y code. It’s applied automatically – shoppers never type it. Leave empty if you use an automatic discount."
+    },
+    {
+      "type": "select",
+      "id": "after_add",
+      "label": "After adding to cart",
+      "default": "checkout",
+      "options": [
+        { "value": "checkout", "label": "Go to checkout" },
+        { "value": "cart", "label": "Go to cart page" }
+      ]
+    },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#ffffff" },
+    { "type": "color", "id": "c_card", "label": "Card background", "default": "#f8f4ef" },
+    { "type": "color", "id": "c_summary_bg", "label": "Summary background", "default": "#f8f4ef" },
+    { "type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_accent", "label": "Accent", "default": "#a83f2f" },
+    { "type": "color", "id": "c_sale", "label": "Sale / savings", "default": "#8f4764" },
+    { "type": "color", "id": "c_badge", "label": "Best seller badge", "default": "#00221c" },
+    { "type": "color", "id": "c_btn_bg", "label": "Button background", "default": "#a83f2f" },
+    { "type": "color", "id": "c_btn_text", "label": "Button text", "default": "#ffffff" }
+  ],
+  "blocks": [
+    {
+      "type": "trike",
+      "name": "Trike",
+      "limit": 12,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Trike product" },
+        { "type": "text", "id": "label", "label": "Short name", "info": "e.g. Onyx Black (used in the summary)" },
+        { "type": "text", "id": "badge", "label": "Badge", "info": "e.g. Best Seller" },
+        { "type": "text", "id": "only_variant", "label": "Only show this colour", "info": "Optional. Type a colour/variant name (e.g. Red) to show just that one, without colour dots." },
+        { "type": "color", "id": "swatch", "label": "Colour dot" }
+      ]
+    },
+    {
+      "type": "car",
+      "name": "Free Ride-On Car",
+      "limit": 6,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Ride-on product" },
+        { "type": "text", "id": "label", "label": "Short name", "info": "e.g. Mulsanne" },
+        { "type": "text", "id": "only_variant", "label": "Only show this colour", "info": "Optional. Type a colour/variant name (e.g. Red) to show just that one, without colour dots." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Bundle Builder",
+      "blocks": [
+        { "type": "trike", "settings": { "label": "Onyx Black", "badge": "Best Seller" } },
+        { "type": "trike", "settings": { "label": "Mandarin" } },
+        { "type": "trike", "settings": { "label": "Mulliner Gold" } },
+        { "type": "trike", "settings": { "label": "Cool Stone" } },
+        { "type": "car", "settings": { "label": "Mulsanne" } },
+        { "type": "car", "settings": { "label": "Bacalar" } },
+        { "type": "car", "settings": { "label": "EXP 12 Speed 6e" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
