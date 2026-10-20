@@ -1,0 +1,1033 @@
+{% comment %}
+  Bentley Trike – Sticky Video Split Hero
+  Stage 1: framed full-width video/photo with centred overlay text.
+  Stage 2 (on scroll): the media shrinks into a pinned left column and the right column
+  (offer intro, then any following "BT" sections) slides in. Optional desktop-only
+  walking stroller with rolling wheels. Phones get a still photo or the video.
+{% endcomment %}
+
+{%- liquid
+  assign s = section.settings
+
+  assign walk_ok = false
+  if s.walk_enable and s.walk_bg != blank and s.walk_body != blank and s.walk_rim_front != blank and s.walk_rim_rear != blank
+    assign walk_ok = true
+  endif
+
+  assign has_video = false
+  if s.video != blank
+    assign has_video = true
+  endif
+
+  assign show_cd = false
+  if s.show_countdown and s.offer_end != blank
+    assign show_cd = true
+  endif
+
+  assign split = s.split_width | divided_by: 100.0
+  assign shrink = s.headline_shrink | divided_by: 100.0
+  assign shade = s.overlay | divided_by: 100.0
+  assign muted = s.c_text | color_modify: 'alpha', 0.7
+-%}
+
+{%- capture vars -%}
+  --split: {{ split }}; --pad: {{ s.frame_side }}px; --gap: {{ s.frame_top }}px; --shrink: {{ shrink }}; --shade: {{ shade }};
+  --hs: {{ s.headline_size }}px; --hsm: {{ s.headline_size_mobile }}px; --mh: {{ s.mobile_height }};
+  --bg: {{ s.c_bg }}; --text: {{ s.c_text }}; --muted: {{ muted }}; --accent: {{ s.c_accent }};
+  --btn-bg: {{ s.c_btn_bg }}; --btn-text: {{ s.c_btn_text }}; --ovl: {{ s.c_overlay_text }};
+{%- endcapture -%}
+{%- assign vars = vars | strip_newlines | strip -%}
+
+<bt-svh
+  class="bt-svh"
+  data-t="{{ s.transition_length }}"
+  data-split="{{ split }}"
+  data-walk="{% if walk_ok %}1{% else %}0{% endif %}"
+  data-walk-scale="{{ s.walk_scale | divided_by: 100.0 }}"
+  style="{{ vars }}"
+>
+  <div data-slot>
+    <div class="bt-svh__panel{% if has_video %} is-muted{% endif %}" data-panel style="{{ vars }}">
+      <div class="bt-svh__frame{% if s.mobile_image != blank %} has-m{% endif %}" data-frame>
+        <div class="bt-svh__media bt-svh__media--d">
+          {%- if walk_ok -%}
+            {{ s.walk_bg | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '1000,1400,1800,2400', sizes: '100vw', alt: '' }}
+          {%- elsif has_video -%}
+            {{ s.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, image_size: '1800x' }}
+          {%- elsif s.image != blank -%}
+            {{ s.image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '1000,1400,1800,2400', sizes: '100vw' }}
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+        {%- if s.mobile_image != blank -%}
+          <div class="bt-svh__media bt-svh__media--m">
+            {{ s.mobile_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '600,900,1200,1400', sizes: '100vw' }}
+          </div>
+        {%- endif -%}
+
+        {%- if walk_ok -%}
+          <div class="bt-svh__walker" data-walker aria-hidden="true">
+            <span class="w-floor"></span>
+            <span class="w-cs" style="left: 12.5%; top: 99.4%; width: 17%; height: 2.6%;"></span>
+            <span class="w-cs" style="left: 37.9%; top: 90.4%; width: 11%; height: 1.8%; opacity: .7;"></span>
+            <span class="w-cs" style="left: 59.1%; top: 95.3%; width: 14%; height: 2.2%;"></span>
+            <span class="w-cs" style="left: 71.5%; top: 91.6%; width: 14%; height: 1.8%; opacity: .75;"></span>
+            <span class="w-cs" style="left: 89%; top: 89%; width: 9%; height: 1.4%; opacity: .5;"></span>
+            {%- if s.walk_leg_back != blank -%}
+              <img
+                class="w-turn"
+                data-leg-back
+                src="{{ s.walk_leg_back | image_url: width: 300 }}"
+                width="{{ s.walk_leg_back.width }}"
+                height="{{ s.walk_leg_back.height }}"
+                alt=""
+                style="left: 87.983%; top: 70.315%; width: 12.6%; height: 18.954%; transform-origin: 24.28% 20%;"
+              >
+            {%- endif -%}
+            {%- if s.walk_leg_front != blank -%}
+              <img
+                class="w-turn"
+                data-leg-front
+                src="{{ s.walk_leg_front | image_url: width: 300 }}"
+                width="{{ s.walk_leg_front.width }}"
+                height="{{ s.walk_leg_front.height }}"
+                alt=""
+                style="left: 64.967%; top: 72.985%; width: 14.639%; height: 18.954%; transform-origin: 54.73% 14.65%;"
+              >
+            {%- endif -%}
+            <img class="w-body" src="{{ s.walk_body | image_url: width: 1400 }}" width="{{ s.walk_body.width }}" height="{{ s.walk_body.height }}" alt="">
+            <img
+              class="w-turn"
+              data-rim-front
+              src="{{ s.walk_rim_front | image_url: width: 300 }}"
+              width="{{ s.walk_rim_front.width }}"
+              height="{{ s.walk_rim_front.height }}"
+              alt=""
+              style="left: 5.025%; top: 84.784%; width: 15.076%; height: 13.294%; transform-origin: 49.758% 49.799%;"
+            >
+            <img
+              class="w-turn"
+              data-rim-rear
+              src="{{ s.walk_rim_rear | image_url: width: 300 }}"
+              width="{{ s.walk_rim_rear.width }}"
+              height="{{ s.walk_rim_rear.height }}"
+              alt=""
+              style="left: 53.824%; top: 84.036%; width: 10.706%; height: 10.731%; transform-origin: 49.66% 49.751%;"
+            >
+            {%- if s.walk_fork != blank -%}
+              <img
+                src="{{ s.walk_fork | image_url: width: 300 }}"
+                width="{{ s.walk_fork.width }}"
+                height="{{ s.walk_fork.height }}"
+                alt=""
+                style="left: 10.342%; top: 84.09%; width: 12.163%; height: 12.226%;"
+              >
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="bt-svh__shade"></div>
+        <div class="bt-svh__text">
+          {%- if s.eyebrow != blank -%}
+            <p class="bt-svh__eyebrow">{{ s.eyebrow }}</p>
+          {%- endif -%}
+          <h1 class="bt-svh__h1">
+            {%- if s.heading_1 != blank -%}<span>{{ s.heading_1 }}</span>{%- endif -%}
+            {%- if s.heading_2 != blank -%}<span>{{ s.heading_2 }}</span>{%- endif -%}
+          </h1>
+          {%- if s.link_label != blank -%}
+            <a class="bt-svh__link" href="{{ s.link_url | default: '#bt-claim' }}">{{ s.link_label }}</a>
+          {%- endif -%}
+        </div>
+
+        {%- if has_video -%}
+          <div class="bt-svh__ctrls">
+            <button type="button" class="bt-svh__ctrl" data-mute aria-label="Unmute video">
+              <svg class="i-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M16 9l5 6M21 9l-5 6"></path></svg>
+              <svg class="i-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+            </button>
+            <button type="button" class="bt-svh__ctrl" data-pause aria-label="Pause video">
+              <svg class="i-pause" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg>
+              <svg class="i-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"></path></svg>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-svh__right" data-right>
+    <div class="bt-svh__intro">
+      <div>
+        {%- if s.intro_eyebrow != blank -%}
+          <p class="bt-svh__intro-eyebrow">{{ s.intro_eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="bt-svh__intro-h">
+          {%- if s.intro_heading_1 != blank -%}<span>{{ s.intro_heading_1 }}</span>{%- endif -%}
+          {%- if s.intro_heading_2 != blank -%}<span>{{ s.intro_heading_2 }}</span>{%- endif -%}
+        </h2>
+        {%- if s.intro_text != blank -%}
+          <p class="bt-svh__intro-p">{{ s.intro_text }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if s.button_label != blank or show_cd -%}
+        <div class="bt-svh__cta-row">
+          {%- if s.button_label != blank -%}
+            <a class="bt-svh__btn" href="{{ s.button_link | default: '#bt-claim' }}">{{ s.button_label }}</a>
+          {%- endif -%}
+          {%- if show_cd -%}
+            <bt-countdown class="bt-svh__cd" data-end="{{ s.offer_end | escape }}" data-format="boxes" role="timer" aria-label="Time left on the offer">
+              <span class="bt-svh__cd-u"><span class="bt-svh__cd-n" data-d>00</span><span class="bt-svh__cd-l">Days</span></span>
+              <span class="bt-svh__cd-sep" aria-hidden="true">:</span>
+              <span class="bt-svh__cd-u"><span class="bt-svh__cd-n" data-h>00</span><span class="bt-svh__cd-l">Hours</span></span>
+              <span class="bt-svh__cd-sep" aria-hidden="true">:</span>
+              <span class="bt-svh__cd-u"><span class="bt-svh__cd-n" data-m>00</span><span class="bt-svh__cd-l">Mins</span></span>
+              <span class="bt-svh__cd-sep" aria-hidden="true">:</span>
+              <span class="bt-svh__cd-u"><span class="bt-svh__cd-n" data-s>00</span><span class="bt-svh__cd-l">Secs</span></span>
+            </bt-countdown>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- assign step_count = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+          {%- assign step_count = step_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if step_count > 0 -%}
+        <div class="bt-svh__steps">
+          {%- assign n = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'step' -%}
+              {%- assign n = n | plus: 1 -%}
+              <div class="bt-svh__step" {{ block.shopify_attributes }}>
+                <span class="bt-svh__step-n">{% if n < 10 %}0{% endif %}{{ n }}</span>
+                <span class="bt-svh__step-t">{{ block.settings.title }}</span>
+                {%- if block.settings.text != blank -%}
+                  <span class="bt-svh__step-d">{{ block.settings.text }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="bt-svh__trust">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'trust' -%}
+            <span {{ block.shopify_attributes }}>
+              {%- if block.settings.stars -%}
+                <span class="bt-svh__stars" role="img" aria-label="5 out of 5 stars">
+                  {%- for i in (1..5) -%}
+                    <svg width="13" height="13" viewBox="0 0 15 15" fill="currentColor" aria-hidden="true"><path d="M7.5 0l2.2 4.8 5.3.6-3.9 3.6 1.1 5.2-4.7-2.7-4.7 2.7 1.1-5.2L0 5.4l5.3-.6z"></path></svg>
+                  {%- endfor -%}
+                </span>
+              {%- endif -%}
+              {{ block.settings.text }}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</bt-svh>
+
+{% stylesheet %}
+  .bt-svh {
+    position: relative;
+    display: block;
+    background: var(--bg);
+    color: var(--text);
+    --p: 0;
+  }
+  .bt-svh *,
+  .bt-svh__panel * {
+    box-sizing: border-box;
+  }
+  .bt-svh__panel {
+    display: block;
+    box-sizing: border-box;
+    will-change: width, padding, transform;
+  }
+  .bt-svh__frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #1a1a1a;
+    container-type: inline-size;
+  }
+  .bt-svh__media img,
+  .bt-svh__media video,
+  .bt-svh__media svg {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+  .bt-svh__media--m {
+    display: none;
+  }
+  .bt-svh__shade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, calc(var(--shade) * 0.45)) 0%,
+      rgba(0, 0, 0, calc(var(--shade) * 0.7)) 45%,
+      rgba(0, 0, 0, calc(var(--shade) * 1.3)) 100%
+    );
+  }
+  .bt-svh__text {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 32px;
+    color: var(--ovl);
+    text-align: center;
+  }
+  .bt-svh__eyebrow {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .bt-svh__h1 {
+    margin: 0;
+    color: var(--ovl);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(30px, 5vw, var(--hs, 72px));
+    font-size: clamp(30px, 7.6cqi, var(--hs, 72px));
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    line-height: 1.06;
+    transform: scale(calc(1 - var(--shrink) * var(--p)));
+    transform-origin: 50% 50%;
+  }
+  .bt-svh__h1 span {
+    display: block;
+  }
+  .bt-svh__link {
+    display: inline-block;
+    padding: 8px 0 4px;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    color: var(--ovl);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background-size 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .bt-svh__link:hover {
+    background-size: 0 1px;
+    color: var(--ovl);
+  }
+  .bt-svh__ctrls {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 3;
+    display: flex;
+    gap: 6px;
+  }
+  .bt-svh__ctrl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s ease-in-out;
+  }
+  .bt-svh__ctrl:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .bt-svh__ctrl svg {
+    display: none;
+  }
+  .bt-svh__panel.is-muted [data-mute] .i-muted,
+  .bt-svh__panel:not(.is-muted) [data-mute] .i-unmuted,
+  .bt-svh__panel:not(.is-paused) [data-pause] .i-pause,
+  .bt-svh__panel.is-paused [data-pause] .i-play {
+    display: block;
+  }
+
+  .bt-svh__walker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    will-change: transform;
+  }
+  .bt-svh__walker img,
+  .bt-svh__walker span {
+    position: absolute;
+    display: block;
+  }
+  .bt-svh__walker .w-body {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .bt-svh__walker .w-turn {
+    will-change: transform;
+  }
+  .bt-svh__walker .w-floor {
+    right: 4%;
+    bottom: -2.2%;
+    left: 2%;
+    height: 4.5%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+  .bt-svh__walker .w-cs {
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(20, 16, 12, 0.55) 0%, rgba(20, 16, 12, 0.22) 45%, rgba(20, 16, 12, 0) 72%);
+    transform: translate(-50%, -50%);
+  }
+
+  .bt-svh__right {
+    position: relative;
+    z-index: 1;
+    will-change: opacity, transform;
+  }
+  .bt-svh__intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 36px;
+    min-height: var(--hpin, 100vh);
+    padding: 80px clamp(20px, 4vw, 72px);
+  }
+  .bt-svh__intro-eyebrow {
+    margin: 0;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .bt-svh__intro-h {
+    margin: 12px 0 0;
+    color: var(--text);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(32px, 3.4vw, 52px);
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    line-height: 1.06;
+  }
+  .bt-svh__intro-h span {
+    display: block;
+  }
+  .bt-svh__intro-p {
+    max-width: 560px;
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .bt-svh__cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+  }
+  .bt-svh__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 56px;
+    padding: 0 36px;
+    border: 0;
+    border-radius: 0;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: filter 0.15s ease-in-out;
+  }
+  .bt-svh__btn:hover {
+    filter: brightness(0.88);
+    color: var(--btn-text);
+  }
+  .bt-svh__cd {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .bt-svh__cd-u {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 48px;
+  }
+  .bt-svh__cd-n {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 30px;
+    line-height: 1;
+  }
+  .bt-svh__cd-l {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .bt-svh__cd-sep {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 26px;
+    line-height: 1;
+  }
+  .bt-svh__steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--text);
+  }
+  .bt-svh__step {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .bt-svh__step-n {
+    color: var(--accent);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 34px;
+    font-style: italic;
+    line-height: 1;
+  }
+  .bt-svh__step-t {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  .bt-svh__step-d {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .bt-svh__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .bt-svh__trust > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bt-svh__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--accent);
+  }
+
+  @media (min-width: 750px) {
+    .bt-svh__panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: calc(var(--vw, 100vw) * (1 - (1 - var(--split)) * var(--p)));
+      height: var(--h, 100vh);
+      padding: calc(var(--gap) * (1 - var(--p))) calc(var(--pad) * (1 - var(--p))) calc(var(--gap) * 1.5 * (1 - var(--p)));
+      transform: translate3d(0, var(--y, 0px), 0);
+    }
+    .bt-svh__right {
+      width: calc((1 - var(--split)) * 100%);
+      margin-left: calc(var(--split) * 100%);
+      padding-top: var(--T, 80vh);
+      opacity: var(--p);
+      transform: translate3d(calc((1 - var(--p)) * 140px), 0, 0);
+    }
+    html.bt-svh-on [data-bt-col][data-bt-active] {
+      width: calc((1 - var(--bt-split, 0.37)) * 100%);
+      margin-left: calc(var(--bt-split, 0.37) * 100%);
+    }
+  }
+  @media (max-width: 749px) {
+    .bt-svh__panel {
+      position: relative;
+      width: 100%;
+      height: min(calc(var(--mh, 88) * 1svh), 820px);
+      padding: calc(16px * (1 - var(--p)));
+    }
+    .bt-svh__h1 {
+      font-size: var(--hsm, 38px);
+      transform: scale(calc(1 - 0.12 * var(--p)));
+    }
+    .bt-svh__walker {
+      display: none;
+    }
+    .bt-svh__frame.has-m .bt-svh__media--d {
+      display: none;
+    }
+    .bt-svh__frame.has-m .bt-svh__media--m {
+      display: block;
+    }
+    .bt-svh__right {
+      opacity: calc(0.25 + 0.75 * var(--p));
+      transform: translate3d(0, calc((1 - var(--p)) * 48px), 0);
+    }
+    .bt-svh__intro {
+      min-height: 0;
+      padding: 56px 16px;
+    }
+    .bt-svh__btn {
+      width: 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bt-svh__link {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    function pad(n) {
+      return (n < 10 ? '0' : '') + n;
+    }
+
+    if (!customElements.get('bt-countdown')) {
+      customElements.define(
+        'bt-countdown',
+        class extends HTMLElement {
+          connectedCallback() {
+            var m = String(this.dataset.end || '')
+              .trim()
+              .match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?/);
+            if (!m) {
+              this.hidden = true;
+              return;
+            }
+            this.end = new Date(+m[1], +m[2] - 1, +m[3], m[4] ? +m[4] : 23, m[5] ? +m[5] : 59, 59);
+            var self = this;
+            this.tick();
+            // children may not be parsed yet when this runs early – tick again once they are
+            setTimeout(function () {
+              self.tick();
+            }, 0);
+            if (document.readyState === 'loading')
+              document.addEventListener('DOMContentLoaded', function () {
+                self.tick();
+              });
+            this.timer = setInterval(this.tick.bind(this), this.dataset.format === 'boxes' ? 1000 : 30000);
+          }
+          disconnectedCallback() {
+            clearInterval(this.timer);
+          }
+          tick() {
+            var left = Math.max(0, Math.floor((this.end - new Date()) / 1000));
+            var d = Math.floor(left / 86400);
+            var h = Math.floor((left % 86400) / 3600);
+            var mi = Math.floor((left % 3600) / 60);
+            var se = left % 60;
+            if (this.dataset.format === 'boxes') {
+              var set = function (el, k, v) {
+                var t = el.querySelector('[data-' + k + ']');
+                if (t) t.textContent = pad(v);
+              };
+              set(this, 'd', d);
+              set(this, 'h', h);
+              set(this, 'm', mi);
+              set(this, 's', se);
+            } else {
+              this.textContent = d + 'd ' + h + 'h ' + mi + 'm';
+            }
+          }
+        }
+      );
+    }
+
+    if (customElements.get('bt-svh')) return;
+
+    function clamp(v) {
+      return v < 0 ? 0 : v > 1 ? 1 : v;
+    }
+    var EDITOR_EVENTS = ['shopify:section:load', 'shopify:section:unload', 'shopify:section:reorder'];
+
+    customElements.define(
+      'bt-svh',
+      class extends HTMLElement {
+        connectedCallback() {
+          this.panel = this.querySelector('[data-panel]');
+          this.slotEl = this.querySelector('[data-slot]');
+          this.frame = this.querySelector('[data-frame]');
+          if (!this.panel || !this.slotEl || !this.frame) return;
+          this.tLen = (parseFloat(this.dataset.t) || 80) / 100;
+          this.splitF = parseFloat(this.dataset.split) || 0.37;
+          this.walkScale = parseFloat(this.dataset.walkScale) || 0.68;
+          this.mq = window.matchMedia('(min-width: 750px)');
+          this.walker = this.dataset.walk === '1' ? this.panel.querySelector('[data-walker]') : null;
+          if (this.walker) {
+            this.rimF = this.walker.querySelector('[data-rim-front]');
+            this.rimR = this.walker.querySelector('[data-rim-rear]');
+            this.legF = this.walker.querySelector('[data-leg-front]');
+            this.legB = this.walker.querySelector('[data-leg-back]');
+          }
+          this._u = null;
+          this._queued = 0;
+          this.onScroll = () => {
+            if (this._queued) return;
+            this._queued = requestAnimationFrame(() => {
+              this._queued = 0;
+              this.update();
+            });
+          };
+          this.onMQ = () => this.place();
+          this.onDom = () => this.place();
+          this.onEditor = () => setTimeout(() => this.place(), 60);
+          window.addEventListener('scroll', this.onScroll, { passive: true });
+          window.addEventListener('resize', this.onScroll);
+          window.addEventListener('load', this.onDom);
+          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', this.onDom);
+          EDITOR_EVENTS.forEach((ev) => document.addEventListener(ev, this.onEditor));
+          if (this.mq.addEventListener) this.mq.addEventListener('change', this.onMQ);
+          else this.mq.addListener(this.onMQ);
+          this.setupControls();
+          this.place();
+        }
+
+        disconnectedCallback() {
+          window.removeEventListener('scroll', this.onScroll);
+          window.removeEventListener('resize', this.onScroll);
+          window.removeEventListener('load', this.onDom);
+          document.removeEventListener('DOMContentLoaded', this.onDom);
+          EDITOR_EVENTS.forEach((ev) => document.removeEventListener(ev, this.onEditor));
+          if (this.mq) {
+            if (this.mq.removeEventListener) this.mq.removeEventListener('change', this.onMQ);
+            else this.mq.removeListener(this.onMQ);
+          }
+          if (this.panel && this.panel.parentNode === document.body) this.panel.remove();
+          document.documentElement.classList.remove('bt-svh-on');
+          (this._cols || []).forEach(function (c) {
+            c.removeAttribute('data-bt-active');
+          });
+        }
+
+        place() {
+          if (!this.isConnected || !this.panel) return;
+          var desk = this.mq.matches;
+          if (desk && this.panel.parentNode !== document.body) document.body.appendChild(this.panel);
+          if (!desk && this.panel.parentNode !== this.slotEl) {
+            this.slotEl.appendChild(this.panel);
+            ['--y', '--h', '--vw'].forEach((k) => this.panel.style.removeProperty(k));
+            this.panel.style.visibility = '';
+          }
+          document.documentElement.classList.toggle('bt-svh-on', desk);
+          document.documentElement.style.setProperty('--bt-split', String(this.splitF));
+          this.markCols();
+          this.update();
+        }
+
+        // Sections directly after this one that contain [data-bt-col] join the right column.
+        markCols() {
+          (this._cols || []).forEach(function (c) {
+            c.removeAttribute('data-bt-active');
+          });
+          var cols = [];
+          var start = this.closest('.shopify-section') || this;
+          var sib = start.nextElementSibling;
+          while (sib) {
+            if (sib === this.panel || /^(SCRIPT|STYLE|TEMPLATE|LINK)$/.test(sib.tagName)) {
+              sib = sib.nextElementSibling;
+              continue;
+            }
+            var col = sib.matches('[data-bt-col]') ? sib : sib.querySelector('[data-bt-col]');
+            if (!col) break;
+            col.setAttribute('data-bt-active', '');
+            cols.push(col);
+            sib = sib.nextElementSibling;
+          }
+          this._cols = cols;
+          this.endEl = cols.length ? cols[cols.length - 1] : this;
+        }
+
+        headerOffset() {
+          var max = 0;
+          document
+            .querySelectorAll('sticky-header, .header-wrapper, .section-header, #shopify-section-header, .shopify-section-group-header-group, header')
+            .forEach(function (el) {
+              var cs = getComputedStyle(el);
+              if (cs.position !== 'sticky' && cs.position !== 'fixed') return;
+              var r = el.getBoundingClientRect();
+              if (r.top <= 1 && r.bottom > 0 && r.height < 320 && cs.visibility !== 'hidden') max = Math.max(max, r.bottom);
+            });
+          return max;
+        }
+
+        update() {
+          if (!this.panel) return;
+          var ih = window.innerHeight || 800;
+          var desk = this.mq.matches;
+          var r = this.getBoundingClientRect();
+          var docTop = r.top + window.scrollY;
+          var T = ih * this.tLen * (desk ? 1 : 0.6);
+          var start = Math.min(docTop, ih * 0.25);
+          var scrolled = start - r.top;
+          var p = clamp(scrolled / T);
+          p = p * p * (3 - 2 * p);
+          this.style.setProperty('--p', p.toFixed(4));
+          this.panel.style.setProperty('--p', p.toFixed(4));
+          if (!desk) return;
+          var off = this.headerOffset();
+          var yPin = Math.max(r.top, off);
+          var h = ih - yPin;
+          var endBottom = (this.endEl || this).getBoundingClientRect().bottom;
+          var y = Math.min(yPin, endBottom - h);
+          this.style.setProperty('--T', T.toFixed(0) + 'px');
+          this.style.setProperty('--hpin', (ih - off).toFixed(0) + 'px');
+          this.panel.style.setProperty('--vw', document.documentElement.clientWidth + 'px');
+          this.panel.style.setProperty('--y', y.toFixed(1) + 'px');
+          this.panel.style.setProperty('--h', h.toFixed(1) + 'px');
+          this.panel.style.visibility = y > ih || y + h < 0 ? 'hidden' : '';
+          if (this.walker) this.walkTo(scrolled, T, ih);
+        }
+
+        // ---- Walking stroller (desktop) ----
+        walkTo(scrolled, T, ih) {
+          var stopAt = T + ih * 0.55;
+          var t = clamp(scrolled / stopAt);
+          var e = 1 - Math.pow(1 - t, 3);
+          this._u0 = 1750;
+          this._uStop = 1024;
+          this._uTarget = this._u0 - (this._u0 - this._uStop) * e;
+          if (this._u === null) this._u = this._uTarget;
+          if (!this._walking) {
+            this._walking = true;
+            this.stepWalk();
+          }
+        }
+        stepWalk() {
+          var d = this._uTarget - this._u;
+          this._u += d * 0.12;
+          if (Math.abs(d) < 0.25) this._u = this._uTarget;
+          this.drawWalk();
+          if (this._u !== this._uTarget) requestAnimationFrame(() => this.stepWalk());
+          else this._walking = false;
+        }
+        drawWalk() {
+          var W = this.frame.clientWidth;
+          var H = this.frame.clientHeight;
+          if (!W || !H) return;
+          var s = Math.max(W, H) / 2048; // background is a square photo, covered and centred
+          var f = this.walkScale; // walkers' scale vs. the original photo
+          var horizon = 900; // smaller scale = further back = feet higher up the road
+          var feet = horizon + f * (1959 - horizon);
+          var u = this._u;
+          var u0 = this._u0;
+          var gw = 1373 * f * s;
+          var gh = 1873 * f * s;
+          var x = W / 2 + (u - 1024) * s - gw / 2;
+          var y = H / 2 + (feet - 1873 * f - 1024) * s;
+          if (y + gh > H * 0.95) y = H * 0.95 - gh;
+          var stepped = u0 - u;
+          var phase = (stepped / (430 * f)) * 2 * Math.PI;
+          var prog = (u0 - u) / (u0 - this._uStop);
+          var amp = Math.min(1, (1 - prog) * 3.2);
+          var bob = -Math.abs(Math.sin(phase)) * 1.6 * amp;
+          var deg = 180 / Math.PI;
+          this.walker.style.width = gw.toFixed(1) + 'px';
+          this.walker.style.height = gh.toFixed(1) + 'px';
+          this.walker.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + (y + bob).toFixed(1) + 'px,0)';
+          if (this.rimF) this.rimF.style.transform = 'scaleX(0.828) rotate(' + ((-stepped / 154) * deg).toFixed(2) + 'deg) scaleX(1.2077)';
+          if (this.rimR) this.rimR.style.transform = 'scaleX(0.7245) rotate(' + ((-stepped / 112) * deg).toFixed(2) + 'deg) scaleX(1.3803)';
+          var swing = Math.sin(phase) * 4 * amp;
+          if (this.legF) this.legF.style.transform = 'rotate(' + swing.toFixed(2) + 'deg)';
+          if (this.legB) this.legB.style.transform = 'rotate(' + (-swing * 0.8).toFixed(2) + 'deg)';
+        }
+
+        // ---- Video controls ----
+        setupControls() {
+          var panel = this.panel;
+          var vids = function () {
+            return panel.querySelectorAll('video');
+          };
+          vids().forEach(function (v) {
+            v.muted = true;
+            v.setAttribute('playsinline', '');
+            var pr = v.play && v.play();
+            if (pr && pr.catch) pr.catch(function () {});
+          });
+          var mute = panel.querySelector('[data-mute]');
+          var pause = panel.querySelector('[data-pause]');
+          if (mute)
+            mute.addEventListener('click', function () {
+              var isMuted = !panel.classList.contains('is-muted');
+              panel.classList.toggle('is-muted', isMuted);
+              vids().forEach(function (v) {
+                v.muted = isMuted;
+              });
+              mute.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+            });
+          if (pause)
+            pause.addEventListener('click', function () {
+              var isPaused = !panel.classList.contains('is-paused');
+              panel.classList.toggle('is-paused', isPaused);
+              vids().forEach(function (v) {
+                if (isPaused) v.pause();
+                else {
+                  var pr = v.play();
+                  if (pr && pr.catch) pr.catch(function () {});
+                }
+              });
+              pause.setAttribute('aria-label', isPaused ? 'Play video' : 'Pause video');
+            });
+        }
+      }
+    );
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "BT Sticky Video Hero",
+  "tag": "section",
+  "class": "bt-svh-section",
+  "settings": [
+    { "type": "header", "content": "Media" },
+    { "type": "video", "id": "video", "label": "Video (autoplays muted, loops)" },
+    { "type": "image_picker", "id": "image", "label": "Desktop image (if no video)" },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Phone image",
+      "info": "Shown on phones instead of the desktop media. Use hero-mobile.jpg (the full photo)."
+    },
+    { "type": "header", "content": "Walking stroller (desktop)" },
+    { "type": "paragraph", "content": "Upload the matching layer files. The layers are aligned to these exact files, so other photos won’t line up." },
+    { "type": "checkbox", "id": "walk_enable", "label": "Show walking stroller", "default": true },
+    { "type": "image_picker", "id": "walk_bg", "label": "Empty street background", "info": "hero-street.jpg (replaces the video on desktop)" },
+    { "type": "image_picker", "id": "walk_body", "label": "Mother & trike", "info": "stroll-body-nolegs.png" },
+    { "type": "image_picker", "id": "walk_leg_front", "label": "Front leg", "info": "stroll-leg-front.png" },
+    { "type": "image_picker", "id": "walk_leg_back", "label": "Back leg", "info": "stroll-leg-back.png" },
+    { "type": "image_picker", "id": "walk_rim_front", "label": "Front wheel rim", "info": "stroll-rim_front.png" },
+    { "type": "image_picker", "id": "walk_rim_rear", "label": "Rear wheel rim", "info": "stroll-rim_rear.png" },
+    { "type": "image_picker", "id": "walk_fork", "label": "Front fork & pedal", "info": "stroll-occ_front.png" },
+    { "type": "range", "id": "walk_scale", "label": "Stroller size", "min": 40, "max": 100, "step": 2, "unit": "%", "default": 68 },
+    { "type": "header", "content": "Overlay text" },
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "You’ve found the secret deal" },
+    { "type": "inline_richtext", "id": "heading_1", "label": "Headline line 1", "default": "Get a <em>Free</em> Ride-On Car" },
+    { "type": "inline_richtext", "id": "heading_2", "label": "Headline line 2", "default": "With Any Bentley Trike" },
+    { "type": "range", "id": "headline_size", "label": "Headline max size (desktop)", "min": 40, "max": 96, "step": 2, "unit": "px", "default": 72 },
+    { "type": "range", "id": "headline_size_mobile", "label": "Headline size (phone)", "min": 26, "max": 56, "step": 2, "unit": "px", "default": 38 },
+    { "type": "text", "id": "link_label", "label": "Link text", "default": "Claim my free car" },
+    { "type": "url", "id": "link_url", "label": "Link", "info": "Leave empty to jump to the bundle builder" },
+    { "type": "range", "id": "overlay", "label": "Dark overlay", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 45 },
+    { "type": "header", "content": "Scroll transition" },
+    { "type": "range", "id": "frame_side", "label": "Frame side space (desktop)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "frame_top", "label": "Frame top gap", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "split_width", "label": "Pinned video width", "min": 30, "max": 50, "step": 1, "unit": "%", "default": 37 },
+    {
+      "type": "range",
+      "id": "transition_length",
+      "label": "Transition scroll length",
+      "min": 40,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 80,
+      "info": "% of the screen height"
+    },
+    {
+      "type": "range",
+      "id": "headline_shrink",
+      "label": "Extra headline shrink",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "%",
+      "default": 8,
+      "info": "The headline already resizes with the video width"
+    },
+    { "type": "range", "id": "mobile_height", "label": "Media height (phone)", "min": 60, "max": 100, "step": 2, "unit": "%", "default": 88 },
+    { "type": "header", "content": "Offer intro (right column)" },
+    { "type": "text", "id": "intro_eyebrow", "label": "Small label", "default": "Private offer" },
+    { "type": "inline_richtext", "id": "intro_heading_1", "label": "Heading line 1", "default": "Buy any Bentley Trike." },
+    { "type": "inline_richtext", "id": "intro_heading_2", "label": "Heading line 2", "default": "Get a Bentley Ride-On Car <em>free</em>." },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Text",
+      "default": "One iconic 6-in-1 Stroller/Trike, one officially licensed electric ride-on — for the price of the Trike alone. This offer isn’t on our homepage, and it won’t be here for long."
+    },
+    { "type": "text", "id": "button_label", "label": "Button text", "default": "Claim my free car" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Leave empty to jump to the bundle builder" },
+    { "type": "checkbox", "id": "show_countdown", "label": "Show countdown", "default": true },
+    { "type": "text", "id": "offer_end", "label": "Offer ends", "default": "2026-11-30 23:59", "info": "YYYY-MM-DD HH:MM in the shopper’s local time" },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_accent", "label": "Accent", "default": "#a83f2f" },
+    { "type": "color", "id": "c_btn_bg", "label": "Button background", "default": "#a83f2f" },
+    { "type": "color", "id": "c_btn_text", "label": "Button text", "default": "#ffffff" },
+    { "type": "color", "id": "c_overlay_text", "label": "Text over video", "default": "#ffffff" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Choose your Trike" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Any finish, from Onyx Black to Mulliner." }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust line",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Officially licensed by Bentley Motors" },
+        { "type": "checkbox", "id": "stars", "label": "Show 5 stars", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Sticky Video Hero",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Choose your Trike", "text": "Any finish, from Onyx Black to Mulliner." } },
+        { "type": "step", "settings": { "title": "Pick your free Ride-On", "text": "Select the car that comes with it — on us." } },
+        { "type": "step", "settings": { "title": "Check out as usual", "text": "Your free car is applied automatically at checkout." } },
+        { "type": "trust", "settings": { "text": "1,000+ five-star reviews", "stars": true } },
+        { "type": "trust", "settings": { "text": "Officially licensed by Bentley Motors" } },
+        { "type": "trust", "settings": { "text": "Ships to US & Mexico" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
