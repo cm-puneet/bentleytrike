@@ -1,0 +1,146 @@
+{% comment %}
+  Bentley Trike – FAQ ("The fine print"). Joins the sticky hero's right column when placed after it.
+{% endcomment %}
+
+{%- assign ai = section.id | replace: '_', '' | downcase -%}
+{%- assign s = section.settings -%}
+
+{% style %}
+  .fq-{{ ai }} {
+    --bg: {{ s.c_bg }};
+    --text: {{ s.c_text }};
+    --muted: {{ s.c_text | color_modify: 'alpha', 0.7 }};
+    --line: {{ s.c_text | color_modify: 'alpha', 0.12 }};
+    --accent: {{ s.c_accent }};
+    display: block; background: var(--bg); color: var(--text);
+    padding: {{ s.pad_top }}px clamp(20px, 4vw, 72px) {{ s.pad_bottom }}px;
+    {% if s.top_line %}border-top: 1px solid var(--line);{% endif %}
+  }
+  .fq-{{ ai }} * { box-sizing: border-box; }
+  .fq-{{ ai }}__h { margin: 0 0 20px; font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif)); font-weight: 400; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.1; color: var(--text); }
+  .fq-{{ ai }}__list { border-top: 1px solid var(--line); }
+  .fq-{{ ai }}__item { border-bottom: 1px solid var(--line); }
+  .fq-{{ ai }}__q {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 44px; padding: 20px 0;
+    cursor: pointer; list-style: none; font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 20px; line-height: 1.3; color: var(--text); transition: color .15s ease-in-out;
+  }
+  .fq-{{ ai }}__q::-webkit-details-marker { display: none; }
+  .fq-{{ ai }}__q:hover { color: var(--accent); }
+  .fq-{{ ai }}__q:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .fq-{{ ai }}__icon { flex: none; position: relative; width: 18px; height: 18px; }
+  .fq-{{ ai }}__icon::before, .fq-{{ ai }}__icon::after { content: ''; position: absolute; left: 2px; right: 2px; top: 8px; height: 2px; background: currentColor; border-radius: 2px; transition: transform .25s ease-in-out; }
+  .fq-{{ ai }}__icon::after { transform: rotate(90deg); }
+  .fq-{{ ai }}__item[open] .fq-{{ ai }}__icon::after { transform: rotate(0deg); }
+  .fq-{{ ai }}__a { padding: 0 0 20px; font-size: 14px; line-height: 1.65; color: var(--muted); }
+  .fq-{{ ai }}__a p { margin: 0 0 .6em; }
+  .fq-{{ ai }}__a p:last-child { margin-bottom: 0; }
+  @media (max-width: 749px) {
+    .fq-{{ ai }} { padding: {{ s.pad_top | times: 0.7 | round }}px 16px {{ s.pad_bottom | times: 0.7 | round }}px; }
+    .fq-{{ ai }}__q { font-size: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fq-{{ ai }}__icon::after { transition: none; }
+  }
+{% endstyle %}
+
+<div data-bt-col>
+  <section class="fq-{{ ai }}">
+    {%- if s.heading != blank -%}
+      <h2 class="fq-{{ ai }}__h">{{ s.heading }}</h2>
+    {%- endif -%}
+    <div class="fq-{{ ai }}__list">
+      {%- for block in section.blocks -%}
+        <details
+          class="fq-{{ ai }}__item"
+          {{ block.shopify_attributes -}}
+          {% if forloop.first and s.open_first %}
+            open
+          {% endif %}
+        >
+          <summary class="fq-{{ ai }}__q">
+            <span>{{ block.settings.question }}</span><span class="fq-{{ ai }}__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="fq-{{ ai }}__a">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "BT FAQ",
+  "tag": "section",
+  "class": "bt-faq-section",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The fine print" },
+    { "type": "checkbox", "id": "open_first", "label": "Open the first question", "default": true },
+    { "type": "checkbox", "id": "top_line", "label": "Show divider line on top", "default": true },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_accent", "label": "Hover colour", "default": "#a83f2f" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How do I claim my free ride-on car?" },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Choose your Trike and your free car above, then add the bundle to your cart.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "How do I claim my free ride-on car?",
+            "answer": "<p>Choose your Trike and your free car above, then add the bundle to your cart. The car is free at checkout – no code to type.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Which ride-on cars are included?",
+            "answer": "<p>The Bentley Mulsanne, Bacalar and EXP 12 Speed 6e Electric Ride-On Cars.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Does it work with every Bentley Trike finish?",
+            "answer": "<p>Yes – the offer applies to any Bentley 6-in-1 Stroller/Trike, including the Mulliner collection.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Why is this deal secret?",
+            "answer": "<p>It’s reserved for the people who receive this link, so it isn’t listed anywhere else on our store.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "When does the offer end?",
+            "answer": "<p>This page closes on [END DATE], or sooner if our ride-on stock runs out.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
