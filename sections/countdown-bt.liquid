@@ -1,0 +1,93 @@
+{% comment %}
+  Bentley Trike – Black announcement bar with a live countdown.
+{% endcomment %}
+ 
+{%- assign ai = section.id | replace: '_', '' | downcase -%}
+{%- assign s = section.settings -%}
+{%- assign show_cd = false -%}
+{%- if s.show_countdown and s.offer_end != blank -%}{%- assign show_cd = true -%}{%- endif -%}
+ 
+{% style %}
+  .ab-{{ ai }} {
+    --bg: {{ s.c_bg }};
+    --text: {{ s.c_text }};
+    display: block; position: relative; z-index: 3; background: var(--bg); color: var(--text);
+    text-align: center; padding: 10px 16px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5;
+  }
+  .ab-{{ ai }} a { color: inherit; text-decoration: none; }
+  .ab-{{ ai }} a:hover { text-decoration: underline; }
+  @media (max-width: 749px) {
+    .ab-{{ ai }} { font-size: 10px; letter-spacing: .1em; }
+    .ab-{{ ai }}__long { display: none; }
+  }
+{% endstyle %}
+ 
+<div class="ab-{{ ai }}" role="region" aria-label="Announcement">
+  {%- if s.link != blank -%}<a href="{{ s.link }}">{%- endif -%}
+  {{ s.text }}
+  {%- if show_cd -%}
+    <span class="ab-{{ ai }}__long"> · </span
+    ><span class="ab-{{ ai }}__long" data-ab-countdown="{{ s.offer_end | escape }}">
+      {{- s.countdown_prefix }}
+      <span data-ab-left>—</span></span
+    >
+  {%- endif -%}
+  {%- if s.link != blank -%}</a>{%- endif -%}
+</div>
+ 
+{%- if show_cd -%}
+  <script>
+    (function () {
+      var el = document.querySelector('.ab-{{ ai }} [data-ab-countdown]');
+      if (!el || el.dataset.ready) return;
+      el.dataset.ready = '1';
+      var m = String(el.getAttribute('data-ab-countdown') || '')
+        .trim()
+        .match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?/);
+      var out = el.querySelector('[data-ab-left]');
+      if (!m || !out) {
+        el.hidden = true;
+        return;
+      }
+      var end = new Date(+m[1], +m[2] - 1, +m[3], m[4] ? +m[4] : 23, m[5] ? +m[5] : 59, 59);
+      function tick() {
+        var left = Math.max(0, Math.floor((end - new Date()) / 1000));
+        out.textContent = Math.floor(left / 86400) + 'd ' + Math.floor((left % 86400) / 3600) + 'h ' + Math.floor((left % 3600) / 60) + 'm';
+      }
+      tick();
+      setInterval(tick, 30000);
+    })();
+  </script>
+{%- endif -%}
+ 
+{% schema %}
+{
+  "name": "BT Announcement",
+  "tag": "section",
+  "class": "bt-announcement-section",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Text", "default": "Private offer · A free Bentley ride-on car with any Bentley Trike" },
+    { "type": "url", "id": "link", "label": "Link" },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "Show countdown",
+      "default": true,
+      "info": "Hidden on phones to keep the bar to one line"
+    },
+    { "type": "text", "id": "countdown_prefix", "label": "Countdown text", "default": "Ends in" },
+    {
+      "type": "text",
+      "id": "offer_end",
+      "label": "Offer ends",
+      "default": "2026-11-30 23:59",
+      "info": "YYYY-MM-DD HH:MM in the shopper’s local time"
+    },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#000000" },
+    { "type": "color", "id": "c_text", "label": "Text", "default": "#d9d0c5" }
+  ],
+  "presets": [{ "name": "BT Announcement" }]
+}
+{% endschema %}
+ 
