@@ -25,6 +25,7 @@
     class="bt-bb bt-bb--mt-{{ s.m_layout_trikes }} bt-bb--mc-{{ s.m_layout_cars }} bt-bb--mv-{{ s.m_per_view }}"
     id="bt-claim"
     data-code="{{ s.discount_code | strip | escape }}"
+    data-mode="{{ s.discount_mode }}"
     data-after="{{ s.after_add }}"
     data-currency="{{ cart.currency.iso_code }}"
     data-locale="{{ request.locale.iso_code }}"
@@ -1011,28 +1012,76 @@
             return;
           }
           var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
-          var code = this.dataset.code;
+          var mode = this.dataset.mode || 'automatic';
+          var code = mode === 'code' ? this.dataset.code : '';
           var dest = this.dataset.after === 'cart' ? root + 'cart' : '/checkout';
           var label = btn.textContent;
           btn.disabled = true;
           btn.textContent = 'Adding…';
-          fetch(root + 'cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({
-              items: [
-                { id: +t.dataset.variant, quantity: 1 },
-                { id: +c.dataset.variant, quantity: 1, properties: { _bundle: 'Secret deal free ride-on' } },
-              ],
-            }),
-          })
-            .then(function (r) {
+          var post = function (path, body) {
+            return fetch(root + path, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify(body),
+            }).then(function (r) {
               return r.json().then(function (j) {
                 if (!r.ok) throw j;
                 return j;
               });
+            });
+          };
+          // Add one item exactly like the theme's product form does: form data with an explicit
+          // empty selling_plan, so pre-order apps (e.g. Globo) don't attach a payment plan.
+          var addLikeProductForm = function (variantId) {
+            var fd = new FormData();
+            fd.append('form_type', 'product');
+            fd.append('utf8', '✓');
+            fd.append('id', String(variantId));
+            fd.append('quantity', '1');
+            fd.append('selling_plan', '');
+            return fetch(root + 'cart/add.js', {
+              method: 'POST',
+              headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+              body: fd,
+            }).then(function (r) {
+              return r.json().then(function (j) {
+                if (!r.ok) throw j;
+                return j;
+              });
+            });
+          };
+          // Safety net: if a payment plan still got attached to the Trike or car, remove it –
+          // product-page orders don't have one, and Buy X Get Y discounts skip lines that do.
+          var stripPlans = function () {
+            var ids = [+t.dataset.variant, +c.dataset.variant];
+            return fetch(root + 'cart.js', { headers: { Accept: 'application/json' } })
+              .then(function (r) {
+                return r.json();
+              })
+              .then(function (cart) {
+                var lines = (cart.items || []).filter(function (it) {
+                  return ids.indexOf(it.variant_id) > -1 && it.selling_plan_allocation;
+                });
+                return lines.reduce(function (chain, it) {
+                  return chain.then(function () {
+                    return post('cart/change.js', { id: it.key, quantity: it.quantity, selling_plan: null }).catch(function () {});
+                  });
+                }, Promise.resolve());
+              })
+              .catch(function () {});
+          };
+          addLikeProductForm(t.dataset.variant)
+            .then(function () {
+              return addLikeProductForm(c.dataset.variant);
+            })
+            .then(stripPlans)
+            .then(function () {
+              // Automatic discount: clear any leftover code (e.g. an old test code) that would block it.
+              // Discount code: apply it to the cart.
+              return post('cart/update.js', { discount: code || '' }).catch(function () {});
             })
             .then(function () {
+              document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
               window.location.href = code ? root + 'discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(dest) : dest;
             })
             .catch(function (e) {
@@ -1109,16 +1158,27 @@
     { "type": "text", "id": "color_label", "label": "Colour picker label", "default": "Colour", "info": "Colour dots appear under any product with more than one variant" },
     { "type": "header", "content": "Checkout" },
     {
+      "type": "select",
+      "id": "discount_mode",
+      "label": "How the free car is discounted",
+      "default": "automatic",
+      "options": [
+        { "value": "automatic", "label": "Automatic discount (no code)" },
+        { "value": "code", "label": "Discount code (below)" }
+      ],
+      "info": "Automatic also clears any leftover code in the shopper’s cart that could block the offer."
+    },
+    {
       "type": "text",
       "id": "discount_code",
       "label": "Discount code",
-      "info": "Your Buy X Get Y code. It’s applied automatically – shoppers never type it. Leave empty if you use an automatic discount."
+      "info": "Only used when the option above is “Discount code”. Applied for the shopper – they never type it."
     },
     {
       "type": "select",
       "id": "after_add",
       "label": "After adding to cart",
-      "default": "checkout",
+      "default": "cart",
       "options": [
         { "value": "checkout", "label": "Go to checkout" },
         { "value": "cart", "label": "Go to cart page" }
