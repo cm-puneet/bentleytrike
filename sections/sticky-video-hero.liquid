@@ -139,7 +139,25 @@
           {%- if s.link_label != blank -%}
             <a class="bt-svh__link" href="{{ s.link_url | default: '#bt-claim' }}">{{ s.link_label }}</a>
           {%- endif -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'scroll_cue' and block.settings.box_text != blank -%}
+              <button type="button" class="bt-svh__cue-box" data-cue {{ block.shopify_attributes }}>
+                <span>{{ block.settings.box_text }}</span>
+                <span class="bt-svh__cue-line" aria-hidden="true"></span>
+              </button>
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
         </div>
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'scroll_cue' and block.settings.show_circle -%}
+            <button type="button" class="bt-svh__cue-circle" data-cue aria-label="{{ block.settings.box_text | default: 'Scroll down' | escape }}">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"></path></svg>
+            </button>
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
 
         {%- if has_video -%}
           <div class="bt-svh__ctrls">
@@ -235,7 +253,7 @@
   </div>
 </bt-svh>
 
-{% stylesheet %}
+{% style %}
   .bt-svh {
     position: relative;
     display: block;
@@ -336,6 +354,114 @@
   .bt-svh__link:hover {
     background-size: 0 1px;
     color: var(--ovl);
+  }
+  /* Scroll cue – fades away as the video moves to the left */
+  .bt-svh__cue-box,
+  .bt-svh__cue-circle {
+    opacity: calc(1 - var(--p, 0) * 6);
+    transition: opacity 0.35s ease, background 0.25s ease, color 0.25s ease;
+  }
+  .cue-off .bt-svh__cue-box,
+  .cue-off .bt-svh__cue-circle {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .bt-svh__cue-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 6px;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: var(--ovl);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .bt-svh__cue-box:hover,
+  .bt-svh__cue-circle:hover {
+    background: var(--ovl);
+    color: #1a1a1a;
+  }
+  .bt-svh__cue-line {
+    position: relative;
+    width: 1px;
+    height: 22px;
+    background: currentColor;
+    opacity: 0.35;
+    overflow: hidden;
+  }
+  .bt-svh__cue-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -40%;
+    width: 1px;
+    height: 40%;
+    background: currentColor;
+    animation: bt-svh-drip 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  .bt-svh__cue-box .bt-svh__cue-line {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .bt-svh__cue-box:hover .bt-svh__cue-line {
+    background: rgba(0, 0, 0, 0.15);
+  }
+  @keyframes bt-svh-drip {
+    0% { top: -40%; }
+    100% { top: 100%; }
+  }
+  .bt-svh__cue-circle {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: var(--ovl);
+    cursor: pointer;
+  }
+  .bt-svh__cue-circle svg {
+    animation: bt-svh-bob 1.8s ease-in-out infinite;
+  }
+  @keyframes bt-svh-bob {
+    0%, 100% { transform: translateY(-3px); }
+    50% { transform: translateY(4px); }
+  }
+  @media (max-width: 749px) {
+    .bt-svh__cue-circle {
+      right: 14px;
+      bottom: 14px;
+      width: 42px;
+      height: 42px;
+    }
+    .bt-svh__cue-box {
+      padding: 11px 16px;
+      font-size: 10px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bt-svh__cue-line::after,
+    .bt-svh__cue-circle svg {
+      animation: none;
+    }
   }
   .bt-svh__ctrls {
     position: absolute;
@@ -613,9 +739,9 @@
       transition: none;
     }
   }
-{% endstylesheet %}
+{% endstyle %}
 
-{% javascript %}
+<script>
   (function () {
     function pad(n) {
       return (n < 10 ? '0' : '') + n;
@@ -718,6 +844,13 @@
           if (this.mq.addEventListener) this.mq.addEventListener('change', this.onMQ);
           else this.mq.addListener(this.onMQ);
           this.setupControls();
+          this.panel.querySelectorAll('[data-cue]').forEach((b) => {
+            b.addEventListener('click', () => {
+              this.update();
+              var y = this.mq.matches ? this._cueY : window.scrollY + (this.frame.getBoundingClientRect().bottom || window.innerHeight) - 60;
+              window.scrollTo({ top: Math.max(0, y || window.innerHeight), behavior: 'smooth' });
+            });
+          });
           this.place();
         }
 
@@ -802,6 +935,8 @@
           p = p * p * (3 - 2 * p);
           this.style.setProperty('--p', p.toFixed(4));
           this.panel.style.setProperty('--p', p.toFixed(4));
+          this.panel.classList.toggle('cue-off', p > 0.12);
+          this._cueY = window.scrollY + r.top - start + T + 2;
           if (!desk) return;
           var off = this.headerOffset();
           var yPin = Math.max(r.top, off);
@@ -910,7 +1045,7 @@
       }
     );
   })();
-{% endjavascript %}
+</script>
 
 {% schema %}
 {
@@ -1007,6 +1142,16 @@
       ]
     },
     {
+      "type": "scroll_cue",
+      "name": "Scroll cue",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "A square “scroll” button under the headline and a round arrow in the corner. Both fade away as the video moves to the left." },
+        { "type": "text", "id": "box_text", "label": "Square button text", "info": "Leave empty to hide the square button.", "default": "Scroll to unlock the offer" },
+        { "type": "checkbox", "id": "show_circle", "label": "Show round arrow (bottom right)", "default": true }
+      ]
+    },
+    {
       "type": "trust",
       "name": "Trust line",
       "limit": 4,
@@ -1025,7 +1170,8 @@
         { "type": "step", "settings": { "title": "Check out as usual", "text": "Your free car is applied automatically at checkout." } },
         { "type": "trust", "settings": { "text": "1,000+ five-star reviews", "stars": true } },
         { "type": "trust", "settings": { "text": "Officially licensed by Bentley Motors" } },
-        { "type": "trust", "settings": { "text": "Ships to US & Mexico" } }
+        { "type": "trust", "settings": { "text": "Ships to US & Mexico" } },
+        { "type": "scroll_cue" }
       ]
     }
   ]

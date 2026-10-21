@@ -1,8 +1,8 @@
 {% comment %}
   Bentley Trike – Quick Add builder.
   Step 1: add a Trike. Step 2: add the free Ride-On Car. Step 3: check out.
-  Each card is a plain Shopify product form (no background cart requests), so the
-  cart behaves exactly like adding from a product page. Joins the sticky hero's
+  Each card is a plain Shopify product form, posted into a hidden frame so the page
+  doesn't reload – the cart behaves exactly like adding from a product page. Joins the sticky hero's
   right column when placed after it.
 {% endcomment %}
 
@@ -10,7 +10,7 @@
   assign s = section.settings
 
   comment
-    Which products / variants are already in the cart (the page reloads after each add).
+    Which products / variants are already in the cart (on first load).
   endcomment
   assign cart_variants = ','
   assign cart_products = ','
@@ -21,10 +21,17 @@
 
   assign has_trike = false
   assign has_car = false
+  assign trike_ids = ','
+  assign car_ids = ','
   for block in section.blocks
     assign bp = block.settings.product
     if bp != blank
       assign needle = ',' | append: bp.id | append: ','
+      if block.type == 'trike'
+        assign trike_ids = trike_ids | append: bp.id | append: ','
+      else
+        assign car_ids = car_ids | append: bp.id | append: ','
+      endif
       if cart_products contains needle
         if block.type == 'trike'
           assign has_trike = true
@@ -32,6 +39,21 @@
           assign has_car = true
         endif
       endif
+    endif
+  endfor
+
+  comment
+    The trike and car shown in Step 3 (most recently added of each).
+  endcomment
+  assign pick_trike = nil
+  assign pick_car = nil
+  for item in cart.items
+    assign ineedle = ',' | append: item.product_id | append: ','
+    if pick_trike == nil and trike_ids contains ineedle
+      assign pick_trike = item
+    endif
+    if pick_car == nil and car_ids contains ineedle
+      assign pick_car = item
     endif
   endfor
 
@@ -51,6 +73,8 @@
     class="bt-qa bt-qa--mt-{{ s.m_layout_trikes }} bt-qa--mc-{{ s.m_layout_cars }} bt-qa--mv-{{ s.m_per_view }}"
     id="bt-claim"
     data-soldout="{{ s.soldout_label | escape }}"
+    data-added="{{ s.added_label | escape }}"
+    data-root="{{ routes.root_url }}"
     style="{{ vars | strip_newlines | strip }}"
   >
     {%- for step in (1..2) -%}
@@ -80,7 +104,7 @@
         endif
         assign return_to = return_base | append: next_anchor
       -%}
-      <div class="bt-qa__step" id="{{ anchor }}">
+      <div class="bt-qa__step" id="{{ anchor }}" data-qa-step="{{ kind }}">
         <div class="bt-qa__head">
           <div>
             {%- if eyebrow != blank -%}
@@ -88,12 +112,10 @@
             {%- endif -%}
             <h2 class="bt-qa__h">{{ heading }}</h2>
           </div>
-          {%- if done -%}
-            <span class="bt-qa__done">
+          <span class="bt-qa__done" data-qa-done{% unless done %} hidden{% endunless %}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
               Added
             </span>
-          {%- endif -%}
         </div>
         {%- if s.swipe_hint != blank -%}
           <p class="{{ hint_cls }}">{{ s.swipe_hint }}</p>
@@ -133,7 +155,7 @@
                     assign in_cart = true
                   endif
                 -%}
-                <div class="bt-qa__cell{% if in_cart %} is-in{% endif %}" {{ block.shopify_attributes }}>
+                <div class="bt-qa__cell{% if in_cart %} is-in{% endif %}" data-kind="{{ kind }}" data-product="{{ p.id }}" {{ block.shopify_attributes }}>
                   <span class="bt-qa__badges">
                     {%- if kind == 'car' and s.free_badge != blank -%}
                       <span class="bt-qa__badge bt-qa__badge--free">{{ s.free_badge }}</span>
@@ -145,11 +167,9 @@
                       <span class="bt-qa__badge bt-qa__badge--sale">Save {{ v.compare_at_price | minus: v.price | money_without_trailing_zeros }}</span>
                     {%- endif -%}
                   </span>
-                  {%- if in_cart -%}
-                    <span class="bt-qa__tick" aria-hidden="true">
+                  <span class="bt-qa__tick" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
                     </span>
-                  {%- endif -%}
                   <span class="bt-qa__img">
                     {%- if v_img -%}
                       {%- assign img_alt = v_img.alt | default: p.title | escape -%}
@@ -242,13 +262,13 @@
                     </div>
                   {%- endif -%}
 
-                  <form method="post" action="{{ routes.cart_add_url }}" class="bt-qa__form" accept-charset="UTF-8" data-qa-form>
+                  <form method="post" action="{{ routes.cart_add_url }}" class="bt-qa__form" accept-charset="UTF-8" data-qa-form data-next="{{ next_anchor }}">
                     <input type="hidden" name="form_type" value="product">
                     <input type="hidden" name="utf8" value="✓">
                     <input type="hidden" name="id" value="{{ v.id }}" data-qa-id>
                     <input type="hidden" name="quantity" value="1">
                     <input type="hidden" name="selling_plan" value="">
-                    <input type="hidden" name="return_to" value="{{ return_to }}">
+                    <input type="hidden" name="return_to" value="{{ return_to }}" data-qa-return>
                     <button type="submit" class="bt-qa__add" data-qa-add {% unless v.available %}disabled{% endunless %}>
                       <span data-qa-add-label>
                         {%- if v.available -%}
@@ -269,39 +289,151 @@
             {%- endif -%}
           {%- endfor -%}
         </div>
+        {%- if step == 1 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trike_only' -%}
+              {%- assign b = block.settings -%}
+              <div class="bt-qa__alt" data-qa-alt data-code="{{ b.code | strip | escape }}" data-go="{{ b.go_to }}" {{ block.shopify_attributes }}>
+                <div class="bt-qa__alt-big" aria-hidden="true">
+                  <span class="bt-qa__alt-num">{{ b.big_value }}</span>
+                  {%- if b.big_label != blank -%}<span class="bt-qa__alt-off">{{ b.big_label }}</span>{%- endif -%}
+                </div>
+                <div class="bt-qa__alt-copy">
+                  {%- if b.heading != blank -%}
+                    <p class="bt-qa__alt-h">{{ b.heading }}</p>
+                  {%- endif -%}
+                  {%- if b.text != blank -%}
+                    <p class="bt-qa__alt-t">{{ b.text }}</p>
+                  {%- endif -%}
+                  <p class="bt-qa__alt-msg" data-qa-alt-msg role="alert" data-need="{{ b.need_trike | escape }}"></p>
+                </div>
+                <span class="bt-qa__alt-pic{% if pick_trike and pick_trike.image %} is-on{% endif %}" data-qa-alt-pic>
+                  {%- if pick_trike and pick_trike.image -%}
+                    {{ pick_trike.image | image_url: width: 300 | image_tag: loading: 'lazy', widths: '150,300', sizes: '120px', alt: pick_trike.product.title }}
+                  {%- endif -%}
+                </span>
+                <button type="button" class="bt-qa__alt-btn" data-qa-alt-btn>
+                  <span data-qa-alt-label>{{ b.button }}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                </button>
+              </div>
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     {%- endfor -%}
 
+    {%- liquid
+      comment
+        Step 3 bundle summary – built from what is actually in the cart.
+      endcomment
+      assign t_title = ''
+      assign t_short = ''
+      assign t_price = 0
+      assign t_save = 0
+      if pick_trike
+        assign t_title = pick_trike.product.title
+        unless pick_trike.product.has_only_default_variant
+          assign t_title = t_title | append: ' – ' | append: pick_trike.variant.title
+        endunless
+        assign t_short = pick_trike.product.title
+        if t_short contains 'Bentley'
+          assign t_parts = t_short | split: 'Bentley'
+          assign t_first = t_parts | first | strip
+          if t_first != blank
+            assign t_short = t_first
+          else
+            assign t_short = t_parts | last | strip | split: ' ' | first
+          endif
+        endif
+        assign t_price = pick_trike.original_price
+        if pick_trike.variant.compare_at_price > t_price
+          assign t_save = pick_trike.variant.compare_at_price | minus: t_price
+        endif
+      endif
+      assign c_title = ''
+      assign c_short = ''
+      assign c_price = 0
+      if pick_car
+        assign c_title = pick_car.product.title
+        unless pick_car.product.has_only_default_variant
+          assign c_title = c_title | append: ' – ' | append: pick_car.variant.title
+        endunless
+        assign c_short = pick_car.product.title
+        if c_short contains 'Bentley'
+          assign c_parts = c_short | split: 'Bentley'
+          assign c_first = c_parts | first | strip
+          if c_first != blank
+            assign c_short = c_first
+          else
+            assign c_short = c_parts | last | strip | split: ' ' | first
+          endif
+        endif
+        assign c_price = pick_car.original_price
+      endif
+      assign sum_save = c_price | plus: t_save
+    -%}
     <div class="bt-qa__checkout" id="bt-checkout">
-      {%- if s.step3_eyebrow != blank -%}
-        <p class="bt-qa__eyebrow">{{ s.step3_eyebrow }}</p>
-      {%- endif -%}
-      <h2 class="bt-qa__h">{{ s.step3_heading }}</h2>
-      <ul class="bt-qa__status" role="list">
-        <li class="{% if has_trike %}is-ok{% endif %}">
-          <span class="bt-qa__dot" aria-hidden="true"></span>
-          <span>{{ s.status_trike }}</span>
-          {%- if has_trike -%}<b>· Added</b>{%- else -%}<a href="#bt-step-1">· Add one →</a>{%- endif -%}
-        </li>
-        <li class="{% if has_car %}is-ok{% endif %}">
-          <span class="bt-qa__dot" aria-hidden="true"></span>
-          <span>{{ s.status_car }}</span>
-          {%- if has_car -%}<b>· Added</b>{%- else -%}<a href="#bt-step-2">· Add one →</a>{%- endif -%}
-        </li>
-      </ul>
-      {%- if s.step3_text != blank -%}
-        <p class="bt-qa__p">{{ s.step3_text }}</p>
-      {%- endif -%}
-      <div class="bt-qa__actions">
-        <a class="bt-qa__btn{% unless has_trike and has_car %} is-soft{% endunless %}" href="{% if s.checkout_goes_to == 'cart' %}{{ routes.cart_url }}{% else %}/checkout{% endif %}">{{ s.checkout_label }}</a>
+      <div class="bt-qa__pair">
+        <a class="bt-qa__pair-img{% if pick_trike %} is-on{% endif %}" href="#bt-step-1" data-qa-pick-img="trike" aria-label="{{ s.status_trike | escape }}">
+          {%- if pick_trike and pick_trike.image -%}
+            {{ pick_trike.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '(min-width: 750px) 22vw, 42vw', alt: pick_trike.product.title }}
+          {%- endif -%}
+          <span class="bt-qa__pair-empty">{{ s.status_trike }}</span>
+        </a>
+        <span class="bt-qa__plus" aria-hidden="true">+</span>
+        <a class="bt-qa__pair-img{% if pick_car %} is-on{% endif %}" href="#bt-step-2" data-qa-pick-img="car" aria-label="{{ s.status_car | escape }}">
+          {%- if pick_car and pick_car.image -%}
+            {{ pick_car.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '(min-width: 750px) 22vw, 42vw', alt: pick_car.product.title }}
+          {%- endif -%}
+          <span class="bt-qa__pair-empty">{{ s.status_car }}</span>
+        </a>
+      </div>
+      <div class="bt-qa__box">
+        {%- if s.step3_eyebrow != blank -%}
+          <p class="bt-qa__eyebrow">{{ s.step3_eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="bt-qa__h" data-qa-sum-head data-fallback="{{ s.step3_heading | strip_html | escape }}">
+          {%- if pick_trike or pick_car -%}
+            {%- if pick_trike -%}{{ t_short }}{%- else -%}…{%- endif %} + {% if pick_car -%}{{ c_short }}{%- else -%}…{%- endif -%}
+          {%- else -%}
+            {{ s.step3_heading }}
+          {%- endif -%}
+        </h2>
+        <div class="bt-qa__lines">
+          <div class="bt-qa__line{% if pick_trike %} is-on{% endif %}" data-qa-line="trike">
+            <span data-qa-line-title>{% if pick_trike %}{{ t_title }}{% else %}{{ s.status_trike }}{% endif %}</span>
+            <span class="bt-qa__line-r">
+              <b data-qa-line-price>{% if pick_trike %}{{ t_price | money }}{% endif %}</b>
+              <a href="#bt-step-1" class="bt-qa__line-add">Choose →</a>
+            </span>
+          </div>
+          <div class="bt-qa__line{% if pick_car %} is-on{% endif %}" data-qa-line="car">
+            <span data-qa-line-title>{% if pick_car %}{{ c_title }}{% else %}{{ s.status_car }}{% endif %}</span>
+            <span class="bt-qa__line-r">
+              <s data-qa-line-price>{% if pick_car %}{{ c_price | money }}{% endif %}</s><b class="bt-qa__free bt-qa__line-free">{{ s.free_word }}</b>
+              <a href="#bt-step-2" class="bt-qa__line-add">Choose →</a>
+            </span>
+          </div>
+          <div class="bt-qa__total">
+            <span>You pay</span><span data-qa-sum-total>{{ t_price | money }}</span>
+          </div>
+          <div class="bt-qa__save"{% if sum_save == 0 %} hidden{% endif %} data-qa-sum-save-row>You save <span data-qa-sum-save>{{ sum_save | money }}</span></div>
+        </div>
+        {%- if s.step3_text != blank -%}
+          <p class="bt-qa__p">{{ s.step3_text }}</p>
+        {%- endif -%}
+        <a class="bt-qa__btn{% unless pick_trike and pick_car %} is-soft{% endunless %}" data-qa-go href="{% if s.checkout_goes_to == 'cart' %}{{ routes.cart_url }}{% else %}/checkout{% endif %}">{{ s.checkout_label }}</a>
         {%- if s.checkout_goes_to != 'cart' -%}
           <a class="bt-qa__link" href="{{ routes.cart_url }}">{{ s.view_cart_label }}</a>
         {%- endif -%}
+        {%- if s.fine_print != blank -%}
+          <p class="bt-qa__fine">{{ s.fine_print }}</p>
+        {%- endif -%}
       </div>
-      {%- if s.fine_print != blank -%}
-        <p class="bt-qa__fine">{{ s.fine_print }}</p>
-      {%- endif -%}
     </div>
+    <iframe class="bt-qa__sink" name="bt-qa-sink-{{ section.id }}" title="Cart" src="about:blank" width="1" height="1" tabindex="-1" aria-hidden="true" data-qa-sink></iframe>
   </bt-quick-add>
 </div>
 
@@ -359,6 +491,126 @@
   }
   .bt-qa__hint {
     display: none;
+  }
+  .bt-qa__alt {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 0 22px 0 0;
+    border: 1.5px solid var(--qa-accent);
+    background: var(--qa-card);
+    overflow: hidden;
+  }
+  .bt-qa__alt-big {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    min-width: 150px;
+    padding: 18px 22px;
+    background: var(--qa-accent);
+    color: #fff;
+    text-align: center;
+  }
+  .bt-qa__alt-num {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(48px, 5vw, 68px);
+    line-height: 0.9;
+  }
+  .bt-qa__alt-off {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .bt-qa__alt-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 18px 0;
+  }
+  .bt-qa__alt-h {
+    margin: 0;
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(20px, 1.9vw, 26px);
+    line-height: 1.2;
+  }
+  .bt-qa__alt-h strong {
+    color: var(--qa-accent);
+    font-weight: inherit;
+  }
+  .bt-qa__alt-t {
+    margin: 6px 0 0;
+    color: var(--qa-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .bt-qa__alt-pic {
+    display: none;
+    flex: none;
+    width: 112px;
+    height: 112px;
+    margin: 8px 0;
+    background: var(--qa-bg);
+  }
+  .bt-qa__alt-pic.is-on {
+    display: block;
+  }
+  .bt-qa__alt-pic img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .bt-qa__alt-msg {
+    margin: 6px 0 0;
+    color: var(--qa-accent);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .bt-qa__alt-msg:empty {
+    display: none;
+  }
+  .bt-qa__alt-btn {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    margin: 0;
+    padding: 0 26px;
+    border: 1.5px solid var(--qa-text);
+    border-radius: 0;
+    background: var(--qa-text);
+    color: var(--qa-bg);
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+  }
+  .bt-qa__alt-btn:hover {
+    filter: brightness(1.4);
+  }
+  .bt-qa__alt-btn:focus-visible {
+    outline: 2px solid var(--qa-accent);
+    outline-offset: 2px;
+  }
+  .bt-qa__alt-btn.is-busy {
+    cursor: wait;
+    opacity: 0.6;
+  }
+  .bt-qa__grid.is-nudge {
+    animation: bt-qa-nudge 0.9s ease;
+  }
+  @keyframes bt-qa-nudge {
+    0%, 100% { outline: 2px solid transparent; outline-offset: 6px; }
+    30%, 70% { outline: 2px solid var(--qa-accent); outline-offset: 6px; }
   }
   .bt-qa__grid {
     display: grid;
@@ -541,6 +793,145 @@
   .bt-qa__form {
     margin: 0;
   }
+  .bt-qa__cell:not(.is-in) .bt-qa__tick,
+  .bt-qa__done[hidden] {
+    display: none;
+  }
+  .bt-qa__pair {
+    display: flex;
+    flex: 1 1 280px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .bt-qa__pair-img {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44%;
+    aspect-ratio: 1;
+    color: var(--qa-muted);
+    text-decoration: none;
+  }
+  .bt-qa__pair-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .bt-qa__pair-img:not(.is-on) {
+    box-shadow: inset 0 0 0 1.5px var(--qa-line);
+  }
+  .bt-qa__pair-img:not(.is-on) img,
+  .bt-qa__pair-img.is-on .bt-qa__pair-empty {
+    display: none;
+  }
+  .bt-qa__pair-empty {
+    padding: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .bt-qa__plus {
+    color: var(--qa-accent);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 40px;
+    line-height: 1;
+  }
+  .bt-qa__box {
+    display: flex;
+    flex: 1 1 320px;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+  .bt-qa__box .bt-qa__eyebrow {
+    margin: 0;
+  }
+  .bt-qa__lines {
+    border-top: 1px solid var(--qa-line);
+  }
+  .bt-qa__line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--qa-line);
+    font-size: 14px;
+  }
+  .bt-qa__line:not(.is-on) > span:first-child {
+    color: var(--qa-muted);
+  }
+  .bt-qa__line-r {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .bt-qa__line s {
+    margin-right: 8px;
+    color: var(--qa-muted);
+    font-size: 12px;
+  }
+  .bt-qa__line .bt-qa__free {
+    letter-spacing: 0.1em;
+  }
+  .bt-qa__line-add {
+    color: var(--qa-accent);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .bt-qa__line.is-on .bt-qa__line-add,
+  .bt-qa__line:not(.is-on) [data-qa-line-price],
+  .bt-qa__line:not(.is-on) .bt-qa__line-free {
+    display: none;
+  }
+  .bt-qa__total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+  }
+  .bt-qa__total span:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .bt-qa__total span:last-child {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 32px;
+    line-height: 1;
+  }
+  .bt-qa__save {
+    padding-top: 6px;
+    color: var(--qa-sale);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+  }
+  .bt-qa__save[hidden] {
+    display: none;
+  }
+  .bt-qa__box .bt-qa__btn {
+    width: 100%;
+  }
+  .bt-qa__box .bt-qa__link,
+  .bt-qa__box .bt-qa__fine {
+    align-self: center;
+    text-align: center;
+  }
+  .bt-qa__sink {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    pointer-events: none;
+  }
   .bt-qa__add {
     width: 100%;
     min-height: 44px;
@@ -580,58 +971,19 @@
   }
   .bt-qa__checkout {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 32px;
     margin: 40px clamp(20px, 4vw, 72px) var(--qa-pb, 80px);
     padding: clamp(20px, 3vw, 40px);
     background: var(--qa-panel);
     scroll-margin-top: 80px;
-  }
-  .bt-qa__status {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-size: 14px;
-  }
-  .bt-qa__status li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    color: var(--qa-muted);
-  }
-  .bt-qa__status li.is-ok {
-    color: var(--qa-text);
-  }
-  .bt-qa__status a {
-    color: var(--qa-accent);
-    font-weight: 700;
-  }
-  .bt-qa__dot {
-    flex: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1.5px var(--qa-muted);
-  }
-  .bt-qa__status li.is-ok .bt-qa__dot {
-    background: var(--qa-ok);
-    box-shadow: none;
   }
   .bt-qa__p {
     margin: 0;
     color: var(--qa-muted);
     font-size: 14px;
     line-height: 1.6;
-  }
-  .bt-qa__actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 14px 24px;
   }
   .bt-qa__btn {
     display: inline-flex;
@@ -710,15 +1062,47 @@
       font-size: 11px;
       letter-spacing: 0.08em;
     }
+    .bt-qa__alt {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0 14px;
+      padding: 0;
+    }
+    .bt-qa__alt-big {
+      grid-row: span 2;
+      min-width: 96px;
+      padding: 14px 10px;
+    }
+    .bt-qa__alt-num {
+      font-size: 44px;
+    }
+    .bt-qa__alt-off {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+    }
+    .bt-qa__alt-copy {
+      padding: 14px 14px 10px 0;
+    }
+    .bt-qa__alt-h {
+      font-size: 19px;
+    }
+    .bt-qa__alt-pic {
+      display: none !important;
+    }
+    .bt-qa__alt-btn {
+      justify-self: stretch;
+      margin: 0 14px 14px 0;
+    }
     .bt-qa__checkout {
+      gap: 20px;
       margin: 28px 0 calc(var(--qa-pb, 80px) * 0.7);
-      padding: 24px 16px;
+      padding: 20px 16px 24px;
+    }
+    .bt-qa__plus {
+      font-size: 32px;
     }
     .bt-qa__btn {
       width: 100%;
-    }
-    .bt-qa__actions {
-      justify-content: center;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -789,15 +1173,282 @@
               }
             });
           });
-          // Show progress on submit; the browser then posts the form like a product page.
-          this.querySelectorAll('[data-qa-form]').forEach(function (form) {
-            form.addEventListener('submit', function () {
-              var add = form.querySelector('[data-qa-add]');
-              if (add) {
-                add.classList.add('is-busy');
-                var lab = add.querySelector('[data-qa-add-label]');
-                if (lab) lab.textContent = root.dataset.adding || 'Adding…';
+          // Add to cart without leaving the page: each card's form is posted into a hidden
+          // frame – the exact same request as a product page – then we read the cart.
+          var sink = this.querySelector('[data-qa-sink]');
+          var base = this.dataset.root || '/';
+          if (base.slice(-1) !== '/') base += '/';
+          var pending = null;
+          var timer = null;
+          var label = function (form, text) {
+            var lab = form.querySelector('[data-qa-add-label]');
+            if (lab && text) lab.textContent = text;
+          };
+          var busy = function (form, on) {
+            var add = form.querySelector('[data-qa-add]');
+            if (add) add.classList.toggle('is-busy', on);
+          };
+          var hardSubmit = function (form) {
+            // Fallback: normal post + reload, exactly like before.
+            form.dataset.hard = '1';
+            form.removeAttribute('target');
+            form.submit();
+          };
+          var refreshTheme = function (cart) {
+            [document, document.documentElement].forEach(function (el) {
+              el.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: { cart: cart } }));
+            });
+            document.dispatchEvent(new CustomEvent('cart:change', { bubbles: true, detail: { baseEvent: 'variant:add', cart: cart } }));
+            if (cart && typeof cart.item_count === 'number') {
+              document.querySelectorAll('cart-count, .cart-count, [data-cart-count], .header__cart-count').forEach(function (n) {
+                if (n.children.length === 0) n.textContent = cart.item_count;
+              });
+            }
+          };
+          var syncSteps = function (cart) {
+            var ids = {};
+            (cart.items || []).forEach(function (it) {
+              ids[String(it.product_id)] = true;
+            });
+            var have = { trike: false, car: false };
+            root.querySelectorAll('.bt-qa__cell[data-product]').forEach(function (cell) {
+              if (ids[cell.dataset.product]) {
+                cell.classList.add('is-in');
+                have[cell.dataset.kind] = true;
+                var add = cell.querySelector('[data-qa-add]');
+                if (add && !add.disabled) label(cell, root.dataset.added || 'Added');
               }
+            });
+            ['trike', 'car'].forEach(function (k) {
+              var step = root.querySelector('[data-qa-step="' + k + '"] [data-qa-done]');
+              if (step) step.hidden = !have[k];
+              var li = root.querySelector('[data-qa-status="' + k + '"]');
+              if (li && have[k] && !li.classList.contains('is-ok')) {
+                li.classList.add('is-ok');
+                var a = li.querySelector('a');
+                if (a) {
+                  var b = document.createElement('b');
+                  b.textContent = '· Added';
+                  a.replaceWith(b);
+                }
+              }
+            });
+            var found = {};
+            ['trike', 'car'].forEach(function (k) {
+              (cart.items || []).some(function (x) {
+                var c = root.querySelector('.bt-qa__cell[data-kind="' + k + '"][data-product="' + x.product_id + '"]');
+                if (c) found[k] = { item: x, cell: c };
+                return !!c;
+              });
+            });
+            var shortName = function (title) {
+              title = title || '';
+              var i = title.indexOf('Bentley');
+              if (i < 0) return title;
+              var before = title.slice(0, i).trim();
+              if (before) return before;
+              return (title.slice(i + 7).trim().split(' ')[0] || title);
+            };
+            var tPrice = 0;
+            var save = 0;
+            ['trike', 'car'].forEach(function (k) {
+              var f = found[k];
+              if (!f) return;
+              var x = f.item;
+              var price = x.original_price != null ? x.original_price : x.price;
+              var holder = root.querySelector('[data-qa-pick-img="' + k + '"]');
+              var src = x.image || '';
+              if (!src) {
+                var ci = f.cell.querySelector('.bt-qa__img img');
+                src = ci ? ci.currentSrc || ci.src : '';
+              } else {
+                src += (src.indexOf('?') > -1 ? '&' : '?') + 'width=700';
+              }
+              if (holder && src) {
+                holder.classList.add('is-on');
+                var im = holder.querySelector('img');
+                if (!im) {
+                  im = document.createElement('img');
+                  im.width = 700;
+                  im.height = 700;
+                  holder.insertBefore(im, holder.firstChild);
+                }
+                im.removeAttribute('srcset');
+                im.removeAttribute('sizes');
+                im.src = src;
+                im.alt = x.product_title || '';
+              }
+              var line = root.querySelector('[data-qa-line="' + k + '"]');
+              if (line) {
+                line.classList.add('is-on');
+                var lt = line.querySelector('[data-qa-line-title]');
+                if (lt) lt.textContent = (x.product_title || '') + (x.product_has_only_default_variant || !x.variant_title ? '' : ' – ' + x.variant_title);
+                var lp = line.querySelector('[data-qa-line-price]');
+                if (lp) lp.textContent = money(price);
+              }
+              if (k === 'trike') {
+                tPrice = price;
+                var sw = f.cell.querySelector('[data-qa-swatch][data-variant="' + x.variant_id + '"]');
+                var cmp = sw ? +sw.dataset.compare : 0;
+                if (cmp > price) save += cmp - price;
+              } else {
+                save += price;
+              }
+            });
+            var altPic = root.querySelector('[data-qa-alt-pic]');
+            var tImg = root.querySelector('[data-qa-pick-img="trike"] img');
+            if (altPic && found.trike && tImg && tImg.src) {
+              var ai = altPic.querySelector('img');
+              if (!ai) {
+                ai = document.createElement('img');
+                ai.width = 300;
+                ai.height = 300;
+                altPic.appendChild(ai);
+              }
+              ai.removeAttribute('srcset');
+              ai.removeAttribute('sizes');
+              ai.src = tImg.currentSrc || tImg.src;
+              ai.alt = found.trike.item.product_title || '';
+              altPic.classList.add('is-on');
+            }
+            var altM = root.querySelector('[data-qa-alt-msg]');
+            if (altM && found.trike) altM.textContent = '';
+            var head = root.querySelector('[data-qa-sum-head]');
+            if (head && (found.trike || found.car)) {
+              head.textContent =
+                (found.trike ? shortName(found.trike.item.product_title) : '…') + ' + ' + (found.car ? shortName(found.car.item.product_title) : '…');
+            }
+            var tot = root.querySelector('[data-qa-sum-total]');
+            if (tot) tot.textContent = money(tPrice);
+            var sv = root.querySelector('[data-qa-sum-save]');
+            if (sv) sv.textContent = money(save);
+            var svr = root.querySelector('[data-qa-sum-save-row]');
+            if (svr) svr.hidden = save <= 0;
+            var go = root.querySelector('[data-qa-go]');
+            if (go) go.classList.toggle('is-soft', !(have.trike && have.car));
+          };
+          var finish = function () {
+            if (!pending) return;
+            var form = pending;
+            pending = null;
+            clearTimeout(timer);
+            var rt = form.querySelector('[data-qa-return]');
+            if (rt && rt.dataset.orig) rt.value = rt.dataset.orig;
+            form.removeAttribute('target');
+            var id = String((form.querySelector('[data-qa-id]') || {}).value || '');
+            fetch(base + 'cart.js', { headers: { Accept: 'application/json' }, credentials: 'same-origin', cache: 'no-store' })
+              .then(function (r) {
+                return r.json();
+              })
+              .then(function (cart) {
+                var ok = (cart.items || []).some(function (it) {
+                  return String(it.variant_id) === id;
+                });
+                if (!ok) return hardSubmit(form);
+                busy(form, false);
+                syncSteps(cart);
+                refreshTheme(cart);
+                var next = form.dataset.next && document.querySelector(form.dataset.next);
+                if (next) {
+                  setTimeout(function () {
+                    next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }, 350);
+                }
+              })
+              .catch(function () {
+                hardSubmit(form);
+              });
+          };
+          if (sink) sink.addEventListener('load', finish);
+
+          // "Just the trike" offer: check out with the trike only (no car → the % discount applies).
+          var alt = root.querySelector('[data-qa-alt]');
+          if (alt) {
+            var altBtn = alt.querySelector('[data-qa-alt-btn]');
+            var altMsg = alt.querySelector('[data-qa-alt-msg]');
+            var altLab = alt.querySelector('[data-qa-alt-label]');
+            var altOrig = altLab ? altLab.textContent : '';
+            var idsOf = function (kind) {
+              var m = {};
+              root.querySelectorAll('.bt-qa__cell[data-kind="' + kind + '"][data-product]').forEach(function (c) {
+                m[c.dataset.product] = true;
+              });
+              return m;
+            };
+            altBtn.addEventListener('click', function () {
+              if (altBtn.classList.contains('is-busy')) return;
+              altBtn.classList.add('is-busy');
+              if (altMsg) altMsg.textContent = '';
+              var trikes = idsOf('trike');
+              var cars = idsOf('car');
+              var j = { headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+              fetch(base + 'cart.js', { headers: j.headers, credentials: 'same-origin', cache: 'no-store' })
+                .then(function (r) {
+                  return r.json();
+                })
+                .then(function (cart) {
+                  var items = cart.items || [];
+                  var hasTrike = items.some(function (it) {
+                    return trikes[String(it.product_id)];
+                  });
+                  if (!hasTrike) {
+                    altBtn.classList.remove('is-busy');
+                    if (altMsg) altMsg.textContent = altMsg.dataset.need || 'Add a trike above first.';
+                    var grid = root.querySelector('.bt-qa__grid--t');
+                    if (grid) {
+                      grid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      grid.classList.remove('is-nudge');
+                      void grid.offsetWidth;
+                      grid.classList.add('is-nudge');
+                    }
+                    return;
+                  }
+                  if (altLab) altLab.textContent = root.dataset.adding || 'One moment…';
+                  // Take any free cars out so only the trike offer applies.
+                  var carLines = items.filter(function (it) {
+                    return cars[String(it.product_id)];
+                  });
+                  var chain = Promise.resolve();
+                  carLines.forEach(function (it) {
+                    chain = chain.then(function () {
+                      return fetch(base + 'cart/change.js', {
+                        method: 'POST',
+                        headers: j.headers,
+                        credentials: 'same-origin',
+                        body: JSON.stringify({ id: it.key, quantity: 0 }),
+                      });
+                    });
+                  });
+                  return chain.then(function () {
+                    var dest = alt.dataset.go === 'cart' ? base + 'cart' : base + 'checkout';
+                    var code = alt.dataset.code;
+                    window.location.href = code
+                      ? base + 'discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(dest)
+                      : dest;
+                  });
+                })
+                .catch(function () {
+                  altBtn.classList.remove('is-busy');
+                  if (altLab) altLab.textContent = altOrig;
+                });
+            });
+          }
+          this.querySelectorAll('[data-qa-form]').forEach(function (form) {
+            form.addEventListener('submit', function (e) {
+              busy(form, true);
+              label(form, root.dataset.adding || 'Adding…');
+              if (!sink || form.dataset.hard === '1') return; // normal post
+              e.preventDefault();
+              if (pending) return;
+              pending = form;
+              var rt = form.querySelector('[data-qa-return]');
+              if (rt) {
+                if (!rt.dataset.orig) rt.dataset.orig = rt.value;
+                rt.value = '/cart.js';
+              }
+              form.target = sink.name;
+              form.submit();
+              timer = setTimeout(finish, 12000);
             });
           });
         }
@@ -828,8 +1479,8 @@
     { "type": "text", "id": "free_badge", "label": "Car badge", "default": "Free with Trike" },
     { "type": "text", "id": "free_word", "label": "“Free” word", "default": "FREE" },
     { "type": "header", "content": "Step 3 – Checkout" },
-    { "type": "text", "id": "step3_eyebrow", "label": "Small label", "default": "Step 3" },
-    { "type": "inline_richtext", "id": "step3_heading", "label": "Heading", "default": "Check out" },
+    { "type": "text", "id": "step3_eyebrow", "label": "Small label", "default": "Your secret bundle" },
+    { "type": "inline_richtext", "id": "step3_heading", "label": "Heading (before anything is added)", "default": "Your bundle" },
     { "type": "text", "id": "status_trike", "label": "Trike checklist line", "default": "Bentley Trike" },
     { "type": "text", "id": "status_car", "label": "Car checklist line", "default": "Free Ride-On Car" },
     { "type": "text", "id": "step3_text", "label": "Text", "default": "Your free car is applied automatically at checkout." },
@@ -906,6 +1557,32 @@
       ]
     },
     {
+      "type": "trike_only",
+      "name": "Trike-only offer",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Shows under the trikes. “Buy now” checks out with just the trike (any free car is taken out), so the % off discount applies." },
+        { "type": "text", "id": "big_value", "label": "Big number", "default": "30%" },
+        { "type": "text", "id": "big_label", "label": "Under the big number", "default": "Off" },
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Or just want the trike? <strong>Get 30% off instead.</strong>" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Skip the free car and take 30% off your trike at checkout." },
+        { "type": "text", "id": "button", "label": "Button", "default": "Buy now" },
+        { "type": "paragraph", "content": "The photo of the trike in the cart shows beside the button (desktop) once a trike is added." },
+        { "type": "text", "id": "need_trike", "label": "Message if no trike added yet", "default": "Add a trike above first, then tap Buy now." },
+        { "type": "text", "id": "code", "label": "Discount code (optional)", "info": "Leave empty if the 30% off is an automatic discount." },
+        {
+          "type": "select",
+          "id": "go_to",
+          "label": "Buy now goes to",
+          "default": "checkout",
+          "options": [
+            { "value": "checkout", "label": "Checkout" },
+            { "value": "cart", "label": "Cart" }
+          ]
+        }
+      ]
+    },
+    {
       "type": "car",
       "name": "Free Ride-On Car",
       "limit": 6,
@@ -923,6 +1600,7 @@
         { "type": "trike" },
         { "type": "trike" },
         { "type": "trike" },
+        { "type": "trike_only" },
         { "type": "car" },
         { "type": "car" },
         { "type": "car" }
