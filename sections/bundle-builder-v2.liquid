@@ -1,0 +1,933 @@
+{% comment %}
+  Bentley Trike – Quick Add builder.
+  Step 1: add a Trike. Step 2: add the free Ride-On Car. Step 3: check out.
+  Each card is a plain Shopify product form (no background cart requests), so the
+  cart behaves exactly like adding from a product page. Joins the sticky hero's
+  right column when placed after it.
+{% endcomment %}
+
+{%- liquid
+  assign s = section.settings
+
+  comment
+    Which products / variants are already in the cart (the page reloads after each add).
+  endcomment
+  assign cart_variants = ','
+  assign cart_products = ','
+  for item in cart.items
+    assign cart_variants = cart_variants | append: item.variant_id | append: ','
+    assign cart_products = cart_products | append: item.product_id | append: ','
+  endfor
+
+  assign has_trike = false
+  assign has_car = false
+  for block in section.blocks
+    assign bp = block.settings.product
+    if bp != blank
+      assign needle = ',' | append: bp.id | append: ','
+      if cart_products contains needle
+        if block.type == 'trike'
+          assign has_trike = true
+        else
+          assign has_car = true
+        endif
+      endif
+    endif
+  endfor
+
+  assign return_base = request.path
+-%}
+
+{%- capture vars -%}
+  --qa-bg: {{ s.c_bg }}; --qa-card: {{ s.c_card }}; --qa-panel: {{ s.c_panel }}; --qa-text: {{ s.c_text }};
+  --qa-muted: {{ s.c_text | color_modify: 'alpha', 0.7 }}; --qa-line: {{ s.c_text | color_modify: 'alpha', 0.12 }};
+  --qa-accent: {{ s.c_accent }}; --qa-sale: {{ s.c_sale }}; --qa-badge: {{ s.c_badge }}; --qa-ok: {{ s.c_ok }};
+  --qa-btn-bg: {{ s.c_btn_bg }}; --qa-btn-text: {{ s.c_btn_text }};
+  --qa-cols-t: {{ s.cols_trikes }}; --qa-cols-c: {{ s.cols_cars }}; --qa-pt: {{ s.pad_top }}px; --qa-pb: {{ s.pad_bottom }}px;
+{%- endcapture -%}
+
+<div data-bt-col>
+  <bt-quick-add
+    class="bt-qa bt-qa--mt-{{ s.m_layout_trikes }} bt-qa--mc-{{ s.m_layout_cars }} bt-qa--mv-{{ s.m_per_view }}"
+    id="bt-claim"
+    data-soldout="{{ s.soldout_label | escape }}"
+    style="{{ vars | strip_newlines | strip }}"
+  >
+    {%- for step in (1..2) -%}
+      {%- liquid
+        if step == 1
+          assign kind = 'trike'
+          assign eyebrow = s.step1_eyebrow
+          assign heading = s.step1_heading
+          assign show_colors = s.show_colors_trikes
+          assign grid_cls = 'bt-qa__grid bt-qa__grid--t'
+          assign hint_cls = 'bt-qa__hint bt-qa__hint--t'
+          assign done = has_trike
+          assign anchor = 'bt-step-1'
+          assign next_anchor = '#bt-step-2'
+          assign btn_label = s.add_trike_label
+        else
+          assign kind = 'car'
+          assign eyebrow = s.step2_eyebrow
+          assign heading = s.step2_heading
+          assign show_colors = s.show_colors_cars
+          assign grid_cls = 'bt-qa__grid bt-qa__grid--c'
+          assign hint_cls = 'bt-qa__hint bt-qa__hint--c'
+          assign done = has_car
+          assign anchor = 'bt-step-2'
+          assign next_anchor = '#bt-checkout'
+          assign btn_label = s.add_car_label
+        endif
+        assign return_to = return_base | append: next_anchor
+      -%}
+      <div class="bt-qa__step" id="{{ anchor }}">
+        <div class="bt-qa__head">
+          <div>
+            {%- if eyebrow != blank -%}
+              <p class="bt-qa__eyebrow">{{ eyebrow }}</p>
+            {%- endif -%}
+            <h2 class="bt-qa__h">{{ heading }}</h2>
+          </div>
+          {%- if done -%}
+            <span class="bt-qa__done">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+              Added
+            </span>
+          {%- endif -%}
+        </div>
+        {%- if s.swipe_hint != blank -%}
+          <p class="{{ hint_cls }}">{{ s.swipe_hint }}</p>
+        {%- endif -%}
+        <div class="{{ grid_cls }}">
+          {%- for block in section.blocks -%}
+            {%- if block.type == kind -%}
+              {%- assign p = block.settings.product -%}
+              {%- if p != blank -%}
+                {%- liquid
+                  assign v = p.selected_or_first_available_variant
+                  assign show_sw = show_colors
+                  assign only_name = ''
+                  assign only = block.settings.only_variant | strip | downcase
+                  if only != blank
+                    for vv in p.variants
+                      assign vt = vv.title | downcase
+                      if vt == only or vt contains only
+                        assign v = vv
+                        assign only_name = vv.title
+                        break
+                      endif
+                    endfor
+                    assign show_sw = false
+                  endif
+                  if show_sw == false and only_name == '' and p.has_only_default_variant == false
+                    assign only_name = v.title
+                  endif
+                  assign on_sale = false
+                  if kind == 'trike' and v.compare_at_price > v.price
+                    assign on_sale = true
+                  endif
+                  assign v_img = v.featured_image | default: p.featured_image
+                  assign pneedle = ',' | append: p.id | append: ','
+                  assign in_cart = false
+                  if cart_products contains pneedle
+                    assign in_cart = true
+                  endif
+                -%}
+                <div class="bt-qa__cell{% if in_cart %} is-in{% endif %}" {{ block.shopify_attributes }}>
+                  <span class="bt-qa__badges">
+                    {%- if kind == 'car' and s.free_badge != blank -%}
+                      <span class="bt-qa__badge bt-qa__badge--free">{{ s.free_badge }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.badge != blank -%}
+                      <span class="bt-qa__badge">{{ block.settings.badge }}</span>
+                    {%- endif -%}
+                    {%- if on_sale and s.show_save -%}
+                      <span class="bt-qa__badge bt-qa__badge--sale">Save {{ v.compare_at_price | minus: v.price | money_without_trailing_zeros }}</span>
+                    {%- endif -%}
+                  </span>
+                  {%- if in_cart -%}
+                    <span class="bt-qa__tick" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                    </span>
+                  {%- endif -%}
+                  <span class="bt-qa__img">
+                    {%- if v_img -%}
+                      {%- assign img_alt = v_img.alt | default: p.title | escape -%}
+                      {{ v_img | image_url: width: 700 | image_tag: loading: 'lazy', widths: '300,500,700', sizes: '(min-width: 750px) 20vw, 45vw', alt: img_alt }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    {%- endif -%}
+                  </span>
+                  <span class="bt-qa__meta">
+                    <span class="bt-qa__title">{{ p.title }}</span>
+                    {%- if only_name != '' -%}
+                      <span class="bt-qa__variant">{{ only_name }}</span>
+                    {%- endif -%}
+                    {%- if kind == 'car' -%}
+                      <span class="bt-qa__price"><span class="bt-qa__free">{{ s.free_word }}</span><s data-qa-price>{{ v.price | money }}</s></span>
+                    {%- else -%}
+                      <span class="bt-qa__price">
+                        <b data-qa-price{% if on_sale %} class="is-sale"{% endif %}>{{ v.price | money }}</b>
+                        <s data-qa-compare{% unless on_sale %} hidden{% endunless %}>{% if on_sale %}{{ v.compare_at_price | money }}{% endif %}</s>
+                      </span>
+                    {%- endif -%}
+                  </span>
+
+                  {%- if show_sw and p.has_only_default_variant == false -%}
+                    {%- liquid
+                      assign copt_pos = 0
+                      for opt in p.options_with_values
+                        assign oname = opt.name | downcase
+                        if oname contains 'colo'
+                          assign copt_pos = forloop.index
+                          assign copt = opt
+                          break
+                        endif
+                      endfor
+                    -%}
+                    <div class="bt-qa__swatches" role="group" aria-label="Colour">
+                      {%- for vv in p.variants limit: 12 -%}
+                        {%- liquid
+                          assign vname = vv.title
+                          assign sw_color = blank
+                          assign sw_img = blank
+                          if copt_pos > 0
+                            assign idx = copt_pos | minus: 1
+                            assign vname = vv.options[idx]
+                            for val in copt.values
+                              if val.name == vname
+                                if val.swatch.color
+                                  assign sw_color = val.swatch.color
+                                elsif val.swatch.image
+                                  assign sw_img = val.swatch.image | image_url: width: 80
+                                endif
+                                break
+                              endif
+                            endfor
+                          endif
+                          if sw_color == blank and sw_img == blank and vv.featured_image
+                            assign sw_img = vv.featured_image | image_url: width: 80
+                          endif
+                          assign vv_img = vv.featured_image | default: p.featured_image
+                          assign sw_cls = 'bt-qa__sw'
+                          if sw_color == blank and sw_img == blank
+                            assign sw_cls = sw_cls | append: ' bt-qa__sw--text'
+                          endif
+                          unless vv.available
+                            assign sw_cls = sw_cls | append: ' is-out'
+                          endunless
+                        -%}
+                        <button
+                          type="button"
+                          class="{{ sw_cls }}"
+                          data-qa-swatch
+                          data-variant="{{ vv.id }}"
+                          data-price="{{ vv.price }}"
+                          data-compare="{% if vv.compare_at_price > vv.price %}{{ vv.compare_at_price }}{% else %}0{% endif %}"
+                          data-img="{{ vv_img | image_url: width: 700 }}"
+                          data-available="{% if vv.available %}1{% else %}0{% endif %}"
+                          aria-pressed="{% if vv.id == v.id %}true{% else %}false{% endif %}"
+                          aria-label="{{ vname | escape }}{% unless vv.available %} – {{ s.soldout_label | escape }}{% endunless %}"
+                          title="{{ vname | escape }}"
+                        >
+                          {%- if sw_color != blank -%}
+                            <span class="bt-qa__sw-dot" style="background-color: {{ sw_color }};"></span>
+                          {%- elsif sw_img != blank -%}
+                            <span class="bt-qa__sw-dot" style="background-image: url('{{ sw_img }}');"></span>
+                          {%- else -%}
+                            <span class="bt-qa__sw-txt">{{ vname }}</span>
+                          {%- endif -%}
+                        </button>
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+
+                  <form method="post" action="{{ routes.cart_add_url }}" class="bt-qa__form" accept-charset="UTF-8" data-qa-form>
+                    <input type="hidden" name="form_type" value="product">
+                    <input type="hidden" name="utf8" value="✓">
+                    <input type="hidden" name="id" value="{{ v.id }}" data-qa-id>
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="selling_plan" value="">
+                    <input type="hidden" name="return_to" value="{{ return_to }}">
+                    <button type="submit" class="bt-qa__add" data-qa-add {% unless v.available %}disabled{% endunless %}>
+                      <span data-qa-add-label>
+                        {%- if v.available -%}
+                          {%- if in_cart -%}{{ s.added_label }}{%- else -%}{{ btn_label }}{%- endif -%}
+                        {%- else -%}
+                          {{ s.soldout_label }}
+                        {%- endif -%}
+                      </span>
+                    </button>
+                  </form>
+                </div>
+              {%- else -%}
+                <div class="bt-qa__cell" {{ block.shopify_attributes }}>
+                  <span class="bt-qa__img">{{ 'product-1' | placeholder_svg_tag }}</span>
+                  <span class="bt-qa__meta"><span class="bt-qa__title">Choose a product</span></span>
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <div class="bt-qa__checkout" id="bt-checkout">
+      {%- if s.step3_eyebrow != blank -%}
+        <p class="bt-qa__eyebrow">{{ s.step3_eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="bt-qa__h">{{ s.step3_heading }}</h2>
+      <ul class="bt-qa__status" role="list">
+        <li class="{% if has_trike %}is-ok{% endif %}">
+          <span class="bt-qa__dot" aria-hidden="true"></span>
+          <span>{{ s.status_trike }}</span>
+          {%- if has_trike -%}<b>· Added</b>{%- else -%}<a href="#bt-step-1">· Add one →</a>{%- endif -%}
+        </li>
+        <li class="{% if has_car %}is-ok{% endif %}">
+          <span class="bt-qa__dot" aria-hidden="true"></span>
+          <span>{{ s.status_car }}</span>
+          {%- if has_car -%}<b>· Added</b>{%- else -%}<a href="#bt-step-2">· Add one →</a>{%- endif -%}
+        </li>
+      </ul>
+      {%- if s.step3_text != blank -%}
+        <p class="bt-qa__p">{{ s.step3_text }}</p>
+      {%- endif -%}
+      <div class="bt-qa__actions">
+        <a class="bt-qa__btn{% unless has_trike and has_car %} is-soft{% endunless %}" href="{% if s.checkout_goes_to == 'cart' %}{{ routes.cart_url }}{% else %}/checkout{% endif %}">{{ s.checkout_label }}</a>
+        {%- if s.checkout_goes_to != 'cart' -%}
+          <a class="bt-qa__link" href="{{ routes.cart_url }}">{{ s.view_cart_label }}</a>
+        {%- endif -%}
+      </div>
+      {%- if s.fine_print != blank -%}
+        <p class="bt-qa__fine">{{ s.fine_print }}</p>
+      {%- endif -%}
+    </div>
+  </bt-quick-add>
+</div>
+
+{% style %}
+  .bt-qa {
+    display: block;
+    background: var(--qa-bg);
+    color: var(--qa-text);
+  }
+  .bt-qa * {
+    box-sizing: border-box;
+  }
+  .bt-qa__step {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: var(--qa-pt, 80px) clamp(20px, 4vw, 72px) 40px;
+    scroll-margin-top: 80px;
+  }
+  .bt-qa__step + .bt-qa__step {
+    padding-top: 40px;
+  }
+  .bt-qa__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .bt-qa__eyebrow {
+    margin: 0 0 8px;
+    color: var(--qa-accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .bt-qa__h {
+    margin: 0;
+    color: var(--qa-text);
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(26px, 2.6vw, 38px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .bt-qa__done {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--qa-ok);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .bt-qa__hint {
+    display: none;
+  }
+  .bt-qa__grid {
+    display: grid;
+    gap: 10px;
+  }
+  .bt-qa__grid--t {
+    grid-template-columns: repeat(var(--qa-cols-t, 4), minmax(0, 1fr));
+  }
+  .bt-qa__grid--c {
+    grid-template-columns: repeat(var(--qa-cols-c, 3), minmax(0, 1fr));
+  }
+  .bt-qa__cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px;
+    background: var(--qa-card);
+    box-shadow: inset 0 0 0 1px var(--qa-line);
+    transition: box-shadow 0.15s ease-in-out, background 0.15s ease-in-out;
+  }
+  .bt-qa__cell:hover {
+    box-shadow: inset 0 0 0 1px var(--qa-text);
+  }
+  .bt-qa__cell.is-in {
+    background: #fff;
+    box-shadow: inset 0 0 0 2px var(--qa-ok);
+  }
+  .bt-qa__badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .bt-qa__badge {
+    padding: 3px 6px;
+    background: var(--qa-badge);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .bt-qa__badge--sale {
+    background: var(--qa-sale);
+  }
+  .bt-qa__badge--free {
+    background: var(--qa-accent);
+  }
+  .bt-qa__tick {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--qa-ok);
+    color: #fff;
+  }
+  .bt-qa__img {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  .bt-qa__img img,
+  .bt-qa__img svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .bt-qa__cell:hover .bt-qa__img img {
+    transform: scale(1.05);
+  }
+  .bt-qa__meta {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .bt-qa__title {
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .bt-qa__variant {
+    color: var(--qa-muted);
+    font-size: 12px;
+  }
+  .bt-qa__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 8px;
+    font-size: 13px;
+  }
+  .bt-qa__price b {
+    font-weight: 700;
+  }
+  .bt-qa__price b.is-sale {
+    color: var(--qa-sale);
+  }
+  .bt-qa__price s {
+    color: var(--qa-muted);
+    font-size: 12px;
+  }
+  .bt-qa__free {
+    color: var(--qa-accent);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .bt-qa__swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .bt-qa__sw {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    padding: 3px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--qa-line);
+    color: var(--qa-text);
+    cursor: pointer;
+    font: inherit;
+  }
+  .bt-qa__sw[aria-pressed='true'] {
+    box-shadow: inset 0 0 0 2px var(--qa-text);
+  }
+  .bt-qa__sw-dot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #ddd;
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  }
+  .bt-qa__sw--text {
+    width: auto;
+    height: 32px;
+    padding: 0 10px;
+    border-radius: 0;
+  }
+  .bt-qa__sw-txt {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .bt-qa__sw.is-out {
+    opacity: 0.45;
+  }
+  .bt-qa__sw.is-out::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    left: 2px;
+    height: 1px;
+    background: var(--qa-text);
+    transform: rotate(-45deg);
+  }
+  .bt-qa__form {
+    margin: 0;
+  }
+  .bt-qa__add {
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 0;
+    background: var(--qa-btn-bg);
+    color: var(--qa-btn-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: filter 0.15s ease-in-out, background 0.15s ease-in-out;
+  }
+  .bt-qa__add:hover {
+    filter: brightness(0.88);
+  }
+  .bt-qa__cell.is-in .bt-qa__add {
+    background: var(--qa-ok);
+  }
+  .bt-qa__add[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .bt-qa__add.is-busy {
+    cursor: wait;
+    opacity: 0.7;
+  }
+  .bt-qa__add:focus-visible,
+  .bt-qa__sw:focus-visible,
+  .bt-qa__btn:focus-visible {
+    outline: 2px solid var(--qa-accent);
+    outline-offset: 2px;
+  }
+  .bt-qa__checkout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 40px clamp(20px, 4vw, 72px) var(--qa-pb, 80px);
+    padding: clamp(20px, 3vw, 40px);
+    background: var(--qa-panel);
+    scroll-margin-top: 80px;
+  }
+  .bt-qa__status {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+  }
+  .bt-qa__status li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    color: var(--qa-muted);
+  }
+  .bt-qa__status li.is-ok {
+    color: var(--qa-text);
+  }
+  .bt-qa__status a {
+    color: var(--qa-accent);
+    font-weight: 700;
+  }
+  .bt-qa__dot {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1.5px var(--qa-muted);
+  }
+  .bt-qa__status li.is-ok .bt-qa__dot {
+    background: var(--qa-ok);
+    box-shadow: none;
+  }
+  .bt-qa__p {
+    margin: 0;
+    color: var(--qa-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .bt-qa__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 24px;
+  }
+  .bt-qa__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 0 40px;
+    background: var(--qa-btn-bg);
+    color: var(--qa-btn-text);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: filter 0.15s ease-in-out, opacity 0.15s ease-in-out;
+  }
+  .bt-qa__btn:hover {
+    filter: brightness(0.88);
+    color: var(--qa-btn-text);
+  }
+  .bt-qa__btn.is-soft {
+    opacity: 0.55;
+  }
+  .bt-qa__link {
+    color: var(--qa-text);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .bt-qa__fine {
+    margin: 0;
+    color: var(--qa-muted);
+    font-size: 11px;
+  }
+
+  @media (max-width: 749px) {
+    .bt-qa__step {
+      padding: calc(var(--qa-pt, 80px) * 0.7) 16px 28px;
+    }
+    .bt-qa__grid--t,
+    .bt-qa__grid--c {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .bt-qa--mt-swipe .bt-qa__grid--t,
+    .bt-qa--mc-swipe .bt-qa__grid--c {
+      display: flex;
+      gap: 10px;
+      margin: 0 -16px;
+      padding: 2px 16px 6px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding: 0 16px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .bt-qa--mt-swipe .bt-qa__grid--t::-webkit-scrollbar,
+    .bt-qa--mc-swipe .bt-qa__grid--c::-webkit-scrollbar {
+      display: none;
+    }
+    .bt-qa--mt-swipe .bt-qa__grid--t > .bt-qa__cell,
+    .bt-qa--mc-swipe .bt-qa__grid--c > .bt-qa__cell {
+      flex: 0 0 var(--qa-mw, 78%);
+      scroll-snap-align: start;
+    }
+    .bt-qa--mv-one {
+      --qa-mw: 78%;
+    }
+    .bt-qa--mv-two {
+      --qa-mw: 46%;
+    }
+    .bt-qa--mt-swipe .bt-qa__hint--t,
+    .bt-qa--mc-swipe .bt-qa__hint--c {
+      display: block;
+      margin: -12px 0 0;
+      color: var(--qa-muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .bt-qa__checkout {
+      margin: 28px 0 calc(var(--qa-pb, 80px) * 0.7);
+      padding: 24px 16px;
+    }
+    .bt-qa__btn {
+      width: 100%;
+    }
+    .bt-qa__actions {
+      justify-content: center;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bt-qa__img img {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    if (customElements.get('bt-quick-add')) return;
+    customElements.define(
+      'bt-quick-add',
+      class extends HTMLElement {
+        connectedCallback() {
+          var root = this;
+          var fmtr;
+          try {
+            fmtr = new Intl.NumberFormat(document.documentElement.lang || undefined, {
+              style: 'currency',
+              currency: (window.Shopify && window.Shopify.currency && window.Shopify.currency.active) || 'USD',
+            });
+          } catch (e) {
+            fmtr = {
+              format: function (n) {
+                return '$' + n.toFixed(2);
+              },
+            };
+          }
+          var money = function (cents) {
+            return fmtr.format((cents || 0) / 100);
+          };
+          // Colour dots only change what this card's form will submit – no cart requests.
+          this.querySelectorAll('[data-qa-swatch]').forEach(function (sw) {
+            sw.addEventListener('click', function () {
+              var cell = sw.closest('.bt-qa__cell');
+              if (!cell) return;
+              cell.querySelectorAll('[data-qa-swatch]').forEach(function (b) {
+                b.setAttribute('aria-pressed', b === sw ? 'true' : 'false');
+              });
+              var idInput = cell.querySelector('[data-qa-id]');
+              if (idInput) idInput.value = sw.dataset.variant;
+              var img = cell.querySelector('.bt-qa__img img');
+              if (img && sw.dataset.img) {
+                img.removeAttribute('srcset');
+                img.removeAttribute('sizes');
+                img.src = sw.dataset.img;
+              }
+              var price = +sw.dataset.price;
+              var compare = +sw.dataset.compare;
+              var pEl = cell.querySelector('[data-qa-price]');
+              var cEl = cell.querySelector('[data-qa-compare]');
+              if (pEl) pEl.textContent = money(price);
+              if (cEl) {
+                var sale = compare > price;
+                pEl.classList.toggle('is-sale', sale);
+                cEl.hidden = !sale;
+                cEl.textContent = sale ? money(compare) : '';
+              }
+              var add = cell.querySelector('[data-qa-add]');
+              var lab = cell.querySelector('[data-qa-add-label]');
+              var ok = sw.dataset.available === '1';
+              if (add) add.disabled = !ok;
+              if (lab) {
+                if (!lab.dataset.orig) lab.dataset.orig = lab.textContent;
+                lab.textContent = ok ? lab.dataset.orig : root.dataset.soldout || 'Sold out';
+              }
+            });
+          });
+          // Show progress on submit; the browser then posts the form like a product page.
+          this.querySelectorAll('[data-qa-form]').forEach(function (form) {
+            form.addEventListener('submit', function () {
+              var add = form.querySelector('[data-qa-add]');
+              if (add) {
+                add.classList.add('is-busy');
+                var lab = add.querySelector('[data-qa-add-label]');
+                if (lab) lab.textContent = root.dataset.adding || 'Adding…';
+              }
+            });
+          });
+        }
+      }
+    );
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Quick Add",
+  "tag": "section",
+  "class": "bt-quick-add-section",
+  "settings": [
+    { "type": "header", "content": "Step 1 – Trike" },
+    { "type": "text", "id": "step1_eyebrow", "label": "Small label", "default": "Step 1" },
+    { "type": "inline_richtext", "id": "step1_heading", "label": "Heading", "default": "Choose your Bentley Trike" },
+    { "type": "text", "id": "add_trike_label", "label": "Button text", "default": "Add to cart" },
+    { "type": "range", "id": "cols_trikes", "label": "Columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_colors_trikes", "label": "Show colour choices", "default": true },
+    { "type": "checkbox", "id": "show_save", "label": "Show “Save” badge on sale items", "default": true },
+    { "type": "header", "content": "Step 2 – Free Ride-On" },
+    { "type": "text", "id": "step2_eyebrow", "label": "Small label", "default": "Step 2" },
+    { "type": "inline_richtext", "id": "step2_heading", "label": "Heading", "default": "Add your <em>free</em> Ride-On Car" },
+    { "type": "text", "id": "add_car_label", "label": "Button text", "default": "Add free car" },
+    { "type": "range", "id": "cols_cars", "label": "Columns (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_colors_cars", "label": "Show colour choices", "default": true },
+    { "type": "text", "id": "free_badge", "label": "Car badge", "default": "Free with Trike" },
+    { "type": "text", "id": "free_word", "label": "“Free” word", "default": "FREE" },
+    { "type": "header", "content": "Step 3 – Checkout" },
+    { "type": "text", "id": "step3_eyebrow", "label": "Small label", "default": "Step 3" },
+    { "type": "inline_richtext", "id": "step3_heading", "label": "Heading", "default": "Check out" },
+    { "type": "text", "id": "status_trike", "label": "Trike checklist line", "default": "Bentley Trike" },
+    { "type": "text", "id": "status_car", "label": "Car checklist line", "default": "Free Ride-On Car" },
+    { "type": "text", "id": "step3_text", "label": "Text", "default": "Your free car is applied automatically at checkout." },
+    { "type": "text", "id": "checkout_label", "label": "Button text", "default": "Checkout" },
+    {
+      "type": "select",
+      "id": "checkout_goes_to",
+      "label": "Button goes to",
+      "default": "checkout",
+      "options": [
+        { "value": "checkout", "label": "Checkout" },
+        { "value": "cart", "label": "Cart page" }
+      ]
+    },
+    { "type": "text", "id": "view_cart_label", "label": "View cart link", "default": "View cart" },
+    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "While supplies last · One free car per Trike · Can’t be combined with other offers" },
+    { "type": "header", "content": "Labels & phone layout" },
+    { "type": "text", "id": "added_label", "label": "Button text once in cart", "default": "In your cart ✓" },
+    { "type": "text", "id": "soldout_label", "label": "Sold out text", "default": "Sold out" },
+    {
+      "type": "select",
+      "id": "m_layout_trikes",
+      "label": "Trikes on phones",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "Grid (2 columns)" },
+        { "value": "swipe", "label": "Swipe row" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "m_layout_cars",
+      "label": "Cars on phones",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "Grid (2 columns)" },
+        { "value": "swipe", "label": "Swipe row" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "m_per_view",
+      "label": "Cards in view when swiping",
+      "default": "one",
+      "options": [
+        { "value": "one", "label": "One at a time" },
+        { "value": "two", "label": "Two at a time" }
+      ]
+    },
+    { "type": "text", "id": "swipe_hint", "label": "Swipe hint", "default": "Swipe to see all →" },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#ffffff" },
+    { "type": "color", "id": "c_card", "label": "Card background", "default": "#f8f4ef" },
+    { "type": "color", "id": "c_panel", "label": "Checkout panel", "default": "#f8f4ef" },
+    { "type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_accent", "label": "Accent", "default": "#a83f2f" },
+    { "type": "color", "id": "c_sale", "label": "Sale", "default": "#8f4764" },
+    { "type": "color", "id": "c_badge", "label": "Best seller badge", "default": "#00221c" },
+    { "type": "color", "id": "c_ok", "label": "“In your cart”", "default": "#00221c" },
+    { "type": "color", "id": "c_btn_bg", "label": "Button background", "default": "#a83f2f" },
+    { "type": "color", "id": "c_btn_text", "label": "Button text", "default": "#ffffff" }
+  ],
+  "blocks": [
+    {
+      "type": "trike",
+      "name": "Trike",
+      "limit": 12,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Trike product" },
+        { "type": "text", "id": "badge", "label": "Badge", "info": "e.g. Best Seller" },
+        { "type": "text", "id": "only_variant", "label": "Only show this colour", "info": "Optional, e.g. Red" }
+      ]
+    },
+    {
+      "type": "car",
+      "name": "Free Ride-On Car",
+      "limit": 6,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Ride-on product" },
+        { "type": "text", "id": "only_variant", "label": "Only show this colour", "info": "Optional, e.g. White" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Quick Add",
+      "blocks": [
+        { "type": "trike", "settings": { "badge": "Best Seller" } },
+        { "type": "trike" },
+        { "type": "trike" },
+        { "type": "trike" },
+        { "type": "car" },
+        { "type": "car" },
+        { "type": "car" }
+      ]
+    }
+  ]
+}
+{% endschema %}
