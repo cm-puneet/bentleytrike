@@ -269,7 +269,7 @@
                     <input type="hidden" name="quantity" value="1">
                     <input type="hidden" name="selling_plan" value="">
                     <input type="hidden" name="return_to" value="{{ return_to }}" data-qa-return>
-                    <button type="submit" class="bt-qa__add" data-qa-add {% unless v.available %}disabled{% endunless %}>
+                    <button type="submit" class="bt-qa__add" data-qa-add data-base-label="{{ btn_label | escape }}" {% unless v.available %}disabled{% endunless %}>
                       <span data-qa-add-label>
                         {%- if v.available -%}
                           {%- if in_cart -%}{{ s.added_label }}{%- else -%}{{ btn_label }}{%- endif -%}
@@ -1212,11 +1212,15 @@
             });
             var have = { trike: false, car: false };
             root.querySelectorAll('.bt-qa__cell[data-product]').forEach(function (cell) {
+              var add = cell.querySelector('[data-qa-add]');
               if (ids[cell.dataset.product]) {
                 cell.classList.add('is-in');
                 have[cell.dataset.kind] = true;
-                var add = cell.querySelector('[data-qa-add]');
                 if (add && !add.disabled) label(cell, root.dataset.added || 'Added');
+              } else if (cell.classList.contains('is-in')) {
+                // Replaced by another choice – back to a normal card.
+                cell.classList.remove('is-in');
+                if (add && !add.disabled && add.dataset.baseLabel) label(cell, add.dataset.baseLabel);
               }
             });
             ['trike', 'car'].forEach(function (k) {
@@ -1447,8 +1451,50 @@
                 rt.value = '/cart.js';
               }
               form.target = sink.name;
-              form.submit();
-              timer = setTimeout(finish, 12000);
+              // One trike and one car per bundle: picking a new one replaces the old one.
+              var cell = form.closest('.bt-qa__cell');
+              var kind = cell ? cell.dataset.kind : '';
+              var vid = String((form.querySelector('[data-qa-id]') || {}).value || '');
+              var sameKind = {};
+              root.querySelectorAll('.bt-qa__cell[data-kind="' + kind + '"][data-product]').forEach(function (c) {
+                sameKind[c.dataset.product] = true;
+              });
+              var send = function () {
+                form.submit();
+                timer = setTimeout(finish, 12000);
+              };
+              fetch(base + 'cart.js', { headers: { Accept: 'application/json' }, credentials: 'same-origin', cache: 'no-store' })
+                .then(function (r) {
+                  return r.json();
+                })
+                .then(function (cart) {
+                  var items = cart.items || [];
+                  var exact = false;
+                  var others = items.filter(function (it) {
+                    if (!sameKind[String(it.product_id)]) return false;
+                    if (String(it.variant_id) === vid) {
+                      exact = true;
+                      return false;
+                    }
+                    return true;
+                  });
+                  var chain = Promise.resolve();
+                  others.forEach(function (it) {
+                    chain = chain.then(function () {
+                      return fetch(base + 'cart/change.js', {
+                        method: 'POST',
+                        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+                        credentials: 'same-origin',
+                        body: JSON.stringify({ id: it.key, quantity: 0 }),
+                      });
+                    });
+                  });
+                  return chain.then(function () {
+                    if (exact) finish(); // already in the cart – just update the page
+                    else send();
+                  });
+                })
+                .catch(send);
             });
           });
         }
