@@ -264,7 +264,6 @@
         },
         "offer_WtbX38": {
           "type": "offer",
-          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "stacked",
@@ -278,7 +277,6 @@
         },
         "offer_EWXTY8": {
           "type": "offer",
-          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "stacked",
