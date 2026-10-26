@@ -1070,10 +1070,20 @@
     .bt-ebf__actions {
       margin-top: 10px;
     }
-    /* Phones: keep Add to cart and Buy with Shop side by side. */
+    /* Phones: side by side – Buy with Shop keeps the width Shopify needs for its logo,
+       Add to cart takes the rest. */
     .bt-ebf__actions.has-pay {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
       gap: 6px;
+    }
+    .bt-ebf__pay,
+    .bt-ebf__pay .shopify-payment-button,
+    .bt-ebf__pay .shopify-payment-button__button,
+    .bt-ebf__pay shopify-accelerated-checkout {
+      width: auto !important;
+      min-width: 165px !important;
+      max-width: none !important;
+      overflow: visible !important;
     }
     .bt-ebf__pay,
     .bt-ebf__pay .shopify-payment-button,
@@ -1106,6 +1116,18 @@
     .bt-ebf__pay .shopify-payment-button__more-options {
       margin-top: 5px !important;
       font-size: 10px !important;
+    }
+  }
+  /* Very narrow screens only: stack the two buttons so nothing gets cut off. */
+  @container (max-width: 250px) {
+    .bt-ebf__actions.has-pay {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .bt-ebf__pay,
+    .bt-ebf__pay .shopify-payment-button,
+    .bt-ebf__pay .shopify-payment-button__button,
+    .bt-ebf__pay shopify-accelerated-checkout {
+      width: 100% !important;
     }
   }
 </style>
