@@ -1070,19 +1070,14 @@
     .bt-ebf__actions {
       margin-top: 10px;
     }
-    /* Phones: side by side – Buy with Shop keeps the width Shopify needs for its logo,
-       Add to cart takes the rest. */
+    /* Phones: two equal halves. Text shrinks to fit; Shopify's button is scaled
+       down to fit its half if its logo needs more room (see fitShop in the script). */
     .bt-ebf__actions.has-pay {
-      grid-template-columns: minmax(0, 1fr) auto !important;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
       gap: 6px;
     }
-    .bt-ebf__pay,
-    .bt-ebf__pay .shopify-payment-button,
     .bt-ebf__pay .shopify-payment-button__button,
     .bt-ebf__pay shopify-accelerated-checkout {
-      width: auto !important;
-      min-width: 165px !important;
-      max-width: none !important;
       overflow: visible !important;
     }
     .bt-ebf__pay,
@@ -1094,14 +1089,16 @@
     .bt-ebf__atc {
       height: 50px;
       min-height: 50px;
-      padding: 0 8px;
+      padding: 0 6px;
     }
     .bt-ebf__atc-main {
-      font-size: 12px;
-      letter-spacing: 0.06em;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
     }
     .bt-ebf__atc-sub {
-      font-size: 10.5px;
+      font-size: 9.5px;
+      white-space: nowrap;
     }
     .bt-ebf__pay {
       --shopify-accelerated-checkout-button-block-size: 50px;
@@ -1368,8 +1365,31 @@
           var pay = q('[data-ebf-pay]');
           // Shopify draws its button a moment after the page loads, at its own height –
           // match Add to cart to it so the two always line up.
+          // If Shopify's button needs more room than its half of the row (narrow phones),
+          // scale it down to fit instead of letting the logo get cut off.
+          var fitShop = function () {
+            if (!pay || !btn) return false;
+            var sb = pay.querySelector('shopify-accelerated-checkout, .shopify-payment-button__button');
+            if (!sb) return false;
+            sb.style.zoom = '';
+            sb.style.removeProperty('height');
+            sb.style.removeProperty('min-height');
+            var have = pay.clientWidth;
+            var need = Math.max(sb.scrollWidth, sb.getBoundingClientRect().width);
+            if (!(have > 0 && need > have + 1)) return false;
+            // Scaled: keep it the same visible height as Add to cart.
+            btn.style.height = '';
+            btn.style.minHeight = '';
+            var H = btn.getBoundingClientRect().height;
+            var z = Math.max(0.6, have / need);
+            sb.style.zoom = String(z);
+            sb.style.setProperty('height', H / z + 'px', 'important');
+            sb.style.setProperty('min-height', H / z + 'px', 'important');
+            return true;
+          };
           var matchHeights = function () {
             if (!pay || !btn) return;
+            if (fitShop()) return;
             var sb = pay.querySelector('.shopify-payment-button__button, shopify-accelerated-checkout');
             var h = sb ? Math.round(sb.getBoundingClientRect().height) : 0;
             if (h >= 36 && h <= 80) {
