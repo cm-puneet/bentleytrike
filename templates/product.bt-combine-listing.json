@@ -113,6 +113,7 @@
         "heading_6jrcte",
         "button_VyD6mm"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "content_width": "large",
@@ -168,6 +169,7 @@
         },
         "offer_Krbwa8": {
           "type": "offer",
+          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
@@ -209,7 +211,14 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
+        },
+        "liquid_6cGiha": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product %}"
+          }
         },
         "text_q6Hc7E": {
           "type": "text",
@@ -324,6 +333,7 @@
         "product_variations_WFpMqc",
         "variant_picker",
         "quantity_selector",
+        "liquid_6cGiha",
         "text_q6Hc7E",
         "description",
         "buy_buttons",
