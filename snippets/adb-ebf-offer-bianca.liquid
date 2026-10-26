@@ -249,15 +249,28 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 4h14v12H1zM15 9h4l3 3v4h-7"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18.5" cy="18.5" r="1.8"/></svg>
                 <span><b>Pre-order:</b> your free car ships separately from your trike.</span>
               </div>
+              <div class="bt-ebf__ship">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.01"/></svg>
+                <span><b>Please note:</b> the Free Car offer cannot be combined with any other discount codes or offers.</span>
+              </div>
           </div>
         </div>
       </div>
 
 
-      <button type="button" class="bt-ebf__atc" data-ebf-add {% unless first_v %}disabled{% endunless %}>
-        <span class="bt-ebf__atc-main" data-ebf-add-label>{% if first_v %}Add to cart{% else %}Sold out{% endif %}</span>
-        <span class="bt-ebf__atc-sub" data-ebf-add-sub></span>
-      </button>
+      <div class="bt-ebf__actions{% if first_v %} has-pay{% endif %}">
+        <button type="button" class="bt-ebf__atc" data-ebf-add {% unless first_v %}disabled{% endunless %}>
+          <span class="bt-ebf__atc-main" data-ebf-add-label>{% if first_v %}Add to cart{% else %}Sold out{% endif %}</span>
+          <span class="bt-ebf__atc-sub" data-ebf-add-sub></span>
+        </button>
+        {%- if first_v -%}
+          {%- comment -%} Shopify's express buttons (Shop Pay / more options). Clicking them runs the chosen offer, then checkout. {%- endcomment -%}
+          {%- form 'product', first_p, class: 'bt-ebf__pay', data-ebf-pay: '' -%}
+            <input type="hidden" name="id" value="{{ first_v.id }}" data-ebf-pay-id>
+            {{ form | payment_button }}
+          {%- endform -%}
+        {%- endif -%}
+      </div>
       <p class="bt-ebf__err" data-ebf-err hidden></p>
     </bt-ebf-offer>
   </div>
@@ -636,6 +649,37 @@
     height: 1px;
     background: var(--ebf-line);
   }
+  .bt-ebf__actions {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 0;
+  }
+  .bt-ebf__actions.has-pay {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .bt-ebf__actions .bt-ebf__atc {
+    margin: 0;
+  }
+  .bt-ebf__pay {
+    margin: 0;
+  }
+  .bt-ebf__pay .shopify-payment-button__button {
+    min-height: 56px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .bt-ebf__pay .shopify-payment-button__more-options {
+    margin-top: 8px;
+    color: var(--ebf-ink);
+    font-size: 13px;
+    text-align: center;
+  }
+  @container (max-width: 400px) {
+    .bt-ebf__actions.has-pay {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
   .bt-ebf__atc {
     display: flex;
     flex-direction: column;
@@ -814,6 +858,8 @@
             }
             if (tSel && tSel.selectedOptions[0]) {
               var o = tSel.selectedOptions[0];
+              var pid = q('[data-ebf-pay-id]');
+              if (pid) pid.value = tSel.value;
               setText(q('[data-ebf-name]'), o.dataset.name || '');
               box.querySelectorAll('[data-ebf-dot]').forEach(function (d) {
                 d.setAttribute('aria-pressed', d.getAttribute('data-ebf-dot') === tSel.value ? 'true' : 'false');
@@ -910,43 +956,72 @@
             err.hidden = !m;
           };
 
+          var running = false;
+          var run = function (goCheckout) {
+            if (running || !tSel || !tSel.value) return;
+            running = true;
+            showErr('');
+            if (btn) btn.setAttribute('aria-busy', 'true');
+            setText(lab, goCheckout ? 'One moment…' : 'Adding…');
+            var o = offer();
+            var items = [{ id: Number(tSel.value), quantity: 1 }];
+            if (o === 'car' && cSel && cSel.value) {
+              items.push({ id: Number(cSel.value), quantity: 1, properties: { _adb_offer: 'free-car' } });
+            }
+            var detail = { sections: [] };
+            document.dispatchEvent(new CustomEvent('cart:prepare-bundled-sections', { bubbles: true, detail: detail }));
+            var code = o === 'off' ? box.dataset.code : '';
+            var done = function () {
+              running = false;
+              if (btn) btn.removeAttribute('aria-busy');
+              setText(lab, origLabel);
+            };
+            json('cart/add.js', { items: items })
+              .then(function () {
+                return json('cart/update.js', { discount: code, sections: detail.sections.join(',') });
+              })
+              .then(function (cart) {
+                if (goCheckout === 'shop_pay') return (window.location.href = base + 'checkout?payment=shop_pay');
+                var after = goCheckout ? 'checkout' : box.dataset.after;
+                if (after === 'checkout') return (window.location.href = base + 'checkout');
+                if (after === 'cart') return (window.location.href = base + 'cart');
+                document.dispatchEvent(new CustomEvent('variant:add', { bubbles: true, detail: { items: items, cart: cart } }));
+                document.documentElement.dispatchEvent(
+                  new CustomEvent('cart:change', {
+                    bubbles: true,
+                    detail: { baseEvent: 'variant:add', onSuccessDo: 'force_open_drawer', cart: cart },
+                  })
+                );
+                done();
+              })
+              .catch(function (e) {
+                done();
+                showErr((e && (e.description || e.message)) || 'Something went wrong, please try again.');
+              });
+          };
           if (btn) {
             btn.addEventListener('click', function () {
-              if (btn.getAttribute('aria-busy') === 'true' || !tSel || !tSel.value) return;
-              showErr('');
-              btn.setAttribute('aria-busy', 'true');
-              setText(lab, 'Adding…');
-              var o = offer();
-              var items = [{ id: Number(tSel.value), quantity: 1 }];
-              if (o === 'car' && cSel && cSel.value) {
-                items.push({ id: Number(cSel.value), quantity: 1, properties: { _adb_offer: 'free-car' } });
-              }
-              var detail = { sections: [] };
-              document.dispatchEvent(new CustomEvent('cart:prepare-bundled-sections', { bubbles: true, detail: detail }));
-              var code = o === 'off' ? box.dataset.code : '';
-              json('cart/add.js', { items: items })
-                .then(function () {
-                  return json('cart/update.js', { discount: code, sections: detail.sections.join(',') });
-                })
-                .then(function (cart) {
-                  var after = box.dataset.after;
-                  if (after === 'checkout') return (window.location.href = base + 'checkout');
-                  if (after === 'cart') return (window.location.href = base + 'cart');
-                  document.dispatchEvent(new CustomEvent('variant:add', { bubbles: true, detail: { items: items, cart: cart } }));
-                  document.documentElement.dispatchEvent(
-                    new CustomEvent('cart:change', {
-                      bubbles: true,
-                      detail: { baseEvent: 'variant:add', onSuccessDo: 'force_open_drawer', cart: cart },
-                    })
-                  );
-                  btn.removeAttribute('aria-busy');
-                  setText(lab, origLabel);
-                })
-                .catch(function (e) {
-                  btn.removeAttribute('aria-busy');
-                  setText(lab, origLabel);
-                  showErr((e && (e.description || e.message)) || 'Something went wrong, please try again.');
-                });
+              if (btn.getAttribute('aria-busy') === 'true') return;
+              run(false);
+            });
+          }
+          // Express buttons: stop Shopify's own "buy this one item" flow and run the offer instead.
+          var pay = q('[data-ebf-pay]');
+          if (pay) {
+            pay.addEventListener(
+              'click',
+              function (e) {
+                if (!e.target.closest('.shopify-payment-button')) return;
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                // "Buy with Shop" → Shop Pay checkout. "More payment options" → normal checkout.
+                run(e.target.closest('.shopify-payment-button__more-options') ? true : 'shop_pay');
+              },
+              true
+            );
+            pay.addEventListener('submit', function (e) {
+              e.preventDefault();
             });
           }
         }
