@@ -685,11 +685,6 @@
     font-size: 13px;
     text-align: center;
   }
-  @container (max-width: 400px) {
-    .bt-ebf__actions.has-pay {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
   .bt-ebf__atc {
     display: flex;
     flex-direction: column;
@@ -945,6 +940,26 @@
     white-space: nowrap;
   }
 
+  /* Keep Shopify's button exactly inside its half of the row */
+  .bt-ebf__actions.has-pay > * {
+    min-width: 0;
+  }
+  .bt-ebf__pay,
+  .bt-ebf__pay .shopify-payment-button,
+  .bt-ebf__pay .shopify-payment-button__button,
+  .bt-ebf__pay shopify-accelerated-checkout {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .bt-ebf__pay .shopify-payment-button,
+  .bt-ebf__pay .shopify-payment-button__button,
+  .bt-ebf__pay shopify-accelerated-checkout {
+    margin-top: 0 !important;
+  }
+
   /* ── Compact on phones ───────────────────────────────────────────── */
   @media (max-width: 699px) {
     .bt-ebf {
@@ -1055,9 +1070,16 @@
     .bt-ebf__actions {
       margin-top: 10px;
     }
+    /* Phones: keep Add to cart and Buy with Shop side by side. */
     .bt-ebf__actions.has-pay {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
       gap: 6px;
+    }
+    .bt-ebf__pay,
+    .bt-ebf__pay .shopify-payment-button,
+    .bt-ebf__pay shopify-accelerated-checkout {
+      width: 100%;
+      min-width: 0;
     }
     .bt-ebf__atc {
       height: 50px;
@@ -1322,6 +1344,25 @@
           }
           // Express buttons: stop Shopify's own "buy this one item" flow and run the offer instead.
           var pay = q('[data-ebf-pay]');
+          // Shopify draws its button a moment after the page loads, at its own height –
+          // match Add to cart to it so the two always line up.
+          var matchHeights = function () {
+            if (!pay || !btn) return;
+            var sb = pay.querySelector('.shopify-payment-button__button, shopify-accelerated-checkout');
+            var h = sb ? Math.round(sb.getBoundingClientRect().height) : 0;
+            if (h >= 36 && h <= 80) {
+              btn.style.height = h + 'px';
+              btn.style.minHeight = h + 'px';
+            }
+          };
+          if (pay && btn) {
+            matchHeights();
+            if (window.ResizeObserver) new ResizeObserver(matchHeights).observe(pay);
+            [300, 1000, 2500].forEach(function (ms) {
+              setTimeout(matchHeights, ms);
+            });
+            window.addEventListener('resize', matchHeights);
+          }
           if (pay) {
             pay.addEventListener(
               'click',
