@@ -786,6 +786,296 @@
       margin-left: 0;
     }
   }
+
+  /* ── Bentley Trike design system skin ─────────────────────────────
+     Square corners everywhere (only radios + colour dots stay round),
+     flat cream surfaces, 1px hairlines, Playfair headings, Poppins body. */
+  .bt-ebf-wrap {
+    --ebf-brand: #a83f2f;   /* terracotta */
+    --ebf-ink: #1a1a1a;
+    --ebf-green: #00221c;   /* British green – badges */
+    --ebf-cream: #f8f4ef;
+  }
+  .bt-ebf {
+    --ebf-muted: rgba(26, 26, 26, 0.7);
+    --ebf-line: rgba(26, 26, 26, 0.12);
+    padding: 26px 16px 16px;
+    border: 1px solid var(--ebf-line);
+    border-radius: 0;
+    background: #fff;
+  }
+  .bt-ebf__pill {
+    top: -11px;
+    left: 16px;
+    gap: 0;
+    padding: 5px 12px;
+    border-radius: 0;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  .bt-ebf__pill i {
+    display: none;
+  }
+  .bt-ebf__opts {
+    gap: 8px;
+  }
+  .bt-ebf__opt {
+    padding: 14px;
+    border: 1px solid var(--ebf-line);
+    border-radius: 0;
+    background: #fff;
+  }
+  .bt-ebf__opt:hover {
+    border-color: rgba(26, 26, 26, 0.3);
+  }
+  .bt-ebf__opt.is-on {
+    border-color: var(--ebf-brand);
+    background: var(--ebf-cream);
+    box-shadow: inset 0 0 0 1px var(--ebf-brand);
+  }
+  .bt-ebf__rad {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid rgba(26, 26, 26, 0.45);
+  }
+  .bt-ebf__opt.is-on .bt-ebf__rad::after {
+    width: 10px;
+    height: 10px;
+  }
+  .bt-ebf__ic {
+    width: 56px;
+    height: 56px;
+    border-radius: 0;
+    background: var(--ebf-cream);
+  }
+  .bt-ebf__opt.is-on .bt-ebf__ic {
+    background: #fff;
+  }
+  .bt-ebf__pct {
+    font-family: var(--heading-font-family, 'Playfair Display', serif);
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .bt-ebf__h {
+    font-family: var(--heading-font-family, 'Playfair Display', serif);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    line-height: 1.25;
+    text-transform: none;
+  }
+  .bt-ebf__pr {
+    margin-top: 4px;
+    font-size: 13px;
+  }
+  .bt-ebf__pr b {
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .bt-ebf__save {
+    padding: 4px 8px;
+    border-radius: 0;
+    background: var(--ebf-green);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+  .bt-ebf__or {
+    margin: 0;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  .bt-ebf__lb {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .bt-ebf__model {
+    border-radius: 0;
+    box-shadow: inset 0 0 0 1px var(--ebf-line);
+    font-weight: 600;
+  }
+  .bt-ebf__model img {
+    border-radius: 0;
+    background: var(--ebf-cream);
+  }
+  .bt-ebf__model:hover {
+    box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.4);
+  }
+  .bt-ebf__model[aria-pressed='true'] {
+    box-shadow: inset 0 0 0 1px var(--ebf-ink), inset 0 0 0 2px var(--ebf-ink);
+  }
+  .bt-ebf__ship,
+  .bt-ebf__opt.is-on .bt-ebf__ship {
+    margin-top: 6px;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    color: var(--ebf-muted);
+    font-size: 11.5px;
+  }
+  .bt-ebf__ship b {
+    color: var(--ebf-ink);
+  }
+  .bt-ebf select:not(.bt-ebf__hidden) {
+    border-radius: 0;
+  }
+  .bt-ebf__actions {
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .bt-ebf__atc {
+    border-radius: 0;
+  }
+  .bt-ebf__atc-main {
+    letter-spacing: 0.08em;
+  }
+  .bt-ebf__pay {
+    font-family: initial;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .bt-ebf__pay .shopify-payment-button__more-options {
+    margin-top: 6px !important;
+    padding: 0 !important;
+    color: var(--ebf-ink) !important;
+    font-family: var(--text-font-family, Poppins, sans-serif) !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  /* ── Compact on phones ───────────────────────────────────────────── */
+  @media (max-width: 699px) {
+    .bt-ebf {
+      margin-top: 12px;
+      padding: 20px 10px 10px;
+    }
+    .bt-ebf__pill {
+      top: -10px;
+      left: 10px;
+      padding: 4px 9px;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+    }
+    .bt-ebf__opts {
+      gap: 6px;
+    }
+    .bt-ebf__opt {
+      padding: 10px;
+    }
+    .bt-ebf__top {
+      gap: 3px 10px !important;
+    }
+    .bt-ebf__rad {
+      width: 18px;
+      height: 18px;
+    }
+    .bt-ebf__opt.is-on .bt-ebf__rad::after {
+      width: 8px;
+      height: 8px;
+    }
+    .bt-ebf__ic {
+      width: 44px;
+      height: 44px;
+    }
+    .bt-ebf__pct {
+      font-size: 18px;
+    }
+    .bt-ebf__h {
+      font-size: 15px;
+    }
+    .bt-ebf__pr {
+      margin-top: 1px;
+      font-size: 12px;
+    }
+    .bt-ebf__save {
+      padding: 3px 6px;
+      font-size: 9px;
+    }
+    .bt-ebf__or {
+      font-size: 9px;
+    }
+    .bt-ebf__od {
+      margin-top: 8px;
+    }
+    .bt-ebf__note {
+      margin-top: 5px;
+      font-size: 10.5px;
+    }
+    .bt-ebf__lb {
+      margin-bottom: 6px;
+      font-size: 10px;
+    }
+    .bt-ebf__lb--gap {
+      margin-top: 8px !important;
+    }
+    .bt-ebf__models {
+      gap: 6px;
+    }
+    .bt-ebf__model {
+      min-height: 38px;
+      padding: 3px 10px 3px 3px;
+      font-size: 12px;
+    }
+    .bt-ebf__model img {
+      width: 30px;
+      height: 30px;
+    }
+    .bt-ebf__dots {
+      gap: 6px;
+    }
+    .bt-ebf__dot {
+      width: 32px;
+      height: 32px;
+    }
+    .bt-ebf__dot > span {
+      width: 24px;
+      height: 24px;
+    }
+    .bt-ebf__ship {
+      margin-top: 5px;
+      padding: 0;
+      font-size: 10.5px;
+    }
+    .bt-ebf__ship svg {
+      width: 14px;
+      height: 14px;
+    }
+    .bt-ebf__actions {
+      margin-top: 10px;
+    }
+    .bt-ebf__actions.has-pay {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+      gap: 6px;
+    }
+    .bt-ebf__atc {
+      height: 50px;
+      min-height: 50px;
+      padding: 0 8px;
+    }
+    .bt-ebf__atc-main {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+    .bt-ebf__atc-sub {
+      font-size: 10.5px;
+    }
+    .bt-ebf__pay {
+      --shopify-accelerated-checkout-button-block-size: 50px;
+    }
+    .bt-ebf__pay .shopify-payment-button__button,
+    .bt-ebf__pay .shopify-payment-button__button--branded,
+    .bt-ebf__pay .shopify-payment-button__button--unbranded,
+    .bt-ebf__pay shopify-accelerated-checkout {
+      height: 50px !important;
+      min-height: 50px;
+    }
+    .bt-ebf__pay .shopify-payment-button__more-options {
+      margin-top: 5px !important;
+      font-size: 10px !important;
+    }
+  }
 </style>
 
 <script>
@@ -995,6 +1285,7 @@
                 return json('cart/update.js', { discount: code, sections: detail.sections.join(',') });
               })
               .then(function (cart) {
+                // "Buy with Shop" → Shop Pay sign-in (shop.app), with the offer already in the cart.
                 if (goCheckout === 'shop_pay') return (window.location.href = base + 'checkout?payment=shop_pay');
                 var after = goCheckout ? 'checkout' : box.dataset.after;
                 if (after === 'checkout') return (window.location.href = base + 'checkout');
@@ -1029,7 +1320,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
-                // "Buy with Shop" → Shop Pay checkout. "More payment options" → normal checkout.
+                // "More payment options" → normal checkout. "Buy with Shop" → Shop Pay sign-in.
                 run(e.target.closest('.shopify-payment-button__more-options') ? true : 'shop_pay');
               },
               true
