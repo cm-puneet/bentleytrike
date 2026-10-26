@@ -113,6 +113,7 @@
         "heading_cgmXG7",
         "button_TWcPRD"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "content_width": "large",
@@ -164,6 +165,7 @@
         },
         "offer_apib9N": {
           "type": "offer",
+          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
@@ -210,10 +212,18 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
+        },
+        "liquid_NAxGmX": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product %}"
+          }
         },
         "text_q6Hc7E": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "<p>The luxury stroller that grows with your child. Designed in collaboration with Bentley Motors and your toddler’s needs in mind, the Bentley 6-in-1 Stroller / Tricycle is the perfect combination of elegance and function.</p>"
           }
@@ -241,6 +251,7 @@
         },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_payment_button": false,
             "show_gift_card_recipient": true,
@@ -292,6 +303,7 @@
         },
         "associated_products_YXTBbY": {
           "type": "associated_products",
+          "disabled": true,
           "settings": {
             "title": "Get The Full Bentley Experience",
             "stack_products": false,
@@ -326,6 +338,7 @@
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
         "quantity_selector",
+        "liquid_NAxGmX",
         "text_q6Hc7E",
         "description",
         "variant_picker",
