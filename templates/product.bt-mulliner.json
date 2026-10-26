@@ -113,6 +113,7 @@
         "heading_RBkmA9",
         "button_aTX4Cm"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "content_width": "large",
@@ -168,6 +169,7 @@
         },
         "offer_TtAFeJ": {
           "type": "offer",
+          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
@@ -208,8 +210,15 @@
             "selector_style": "variant_image"
           }
         },
+        "liquid_bVzUBe": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product %}"
+          }
+        },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "text_q6Hc7E": {
@@ -242,6 +251,7 @@
         },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_payment_button": false,
             "show_gift_card_recipient": true,
@@ -279,6 +289,7 @@
         },
         "associated_products_YXTBbY": {
           "type": "associated_products",
+          "disabled": true,
           "settings": {
             "title": "Get The Full Bentley Experience",
             "stack_products": false,
@@ -312,6 +323,7 @@
         "offer_TtAFeJ",
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
+        "liquid_bVzUBe",
         "quantity_selector",
         "text_q6Hc7E",
         "description",
