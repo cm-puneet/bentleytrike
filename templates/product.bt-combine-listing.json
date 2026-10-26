@@ -238,6 +238,7 @@
         },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_payment_button": false,
             "show_gift_card_recipient": true,
@@ -291,6 +292,7 @@
         },
         "associated_products_YXTBbY": {
           "type": "associated_products",
+          "disabled": true,
           "settings": {
             "title": "Get The Full Bentley Experience",
             "stack_products": false,
