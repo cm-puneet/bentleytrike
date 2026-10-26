@@ -1,0 +1,957 @@
+{% doc %}
+  [Canada store – bentleytrike.ca] Early Black Friday "choose your offer" box: "Choose your Bentley" colour circles, the two offers, and its own Add to cart.
+  To add/remove trikes from the dropdown, edit trike_handles below.
+
+  @param {product} [product] - Trike selected first (use section.settings.product in a Featured product section)
+  @param {string} [code] - % off discount code (default BF30)
+  @param {number} [pct] - % off (default 30)
+  @param {string} [car_handles] - Free car product handles, comma-separated (one button per car)
+  @param {string} [after] - 'drawer', 'cart' or 'checkout' (default drawer)
+
+  @example
+  {% render 'bt-ebf-offer-box' %}
+  {% render 'bt-ebf-offer-box', product: section.settings.product %}
+{% enddoc %}
+{%- liquid
+  assign trike_handles = 'onyx-black-bentley-stroller-trike,fuscia-pink-bentley-stroller-trike,dragon-red-bentley-stroller-trike,sequin-blue-bentley-stroller-trike,white-satin-bentley-6-in-1-stroller-trike,spruce-green-6-in-1-stroller-trike,jetstream-blue-bentley-6-in-1-stroller-trike,limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike,bentley-6-in-1-stroller-trike,bentley-6-in-1-convertible-stroller-trike,bentley-mulliner-trike,mulliner-cool-stone-bentley-6-in-1-stroller-trike,mulliner-mandarin-bentley-6-in-1-stroller-trike,mulliner-celeste-bentley-6-in-1-stroller-trike' | split: ','
+  assign ebf_code = code | default: 'BF30'
+  assign pct = pct | default: 30
+  comment
+    The free cars shoppers can choose from (one "Choose your Bentley" button each).
+    Check these handles match your store – a wrong handle is simply skipped.
+  endcomment
+  assign car_list = car_handles | default: 'bentley-bacalar-electric-ride-on-car-for-kids,bentley-exp-12-electric-ride-on-speed-car-for-kids' | split: ','
+  assign car = nil
+  for ch in car_list
+    assign cand = all_products[ch]
+    if cand != blank
+      assign car = cand
+      break
+    endif
+  endfor
+  assign after_add = after | default: 'drawer'
+  assign uid = 'ebf' | append: car.id
+  if product != blank
+    assign uid = uid | append: '-' | append: product.id
+  endif
+
+  assign first_v = nil
+  assign first_p = nil
+-%}
+{%- liquid
+  for h in trike_handles
+    if product != blank
+      assign tp = product
+    else
+      assign tp = all_products[h]
+    endif
+    if tp != blank
+      for v in tp.variants
+        if v.available
+          assign first_v = v
+          assign first_p = tp
+          break
+        endif
+      endfor
+    endif
+    if first_v or product != blank
+      break
+    endif
+  endfor
+
+  if product != blank and product.selected_or_first_available_variant.available
+    assign first_v = product.selected_or_first_available_variant
+    assign first_p = product
+  endif
+  assign cur_price = first_v.price | default: 0
+  assign cur_disc = cur_price | times: pct | divided_by: 100.0 | round
+  assign cur_off = cur_price | minus: cur_disc
+  assign t_img = first_v.featured_image | default: first_p.featured_image
+
+  assign car_first = car.variants | where: 'available' | first | default: car.variants.first
+  assign car_price = car_first.price | default: 0
+-%}
+
+{%- if car != blank -%}
+<div>
+  <div class="bt-ebf-wrap bt-ebf-wrap--snip">
+
+    <bt-ebf-offer
+      class="bt-ebf"
+      data-code="{{ ebf_code | strip | escape }}"
+      data-pct="{{ pct }}"
+      data-after="{{ after_add }}"
+      data-root="{{ routes.root_url }}"
+    >
+      <span class="bt-ebf__pill"><i></i>EARLY BLACK FRIDAY SALE · CHOOSE YOUR OFFER</span>
+
+      {%- if first_v -%}
+        {%- comment -%} Hidden: holds the trike + prices. Follows the page's own colour picker if there is one. {%- endcomment -%}
+        {%- liquid
+          comment
+            Hidden: the trike that gets added + its prices. Follows the page's own colour picker.
+          endcomment
+          assign own_colors = false
+          if product != blank and product.has_only_default_variant == false
+            assign own_colors = true
+          endif
+        -%}
+        {%- capture ebf_opts -%}
+          {%- for h in trike_handles -%}
+            {%- if own_colors -%}
+              {%- assign tp = product -%}
+            {%- else -%}
+              {%- assign tp = all_products[h] -%}
+            {%- endif -%}
+            {%- if tp == blank -%}{%- continue -%}{%- endif -%}
+            {%- for v in tp.variants -%}
+              {%- unless v.available -%}{%- continue -%}{%- endunless -%}
+              {%- assign d = v.price | times: pct | divided_by: 100.0 | round -%}
+              <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" {% if v.id == first_v.id %}selected{% endif %}>{{ tp.title | escape }}</option>
+            {%- endfor -%}
+            {%- if own_colors -%}{%- break -%}{%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        <select class="bt-ebf__hidden" data-ebf-trike aria-hidden="true" tabindex="-1">{{ ebf_opts }}</select>
+      {%- endif -%}
+
+      <div class="bt-ebf__opts">
+        <div class="bt-ebf__opt is-on" data-ebf-opt="off" role="radio" aria-checked="true" tabindex="0">
+          <div class="bt-ebf__top">
+            <span class="bt-ebf__rad"></span>
+            <span class="bt-ebf__ic"><span class="bt-ebf__pct">{{ pct }}%</span></span>
+            <span class="bt-ebf__tx">
+              <span class="bt-ebf__h">Get {{ pct }}% off your trike</span>
+              <span class="bt-ebf__pr"><s data-ebf-was>{{ cur_price | money }}</s><b data-ebf-now>{{ cur_off | money }}</b></span>
+            </span>
+            <span class="bt-ebf__save">SAVE <span data-ebf-save>{{ cur_disc | money }}</span></span>
+          </div>
+          <div class="bt-ebf__od"><div class="bt-ebf__note">Early Black Friday price, applied automatically at checkout.</div></div>
+        </div>
+
+        <div class="bt-ebf__or">OR</div>
+
+        <div class="bt-ebf__opt" data-ebf-opt="car" role="radio" aria-checked="false" tabindex="0">
+          <div class="bt-ebf__top">
+            <span class="bt-ebf__rad"></span>
+            <span class="bt-ebf__ic">
+              {%- assign car_img0 = car_first.featured_image | default: car.featured_image -%}
+              {%- if car_img0 -%}
+                <img data-ebf-carimg src="{{ car_img0 | image_url: width: 160 }}" alt="{{ car.title | escape }}" width="80" height="80" loading="lazy">
+              {%- else -%}
+                <img data-ebf-carimg src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" width="80" height="80">
+              {%- endif -%}
+            </span>
+            <span class="bt-ebf__tx">
+              <span class="bt-ebf__h">Get a free Bentley ride-on car</span>
+              <span class="bt-ebf__pr"><s data-ebf-cworth>{{ car_price | money }}</s><b>FREE</b></span>
+            </span>
+            <span class="bt-ebf__save">WORTH <span data-ebf-cworth-short>{{ car_price | money_without_trailing_zeros }}</span></span>
+          </div>
+          <div class="bt-ebf__od">
+            {%- liquid
+              assign car_opts = ''
+              assign car_models = ''
+              assign car_dots = ''
+              assign model_n = 0
+              for ch in car_list
+                assign cp = all_products[ch]
+                if cp == blank
+                  continue
+                endif
+                assign first_cv = cp.variants | where: 'available' | first
+                if first_cv == blank
+                  continue
+                endif
+                assign model_n = model_n | plus: 1
+                assign mname = cp.title | split: ' Electric' | first | split: ' Ride' | first | split: ' Kids' | first | remove: 'Bentley ' | strip
+                assign mimg = first_cv.featured_image | default: cp.featured_image
+                assign mname_e = mname | escape
+                capture mb
+                  echo '<button type="button" class="bt-ebf__model" data-ebf-model="' | append: cp.id | append: '" aria-pressed="false">'
+                  if mimg
+                    assign murl = mimg | image_url: width: 120
+                    echo '<img src="' | append: murl | append: '" alt="" width="60" height="60" loading="lazy">'
+                  endif
+                  echo '<span>' | append: mname_e | append: '</span></button>'
+                endcapture
+                assign car_models = car_models | append: mb
+                for cv in cp.variants
+                  unless cv.available
+                    continue
+                  endunless
+                  if cv.compare_at_price > cv.price
+                    assign worth = cv.compare_at_price
+                  else
+                    assign worth = cv.price
+                  endif
+                  assign cimg = cv.featured_image | default: cp.featured_image
+                  assign ckey = cv.title | handleize
+                  assign cdot = ''
+                  if ckey contains 'black'
+                    assign cdot = '#1b1b1b'
+                  elsif ckey contains 'white'
+                    assign cdot = '#f4f0e8'
+                  elsif ckey contains 'red'
+                    assign cdot = '#b3202a'
+                  elsif ckey contains 'pink'
+                    assign cdot = '#e07aa6'
+                  elsif ckey contains 'green'
+                    assign cdot = '#1f4d3a'
+                  elsif ckey contains 'blue'
+                    assign cdot = '#2d5c9e'
+                  elsif ckey contains 'silver' or ckey contains 'grey' or ckey contains 'gray'
+                    assign cdot = '#b9bcc0'
+                  elsif ckey contains 'yellow' or ckey contains 'gold'
+                    assign cdot = '#d9b23f'
+                  elsif ckey contains 'orange'
+                    assign cdot = '#e0782e'
+                  elsif ckey contains 'purple'
+                    assign cdot = '#6b4a8f'
+                  endif
+                  assign cname_e = cv.title | escape
+                  assign w_long = worth | money | strip_html | escape
+                  assign w_short = worth | money_without_trailing_zeros | strip_html | escape
+                  assign curl = ''
+                  assign curl_s = ''
+                  if cimg
+                    assign curl = cimg | image_url: width: 160
+                    assign curl_s = cimg | image_url: width: 80
+                  endif
+                  capture op
+                    echo '<option value="' | append: cv.id | append: '" data-model="' | append: cp.id | append: '" data-name="' | append: cname_e | append: '" data-worth="' | append: w_long | append: '" data-worth-short="' | append: w_short | append: '" data-img="' | append: curl | append: '">' | append: cname_e | append: '</option>'
+                  endcapture
+                  assign car_opts = car_opts | append: op
+                  capture dt
+                    echo '<button type="button" class="bt-ebf__dot" data-ebf-cdot="' | append: cv.id | append: '" data-model="' | append: cp.id | append: '" aria-pressed="false" aria-label="' | append: cname_e | append: '" title="' | append: cname_e | append: '">'
+                    if cdot != blank
+                      echo '<span style="background: ' | append: cdot | append: ';"></span>'
+                    elsif curl_s != blank
+                      echo '<span><img src="' | append: curl_s | append: '" alt="" width="40" height="40" loading="lazy"></span>'
+                    else
+                      echo '<span style="background: #ddd;"></span>'
+                    endif
+                    echo '</button>'
+                  endcapture
+                  assign car_dots = car_dots | append: dt
+                endfor
+              endfor
+            -%}
+            <select class="bt-ebf__hidden" data-ebf-car aria-hidden="true" tabindex="-1">{{ car_opts }}</select>
+            {%- if model_n > 1 -%}
+              <p class="bt-ebf__lb">Choose your Bentley</p>
+              <div class="bt-ebf__models" role="group" aria-label="Choose your Bentley">{{ car_models }}</div>
+            {%- endif -%}
+            <p class="bt-ebf__lb bt-ebf__lb--gap">Choose your free car color<span class="bt-ebf__pick-name" data-ebf-cname></span></p>
+            <div class="bt-ebf__dots" role="group" aria-label="Choose your free car color">{{ car_dots }}</div>
+            <div class="bt-ebf__note">Automatically added to your cart, free, when you add this trike.</div>
+              <div class="bt-ebf__ship">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 4h14v12H1zM15 9h4l3 3v4h-7"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18.5" cy="18.5" r="1.8"/></svg>
+                <span><b>Pre-order:</b> your free car ships separately from your trike.</span>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <button type="button" class="bt-ebf__atc" data-ebf-add {% unless first_v %}disabled{% endunless %}>
+        <span class="bt-ebf__atc-main" data-ebf-add-label>{% if first_v %}Add to cart{% else %}Sold out{% endif %}</span>
+        <span class="bt-ebf__atc-sub" data-ebf-add-sub></span>
+      </button>
+      <p class="bt-ebf__err" data-ebf-err hidden></p>
+    </bt-ebf-offer>
+  </div>
+</div>
+
+<style>
+  .bt-ebf-wrap,
+  .bt-ebf-wrap * {
+    box-sizing: border-box;
+  }
+  .bt-ebf-wrap {
+    --ebf-brand: #a83f2f;
+    --ebf-ink: #1c1a17;
+    padding: var(--ebf-pt, 60px) 20px var(--ebf-pb, 60px);
+    background: var(--ebf-bg, #fff);
+  }
+  .bt-ebf-wrap--snip {
+    padding: 8px 0;
+    background: transparent;
+  }
+  .bt-ebf-wrap--snip .bt-ebf {
+    max-width: none;
+  }
+  .bt-ebf-head {
+    max-width: 560px;
+    margin: 0 auto 28px;
+    text-align: center;
+  }
+  .bt-ebf-eyebrow {
+    margin: 0 0 8px;
+    color: var(--ebf-brand);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .bt-ebf-h2 {
+    margin: 0;
+    font-family: var(--heading-font-family, var(--font-heading-family, Georgia, serif));
+    font-size: clamp(26px, 2.6vw, 38px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .bt-ebf {
+    --ebf-muted: #6f675e;
+    --ebf-line: #e4dcd2;
+    position: relative;
+    display: block;
+    max-width: 560px;
+    margin: 14px auto 0;
+    padding: 22px 12px 12px;
+    border: 2px solid var(--ebf-ink);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--ebf-ink);
+    text-align: left;
+    container-type: inline-size;
+  }
+  .bt-ebf__pill {
+    position: absolute;
+    top: -13px;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--ebf-brand);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .bt-ebf__pill i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f3d58f;
+    animation: btEbfPulse 1.8s infinite;
+  }
+  @keyframes btEbfPulse {
+    0% { box-shadow: 0 0 0 0 rgba(243, 213, 143, 0.8); }
+    70% { box-shadow: 0 0 0 8px rgba(243, 213, 143, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(243, 213, 143, 0); }
+  }
+  .bt-ebf__pick {
+    margin: 14px 0 0;
+    padding: 0 4px;
+  }
+  .bt-ebf__pick .bt-ebf__lb {
+    margin: 0 0 10px;
+  }
+  .bt-ebf__pick-name {
+    margin-left: 8px;
+    color: var(--ebf-muted);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  .bt-ebf__pick-name:empty {
+    display: none;
+  }
+  .bt-ebf__dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .bt-ebf__dot {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--ebf-line);
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+  }
+  .bt-ebf__dot > span {
+    display: block;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+  }
+  .bt-ebf__dot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bt-ebf__dot:hover {
+    box-shadow: inset 0 0 0 1px var(--ebf-ink);
+  }
+  .bt-ebf__dot[aria-pressed='true'] {
+    box-shadow: inset 0 0 0 2px var(--ebf-ink);
+  }
+  .bt-ebf__dot:focus-visible {
+    outline: 2px solid var(--ebf-brand);
+    outline-offset: 2px;
+  }
+  .bt-ebf__models {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 4px;
+  }
+  .bt-ebf__model {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin: 0;
+    padding: 4px 14px 4px 4px;
+    border: 0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1.5px var(--ebf-line);
+    color: var(--ebf-ink);
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    transition: box-shadow 0.15s;
+  }
+  .bt-ebf__model img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #f3eee8;
+    object-fit: contain;
+  }
+  .bt-ebf__model:hover {
+    box-shadow: inset 0 0 0 1.5px #cbbfb2;
+  }
+  .bt-ebf__model[aria-pressed='true'] {
+    box-shadow: inset 0 0 0 2px var(--ebf-ink);
+  }
+  .bt-ebf__model:focus-visible {
+    outline: 2px solid var(--ebf-brand);
+    outline-offset: 2px;
+  }
+  .bt-ebf__lb--gap {
+    margin-top: 12px !important;
+  }
+  .bt-ebf__dot[hidden] {
+    display: none;
+  }
+  .bt-ebf__hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .bt-ebf__opts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .bt-ebf__opt {
+    position: relative;
+    display: block;
+    padding: 12px;
+    border: 2px solid var(--ebf-line);
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .bt-ebf__opt:hover {
+    border-color: #cbbfb2;
+  }
+  .bt-ebf__opt.is-on {
+    border-color: var(--ebf-brand);
+    background: #fdf6f3;
+  }
+  .bt-ebf__opt:focus-visible {
+    box-shadow: 0 0 0 3px rgba(168, 63, 47, 0.25);
+  }
+  .bt-ebf__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .bt-ebf__rad {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #b9ada0;
+    border-radius: 50%;
+  }
+  .bt-ebf__opt.is-on .bt-ebf__rad {
+    border-color: var(--ebf-brand);
+  }
+  .bt-ebf__opt.is-on .bt-ebf__rad::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ebf-brand);
+  }
+  .bt-ebf__ic {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 10px;
+    background: #f3eee8;
+    overflow: hidden;
+  }
+  .bt-ebf__ic img {
+    width: 92%;
+    height: auto;
+    transition: opacity 0.25s;
+  }
+  .bt-ebf__pct {
+    color: var(--ebf-brand);
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .bt-ebf__tx {
+    display: block;
+    flex: 1;
+    min-width: 0;
+  }
+  .bt-ebf__h {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+  .bt-ebf__pr {
+    display: block;
+    margin-top: 2px;
+    font-size: 13px;
+  }
+  .bt-ebf__pr s {
+    margin-right: 6px;
+    color: var(--ebf-muted);
+  }
+  .bt-ebf__pr b {
+    color: var(--ebf-brand);
+    letter-spacing: 0.04em;
+  }
+  .bt-ebf__save {
+    flex: none;
+    align-self: flex-start;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: var(--ebf-ink);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .bt-ebf__od {
+    display: none;
+    margin: 10px 0 0 34px;
+  }
+  .bt-ebf__opt.is-on .bt-ebf__od {
+    display: block;
+  }
+  .bt-ebf__lb {
+    display: block;
+    margin: 0 0 5px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .bt-ebf select:not(.bt-ebf__hidden) {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 9px 34px 9px 12px;
+    border: 1.5px solid var(--ebf-ink);
+    border-radius: 8px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231c1a17' stroke-width='3'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+    color: var(--ebf-ink);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .bt-ebf__ship {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: #f8f4ef;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .bt-ebf__ship svg {
+    flex: none;
+    margin-top: 1px;
+    color: var(--ebf-brand);
+  }
+  .bt-ebf__note {
+    margin-top: 7px;
+    color: var(--ebf-muted);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .bt-ebf__or {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: -2px 0;
+    color: var(--ebf-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+  .bt-ebf__or::before,
+  .bt-ebf__or::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ebf-line);
+  }
+  .bt-ebf__atc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 56px;
+    margin: 12px 0 0;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--ebf-brand);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    transition: filter 0.15s;
+  }
+  .bt-ebf__atc:hover {
+    filter: brightness(0.9);
+  }
+  .bt-ebf__atc:focus-visible {
+    outline: 3px solid rgba(168, 63, 47, 0.35);
+    outline-offset: 2px;
+  }
+  .bt-ebf__atc[disabled],
+  .bt-ebf__atc[aria-busy='true'] {
+    cursor: wait;
+    opacity: 0.6;
+  }
+  .bt-ebf__atc-main {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .bt-ebf__atc-sub {
+    margin-top: 2px;
+    font-size: 12px;
+    opacity: 0.85;
+  }
+  .bt-ebf__atc-sub:empty {
+    display: none;
+  }
+  .bt-ebf__err {
+    margin: 10px 0 0;
+    color: var(--ebf-brand);
+    font-size: 13px;
+  }
+  @container (max-width: 460px) {
+    .bt-ebf__top {
+      display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr);
+      gap: 4px 10px;
+      align-items: center;
+    }
+    .bt-ebf__rad,
+    .bt-ebf__ic {
+      grid-row: span 2;
+    }
+    .bt-ebf__save {
+      grid-column: 3;
+      justify-self: start;
+      font-size: 10px;
+    }
+    .bt-ebf__h {
+      font-size: 13px;
+    }
+  }
+  @media (max-width: 699px) {
+    .bt-ebf-wrap {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    .bt-ebf {
+      padding: 20px 10px 10px;
+    }
+    .bt-ebf__pill {
+      left: 10px;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+    .bt-ebf__ic {
+      width: 50px;
+      height: 50px;
+    }
+    .bt-ebf__h {
+      font-size: 13px;
+    }
+    .bt-ebf__od {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    if (customElements.get('bt-ebf-offer')) return;
+    // Same keys as the product-page box, so the shopper's choice carries over.
+    var K_OFFER = 'adb_ebf_offer';
+    var K_CAR = 'adb_ebf_car';
+    var ss = function (k, v) {
+      try {
+        if (v === undefined) return sessionStorage.getItem(k);
+        sessionStorage.setItem(k, v);
+      } catch (e) {
+        return null;
+      }
+    };
+    customElements.define(
+      'bt-ebf-offer',
+      class extends HTMLElement {
+        connectedCallback() {
+          if (this._ready) return;
+          this._ready = true;
+          var box = this;
+          var base = box.dataset.root || '/';
+          if (base.slice(-1) !== '/') base += '/';
+          var q = function (sel) {
+            return box.querySelector(sel);
+          };
+          var tSel = q('[data-ebf-trike]');
+          var cSel = q('[data-ebf-car]');
+          var btn = q('[data-ebf-add]');
+          var lab = q('[data-ebf-add-label]');
+          var sub = q('[data-ebf-add-sub]');
+          var err = q('[data-ebf-err]');
+          var origLabel = lab ? lab.textContent : '';
+
+          var offer = function () {
+            var o = box.querySelector('.bt-ebf__opt.is-on');
+            return o ? o.getAttribute('data-ebf-opt') : 'off';
+          };
+          var setText = function (el, t) {
+            if (el && t != null && el.textContent !== t) el.textContent = t;
+          };
+          // If the box sits inside a product section, follow that section's colour picker.
+          var syncTheme = function () {
+            if (!tSel) return;
+            var scope = box.closest('.product-info, product-info, .shopify-section') || document;
+            var inp = scope.querySelector('form[action*="/cart/add"] [name="id"]');
+            if (!inp && scope !== document) {
+              var bb = scope.querySelector('buy-buttons[form]');
+              var f = bb && document.forms[bb.getAttribute('form')];
+              inp = f && f.querySelector('[name="id"]');
+            }
+            var id = inp && inp.value;
+            if (id && tSel.value !== id && tSel.querySelector('option[value="' + id + '"]')) tSel.value = id;
+          };
+          var paint = function () {
+            var saved = ss(K_OFFER);
+            if (saved) {
+              box.querySelectorAll('[data-ebf-opt]').forEach(function (o) {
+                var on = o.getAttribute('data-ebf-opt') === saved;
+                o.classList.toggle('is-on', on);
+                o.setAttribute('aria-checked', on ? 'true' : 'false');
+              });
+            }
+            var car = ss(K_CAR);
+            if (cSel && car && cSel.querySelector('option[value="' + car + '"]')) cSel.value = car;
+            if (cSel && cSel.selectedOptions[0]) {
+              var co = cSel.selectedOptions[0];
+              var model = co.getAttribute('data-model');
+              var ci = q('[data-ebf-carimg]');
+              var cs = co.getAttribute('data-img');
+              if (ci && cs && ci.getAttribute('src') !== cs) ci.setAttribute('src', cs);
+              setText(q('[data-ebf-cworth]'), co.getAttribute('data-worth'));
+              setText(q('[data-ebf-cworth-short]'), co.getAttribute('data-worth-short'));
+              setText(q('[data-ebf-cname]'), co.getAttribute('data-name'));
+              box.querySelectorAll('[data-ebf-model]').forEach(function (m) {
+                m.setAttribute('aria-pressed', m.getAttribute('data-ebf-model') === model ? 'true' : 'false');
+              });
+              box.querySelectorAll('[data-ebf-cdot]').forEach(function (d) {
+                d.hidden = d.getAttribute('data-model') !== model;
+                d.setAttribute('aria-pressed', d.getAttribute('data-ebf-cdot') === cSel.value ? 'true' : 'false');
+              });
+            }
+            if (tSel && tSel.selectedOptions[0]) {
+              var o = tSel.selectedOptions[0];
+              setText(q('[data-ebf-name]'), o.dataset.name || '');
+              box.querySelectorAll('[data-ebf-dot]').forEach(function (d) {
+                d.setAttribute('aria-pressed', d.getAttribute('data-ebf-dot') === tSel.value ? 'true' : 'false');
+              });
+              setText(q('[data-ebf-was]'), o.dataset.price);
+              setText(q('[data-ebf-now]'), o.dataset.off);
+              setText(q('[data-ebf-save]'), o.dataset.save);
+              var ti = q('[data-ebf-timg]');
+              if (ti && o.dataset.img && ti.getAttribute('src') !== o.dataset.img) ti.setAttribute('src', o.dataset.img);
+            }
+            setText(sub, offer() === 'off' ? box.dataset.pct + '% off applied' : 'Free car included');
+          };
+          var choose = function (o) {
+            ss(K_OFFER, o.getAttribute('data-ebf-opt'));
+            if (!ss(K_OFFER)) {
+              box.querySelectorAll('[data-ebf-opt]').forEach(function (x) {
+                x.classList.toggle('is-on', x === o);
+                x.setAttribute('aria-checked', x === o ? 'true' : 'false');
+              });
+            }
+            paint();
+          };
+          box.addEventListener('click', function (e) {
+            var mdl = e.target.closest('[data-ebf-model]');
+            if (mdl && cSel) {
+              var mid = mdl.getAttribute('data-ebf-model');
+              var cur = cSel.selectedOptions[0];
+              if (!cur || cur.getAttribute('data-model') !== mid) {
+                var firstOpt = cSel.querySelector('option[data-model="' + mid + '"]');
+                if (firstOpt) {
+                  cSel.value = firstOpt.value;
+                  ss(K_CAR, cSel.value);
+                }
+              }
+              paint();
+              return;
+            }
+            var cdot = e.target.closest('[data-ebf-cdot]');
+            if (cdot && cSel) {
+              cSel.value = cdot.getAttribute('data-ebf-cdot');
+              ss(K_CAR, cSel.value);
+              paint();
+              return;
+            }
+            var dot = e.target.closest('[data-ebf-dot]');
+            if (dot && tSel) {
+              tSel.value = dot.getAttribute('data-ebf-dot');
+              paint();
+              return;
+            }
+            var o = e.target.closest('[data-ebf-opt]');
+            if (!o || e.target.closest('select')) return;
+            choose(o);
+          });
+          box.addEventListener('keydown', function (e) {
+            var o = e.target.closest && e.target.closest('[data-ebf-opt]');
+            if (!o || (e.key !== ' ' && e.key !== 'Enter')) return;
+            e.preventDefault();
+            choose(o);
+          });
+          box.addEventListener('change', function (e) {
+            if (e.target === cSel) ss(K_CAR, cSel.value);
+            paint();
+          });
+          syncTheme();
+          paint();
+          // Follow the page's own colour picker (only changes from outside this box).
+          ['variant:change', 'variant:changed', 'change'].forEach(function (ev) {
+            document.addEventListener(ev, function (e) {
+              if (e.target && e.target.nodeType === 1 && box.contains(e.target)) return;
+              setTimeout(function () {
+                syncTheme();
+                paint();
+              }, 30);
+            });
+          });
+
+          var json = function (url, body) {
+            return fetch(base + url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              credentials: 'same-origin',
+              body: JSON.stringify(body),
+            }).then(function (r) {
+              return r.json().then(function (d) {
+                if (!r.ok) throw d;
+                return d;
+              });
+            });
+          };
+          var showErr = function (m) {
+            if (!err) return;
+            err.textContent = m || '';
+            err.hidden = !m;
+          };
+
+          if (btn) {
+            btn.addEventListener('click', function () {
+              if (btn.getAttribute('aria-busy') === 'true' || !tSel || !tSel.value) return;
+              showErr('');
+              btn.setAttribute('aria-busy', 'true');
+              setText(lab, 'Adding…');
+              var o = offer();
+              var items = [{ id: Number(tSel.value), quantity: 1 }];
+              if (o === 'car' && cSel && cSel.value) {
+                items.push({ id: Number(cSel.value), quantity: 1, properties: { _adb_offer: 'free-car' } });
+              }
+              var detail = { sections: [] };
+              document.dispatchEvent(new CustomEvent('cart:prepare-bundled-sections', { bubbles: true, detail: detail }));
+              var code = o === 'off' ? box.dataset.code : '';
+              json('cart/add.js', { items: items })
+                .then(function () {
+                  return json('cart/update.js', { discount: code, sections: detail.sections.join(',') });
+                })
+                .then(function (cart) {
+                  var after = box.dataset.after;
+                  if (after === 'checkout') return (window.location.href = base + 'checkout');
+                  if (after === 'cart') return (window.location.href = base + 'cart');
+                  document.dispatchEvent(new CustomEvent('variant:add', { bubbles: true, detail: { items: items, cart: cart } }));
+                  document.documentElement.dispatchEvent(
+                    new CustomEvent('cart:change', {
+                      bubbles: true,
+                      detail: { baseEvent: 'variant:add', onSuccessDo: 'force_open_drawer', cart: cart },
+                    })
+                  );
+                  btn.removeAttribute('aria-busy');
+                  setText(lab, origLabel);
+                })
+                .catch(function (e) {
+                  btn.removeAttribute('aria-busy');
+                  setText(lab, origLabel);
+                  showErr((e && (e.description || e.message)) || 'Something went wrong, please try again.');
+                });
+            });
+          }
+        }
+      }
+    );
+  })();
+</script>
+{%- endif -%}
