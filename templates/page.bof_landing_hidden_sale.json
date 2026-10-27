@@ -1372,6 +1372,7 @@
         "image_wrnKhg": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/BT_Collection_Banner_BT_Trike_4.png",
             "mobile_image": "shopify://shop_images/BT_Collection_BT_Trike_Mobile_2.png",
             "content_max_width": 600,
             "mobile_text_position": "place-self-end-center text-center",
