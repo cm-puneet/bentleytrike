@@ -270,7 +270,7 @@
             "icon": "none",
             "icon_width": 20,
             "title": "Minimum Height:",
-            "content": "<p> 70  to 110 centimeters</p>",
+            "content": "<p>&nbsp;70 &nbsp;to 110 centimeters</p>",
             "background": "#f2e9e4",
             "text_color": "#1a1a1a"
           }
@@ -290,9 +290,8 @@
         },
         "associated_products_YXTBbY": {
           "type": "associated_products",
-          "disabled": true,
           "settings": {
-            "title": "Get The Full Bentley Experience",
+            "title": "COMPLETE THE BENTLEY EXPERIENCE",
             "stack_products": false,
             "products_count": 5,
             "background": "",
