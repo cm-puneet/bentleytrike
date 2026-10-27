@@ -1771,6 +1771,7 @@
         "item_ijnYFD": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/Helmet_7482a5f8-d18a-4874-b1d9-ebf200c195d0.png",
             "icon": "none",
             "icon_width": 48,
             "title": "Helmets",
