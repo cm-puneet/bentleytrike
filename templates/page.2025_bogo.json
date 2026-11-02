@@ -233,27 +233,27 @@
         },
         "offer_yg6DBx": {
           "type": "offer",
-          "settings": {
-            "text_alignment": "start",
-            "icon_position": "aligned",
-            "icon": "picto-gift",
-            "icon_width": 20,
-            "title": "HALLOWEEN SALE",
-            "content": "<p>Score 30% OFF your entire order for a limited time. Use code: HALLO30</p>",
-            "background": "#d9d0c5",
-            "text_color": "#000000"
-          }
-        },
-        "offer_TN73fe": {
-          "type": "offer",
           "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
             "icon": "picto-gift",
             "icon_width": 20,
+            "title": "HALLOWEEN SALE",
+            "content": "<p>Score 30% OFF your entire order for a limited time. Use code: BF30</p>",
+            "background": "#d9d0c5",
+            "text_color": "#000000"
+          }
+        },
+        "offer_TN73fe": {
+          "type": "offer",
+          "settings": {
+            "text_alignment": "start",
+            "icon_position": "aligned",
+            "icon": "picto-gift",
+            "icon_width": 20,
             "title": "CHOOSE YOUR OFFER",
-            "content": "<p>OFFER 1: Get 30% off with the code <strong>PRIMEDAY</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
+            "content": "<p>OFFER 1: Get 30% off with the code <strong>BF30</strong><br/><br/>OFFER 2: Get a <strong>FREE Bentley Electric Ride-on Car </strong>with the purchase of a Bentley Trike at full price</p>",
             "background": "#d9d0c5",
             "text_color": "#000000"
           }
