@@ -152,7 +152,7 @@
         "heading_MLMq4i": {
           "type": "heading",
           "settings": {
-            "text": "HALLOWEEN SALE",
+            "text": "BLACK FRIDAY SALE",
             "heading_tag": "h2",
             "text_color": "#ffffff",
             "gradient": ""
@@ -161,7 +161,7 @@
         "richtext_3HKUM4": {
           "type": "richtext",
           "settings": {
-            "content": "<p>Score 30% OFF your entire order for a limited time. Use code: HALLO30</p>"
+            "content": "<p>Choose your promo:<br/>Get a <strong>FREE Bentley Trike</strong> or <strong>30% OFF </strong>when use the code <strong>BF30</strong></p>"
           }
         },
         "heading_NKCgwn": {
@@ -1590,7 +1590,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_br4HeY": {
-          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "vlgy6zzuljecp"
           }
