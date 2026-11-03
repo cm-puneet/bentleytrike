@@ -108,7 +108,7 @@
           "type": "milestone",
           "settings": {
             "age": "10–12 Months",
-            "title": "The First Steps",
+            "title": "Their First Steps",
             "text": "For the first-birthday walk, <strong>full stroller mode with a parent push handle</strong> — you steer, they take in the view.",
             "background": "shopify://shop_images/Electric_Ride_On_Car.png",
             "background_mobile": "shopify://shop_images/8_31baf6e1-ffbf-4567-a337-b08ca30ef9f9.png",
@@ -121,7 +121,7 @@
           "type": "milestone",
           "settings": {
             "age": "12–18 Months",
-            "title": "The First Outings",
+            "title": "Their First Outings",
             "text": "Canopy up, footrest down. <strong>Long afternoons out</strong>, from a seat that feels like the front row.",
             "background": "shopify://shop_images/Mom-WhiteSatintrike-2.png",
             "background_mobile": "shopify://shop_images/9_a620b1f0-700b-4411-b7ac-e7e9bb4a55bd.png",
@@ -134,7 +134,7 @@
           "type": "milestone",
           "settings": {
             "age": "18–24 Months",
-            "title": "The First Pedals",
+            "title": "Their First Pedals",
             "text": "As little legs find their rhythm, <strong>the pedals come into play</strong> — your hand never far from the handle.",
             "background": "shopify://shop_images/DAD-Mullinertrike-1.png",
             "background_mobile": "shopify://shop_images/10.png",
@@ -147,7 +147,7 @@
           "type": "milestone",
           "settings": {
             "age": "2–3 Years",
-            "title": "The First Solo Ride",
+            "title": "Their First Solo Ride",
             "text": "Handle off, guard bar away. <strong>The Trike becomes entirely theirs.</strong>",
             "background": "shopify://shop_images/DAD-Centennieltrike-2.png",
             "background_mobile": "shopify://shop_images/11_1a716945-d231-4d47-9c59-ef23a1b07401.png",
@@ -227,7 +227,7 @@
           "settings": {
             "product": "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
             "label": "Centennial",
-            "swatch": "#48494C"
+            "swatch": "#48494c"
           }
         },
         "product_KADhcM": {
@@ -235,7 +235,7 @@
           "settings": {
             "product": "bentley-mulliner-trike",
             "label": "Mulliner",
-            "swatch": "#BCAFA4"
+            "swatch": "#bcafa4"
           }
         },
         "product_VjjDHW": {
@@ -243,7 +243,7 @@
           "settings": {
             "product": "white-satin-bentley-6-in-1-stroller-trike",
             "label": "White Satin",
-            "swatch": "#7A6253"
+            "swatch": "#7a6253"
           }
         }
       },
@@ -405,9 +405,9 @@
         "image_alt": "",
         "overlay": 30,
         "eyebrow": "THE NEXT CHAPTER",
-        "heading": "Comes the <em>open road</em>.&nbsp;",
+        "heading": "Open road <em>ready</em>.&nbsp;",
         "body": "From being guided in the stroller trike to driving their own electric Bentley. Discover ride-on cars designed for the milestone birthdays ahead.",
-        "button_label": "Explore the Ride-On Cars",
+        "button_label": "Explore our ride-on cars",
         "button_link": "shopify://collections/bentley-ride-on-electric-cars",
         "height": 640,
         "height_mobile": 560,
@@ -433,7 +433,7 @@
         "button_label": "Claim my free car",
         "button_link": "shopify://pages/the-bentley-trike-hidden-sale",
         "min_height": 420,
-        "c_bg": "#16181C",
+        "c_bg": "#16181c",
         "c_text": "#ffffff",
         "c_label": "#d9d0c5",
         "c_btn_bg": "#a83f2f",
