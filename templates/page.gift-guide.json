@@ -111,6 +111,7 @@
         },
         "milestone_hPzaFW": {
           "type": "milestone",
+          "disabled": true,
           "settings": {
             "age": "3+ Years",
             "title": "The First Drive",
@@ -294,8 +295,8 @@
           "settings": {
             "icon": "none",
             "icon_width": 20,
-            "title": "Question 1",
-            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "title": "Do you have instructional videos for the Bentley Trike?",
+            "content": "<p>We know how special the celebration is, so we make assembly effortless. Every trike comes with step-by-step video guides, safety tips, and stage-by-stage walkthroughs to ensure you're ready to roll right out of the box.</p><p>Watch our full library anytime here: <a href=\"https://bentleytrike.com/pages/bentley-trike-instructional-videos\" target=\"_blank\" title=\"Bentley Trike Instructional Videos\"><strong>Bentley Trike Instructional Videos</strong></a>.</p>",
             "page": ""
           }
         },
@@ -304,8 +305,8 @@
           "settings": {
             "icon": "none",
             "icon_width": 20,
-            "title": "Question 2",
-            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "title": "Can it be passed down or refreshed as they grow?",
+            "content": "<p>Designed to last well beyond the early years, the Bentley Trike is built for everyday adventure and future siblings alike. If you ever need a fresh set of wheels, hardware, or replacement pieces, you can easily restore your trike with <a href=\"/products/bentley-trike-spare-parts\" target=\"_blank\" title=\"Bentley Trike Spare Parts\">official Bentley spare parts here</a></p>",
             "page": ""
           }
         },
@@ -329,8 +330,8 @@
       "settings": {
         "full_width": true,
         "subheading": "",
-        "title": "Heading",
-        "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+        "title": "Here for Every Step, From One to Four.",
+        "content": "<p>Turning one marks the beginning of true adventure. Whether you're assembling it before the big party or adjusting the stages as they pedal on their own, our guides, support, and warranty coverage are with your family for every milestone ahead.</p>",
         "button_text": "",
         "button_url": "",
         "text_position": "start",
@@ -349,13 +350,14 @@
       "type": "git-banner",
       "name": "BT Gift Banner",
       "settings": {
+        "image": "shopify://shop_images/compressed_Generated_with_Kive.ai_-_Change_only_the_dad_s_coat_to_a_long_black_coat._Keep_the_mom_s_black_coat__both_parents_faces_and_poses__the_child__red_ride-on_car__courtyard__li.png",
         "image_alt": "",
         "overlay": 30,
-        "eyebrow": "The chapter after the Trike",
-        "heading": "Then comes the <em>first drive.</em>",
-        "body": "Officially licensed Bentley Electric Ride-On Cars, for the birthdays still to come.",
+        "eyebrow": "THE NEXT CHAPTER",
+        "heading": "&nbsp;Comes the <em>open road</em>.&nbsp;",
+        "body": "From being guided in the stroller trike to driving their own electric Bentley. Discover ride-on cars designed for the milestone birthdays ahead.",
         "button_label": "Explore the Ride-On Cars",
-        "button_link": "",
+        "button_link": "shopify://collections/bentley-ride-on-electric-cars",
         "height": 640,
         "height_mobile": 560,
         "v_align": "flex-end",
@@ -378,9 +380,9 @@
         "heading": "Some deals are shared. | This one is <em>Whispered</em>.",
         "text": "",
         "button_label": "Claim my free car",
-        "button_link": "",
+        "button_link": "shopify://pages/the-bentley-trike-hidden-sale",
         "min_height": 420,
-        "c_bg": "#00221c",
+        "c_bg": "#16181C",
         "c_text": "#ffffff",
         "c_label": "#d9d0c5",
         "c_btn_bg": "#a83f2f",
