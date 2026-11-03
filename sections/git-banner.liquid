@@ -1,0 +1,179 @@
+{%- comment -%}
+  BT Gift Banner — full-width photo with text and a thin outlined button
+  ("Then comes the first drive").
+{%- endcomment -%}
+{%- liquid
+  assign uid = section.id | replace: '_', '' | downcase
+  assign hf = section.settings.heading_font
+  assign hfi = hf | font_modify: 'style', 'italic'
+  assign bf = section.settings.body_font
+  assign bfb = bf | font_modify: 'weight', 'bold'
+  assign overlay = section.settings.overlay | divided_by: 100.0
+  assign img = section.settings.image
+  assign img_m = section.settings.image_mobile | default: img
+-%}
+
+{% style %}
+  {{ hf | font_face: font_display: 'swap' }}
+  {%- if hfi -%}{{ hfi | font_face: font_display: 'swap' }}{%- endif -%}
+  {{ bf | font_face: font_display: 'swap' }}
+  {%- if bfb -%}{{ bfb | font_face: font_display: 'swap' }}{%- endif -%}
+
+  #btb-{{ uid }} {
+    --btb-head: {{ hf.family }}, {{ hf.fallback_families }};
+    --btb-body: {{ bf.family }}, {{ bf.fallback_families }};
+    --btb-text: {{ section.settings.text }};
+    position: relative; display: flex; align-items: {{ section.settings.v_align }}; overflow: hidden;
+    min-height: {{ section.settings.height }}px; background: #1a1a1a; color: var(--btb-text); font-family: var(--btb-body);
+  }
+  #btb-{{ uid }} .btb__media img,
+  #btb-{{ uid }} .btb__media svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #btb-{{ uid }} .btb__media--m { display: none; }
+  #btb-{{ uid }} .btb__shade { position: absolute; inset: 0; background: rgba(0,0,0, {{ overlay }}); }
+  #btb-{{ uid }} .btb__inner {
+    position: relative; width: 100%; max-width: 1440px; margin: 0 auto; box-sizing: border-box;
+    padding: 64px clamp(20px, 4vw, 64px);
+    display: flex; flex-direction: column; gap: 18px; align-items: {{ section.settings.h_align }}; text-align: {{ section.settings.text_align }};
+  }
+  #btb-{{ uid }} .btb__eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
+  #btb-{{ uid }} .btb__heading { margin: 0; max-width: 640px; font-family: var(--btb-head); font-weight: 400; font-size: clamp(34px, 4.2vw, 60px); line-height: 1.05; color: var(--btb-text); }
+  #btb-{{ uid }} .btb__text { margin: 0; max-width: 500px; font-size: 16px; line-height: 1.6; }
+  #btb-{{ uid }} .btb__btn {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 30px; margin-top: 8px; box-sizing: border-box;
+    color: var(--btb-text); text-decoration: none; box-shadow: inset 0 0 0 1px var(--btb-text);
+    font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    transition: background .35s ease, color .35s ease;
+  }
+  #btb-{{ uid }} .btb__btn:hover { background: var(--btb-text); color: {{ section.settings.button_hover_text }}; }
+  @media (max-width: 749px) {
+    #btb-{{ uid }} { min-height: {{ section.settings.height_mobile }}px; }
+    {%- if section.settings.image_mobile -%}
+      #btb-{{ uid }} .btb__media--d { display: none; }
+      #btb-{{ uid }} .btb__media--m { display: block; }
+    {%- endif -%}
+    #btb-{{ uid }} .btb__inner { padding: 48px 20px; }
+    #btb-{{ uid }} .btb__heading { font-size: 34px; }
+    #btb-{{ uid }} .btb__text { font-size: 15px; }
+  }
+{% endstyle %}
+
+<div id="btb-{{ uid }}">
+  <div class="btb__media btb__media--d" aria-hidden="{% if section.settings.image_alt == blank %}true{% else %}false{% endif %}">
+    {%- if img -%}
+      {%- assign img_style = 'object-position: ' | append: img.presentation.focal_point -%}
+      {{
+        img
+        | image_url: width: 2400
+        | image_tag:
+          widths: '750, 1100, 1500, 1920, 2400',
+          sizes: '100vw',
+          alt: section.settings.image_alt,
+          loading: 'lazy',
+          style: img_style
+      }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+  {%- if section.settings.image_mobile -%}
+    <div class="btb__media btb__media--m" aria-hidden="true">
+      {%- assign img_style = 'object-position: ' | append: img_m.presentation.focal_point -%}
+      {{ img_m | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', sizes: '100vw', alt: '', loading: 'lazy', style: img_style }}
+    </div>
+  {%- endif -%}
+  <div class="btb__shade" aria-hidden="true"></div>
+  <div class="btb__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="btb__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="btb__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="btb__text">{{ section.settings.body }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a class="btb__btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+        {{- section.settings.button_label -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "BT Gift Banner",
+  "class": "section-bt-gift-banner",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Photo on phones (optional)" },
+    { "type": "text", "id": "image_alt", "label": "Photo description", "info": "For screen readers. Leave empty if decorative." },
+    { "type": "range", "id": "overlay", "label": "Photo darkening", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 30 },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "The chapter after the Trike" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Then comes the <em>first drive.</em>" },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Text",
+      "default": "Officially licensed Bentley Electric Ride-On Cars, for the birthdays still to come."
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore the Ride-On Cars" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "height", "label": "Height on desktop", "min": 360, "max": 1000, "step": 20, "unit": "px", "default": 640 },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Height on phones",
+      "min": 320,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 560
+    },
+    {
+      "type": "select",
+      "id": "v_align",
+      "label": "Text position (vertical)",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "select",
+      "id": "h_align",
+      "label": "Text position (horizontal)",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "text", "label": "Text and button", "default": "#ffffff" },
+    { "type": "color", "id": "button_hover_text", "label": "Button text on hover", "default": "#1a1a1a" },
+    { "type": "header", "content": "Fonts" },
+    { "type": "font_picker", "id": "heading_font", "label": "Headings", "default": "playfair_display_n4" },
+    { "type": "font_picker", "id": "body_font", "label": "Body text", "default": "poppins_n4" }
+  ],
+  "presets": [{ "name": "BT Gift Banner" }]
+}
+{% endschema %}
