@@ -1,0 +1,471 @@
+{%- comment -%}
+  BT Gift Finishes — product grid with a quick add-to-cart button on each card.
+  Add a Product block per finish, or pick a collection to fill the grid.
+{%- endcomment -%}
+{%- liquid
+  assign uid = section.id | replace: '_', '' | downcase
+  assign hf = section.settings.heading_font
+  assign hfi = hf | font_modify: 'style', 'italic'
+  assign bf = section.settings.body_font
+  assign bfb = bf | font_modify: 'weight', 'bold'
+-%}
+
+{% style %}
+  {{ hf | font_face: font_display: 'swap' }}
+  {%- if hfi -%}{{ hfi | font_face: font_display: 'swap' }}{%- endif -%}
+  {{ bf | font_face: font_display: 'swap' }}
+  {%- if bfb -%}{{ bfb | font_face: font_display: 'swap' }}{%- endif -%}
+
+  #btf-{{ uid }} {
+    --btf-head: {{ hf.family }}, {{ hf.fallback_families }};
+    --btf-body: {{ bf.family }}, {{ bf.fallback_families }};
+    --btf-bg: {{ section.settings.bg }};
+    --btf-text: {{ section.settings.text_color }};
+    --btf-muted: {{ section.settings.text_color | color_modify: 'alpha', 0.7 }};
+    --btf-accent: {{ section.settings.accent }};
+    --btf-card: {{ section.settings.card_bg }};
+    --btf-btn-bg: {{ section.settings.button_bg }};
+    --btf-btn-done: {{ section.settings.button_added_bg }};
+    display: block; background: var(--btf-bg); color: var(--btf-text); font-family: var(--btf-body);
+    border-top: 1px solid {{ section.settings.text_color | color_modify: 'alpha', 0.12 }};
+  }
+  #btf-{{ uid }} .btf__wrap {
+    max-width: 1440px; margin: 0 auto; box-sizing: border-box;
+    padding: {{ section.settings.pad_top }}px clamp(20px, 4vw, 64px) {{ section.settings.pad_bottom }}px;
+    display: flex; flex-direction: column; gap: 56px;
+  }
+  #btf-{{ uid }} .btf__top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; }
+  #btf-{{ uid }} .btf__eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--btf-accent); }
+  #btf-{{ uid }} .btf__heading { margin: 14px 0 0; font-family: var(--btf-head); font-weight: 400; font-size: clamp(30px, 3.4vw, 48px); line-height: 1.1; color: var(--btf-text); }
+  #btf-{{ uid }} .btf__intro { margin: 0; max-width: 380px; font-size: 15px; line-height: 1.6; color: var(--btf-muted); }
+  #btf-{{ uid }} .btf__grid {
+    display: grid; grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr)); gap: 48px 28px;
+    list-style: none; margin: 0; padding: 0;
+  }
+  #btf-{{ uid }} .btf__card { display: flex; flex-direction: column; gap: 14px; }
+  #btf-{{ uid }} .btf__media { position: relative; aspect-ratio: 4 / 5; background: var(--btf-card); overflow: hidden; }
+  #btf-{{ uid }} .btf__media-link { display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; }
+  #btf-{{ uid }} .btf__media-link img,
+  #btf-{{ uid }} .btf__media-link > svg { width: 86%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+  #btf-{{ uid }} .btf__card:hover .btf__media-link img { transform: scale(1.04); }
+  #btf-{{ uid }} .btf__swatch-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--btf-muted); }
+  #btf-{{ uid }} .btf__swatch { width: 12px; height: 12px; border-radius: 9999px; box-shadow: inset 0 0 0 1px rgba(26,26,26,.2); }
+  #btf-{{ uid }} .btf__name { font-family: var(--btf-head); font-size: 19px; line-height: 1.3; color: var(--btf-text); text-decoration: none; transition: color .3s ease; }
+  #btf-{{ uid }} .btf__card:hover .btf__name { color: var(--btf-accent); }
+  #btf-{{ uid }} .btf__price { display: flex; gap: 10px; align-items: baseline; font-size: 14px; }
+  #btf-{{ uid }} .btf__price s { font-size: 13px; color: var(--btf-muted); }
+  #btf-{{ uid }} .btf__add {
+    position: absolute; left: 14px; right: 14px; bottom: 14px; min-height: 46px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    border: 0; border-radius: 0; cursor: pointer;
+    background: var(--btf-btn-bg); color: var(--btf-text); box-shadow: inset 0 0 0 1px var(--btf-text);
+    font-family: var(--btf-body); font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity .35s ease, transform .35s ease, background .3s ease, color .3s ease;
+  }
+  #btf-{{ uid }} .btf__card:hover .btf__add,
+  #btf-{{ uid }} .btf__card:focus-within .btf__add,
+  #btf-{{ uid }} .btf__add.is-added,
+  #btf-{{ uid }} .btf__add.is-busy { opacity: 1; transform: none; }
+  #btf-{{ uid }} .btf__add:hover,
+  #btf-{{ uid }} .btf__add.is-added { background: var(--btf-btn-done); color: var(--btf-btn-bg); }
+  /* Locked so theme-wide icon or button styles can't resize the cart icon */
+  #btf-{{ uid }} .btf__add svg {
+    width: 14px !important; height: 14px !important; min-width: 14px !important; max-width: 14px !important;
+    max-height: 14px !important; flex: 0 0 14px !important; margin: 0 !important; padding: 0 !important; display: block !important;
+  }
+  #btf-{{ uid }} .btf__add-text { white-space: nowrap; line-height: 1; }
+  #btf-{{ uid }} .btf__add {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important;
+    flex-direction: row !important; flex-wrap: nowrap !important; white-space: nowrap;
+    width: auto !important; height: auto !important; max-height: 56px; padding: 0 14px !important;
+    line-height: 1 !important; text-align: center !important; box-sizing: border-box !important; overflow: hidden;
+  }
+  #btf-{{ uid }} .btf__add[disabled] { cursor: default; opacity: 1; transform: none; background: var(--btf-btn-bg); color: var(--btf-muted); box-shadow: inset 0 0 0 1px var(--btf-muted); }
+  #btf-{{ uid }} .btf__add.is-busy { cursor: progress; }
+  #btf-{{ uid }} .btf__msg { min-height: 1em; font-size: 12px; color: var(--btf-accent); }
+  @media (hover: none) {
+    #btf-{{ uid }} .btf__add { opacity: 1; transform: none; }
+  }
+  @media (max-width: 749px) {
+    #btf-{{ uid }} .btf__wrap { padding: {{ section.settings.pad_top | times: 0.6 | round }}px 20px {{ section.settings.pad_bottom | times: 0.6 | round }}px; gap: 36px; }
+    #btf-{{ uid }} .btf__grid { grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(0, 1fr)); gap: 34px 14px; }
+    #btf-{{ uid }} .btf__name { font-size: 15px; }
+    #btf-{{ uid }} .btf__add { left: 8px; right: 8px; bottom: 8px; min-height: 44px; font-size: 10px; letter-spacing: .16em; }
+    #btf-{{ uid }} .btf__media-link { padding-bottom: 40px; box-sizing: border-box; }
+  }
+  #btf-{{ uid }} .btf__bar { display: none; }
+  {%- if section.settings.mobile_layout == 'swipe' -%}
+    /* Phones: one row of cards that swipe sideways */
+    @media (max-width: 749px) {
+      #btf-{{ uid }} .btf__grid {
+        display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory; scroll-padding-left: 20px; -webkit-overflow-scrolling: touch;
+        margin: 0 -20px; padding: 0 20px 4px; scrollbar-width: none;
+      }
+      #btf-{{ uid }} .btf__grid::-webkit-scrollbar { display: none; }
+      #btf-{{ uid }} .btf__card { flex: 0 0 {{ section.settings.card_width }}%; scroll-snap-align: start; min-width: 0; }
+      #btf-{{ uid }} .btf__name { font-size: 16px; }
+      #btf-{{ uid }} .btf__bar { display: block; position: relative; height: 1px; margin-top: -12px; background: {{ section.settings.text_color | color_modify: 'alpha', 0.18 }}; }
+      #btf-{{ uid }} .btf__bar span { position: absolute; top: -0.5px; left: 0; height: 2px; width: 30%; background: var(--btf-text); transition: left .15s linear; }
+    }
+  {%- endif -%}
+  @media (prefers-reduced-motion: reduce) {
+    #btf-{{ uid }} .btf__media-link img, #btf-{{ uid }} .btf__add { transition: none; }
+  }
+{% endstyle %}
+
+{%- capture cart_icon -%}
+  <svg width="14" height="14" style="width:14px;height:14px;" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h16l-1.5 13h-13z"></path><path d="M7.5 9.5V6a3.5 3.5 0 0 1 7 0v3.5"></path></svg>
+{%- endcapture -%}
+
+<bt-quick-add-grid
+  id="btf-{{ uid }}"
+  data-cart-add="{{ routes.cart_add_url }}"
+  data-cart-url="{{ routes.cart_url }}"
+  data-after-add="{{ section.settings.after_add }}"
+  data-label-add="{{ section.settings.label_add | escape }}"
+  data-label-added="{{ section.settings.label_added | escape }}"
+  data-label-error="{{ section.settings.label_error | escape }}"
+>
+  <div class="btf__wrap">
+    <div class="btf__top">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="btf__eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="btf__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.text != blank -%}
+        <p class="btf__intro">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    <ul class="btf__grid" role="list">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign p = block.settings.product
+            assign label = block.settings.label
+          -%}
+          <li class="btf__card" {{ block.shopify_attributes }}>
+            {%- if p != blank -%}
+              {%- assign v = p.selected_or_first_available_variant -%}
+              {%- assign img_alt = p.featured_image.alt | default: p.title -%}
+              <div class="btf__media">
+                <a class="btf__media-link" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                  {%- if p.featured_image -%}
+                    {{
+                      p.featured_image
+                      | image_url: width: 900
+                      | image_tag: widths: '360, 540, 720, 900', sizes: '(max-width: 749px) 50vw, 25vw', alt: img_alt, loading: 'lazy'
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </a>
+                {%- if v.available -%}
+                  <button
+                    type="button"
+                    class="btf__add"
+                    data-variant-id="{{ v.id }}"
+                    aria-label="{{ section.settings.label_add | escape }}: {{ p.title | escape }}"
+                  >
+                    <span class="btf__add-text">{{ section.settings.label_add }}</span>{{ cart_icon }}
+                  </button>
+                {%- else -%}
+                  <button type="button" class="btf__add" disabled>{{ section.settings.label_sold_out }}</button>
+                {%- endif -%}
+              </div>
+              {%- if label != blank -%}
+                <div class="btf__swatch-row">
+                  <span class="btf__swatch" style="background: {{ block.settings.swatch }};"></span><span>{{ label }}</span>
+                </div>
+              {%- endif -%}
+              <a class="btf__name" href="{{ p.url }}">{{ p.title }}</a>
+              <div class="btf__price">
+                <span>{{ v.price | money }}</span>
+                {%- if section.settings.show_compare and v.compare_at_price > v.price -%}
+                  <s>{{ v.compare_at_price | money }}</s>
+                {%- endif -%}
+              </div>
+              <span class="btf__msg" role="status" aria-live="polite"></span>
+            {%- else -%}
+              <div class="btf__media">
+                <div class="btf__media-link">{{ 'product-1' | placeholder_svg_tag }}</div>
+                <button type="button" class="btf__add" disabled>{{ section.settings.label_add }}</button>
+              </div>
+              {%- if label != blank -%}
+                <div class="btf__swatch-row">
+                  <span class="btf__swatch" style="background: {{ block.settings.swatch }};"></span><span>{{ label }}</span>
+                </div>
+              {%- endif -%}
+              <span class="btf__name">Choose a product in this block</span>
+              <div class="btf__price">
+                <span>{{ 59900 | money }}</span>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- elsif section.settings.collection != blank -%}
+        {%- for p in section.settings.collection.products limit: section.settings.limit -%}
+          {%- assign v = p.selected_or_first_available_variant -%}
+          {%- assign img_alt = p.featured_image.alt | default: p.title -%}
+          <li class="btf__card">
+            <div class="btf__media">
+              <a class="btf__media-link" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                {%- if p.featured_image -%}
+                  {{
+                    p.featured_image
+                    | image_url: width: 900
+                    | image_tag: widths: '360, 540, 720, 900', sizes: '(max-width: 749px) 50vw, 25vw', alt: img_alt, loading: 'lazy'
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {%- endif -%}
+              </a>
+              {%- if v.available -%}
+                <button
+                  type="button"
+                  class="btf__add"
+                  data-variant-id="{{ v.id }}"
+                  aria-label="{{ section.settings.label_add | escape }}: {{ p.title | escape }}"
+                >
+                  <span class="btf__add-text">{{ section.settings.label_add }}</span>{{ cart_icon }}
+                </button>
+              {%- else -%}
+                <button type="button" class="btf__add" disabled>{{ section.settings.label_sold_out }}</button>
+              {%- endif -%}
+            </div>
+            <a class="btf__name" href="{{ p.url }}">{{ p.title }}</a>
+            <div class="btf__price">
+              <span>{{ v.price | money }}</span>
+              {%- if section.settings.show_compare and v.compare_at_price > v.price -%}
+                <s>{{ v.compare_at_price | money }}</s>
+              {%- endif -%}
+            </div>
+            <span class="btf__msg" role="status" aria-live="polite"></span>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+    <div class="btf__bar" aria-hidden="true"><span></span></div>
+  </div>
+</bt-quick-add-grid>
+
+<script>
+  (function () {
+    if (customElements.get('bt-quick-add-grid')) return;
+
+    class BTQuickAddGrid extends HTMLElement {
+      connectedCallback() {
+        this.onClick = this.onClick.bind(this);
+        this.addEventListener('click', this.onClick);
+        // Progress line under the swipe row on phones
+        this.grid = this.querySelector('.btf__grid');
+        this.thumb = this.querySelector('.btf__bar span');
+        this.onSwipe = this.onSwipe.bind(this);
+        if (this.grid && this.thumb) {
+          this.grid.addEventListener('scroll', this.onSwipe, { passive: true });
+          window.addEventListener('resize', this.onSwipe);
+          this.onSwipe();
+        }
+      }
+      disconnectedCallback() {
+        this.removeEventListener('click', this.onClick);
+        if (this.grid) this.grid.removeEventListener('scroll', this.onSwipe);
+        window.removeEventListener('resize', this.onSwipe);
+      }
+      onSwipe() {
+        var g = this.grid;
+        var max = g.scrollWidth - g.clientWidth;
+        var frac = g.scrollWidth > 0 ? Math.min(1, g.clientWidth / g.scrollWidth) : 1;
+        this.thumb.style.width = frac * 100 + '%';
+        this.thumb.style.left = (max > 0 ? (g.scrollLeft / max) * (1 - frac) * 100 : 0) + '%';
+      }
+      onClick(e) {
+        var btn = e.target.closest ? e.target.closest('.btf__add') : null;
+        if (!btn || btn.disabled || !btn.dataset.variantId || btn.classList.contains('is-busy')) return;
+        e.preventDefault();
+        this.add(btn);
+      }
+      setLabel(btn, text) {
+        var t = btn.querySelector('.btf__add-text');
+        if (t) t.textContent = text;
+      }
+      add(btn) {
+        var self = this;
+        var card = btn.closest('.btf__card');
+        var msg = card ? card.querySelector('.btf__msg') : null;
+        if (msg) msg.textContent = '';
+        btn.classList.add('is-busy');
+        var url = (this.dataset.cartAdd || '/cart/add') + '.js';
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            items: [{ id: Number(btn.dataset.variantId), quantity: 1 }],
+            sections: 'cart-icon-bubble,cart-drawer,cart-notification',
+          }),
+        })
+          .then(function (r) {
+            return r.json().then(function (j) {
+              return { ok: r.ok, data: j };
+            });
+          })
+          .then(function (res) {
+            btn.classList.remove('is-busy');
+            if (!res.ok) throw new Error((res.data && (res.data.description || res.data.message)) || '');
+            if (self.dataset.afterAdd === 'cart') {
+              window.location.href = self.dataset.cartUrl || '/cart';
+              return;
+            }
+            self.refreshCart(res.data);
+            btn.classList.add('is-added');
+            self.setLabel(btn, self.dataset.labelAdded || 'Added to cart');
+            clearTimeout(btn._t);
+            btn._t = setTimeout(function () {
+              btn.classList.remove('is-added');
+              self.setLabel(btn, self.dataset.labelAdd || 'Quick add');
+            }, 2400);
+          })
+          .catch(function (err) {
+            btn.classList.remove('is-busy');
+            if (msg) msg.textContent = (err && err.message) || self.dataset.labelError || 'Could not add to cart.';
+          });
+      }
+      refreshCart(data) {
+        var sections = data && data.sections;
+        if (sections && sections['cart-icon-bubble']) {
+          var bubble = document.getElementById('cart-icon-bubble');
+          if (bubble) {
+            var doc = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
+            var fresh = doc.querySelector('.shopify-section') || doc.body;
+            bubble.innerHTML = fresh.innerHTML;
+          }
+        }
+        var item = data && data.items ? data.items[0] : data;
+        ['cart:refresh', 'cart:updated', 'cart:build'].forEach(function (name) {
+          document.dispatchEvent(new CustomEvent(name, { bubbles: true, detail: { item: item } }));
+        });
+        document.dispatchEvent(new CustomEvent('ajaxProduct:added', { bubbles: true, detail: { product: item } }));
+        fetch('/cart.js')
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (cart) {
+            var counts = document.querySelectorAll('[data-cart-count], .cart-count, .cart-link__bubble-num, .site-nav__cart-bubble');
+            counts.forEach(function (el) {
+              if (el.children.length === 0) el.textContent = cart.item_count;
+            });
+          })
+          .catch(function () {});
+      }
+    }
+
+    customElements.define('bt-quick-add-grid', BTQuickAddGrid);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Gift Finishes",
+  "class": "section-bt-gift-finishes",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "The finishes" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Choose the one they’ll remember." },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Eight finishes of the Bentley 6-in-1 Stroller/Trike, from Onyx Black to the Mulliner collection."
+    },
+    { "type": "header", "content": "Products" },
+    {
+      "type": "paragraph",
+      "content": "Add a Product block for each finish. If there are no Product blocks, the grid uses the collection below."
+    },
+    { "type": "collection", "id": "collection", "label": "Collection (optional)" },
+    { "type": "range", "id": "limit", "label": "Products from collection", "min": 2, "max": 16, "step": 1, "default": 8 },
+    { "type": "checkbox", "id": "show_compare", "label": "Show compare-at price", "default": false },
+    { "type": "header", "content": "Quick add" },
+    { "type": "text", "id": "label_add", "label": "Button label", "default": "Quick add" },
+    { "type": "text", "id": "label_added", "label": "After adding", "default": "Added to cart" },
+    { "type": "text", "id": "label_sold_out", "label": "Sold out label", "default": "Sold out" },
+    { "type": "text", "id": "label_error", "label": "Error message", "default": "Sorry, that couldn’t be added. Please try again." },
+    {
+      "type": "select",
+      "id": "after_add",
+      "label": "After adding to cart",
+      "options": [
+        { "value": "stay", "label": "Stay on the page" },
+        { "value": "cart", "label": "Go to the cart page" }
+      ],
+      "default": "stay"
+    },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns on desktop", "min": 2, "max": 5, "step": 1, "default": 4 },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on phones (grid layout)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select", "id": "mobile_layout", "label": "Layout on phones",
+      "options": [
+        { "value": "swipe", "label": "Swipeable cards" },
+        { "value": "grid", "label": "Grid" }
+      ],
+      "default": "swipe"
+    },
+    { "type": "range", "id": "card_width", "label": "Card width on phones", "min": 50, "max": 90, "step": 2, "unit": "%", "default": 72, "info": "For swipeable cards. A smaller width shows more of the next card." },
+    { "type": "range", "id": "pad_top", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 120 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#a83f2f" },
+    { "type": "color", "id": "card_bg", "label": "Image background", "default": "#efe8df" },
+    { "type": "color", "id": "button_bg", "label": "Button background", "default": "#f8f4ef" },
+    { "type": "color", "id": "button_added_bg", "label": "Button hover / added", "default": "#1a1a1a" },
+    { "type": "header", "content": "Fonts" },
+    { "type": "font_picker", "id": "heading_font", "label": "Headings", "default": "playfair_display_n4" },
+    { "type": "font_picker", "id": "body_font", "label": "Body text", "default": "poppins_n4" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "label", "label": "Finish name", "default": "Onyx Black" },
+        { "type": "color", "id": "swatch", "label": "Swatch colour", "default": "#141414" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Gift Finishes",
+      "blocks": [
+        { "type": "product", "settings": { "label": "Onyx Black", "swatch": "#141414" } },
+        { "type": "product", "settings": { "label": "Mulliner Gold", "swatch": "#c6a15b" } },
+        { "type": "product", "settings": { "label": "Celeste", "swatch": "#9ec5d8" } },
+        { "type": "product", "settings": { "label": "Dragon Red", "swatch": "#a8262b" } },
+        { "type": "product", "settings": { "label": "Mandarin", "swatch": "#d9792b" } },
+        { "type": "product", "settings": { "label": "Cool Stone", "swatch": "#c9c3bb" } },
+        { "type": "product", "settings": { "label": "Jetstream Blue", "swatch": "#2a4d8f" } },
+        { "type": "product", "settings": { "label": "Fuchsia Pink", "swatch": "#d14f8a" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
