@@ -47,10 +47,373 @@
         "body_font": "poppins_n4",
         "z_index": 60
       }
+    },
+    "gift_hero_QaiRYa": {
+      "type": "gift-hero",
+      "blocks": {
+        "intro_AHGHCC": {
+          "type": "intro",
+          "settings": {
+            "text_position": "right",
+            "shade": 55,
+            "heading_size": 52,
+            "heading_size_mobile": 28,
+            "text_on_phones": true,
+            "eyebrow": "A first birthday, considered",
+            "heading": "One year in. A lifetime of <em>firsts</em> ahead.",
+            "text": "Most first-birthday gifts are outgrown by the second. The Bentley 6-in-1 Stroller/Trike is designed to change with them — from the first walk you take together to the day they pedal off on their own.",
+            "hint": "Scroll to begin"
+          }
+        },
+        "milestone_z9fGdY": {
+          "type": "milestone",
+          "settings": {
+            "age": "10–12 Months",
+            "title": "The First Steps",
+            "text": "For the first-birthday walk, <strong>full stroller mode with a parent push handle</strong> — you steer, they take in the view.",
+            "meta": "Onyx Black · $599",
+            "button_label": "Discover the Onyx Black",
+            "button_link": ""
+          }
+        },
+        "milestone_gX66E4": {
+          "type": "milestone",
+          "settings": {
+            "age": "12–18 Months",
+            "title": "The First Outings",
+            "text": "Canopy up, footrest down. <strong>Long afternoons out</strong>, from a seat that feels like the front row.",
+            "meta": "Mulliner Gold · $799",
+            "button_label": "Explore the Mulliner",
+            "button_link": ""
+          }
+        },
+        "milestone_eBbym7": {
+          "type": "milestone",
+          "settings": {
+            "age": "18–24 Months",
+            "title": "The First Pedals",
+            "text": "As little legs find their rhythm, <strong>the pedals come into play</strong> — your hand never far from the handle.",
+            "meta": "Mulliner Celeste · $799",
+            "button_label": "Choose Celeste",
+            "button_link": ""
+          }
+        },
+        "milestone_t7M7bc": {
+          "type": "milestone",
+          "settings": {
+            "age": "2–3 Years",
+            "title": "The First Solo Ride",
+            "text": "Handle off, guard bar away. <strong>The Trike becomes entirely theirs.</strong>",
+            "meta": "Dragon Red · $599",
+            "button_label": "Make it theirs",
+            "button_link": ""
+          }
+        },
+        "milestone_hPzaFW": {
+          "type": "milestone",
+          "settings": {
+            "age": "3+ Years",
+            "title": "The First Drive",
+            "text": "When the Trike is outgrown, <strong>an officially licensed Bentley Mulsanne Ride-On</strong> is waiting.",
+            "meta": "Mulsanne Electric Ride-On · $419",
+            "button_label": "Meet the Ride-On",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "intro_AHGHCC",
+        "milestone_z9fGdY",
+        "milestone_gX66E4",
+        "milestone_eBbym7",
+        "milestone_t7M7bc",
+        "milestone_hPzaFW"
+      ],
+      "name": "BT Gift Hero",
+      "settings": {
+        "kicker": "The 1st Birthday Gift Guide",
+        "scroll_label": "Scroll to turn",
+        "scroll_per_step": 640,
+        "wheel_size": 75,
+        "label_spacing": 24,
+        "snap": true,
+        "max_height": 900,
+        "max_height_mobile": 1000,
+        "scroll_per_step_mobile": 360,
+        "wheel_size_mobile": 85,
+        "header_space": 128,
+        "header_space_mobile": 72,
+        "auto_header_offset": false,
+        "header_offset": 0,
+        "text_color": "#ffffff",
+        "title_fade": "#d9d0c5",
+        "line_color": "#ffffff",
+        "button_hover_text": "#1a1a1a",
+        "stage_bg": "#1a1a1a",
+        "overlay": 40,
+        "ms_blur": 10,
+        "ms_dark": 20,
+        "arc_labels": "age",
+        "label_range": "1",
+        "title_size": 64,
+        "show_meta": false,
+        "hide_kicker": true,
+        "heading_font": "playfair_display_n4",
+        "body_font": "poppins_n4"
+      }
+    },
+    "gift_end_PJNVdX": {
+      "type": "gift-end",
+      "blocks": {
+        "product_7cRYpT": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "label": "Onyx Black",
+            "swatch": "#141414"
+          }
+        },
+        "product_anVjHw": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "label": "Mulliner Gold",
+            "swatch": "#c6a15b"
+          }
+        },
+        "product_KADhcM": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "label": "Celeste",
+            "swatch": "#9ec5d8"
+          }
+        },
+        "product_VjjDHW": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "label": "Dragon Red",
+            "swatch": "#a8262b"
+          }
+        }
+      },
+      "block_order": [
+        "product_7cRYpT",
+        "product_anVjHw",
+        "product_KADhcM",
+        "product_VjjDHW"
+      ],
+      "name": "BT Gift Finishes",
+      "settings": {
+        "eyebrow": "The finishes",
+        "heading": "Choose the one they’ll remember.",
+        "text": "Eight finishes of the Bentley 6-in-1 Stroller/Trike, from Onyx Black to the Mulliner collection.",
+        "collection": "",
+        "limit": 8,
+        "show_compare": false,
+        "label_add": "Quick add",
+        "label_added": "Added to cart",
+        "label_sold_out": "Sold out",
+        "label_error": "Sorry, that couldn’t be added. Please try again.",
+        "after_add": "stay",
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "mobile_layout": "swipe",
+        "card_width": 72,
+        "pad_top": 120,
+        "pad_bottom": 120,
+        "bg": "#f8f4ef",
+        "text_color": "#1a1a1a",
+        "accent": "#a83f2f",
+        "card_bg": "#efe8df",
+        "button_bg": "#f8f4ef",
+        "button_added_bg": "#1a1a1a",
+        "heading_font": "playfair_display_n4",
+        "body_font": "poppins_n4"
+      }
+    },
+    "gift_review_9VaLp4": {
+      "type": "gift-review",
+      "blocks": {
+        "review_aNtYyX": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "It has turned our daily walks into a cherished routine.",
+            "text": "“We really enjoy our Bentley trike. Beyond its performance, it’s a total head-turner with craftsmanship that truly stands out.”",
+            "author": "Raquel L.",
+            "role": "Bentley Trike owner"
+          }
+        },
+        "review_bRwwRY": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "A fantastic gift that combines style, fun, and comfort.",
+            "text": "“I bought this beautiful green Bentley car for my son and it has been an absolute joy! Highly recommend!”",
+            "author": "Irina D.",
+            "role": "Bentley Ride-On owner"
+          }
+        },
+        "review_Jq39E9": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "So rich and classy — I get so many compliments.",
+            "text": "“Absolutely love this product. I wish I could afford a Bentley, but my daughter definitely can with this stroller!”",
+            "author": "Autumn R.",
+            "role": "Bentley Trike owner"
+          }
+        }
+      },
+      "block_order": [
+        "review_aNtYyX",
+        "review_bRwwRY",
+        "review_Jq39E9"
+      ],
+      "name": "BT Gift Reviews",
+      "settings": {
+        "heading": "In their words",
+        "label": "Notes from Bentley Trike families",
+        "autoplay": 7,
+        "height": 860,
+        "blur": 28,
+        "overlay": 40,
+        "text_color": "#ffffff",
+        "bg": "#1a1a1a",
+        "heading_font": "playfair_display_n4",
+        "body_font": "poppins_n4"
+      }
+    },
+    "accordion_content_c9BCRa": {
+      "type": "accordion-content",
+      "blocks": {
+        "item_gHxeGT": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "Question 1",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_D698pW": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "Question 2",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        },
+        "item_eQD9zq": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "icon_width": 20,
+            "title": "Question 3",
+            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_gHxeGT",
+        "item_D698pW",
+        "item_eQD9zq"
+      ],
+      "name": "Accordion content",
+      "settings": {
+        "full_width": true,
+        "subheading": "",
+        "title": "Heading",
+        "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+        "button_text": "",
+        "button_url": "",
+        "text_position": "start",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "heading_color": "",
+        "heading_gradient": "",
+        "button_background": "",
+        "button_text_color": "",
+        "accordion_background": "",
+        "accordion_text_color": ""
+      }
+    },
+    "git_banner_p8PnhA": {
+      "type": "git-banner",
+      "name": "BT Gift Banner",
+      "settings": {
+        "image_alt": "",
+        "overlay": 30,
+        "eyebrow": "The chapter after the Trike",
+        "heading": "Then comes the <em>first drive.</em>",
+        "body": "Officially licensed Bentley Electric Ride-On Cars, for the birthdays still to come.",
+        "button_label": "Explore the Ride-On Cars",
+        "button_link": "",
+        "height": 640,
+        "height_mobile": 560,
+        "v_align": "flex-end",
+        "h_align": "flex-start",
+        "text_align": "left",
+        "text": "#ffffff",
+        "button_hover_text": "#1a1a1a",
+        "heading_font": "playfair_display_n4",
+        "body_font": "poppins_n4"
+      }
+    },
+    "closing_cta_9kF4dh": {
+      "type": "closing-cta",
+      "name": "BT Closing CTA",
+      "settings": {
+        "show_countdown": true,
+        "countdown_prefix": "This page closes in",
+        "offer_end": "2026-11-6 23:59",
+        "label": "Private offer",
+        "heading": "Some deals are shared. | This one is <em>Whispered</em>.",
+        "text": "",
+        "button_label": "Claim my free car",
+        "button_link": "",
+        "min_height": 420,
+        "c_bg": "#00221c",
+        "c_text": "#ffffff",
+        "c_label": "#d9d0c5",
+        "c_btn_bg": "#a83f2f",
+        "c_btn_text": "#ffffff"
+      }
+    },
+    "newsletter_ik3UbJ": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "full_width": true,
+        "show_icon": true,
+        "title": "Newsletter",
+        "content": "<p>Write something about what your customers will receive by subscribing to your newsletter.</p>",
+        "button_text": "Subscribe",
+        "subtext": "",
+        "background": "",
+        "background_gradient": "",
+        "text_color": "",
+        "button_background": "",
+        "button_text_color": ""
+      }
     }
   },
   "order": [
     "main",
-    "gift_sticky_Kqfay7"
+    "gift_sticky_Kqfay7",
+    "gift_hero_QaiRYa",
+    "gift_end_PJNVdX",
+    "gift_review_9VaLp4",
+    "accordion_content_c9BCRa",
+    "git_banner_p8PnhA",
+    "closing_cta_9kF4dh",
+    "newsletter_ik3UbJ"
   ]
 }
