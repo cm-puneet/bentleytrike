@@ -1,0 +1,1690 @@
+{%- comment -%}
+  BT Gift Hero — scroll-locked orbital milestone wheel.
+  Blocks play in the order they are arranged: the Intro, Text slides and Descriptions
+  each take one scroll step as a full-screen text view; each Milestone turns the arc to the next age, swapping the
+  background photo and the copy.
+{%- endcomment -%}
+{%- liquid
+  assign uid = section.id | replace: '_', '' | downcase
+  assign intro = null
+  assign ms_count = 0
+  assign phase_count = 0
+  assign first_kind = ''
+  for b in section.blocks
+    if b.type == 'intro' or b.type == 'statement' or b.type == 'description' or b.type == 'milestone'
+      if phase_count == 0
+        assign first_kind = b.type
+      endif
+      assign phase_count = phase_count | plus: 1
+    endif
+    if b.type == 'intro' and intro == null
+      assign intro = b
+    elsif b.type == 'milestone'
+      assign ms_count = ms_count | plus: 1
+    endif
+  endfor
+  assign first_is_text = false
+  if first_kind == 'intro' or first_kind == 'statement' or first_kind == 'description'
+    assign first_is_text = true
+  endif
+
+  assign hf = section.settings.heading_font
+  assign hfi = hf | font_modify: 'style', 'italic'
+  assign bf = section.settings.body_font
+  assign bfb = bf | font_modify: 'weight', 'bold'
+  assign overlay = section.settings.overlay | divided_by: 100.0
+-%}
+
+{% style %}
+  {{ hf | font_face: font_display: 'swap' }}
+  {%- if hfi -%}{{ hfi | font_face: font_display: 'swap' }}{%- endif -%}
+  {{ bf | font_face: font_display: 'swap' }}
+  {%- if bfb -%}{{ bfb | font_face: font_display: 'swap' }}{%- endif -%}
+
+  #bth-{{ uid }} {
+    --bth-head: {{ hf.family }}, {{ hf.fallback_families }};
+    --bth-body: {{ bf.family }}, {{ bf.fallback_families }};
+    --bth-text: {{ section.settings.text_color }};
+    --bth-line: {{ section.settings.line_color }};
+    --bth-btn-bg-hover: {{ section.settings.text_color }};
+    --bth-btn-text-hover: {{ section.settings.button_hover_text }};
+    --bth-stage-bg: {{ section.settings.stage_bg }};
+    --bth-overlay: {{ overlay }};
+    --bth-maxh: {{ section.settings.max_height }}px;
+    --bth-maxh-m: {{ section.settings.max_height_mobile }}px;
+    --bth-title-size: {{ section.settings.title_size }}px;
+    --bth-wheel: {{ section.settings.wheel_size | divided_by: 100.0 }};
+    --bth-wheel-m: {{ section.settings.wheel_size_mobile | divided_by: 100.0 }};
+    --bth-top: {{ section.settings.header_space }}px;
+    --bth-msblur: {{ section.settings.ms_blur }}px;
+    --bth-msdark: {{ section.settings.ms_dark | divided_by: 100.0 }};
+    display: block;
+    position: relative;
+    color: var(--bth-text);
+    font-family: var(--bth-body);
+  }
+  #bth-{{ uid }} .bth__pin { position: relative; background: var(--bth-stage-bg); }
+  #bth-{{ uid }} .bth__stage {
+    position: sticky; top: 0; overflow: hidden; box-sizing: border-box;
+    height: min(100vh, var(--bth-maxh)); min-height: 520px;
+    background: var(--bth-stage-bg);
+    --rw: calc(min(76vw, 1120px, var(--rw-fit, 1120px)) * var(--bth-wheel, 1));
+  }
+  #bth-{{ uid }} .bth__bgl { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+  #bth-{{ uid }} .bth__bgl:first-child { opacity: 1; }
+  #bth-{{ uid }} .bth__bgl--ms img,
+  #bth-{{ uid }} .bth__bgl--ms svg { filter: blur(var(--bth-msblur)); transform: scale(1.1); }
+  #bth-{{ uid }} .bth__bgl--ms::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0, var(--bth-msdark)); }
+  #bth-{{ uid }} .bth__bgl picture { position: absolute; inset: 0; display: block; }
+  #bth-{{ uid }} .bth__bgl img,
+  #bth-{{ uid }} .bth__bgl svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #bth-{{ uid }} .bth__bgl img { object-position: var(--fp-d, 50% 50%); }
+  #bth-{{ uid }} .bth__bgl svg { background: #3a332c; fill: rgba(255,255,255,.15); }
+  #bth-{{ uid }} .bth__shade {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg,
+      rgba(0,0,0, calc(var(--bth-overlay) + .12)) 0%,
+      rgba(0,0,0, calc(var(--bth-overlay) * .5)) 45%,
+      rgba(0,0,0, calc(var(--bth-overlay) + .18)) 100%);
+  }
+  #bth-{{ uid }} .bth__kicker {
+    position: absolute; top: calc(24px + var(--bth-top)); left: 0; right: 0; margin: 0; text-align: center;
+    font-size: 10px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; opacity: .88;
+  }
+
+  /* Intro (phase 1) */
+  /* Shade behind the intro text, on the side the text sits */
+  #bth-{{ uid }} .bth__scrim { position: absolute; inset: 0; pointer-events: none; }
+  #bth-{{ uid }} .bth__scrim[data-pos="left"] { background: linear-gradient(90deg, rgba(0,0,0, var(--bth-scrim)) 0%, rgba(0,0,0, calc(var(--bth-scrim) * .55)) 32%, rgba(0,0,0,0) 60%); }
+  #bth-{{ uid }} .bth__scrim[data-pos="right"] { background: linear-gradient(270deg, rgba(0,0,0, var(--bth-scrim)) 0%, rgba(0,0,0, calc(var(--bth-scrim) * .55)) 32%, rgba(0,0,0,0) 60%); }
+  #bth-{{ uid }} .bth__scrim[data-pos="bottom"] { background: linear-gradient(0deg, rgba(0,0,0, var(--bth-scrim)) 0%, rgba(0,0,0, calc(var(--bth-scrim) * .5)) 28%, rgba(0,0,0,0) 55%); }
+  #bth-{{ uid }} .bth__scrim[data-pos="center"] { background: radial-gradient(ellipse 55% 45% at 50% 52%, rgba(0,0,0, calc(var(--bth-scrim) * .8)), rgba(0,0,0,0)); }
+
+  #bth-{{ uid }} .bth__intro {
+    position: absolute; box-sizing: border-box;
+    display: flex; flex-direction: column; gap: 18px;
+    --bth-side: clamp(24px, 6vw, 104px);
+  }
+  #bth-{{ uid }} .bth__intro[data-pos="left"],
+  #bth-{{ uid }} .bth__intro[data-pos="right"] {
+    top: calc(50% + var(--bth-top) / 2); transform: translateY(-50%); width: min(420px, 34%);
+  }
+  #bth-{{ uid }} .bth__intro[data-pos="left"] { left: var(--bth-side); align-items: flex-start; text-align: left; }
+  #bth-{{ uid }} .bth__intro[data-pos="right"] { right: var(--bth-side); align-items: flex-end; text-align: right; }
+  #bth-{{ uid }} .bth__intro[data-pos="bottom"] {
+    left: var(--bth-side); bottom: 92px; width: min(620px, calc(100% - 48px)); align-items: flex-start; text-align: left;
+  }
+  #bth-{{ uid }} .bth__intro[data-pos="center"] {
+    left: 50%; top: calc(50% + var(--bth-top) / 2); transform: translate(-50%, -50%);
+    width: min(680px, calc(100% - 40px)); align-items: center; text-align: center;
+  }
+  #bth-{{ uid }} .bth__eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; opacity: .9; }
+  #bth-{{ uid }} .bth__intro-heading {
+    margin: 0; font-family: var(--bth-head); font-weight: 400;
+    font-size: clamp(34px, 4.4vw, var(--bth-intro-size)); line-height: 1.06; letter-spacing: -.005em; color: var(--bth-text);
+  }
+  #bth-{{ uid }} .bth__intro-text { margin: 0; max-width: 400px; font-size: 15px; line-height: 1.7; opacity: .88; }
+  #bth-{{ uid }} .bth__hint {
+    position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; opacity: .85;
+  }
+
+  /* Milestone copy */
+  #bth-{{ uid }} .bth__head {
+    position: absolute; left: 50%; top: calc(60px + var(--bth-top)); width: min(760px, calc(100% - 40px));
+    transform: translateX(-50%); display: grid; text-align: center;
+  }
+  #bth-{{ uid }} .bth__copy {
+    grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; gap: 12px;
+    opacity: 0; visibility: hidden;
+  }
+  #bth-{{ uid }} .bth__age { font-size: clamp(20px, 1.8vw, 28px); line-height: 1.2; letter-spacing: .02em; }
+  #bth-{{ uid }} .bth__title {
+    margin: 0; font-family: var(--bth-head); font-style: italic; font-weight: 400;
+    font-size: clamp(40px, 4.8vw, var(--bth-title-size, 64px)); line-height: 1.02; letter-spacing: -.005em; padding: 0 .06em;
+    background: linear-gradient(180deg, var(--bth-text) 35%, {{ section.settings.title_fade }} 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  #bth-{{ uid }} .bth__text { margin: 8px 0 0; max-width: 470px; font-size: 15px; line-height: 1.6; opacity: .9; }
+  #bth-{{ uid }} .bth__text strong { font-weight: 700; }
+  #bth-{{ uid }} .bth__meta { font-size: 12px; letter-spacing: .08em; opacity: .85; }
+  #bth-{{ uid }} .bth__btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    min-height: 48px; padding: 0 30px; margin-top: 8px; box-sizing: border-box;
+    color: var(--bth-text); text-decoration: none; background: transparent;
+    box-shadow: inset 0 0 0 1px var(--bth-line);
+    font-family: var(--bth-body); font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    transition: background .35s ease, color .35s ease;
+  }
+  #bth-{{ uid }} .bth__intro .bth__btn { margin-top: 6px; }
+  /* Description block: longer text, several paragraphs */
+  #bth-{{ uid }} .bth__bgcolour { position: absolute; inset: 0; }
+  #bth-{{ uid }} .bth__intro--desc { gap: 16px; }
+  #bth-{{ uid }} .bth__intro--desc[data-pos="center"] { width: min(var(--bth-desc-w, 640px), calc(100% - 40px)); }
+  #bth-{{ uid }} .bth__intro--desc[data-pos="left"],
+  #bth-{{ uid }} .bth__intro--desc[data-pos="right"] { width: min(var(--bth-desc-w, 640px), 46%); }
+  #bth-{{ uid }} .bth__desc-body { max-width: none; font-size: var(--bth-desc-size, 16px); line-height: 1.75; opacity: .9; }
+  #bth-{{ uid }} .bth__desc-body p { margin: 0 0 .9em; }
+  #bth-{{ uid }} .bth__desc-body p:last-child { margin-bottom: 0; }
+  #bth-{{ uid }} .bth__desc-body a { color: inherit; text-underline-offset: 3px; }
+  #bth-{{ uid }} .bth__desc-body strong { font-weight: 700; }
+  #bth-{{ uid }} .bth__btn:hover { background: var(--bth-btn-bg-hover); color: var(--bth-btn-text-hover); }
+
+  /* The arc */
+  #bth-{{ uid }} .bth__ring {
+    position: absolute; left: 50%; width: var(--rw); aspect-ratio: 1 / 1;
+    bottom: calc(var(--rw) * -0.64); transform: translateX(-50%);
+  }
+  #bth-{{ uid }} .bth__wheel { position: absolute; inset: 0; }
+  #bth-{{ uid }} .bth__circle { position: absolute; inset: 0; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--bth-line); opacity: .6; }
+  #bth-{{ uid }} .bth__spoke { position: absolute; inset: 0; pointer-events: none; transform: rotate(var(--deg)); }
+  #bth-{{ uid }} .bth__label {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 2px; white-space: nowrap; text-align: center;
+  }
+  #bth-{{ uid }} .bth__label-age { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+  #bth-{{ uid }} .bth__label-name { font-family: var(--bth-head); font-style: italic; font-size: 15px; letter-spacing: .01em; }
+  #bth-{{ uid }} .bth__dot {
+    position: absolute; top: -6px; left: 50%; margin-left: -6px; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bth-text); box-shadow: 0 0 0 7px rgba(255,255,255,.16);
+  }
+
+  #bth-{{ uid }} .bth__corner {
+    position: absolute; bottom: 30px; display: inline-flex; align-items: center; gap: 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; opacity: .85;
+  }
+  #bth-{{ uid }} .bth__corner--l { left: clamp(20px, 4vw, 64px); }
+  #bth-{{ uid }} .bth__corner--r { right: clamp(20px, 4vw, 64px); }
+  #bth-{{ uid }} .bth__num { font-family: var(--bth-head); font-style: italic; font-weight: 400; font-size: 22px; letter-spacing: 0; text-transform: none; }
+  #bth-{{ uid }} .bth__fade { opacity: 0; }
+  {%- unless first_is_text -%}
+    #bth-{{ uid }} .bth__fade { opacity: 1; }
+  {%- endunless -%}
+
+  /* Shorter laptop screens: a slightly tighter text block */
+  @media (min-width: 750px) and (max-height: 860px) {
+    #bth-{{ uid }} .bth__copy { gap: 8px; }
+    #bth-{{ uid }} .bth__age { font-size: 20px; }
+    #bth-{{ uid }} .bth__title { font-size: clamp(38px, 4.2vw, calc(var(--bth-title-size, 64px) * .85)); }
+    #bth-{{ uid }} .bth__text { margin-top: 4px; font-size: 14px; }
+    #bth-{{ uid }} .bth__btn { min-height: 44px; margin-top: 4px; }
+  }
+  @media (max-width: 749px) {
+    #bth-{{ uid }} .bth__stage { --rw: calc(min(185vw, 720px, var(--rw-fit, 720px)) * var(--bth-wheel-m, 1)); height: min(100vh, var(--bth-maxh-m)); min-height: 420px; }
+    #bth-{{ uid }} .bth__ring { bottom: calc(var(--rw) * -0.58); }
+    #bth-{{ uid }} .bth__stage { --bth-top: {{ section.settings.header_space_mobile }}px; }
+    #bth-{{ uid }} .bth__kicker { top: calc(20px + var(--bth-top)); font-size: 9px; }
+    #bth-{{ uid }} .bth__head { top: calc(52px + var(--bth-top)); }
+    #bth-{{ uid }} .bth__age { font-size: 19px; }
+    #bth-{{ uid }} .bth__title { font-size: min(40px, var(--bth-title-size, 64px)); line-height: 1.04; }
+    #bth-{{ uid }} .bth__text { font-size: 14px; }
+    /* Phones: the subject usually fills the middle, so the intro always sits at the bottom */
+    #bth-{{ uid }} .bth__intro[data-pos] {
+      left: 20px; right: 20px; top: auto; bottom: 76px; transform: none; width: auto;
+      align-items: flex-start; text-align: left; gap: 12px;
+    }
+    #bth-{{ uid }} .bth__scrim[data-pos] { background: linear-gradient(0deg, rgba(0,0,0, var(--bth-scrim)) 0%, rgba(0,0,0, calc(var(--bth-scrim) * .55)) 35%, rgba(0,0,0,0) 62%); }
+    #bth-{{ uid }} .bth__bgl img { object-position: var(--fp-m, 50% 50%); }
+    #bth-{{ uid }} .bth__intro-heading { font-size: var(--bth-intro-size-m, 28px); line-height: 1.08; }
+    #bth-{{ uid }} .bth__intro-text { font-size: 13px; line-height: 1.55; max-width: 34ch; }
+    #bth-{{ uid }} .bth__eyebrow { font-size: 9px; letter-spacing: .24em; }
+    #bth-{{ uid }} .bth__intro--hide-text-m .bth__intro-text { display: none; }
+    /* Description on phones: centred in the screen, not pinned to the bottom */
+    /* Description on phones: bottom (default), middle or top */
+    #bth-{{ uid }} .bth__intro--desc[data-pos-m="middle"] { top: 50%; bottom: auto; transform: translateY(-50%); }
+    #bth-{{ uid }} .bth__intro--desc[data-pos-m="top"] { top: calc(var(--bth-top) + 48px); bottom: auto; transform: none; }
+    #bth-{{ uid }} .bth__intro--desc[data-align-m="center"] { align-items: center; text-align: center; }
+    #bth-{{ uid }} .bth__scrim[data-pos-m="top"] { background: linear-gradient(180deg, rgba(0,0,0, var(--bth-scrim)) 0%, rgba(0,0,0, calc(var(--bth-scrim) * .55)) 38%, rgba(0,0,0,0) 65%); }
+    #bth-{{ uid }} .bth__scrim[data-pos-m="middle"] { background: rgba(0,0,0, calc(var(--bth-scrim) * .6)); }
+    #bth-{{ uid }} .bth__desc-body { font-size: max(13px, calc(var(--bth-desc-size, 16px) - 2px)); line-height: 1.65; max-width: none; }
+    #bth-{{ uid }} .bth__hint { bottom: 24px; }
+    #bth-{{ uid }} .bth__label-name { font-size: 13px; }
+    #bth-{{ uid }} .bth__corner--l { left: 20px; bottom: 24px; font-size: 9px; gap: 8px; }
+    #bth-{{ uid }} .bth__corner--r { right: 20px; bottom: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #bth-{{ uid }} .bth__btn { transition: none; }
+  }
+{% endstyle %}
+
+<bt-orbital-hero
+  id="bth-{{ uid }}"
+  data-step="{{ section.settings.scroll_per_step }}"
+  data-step-mobile="{{ section.settings.scroll_per_step_mobile }}"
+  data-deg="{{ section.settings.label_spacing }}"
+  data-snap="{{ section.settings.snap }}"
+  data-label-range="{{ section.settings.label_range }}"
+  data-hide-kicker="{{ section.settings.hide_kicker }}"
+  data-auto-offset="{{ section.settings.auto_header_offset }}"
+  data-offset="{{ section.settings.header_offset }}"
+  data-has-intro="{% if first_is_text %}true{% else %}false{% endif %}"
+>
+  <div class="bth__pin">
+    <div class="bth__stage">
+      {%- comment -%} One background per phase, in block order {%- endcomment -%}
+      <div aria-hidden="true">
+        {%- assign last_bg = null -%}
+        {%- assign last_m = null -%}
+        {%- assign k = 0 -%}
+        {%- for b in section.blocks -%}
+          {%- if b.type == 'intro' or b.type == 'statement' or b.type == 'description' or b.type == 'milestone' -%}
+            {%- liquid
+              # A plain-colour Description leaves the carried-over photo alone
+              assign desc_colour = false
+              if b.type == 'description' and b.settings.bg_style == 'colour'
+                assign desc_colour = true
+              endif
+              unless desc_colour
+                if b.settings.background
+                  assign last_bg = b.settings.background
+                  assign last_m = b.settings.background_mobile | default: b.settings.background
+                elsif b.settings.background_mobile
+                  assign last_m = b.settings.background_mobile
+                endif
+              endunless
+              assign kind = 'text'
+              if b.type == 'milestone'
+                assign kind = 'ms'
+              endif
+            -%}
+            <div class="bth__bgl{% if kind == 'ms' %} bth__bgl--ms{% endif %}" data-kind="{{ kind }}">
+              {%- if b.type == 'description' and b.settings.bg_style == 'colour' -%}
+                <div class="bth__bgcolour" style="background: {{ b.settings.bg_colour }};"></div>
+              {%- elsif last_bg or last_m -%}
+                {%- assign d_img = last_bg | default: last_m -%}
+                {%- assign fp_d = d_img.presentation.focal_point | default: '50% 50%' -%}
+                {%- assign fp_m = last_m.presentation.focal_point | default: fp_d -%}
+                {%- assign bg_style = '--fp-d: ' | append: fp_d | append: '; --fp-m: ' | append: fp_m | append: ';' -%}
+                <picture>
+                  {%- if last_m and last_m != d_img -%}
+                    <source media="(max-width: 749px)" srcset="{{ last_m | image_url: width: 600 }} 600w, {{ last_m | image_url: width: 900 }} 900w, {{ last_m | image_url: width: 1300 }} 1300w" sizes="100vw">
+                  {%- endif -%}
+                  {%- if k == 0 -%}
+                    {{ d_img | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: '', loading: 'eager', fetchpriority: 'high', style: bg_style }}
+                  {%- else -%}
+                    {{ d_img | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: '', loading: 'lazy', style: bg_style }}
+                  {%- endif -%}
+                </picture>
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag }}
+              {%- endif -%}
+            </div>
+            {%- assign k = k | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="bth__shade" aria-hidden="true"></div>
+
+      {%- if section.settings.kicker != blank -%}
+        <p class="bth__kicker"{% if first_is_text %} style="opacity: 0;"{% endif %}>{{ section.settings.kicker }}</p>
+      {%- endif -%}
+
+      {%- comment -%} Text slides: the Intro and any Text slide blocks, each at its place in the order {%- endcomment -%}
+      {%- assign k = 0 -%}
+      {%- for b in section.blocks -%}
+        {%- if b.type == 'intro' or b.type == 'statement' or b.type == 'description' -%}
+          {%- liquid
+            assign ipos = b.settings.text_position | default: 'right'
+            assign iscrim = b.settings.shade | divided_by: 100.0
+            assign is_desc = false
+            if b.type == 'description'
+              assign is_desc = true
+              if b.settings.bg_style == 'colour'
+                assign iscrim = 0
+              endif
+            endif
+          -%}
+          {%- liquid
+            assign ipos_m = 'bottom'
+            assign ialign_m = 'left'
+            if is_desc
+              assign ipos_m = b.settings.text_position_mobile | default: 'bottom'
+              assign ialign_m = b.settings.text_align_mobile | default: 'left'
+            endif
+          -%}
+          <div class="bth__scrim" data-pos="{{ ipos }}" data-pos-m="{{ ipos_m }}" data-phase="{{ k }}" style="--bth-scrim: {{ iscrim }};{% if k > 0 %} opacity: 0;{% endif %}" aria-hidden="true"></div>
+          <div
+            class="bth__intro{% if is_desc %} bth__intro--desc{% endif %}{% if b.settings.text_on_phones == false %} bth__intro--hide-text-m{% endif %}"
+            data-pos="{{ ipos }}"
+            data-pos-m="{{ ipos_m }}"
+            data-align-m="{{ ialign_m }}"
+            data-phase="{{ k }}"
+            data-block-id="{{ b.id }}"
+            style="--bth-intro-size: {{ b.settings.heading_size }}px; --bth-intro-size-m: {{ b.settings.heading_size_mobile }}px;{% if is_desc %} --bth-desc-size: {{ b.settings.body_size }}px; --bth-desc-w: {{ b.settings.body_width }}px;{% if b.settings.copy_colour != blank %} color: {{ b.settings.copy_colour }}; --bth-text: {{ b.settings.copy_colour }};{% endif %}{% endif %}{% if k > 0 %} opacity: 0; visibility: hidden;{% endif %}"
+            {{ b.shopify_attributes }}
+          >
+            {%- if b.settings.eyebrow != blank -%}
+              <span class="bth__eyebrow">{{ b.settings.eyebrow }}</span>
+            {%- endif -%}
+            {%- if b.settings.heading != blank -%}
+              <h2 class="bth__intro-heading">{{ b.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if is_desc -%}
+              {%- if b.settings.body != blank -%}
+                <div class="bth__intro-text bth__desc-body">{{ b.settings.body }}</div>
+              {%- endif -%}
+            {%- elsif b.settings.text != blank -%}
+              <p class="bth__intro-text">{{ b.settings.text }}</p>
+            {%- endif -%}
+            {%- if b.type != 'intro' and b.settings.button_label != blank -%}
+              <a class="bth__btn" href="{{ b.settings.button_link | default: '#' }}">
+                {{- b.settings.button_label -}}
+                <svg width="16" height="8" viewBox="0 0 16 8" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                  <path d="M0 4h15M11.5 .5 15 4l-3.5 3.5"></path>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+          {%- if b.type == 'intro' and b.settings.hint != blank -%}
+            <span class="bth__hint" data-phase="{{ k }}">
+              <svg width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                <rect x=".6" y=".6" width="12.8" height="18.8" rx="6.4"></rect><path d="M7 5v4"></path>
+              </svg>
+              {{ b.settings.hint }}
+            </span>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if b.type == 'intro' or b.type == 'statement' or b.type == 'description' or b.type == 'milestone' -%}
+          {%- assign k = k | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Milestone copy, stacked; the script fades between them {%- endcomment -%}
+      <div class="bth__head">
+        {%- assign k = 0 -%}
+        {%- for b in section.blocks -%}
+          {%- if b.type == 'milestone' -%}
+            {%- assign btn_link = b.settings.button_link -%}
+            {%- assign meta = b.settings.meta -%}
+            <div class="bth__copy" data-block-id="{{ b.id }}" data-phase="{{ k }}" {{ b.shopify_attributes }}>
+              {%- if b.settings.age != blank -%}
+                <span class="bth__age">{{ b.settings.age }}</span>
+              {%- endif -%}
+              <h2 class="bth__title">{{ b.settings.title }}</h2>
+              {%- if b.settings.text != blank -%}
+                <p class="bth__text">{{ b.settings.text }}</p>
+              {%- endif -%}
+              {%- if b.settings.button_label != blank -%}
+                <a class="bth__btn" href="{{ btn_link | default: '#' }}">
+                  {{- b.settings.button_label -}}
+                  <svg width="16" height="8" viewBox="0 0 16 8" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                    <path d="M0 4h15M11.5 .5 15 4l-3.5 3.5"></path>
+                  </svg>
+                </a>
+              {%- endif -%}
+              {%- if meta != blank and section.settings.show_meta -%}
+                <span class="bth__meta">{{ meta }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if b.type == 'intro' or b.type == 'statement' or b.type == 'description' or b.type == 'milestone' -%}
+            {%- assign k = k | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} The arc {%- endcomment -%}
+      <div class="bth__ring bth__fade" aria-hidden="true">
+        <div class="bth__wheel">
+          <div class="bth__circle"></div>
+          {%- assign i = 0 -%}
+          {%- for b in section.blocks -%}
+            {%- if b.type == 'milestone' -%}
+              {%- assign deg = i | times: section.settings.label_spacing -%}
+              <div class="bth__spoke" style="--deg: {{ deg }}deg;">
+                <div class="bth__label">
+                  {%- if section.settings.arc_labels != 'name' and b.settings.age != blank -%}
+                    <span class="bth__label-age">{{ b.settings.age }}</span>
+                  {%- endif -%}
+                  {%- if section.settings.arc_labels != 'age' -%}
+                    <span class="bth__label-name">{{ b.settings.title }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+              {%- assign i = i | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <span class="bth__dot"></span>
+      </div>
+
+      <span class="bth__corner bth__corner--l"{% if first_is_text and intro and intro.settings.hint != blank %} style="opacity: 0;"{% endif %}>
+        <svg width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+          <rect x=".6" y=".6" width="12.8" height="18.8" rx="6.4"></rect><path d="M7 5v4"></path>
+        </svg>
+        {{ section.settings.scroll_label }}
+      </span>
+      <span class="bth__corner bth__corner--r bth__fade" aria-hidden="true">
+        <span class="bth__num">01</span> / {% if ms_count < 10 %}0{% endif -%}
+        {{- ms_count }}
+      </span>
+    </div>
+  </div>
+</bt-orbital-hero>
+
+<script>
+  (function () {
+    if (customElements.get('bt-orbital-hero')) return;
+
+    var clamp = function (x, a, b) {
+      return Math.max(a, Math.min(b, x));
+    };
+
+    class BTOrbitalHero extends HTMLElement {
+      connectedCallback() {
+        this.pin = this.querySelector('.bth__pin');
+        this.stage = this.querySelector('.bth__stage');
+        this.bgs = Array.prototype.slice.call(this.querySelectorAll('.bth__bgl'));
+        this.copies = Array.prototype.slice.call(this.querySelectorAll('.bth__copy'));
+        this.labels = Array.prototype.slice.call(this.querySelectorAll('.bth__label'));
+        this.fades = Array.prototype.slice.call(this.querySelectorAll('.bth__fade'));
+        this.wheel = this.querySelector('.bth__wheel');
+        this.ring = this.querySelector('.bth__ring');
+        this.texts = Array.prototype.slice.call(this.querySelectorAll('.bth__intro'));
+        this.scrims = Array.prototype.slice.call(this.querySelectorAll('.bth__scrim'));
+        this.hint = this.querySelector('.bth__hint');
+        this.cornerL = this.querySelector('.bth__corner--l');
+        this.num = this.querySelector('.bth__num');
+        this.kicker = this.querySelector('.bth__kicker');
+        this.labelRange = parseFloat(this.dataset.labelRange);
+        if (isNaN(this.labelRange)) this.labelRange = 1;
+        if (!this.pin || !this.stage) return;
+
+        this.m = this.copies.length;
+        // Phases play in block order: text slides (Intro / Text slide) and milestones.
+        // For each phase: is the wheel showing (1) or a text slide (0), and which milestone the wheel points at.
+        this.n = Math.max(1, this.bgs.length);
+        this.show = [];
+        this.wpos = [];
+        var mi = -1;
+        for (var k = 0; k < this.n; k++) {
+          var isMs = this.bgs[k] && this.bgs[k].dataset.kind === 'ms';
+          if (isMs) mi++;
+          this.show.push(isMs ? 1 : 0);
+          this.wpos.push(Math.max(0, mi));
+        }
+        this.firstIsText = this.show.length > 0 && this.show[0] === 0;
+        this.firstHasLabel = this.firstIsText && !!(this.texts[0] && this.texts[0].querySelector('.bth__eyebrow'));
+        this.copyPhase = this.copies.map(function (c) { return parseInt(c.dataset.phase, 10) || 0; });
+        this.textPhase = this.texts.map(function (t) { return parseInt(t.dataset.phase, 10) || 0; });
+        this.stepPx = parseInt(this.dataset.step, 10) || 640;
+        this.stepDeg = parseFloat(this.dataset.deg) || 24;
+        this.snap = this.dataset.snap === 'true';
+        this.reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.u = 0;
+        this.target = 0;
+        this.p = 0;
+
+        this.onScroll = this.onScroll.bind(this);
+        this.onResize = this.onResize.bind(this);
+        this.tick = this.tick.bind(this);
+        this.onBlockSelect = this.onBlockSelect.bind(this);
+
+        window.addEventListener('scroll', this.onScroll, { passive: true });
+        window.addEventListener('resize', this.onResize);
+        document.addEventListener('shopify:block:select', this.onBlockSelect);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(this.onResize);
+        window.addEventListener('load', this.onResize);
+        var self = this;
+        [300, 1200, 3000].forEach(function (ms) {
+          setTimeout(self.onResize, ms);
+        });
+        this.onResize();
+        this.render(0);
+      }
+
+      disconnectedCallback() {
+        window.removeEventListener('scroll', this.onScroll);
+        window.removeEventListener('resize', this.onResize);
+        window.removeEventListener('load', this.onResize);
+        document.removeEventListener('shopify:block:select', this.onBlockSelect);
+        if (this.raf) cancelAnimationFrame(this.raf);
+        clearTimeout(this.snapT);
+      }
+
+      // Find whatever the theme pins to the top of the screen (sticky or fixed header,
+      // announcement bar), whatever it is called, so the wheel can sit just below it.
+      // Collect everything that could be the theme header: header-like elements, all of
+      // their parents, and every element that is fixed or sticky right now. Their position
+      // is re-checked on every scroll, because many themes only pin the header after the
+      // visitor starts scrolling.
+      findStickies() {
+        var self = this;
+        var found = [];
+        var add = function (n) {
+          if (!n || n === document.body || n === document.documentElement) return;
+          if (self.contains(n) || n.contains(self)) return;
+          if (found.indexOf(n) < 0) found.push(n);
+        };
+        var addWithParents = function (el) {
+          for (var n = el; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+            if (self.contains(n) || n.contains(self)) return;
+            add(n);
+          }
+        };
+        var sel =
+          'header, sticky-header, header-component, height-observer, .shopify-section-group-header-group, [id*="header"], [class*="header"], [id*="announcement"], [class*="announcement"]';
+        var nodes = document.querySelectorAll(sel);
+        for (var i = 0; i < nodes.length && i < 300; i++) addWithParents(nodes[i]);
+        // One full pass for anything already pinned, whatever it is called.
+        var all = document.body ? document.body.getElementsByTagName('*') : [];
+        for (var j = 0; j < all.length && j < 6000; j++) {
+          var el = all[j];
+          if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE' || el.tagName === 'svg' || el.tagName === 'path') continue;
+          var pos = getComputedStyle(el).position;
+          if (pos === 'fixed' || pos === 'sticky') add(el);
+        }
+        if (typeof document.elementFromPoint === 'function') {
+          [2, 24, 64].forEach(function (y) {
+            addWithParents(document.elementFromPoint(window.innerWidth / 2, y));
+          });
+        }
+        this.stickies = found;
+      }
+
+      // Look at what is actually drawn at the top of the screen. If it isn't this hero,
+      // something (the theme header) is covering it: measure how far down it reaches.
+      probeOffset() {
+        if (typeof document.elementFromPoint !== 'function') return 0;
+        var best = 0;
+        var vh = window.innerHeight;
+        var xs = [Math.round(window.innerWidth * 0.5), 24, Math.max(24, window.innerWidth - 24)];
+        for (var i = 0; i < xs.length; i++) {
+          var el = document.elementFromPoint(xs[i], 2);
+          if (!el || this.contains(el)) continue;
+          for (var n = el; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+            if (n.contains(this)) break;
+            var r = n.getBoundingClientRect();
+            if (r.top <= 2 && r.bottom > 0 && r.bottom < vh * 0.6) best = Math.max(best, r.bottom);
+          }
+        }
+        return best;
+      }
+
+      headerOffset() {
+        var off = parseInt(this.dataset.offset, 10) || 0;
+        if (this.dataset.autoOffset !== 'true') return off;
+        if (!this.stickies) this.findStickies();
+        var best = this.probeOffset();
+        var vw = window.innerWidth;
+        for (var i = 0; i < this.stickies.length; i++) {
+          var el = this.stickies[i];
+          if (!el.isConnected) continue;
+          var cs = getComputedStyle(el);
+          if (cs.position !== 'fixed' && cs.position !== 'sticky') continue;
+          if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) continue;
+          var r = el.getBoundingClientRect();
+          // Pinned at the top, wide like a header bar, not a full-screen overlay.
+          if (r.top <= 1 && r.bottom > 0 && r.height > 0 && r.height < window.innerHeight / 2 && r.width >= vw * 0.5) {
+            best = Math.max(best, r.bottom);
+          }
+        }
+        return Math.round(best) + off;
+      }
+
+      applySize(off) {
+        this.off = off;
+        // Phones get their own (shorter) height and scroll distance per milestone.
+        var phone = window.innerWidth <= 749;
+        var cs = getComputedStyle(this);
+        var maxH = parseInt(cs.getPropertyValue(phone ? '--bth-maxh-m' : '--bth-maxh'), 10) || (phone ? 620 : 900);
+        this.stepPx = phone
+          ? parseInt(this.dataset.stepMobile, 10) || 380
+          : parseInt(this.dataset.step, 10) || 640;
+        var h = Math.max(phone ? 420 : 480, Math.min(window.innerHeight - off, maxH));
+        this.stage.style.top = off + 'px';
+        this.stage.style.height = h + 'px';
+        this.pin.style.height = h + (this.n - 1) * this.stepPx + 'px';
+        this.fitArc();
+      }
+
+      // Size the arc to the room left under the text, so the two never overlap,
+      // however short the screen is.
+      // Spread the arc labels so neighbours never overlap on a small (phone) arc.
+      fitLabels() {
+        if (!this.ring) return;
+        var r = this.ring.offsetWidth / 2;
+        if (!r) return;
+        var base = parseFloat(this.dataset.deg) || 24;
+        var gap = window.innerWidth <= 749 ? 82 : 96; // half the room each label needs, in px
+        var need = (2 * Math.asin(Math.min(1, gap / r)) * 180) / Math.PI;
+        var deg = Math.max(base, Math.round(need));
+        if (deg === this.stepDeg) return;
+        this.stepDeg = deg;
+        var spokes = this.querySelectorAll('.bth__spoke');
+        for (var i = 0; i < spokes.length; i++) spokes[i].style.setProperty('--deg', i * deg + 'deg');
+        if (this.render) this.render(this.u || 0);
+      }
+
+      fitArc() {
+        var head = this.querySelector('.bth__head');
+        if (!head) return;
+        var h = this.stage.offsetHeight;
+        var headBottom = head.offsetTop + head.offsetHeight;
+        var visible = window.innerWidth <= 749 ? 0.42 : 0.36;
+        var fit = (h - headBottom - 28) / visible;
+        this.stage.style.setProperty('--rw-fit', Math.max(320, Math.round(fit)) + 'px');
+        if (!this.ring) return;
+        var rw = this.ring.offsetWidth;
+        if (!rw) return;
+        // The wheel sits on the bottom edge, so a smaller Wheel size makes it both
+        // narrower and lower; at 100% it reaches up to just under the text.
+        this.ring.style.bottom = '';
+        this.fitLabels();
+      }
+
+      // A header that floats over the page (instead of taking up space) covers the top
+      // of the hero before any scrolling. Push the hero down by that overlap.
+      fitUnderHeader(off) {
+        if (window.scrollY > 40) return;
+        var pad = this.pad || 0;
+        var docTop = this.pin.getBoundingClientRect().top + window.scrollY;
+        var need = Math.max(0, Math.round(off - docTop));
+        if (Math.abs(need - pad) > 1) {
+          this.pad = need;
+          this.pin.style.paddingTop = need + 'px';
+        }
+      }
+
+      onResize() {
+        this.stickies = null;
+        this.findStickies();
+        var off = this.headerOffset();
+        this.applySize(off);
+        if (this.dataset.autoOffset === 'true') this.fitUnderHeader(off);
+        this.onScroll(null);
+      }
+
+      geometry() {
+        var pad = this.pad || 0;
+        var pr = this.pin.getBoundingClientRect();
+        var sr = this.stage.getBoundingClientRect();
+        return { moved: sr.top - pr.top - pad, total: Math.max(1, pr.height - pad - sr.height) };
+      }
+
+      onScroll(e) {
+        // Headers that shrink, hide or reappear while scrolling move the wheel with them.
+        if (this.dataset.autoOffset === 'true') {
+          var now = Date.now();
+          if (e && (this.rescans || 0) < 6 && now - (this.lastScan || 0) > 1500) {
+            this.rescans = (this.rescans || 0) + 1;
+            this.lastScan = now;
+            this.findStickies();
+          }
+          var off = this.headerOffset();
+          if (Math.abs(off - (this.off || 0)) > 1) this.applySize(off);
+          this.fitUnderHeader(off);
+        }
+        var g = this.geometry();
+        this.p = clamp(g.moved / g.total, 0, 1);
+        this.target = this.p * (this.n - 1);
+        if (this.reduce) {
+          this.u = this.target;
+          this.render(this.u);
+        } else if (!this.raf) this.raf = requestAnimationFrame(this.tick);
+        if (e && this.snap) {
+          clearTimeout(this.snapT);
+          var self = this;
+          this.snapT = setTimeout(function () {
+            self.snapNow();
+          }, 180);
+        }
+      }
+
+      snapNow() {
+        if (this.p <= 0.001 || this.p >= 0.999 || this.n < 2) return;
+        var g = this.geometry();
+        var k = Math.round(this.p * (this.n - 1));
+        var d = (k / (this.n - 1)) * g.total - g.moved;
+        if (Math.abs(d) < 3) return;
+        window.scrollBy({ top: d, behavior: this.reduce ? 'auto' : 'smooth' });
+      }
+
+      tick() {
+        this.raf = 0;
+        var d = this.target - this.u;
+        if (Math.abs(d) < 0.0008) {
+          this.u = this.target;
+          this.render(this.u);
+          return;
+        }
+        this.u += d * 0.14;
+        this.render(this.u);
+        this.raf = requestAnimationFrame(this.tick);
+      }
+
+      render(u) {
+        var blurOn = !this.reduce;
+        var i, d, ad, op, s;
+        var n = this.n;
+
+        // Where the wheel points (v) and how present it is (E), blended between phases.
+        var k0 = clamp(Math.floor(u), 0, n - 1);
+        var k1 = Math.min(k0 + 1, n - 1);
+        var t = clamp(u - k0, 0, 1);
+        var v = this.wpos[k0] + (this.wpos[k1] - this.wpos[k0]) * t;
+        var E = this.show[k0] + (this.show[k1] - this.show[k0]) * t;
+
+        for (i = 0; i < this.bgs.length; i++) {
+          op = clamp(1 - Math.abs(u - i), 0, 1);
+          s = this.bgs[i].style;
+          s.opacity = op;
+          s.visibility = op > 0.005 ? 'visible' : 'hidden';
+          s.transform = 'scale(' + (1.08 - clamp(u - i, -1, 1) * 0.03) + ')';
+        }
+
+        // Text slides
+        for (i = 0; i < this.texts.length; i++) {
+          var tp = this.textPhase[i];
+          d = u - tp;
+          ad = Math.abs(d);
+          var io = clamp(1 - ad * 2.2, 0, 1);
+          s = this.texts[i].style;
+          s.opacity = io;
+          s.visibility = io > 0.01 ? 'visible' : 'hidden';
+          s.filter = blurOn ? 'blur(' + Math.min(ad * 16, 16) + 'px)' : '';
+          s.marginTop = -d * 40 + 'px';
+          s.pointerEvents = ad < 0.35 ? 'auto' : 'none';
+          this.texts[i].setAttribute('aria-hidden', io > 0.5 ? 'false' : 'true');
+          var tl = this.texts[i].querySelector('a');
+          if (tl) tl.tabIndex = ad < 0.5 ? 0 : -1;
+          if (this.scrims[i]) this.scrims[i].style.opacity = clamp(1 - ad * 1.4, 0, 1);
+          if (this.hint && parseInt(this.hint.dataset.phase, 10) === tp) {
+            this.hint.style.opacity = io * 0.85;
+            this.hint.style.visibility = io > 0.01 ? 'visible' : 'hidden';
+          }
+        }
+
+        // The arc and corner details are only there for milestones.
+        for (i = 0; i < this.fades.length; i++) this.fades[i].style.opacity = E;
+        // "Scroll to turn" stays on for every step (milestones, text slides, descriptions),
+        // except while the Intro shows its own "Scroll to begin" hint.
+        if (this.cornerL) {
+          var hintOp = 0;
+          if (this.hint) hintOp = clamp(1 - Math.abs(u - (parseInt(this.hint.dataset.phase, 10) || 0)) * 2.2, 0, 1);
+          // On the last step there is nothing left to turn to.
+          var last = clamp((n - 1) - u, 0, 1);
+          this.cornerL.style.opacity = (1 - hintOp) * (n > 1 ? Math.max(last, 0) : 0) * 0.85;
+        }
+        if (this.ring) this.ring.style.marginBottom = -(1 - E) * 240 + 'px';
+
+        if (this.kicker) {
+          var kOn = this.dataset.hideKicker === 'true' ? 0 : 1;
+          var kOp;
+          if (this.firstIsText && !this.firstHasLabel) kOp = Math.max(clamp(1 - u, 0, 1), kOn * E);
+          else kOp = kOn * (this.firstIsText ? E : 1);
+          this.kicker.style.opacity = kOp * 0.88;
+        }
+        if (this.wheel) this.wheel.style.transform = 'rotate(' + -v * this.stepDeg + 'deg)';
+
+        for (i = 0; i < this.labels.length; i++) {
+          var la = Math.abs(i - v);
+          var lop = clamp(1 - la * 0.4, 0.35, 1);
+          if (la > this.labelRange) lop *= clamp(this.labelRange + 1 - la, 0, 1);
+          this.labels[i].style.opacity = lop;
+        }
+
+        // Milestone copy fades by its own place in the order, so text slides in between hide it.
+        for (i = 0; i < this.copies.length; i++) {
+          d = this.copyPhase[i] - u;
+          ad = Math.abs(d);
+          op = clamp(1 - ad * 2.4, 0, 1);
+          var c = this.copies[i];
+          s = c.style;
+          s.opacity = op;
+          s.visibility = op > 0.02 ? 'visible' : 'hidden';
+          s.filter = blurOn ? 'blur(' + Math.min(ad * 14, 14) + 'px)' : '';
+          s.transform = 'translateY(' + d * 18 + 'px)';
+          s.pointerEvents = ad < 0.35 ? 'auto' : 'none';
+          c.setAttribute('aria-hidden', ad < 0.5 ? 'false' : 'true');
+          var link = c.querySelector('a');
+          if (link) link.tabIndex = ad < 0.5 ? 0 : -1;
+        }
+
+        if (this.num && this.m) {
+          var idx = clamp(Math.round(v), 0, this.m - 1) + 1;
+          this.num.textContent = (idx < 10 ? '0' : '') + idx;
+        }
+      }
+
+      onBlockSelect(e) {
+        if (!e.target || !this.contains(e.target)) return;
+        var id = e.detail && e.detail.blockId;
+        var k = 0;
+        var els = this.copies.concat(this.texts);
+        for (var i = 0; i < els.length; i++) {
+          if (els[i].dataset.blockId === id) k = parseInt(els[i].dataset.phase, 10) || 0;
+        }
+        var top = this.pin.getBoundingClientRect().top + window.scrollY + (this.pad || 0) - (parseInt(this.stage.style.top, 10) || 0);
+        window.scrollTo({ top: top + k * this.stepPx, behavior: 'auto' });
+      }
+    }
+
+    customElements.define('bt-orbital-hero', BTOrbitalHero);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Gift Hero",
+  "class": "section-bt-gift-hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Top label",
+      "default": "The 1st Birthday Gift Guide"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll hint (bottom left)",
+      "default": "Scroll to turn"
+    },
+    {
+      "type": "header",
+      "content": "Scroll wheel"
+    },
+    {
+      "type": "range",
+      "id": "scroll_per_step",
+      "label": "Scroll distance per milestone",
+      "min": 300,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 640,
+      "info": "How far visitors scroll to move to the next milestone."
+    },
+    {
+      "type": "range",
+      "id": "wheel_size",
+      "label": "Wheel size",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 75
+    },
+    {
+      "type": "range",
+      "id": "label_spacing",
+      "label": "Space between arc labels",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "°",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "snap",
+      "label": "Settle on the nearest milestone",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "Maximum height",
+      "min": 600,
+      "max": 1100,
+      "step": 20,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "header",
+      "content": "On phones"
+    },
+    {
+      "type": "range",
+      "id": "max_height_mobile",
+      "label": "Height on phones",
+      "min": 420,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "default": 1000,
+      "info": "1000 fills the screen. Lower values make the hero shorter, but leave a dark band under it while it's locked."
+    },
+    {
+      "type": "range",
+      "id": "scroll_per_step_mobile",
+      "label": "Scroll per milestone on phones",
+      "min": 200,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "default": 360,
+      "info": "Lower means less swiping to get through all the milestones."
+    },
+    {
+      "type": "range",
+      "id": "wheel_size_mobile",
+      "label": "Wheel size on phones",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 85
+    },
+    {
+      "type": "header",
+      "content": "Space for your header"
+    },
+    {
+      "type": "range",
+      "id": "header_space",
+      "label": "Space above text on desktop",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 128,
+      "info": "Moves the hero text down so your sticky header doesn't cover it. Set it to about your header's height."
+    },
+    {
+      "type": "range",
+      "id": "header_space_mobile",
+      "label": "Space above text on phones",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_header_offset",
+      "label": "Also detect the header automatically",
+      "default": false,
+      "info": "Leave off when using the space settings above."
+    },
+    {
+      "type": "range",
+      "id": "header_offset",
+      "label": "Extra space when the wheel locks",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_fade",
+      "label": "Title fade",
+      "default": "#d9d0c5"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Arc and button lines",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Button text on hover",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "stage_bg",
+      "label": "Background behind photos",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Photo darkening",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Keep it calm"
+    },
+    {
+      "type": "range",
+      "id": "ms_blur",
+      "label": "Blur milestone photos",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "info": "Softens the background behind each milestone so the text stands out. Text slides keep their photo sharp."
+    },
+    {
+      "type": "range",
+      "id": "ms_dark",
+      "label": "Extra darkening on milestones",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "arc_labels",
+      "label": "Labels on the arc",
+      "options": [
+        {
+          "value": "age",
+          "label": "Age only"
+        },
+        {
+          "value": "name",
+          "label": "Name only"
+        },
+        {
+          "value": "both",
+          "label": "Age and name"
+        }
+      ],
+      "default": "age"
+    },
+    {
+      "type": "select",
+      "id": "label_range",
+      "label": "Labels shown on the arc",
+      "options": [
+        {
+          "value": "0",
+          "label": "Current only"
+        },
+        {
+          "value": "1",
+          "label": "Current and next to it"
+        },
+        {
+          "value": "9",
+          "label": "All"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Milestone title size",
+      "min": 36,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 64,
+      "info": "Smaller titles leave more room for the arc."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_meta",
+      "label": "Show price line under the button",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_kicker",
+      "label": "Hide the top label after the intro",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Headings",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body text",
+      "default": "poppins_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "intro",
+      "name": "Intro (first view)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background",
+          "label": "Background photo",
+          "info": "Tip: click the photo in Shopify Files and set a focal point on the people, so they stay in view on every screen."
+        },
+        {
+          "type": "image_picker",
+          "id": "background_mobile",
+          "label": "Phone photo (optional)",
+          "info": "A tall (portrait) photo works best. Leave empty to use the photo above."
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Text position",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            }
+          ],
+          "default": "right",
+          "info": "Put the text on the side away from the people in the photo. On phones it always sits at the bottom."
+        },
+        {
+          "type": "range",
+          "id": "shade",
+          "label": "Shade behind text",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "default": 55
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Heading size",
+          "min": 34,
+          "max": 84,
+          "step": 2,
+          "unit": "px",
+          "default": 52
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "label": "Heading size on phones",
+          "min": 20,
+          "max": 44,
+          "step": 1,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "checkbox",
+          "id": "text_on_phones",
+          "label": "Show the paragraph on phones",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Small label",
+          "default": "A first birthday, considered"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "One year in. A lifetime of <em>firsts</em> ahead."
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Most first-birthday gifts are outgrown by the second. The Bentley 6-in-1 Stroller/Trike is designed to change with them — from the first walk you take together to the day they pedal off on their own."
+        },
+        {
+          "type": "text",
+          "id": "hint",
+          "label": "Scroll hint",
+          "default": "Scroll to begin"
+        }
+      ]
+    },
+    {
+      "type": "statement",
+      "name": "Text slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background",
+          "label": "Background photo",
+          "info": "Leave empty to keep the previous photo."
+        },
+        {
+          "type": "image_picker",
+          "id": "background_mobile",
+          "label": "Phone photo (optional)",
+          "info": "A tall (portrait) photo works best. Leave empty to use the photo above."
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Text position",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            }
+          ],
+          "default": "right",
+          "info": "Put the text on the side away from the people in the photo. On phones it always sits at the bottom."
+        },
+        {
+          "type": "range",
+          "id": "shade",
+          "label": "Shade behind text",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "default": 55
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Heading size",
+          "min": 34,
+          "max": 84,
+          "step": 2,
+          "unit": "px",
+          "default": 52
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "label": "Heading size on phones",
+          "min": 20,
+          "max": 44,
+          "step": 1,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "checkbox",
+          "id": "text_on_phones",
+          "label": "Show the paragraph on phones",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Small label"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Why is this the <em>perfect</em> gift?"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "One gift that grows with them, from the first walk to the first solo ride."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label (optional)"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "settings": [
+        {
+          "type": "select",
+          "id": "bg_style",
+          "label": "Background",
+          "options": [
+            {
+              "value": "colour",
+              "label": "Plain colour"
+            },
+            {
+              "value": "photo",
+              "label": "Photo"
+            }
+          ],
+          "default": "colour"
+        },
+        {
+          "type": "color",
+          "id": "bg_colour",
+          "label": "Background colour",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "color",
+          "id": "copy_colour",
+          "label": "Text colour (optional)",
+          "info": "Leave empty to use the section's text colour."
+        },
+        {
+          "type": "image_picker",
+          "id": "background",
+          "label": "Photo",
+          "info": "Used when Background is set to Photo. Leave empty to keep the previous photo."
+        },
+        {
+          "type": "image_picker",
+          "id": "background_mobile",
+          "label": "Phone photo (optional)"
+        },
+        {
+          "type": "range",
+          "id": "shade",
+          "label": "Shade behind text (photo)",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "default": 55
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Text position",
+          "options": [
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "text_position_mobile",
+          "label": "Position on phones",
+          "options": [
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            },
+            {
+              "value": "middle",
+              "label": "Middle"
+            },
+            {
+              "value": "top",
+              "label": "Top"
+            }
+          ],
+          "default": "bottom",
+          "info": "Bottom keeps the people in the photo visible."
+        },
+        {
+          "type": "select",
+          "id": "text_align_mobile",
+          "label": "Alignment on phones",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Small label",
+          "default": "About the Bentley 6-in-1"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading (optional)",
+          "default": "Designed to <em>grow</em> with them."
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Description",
+          "default": "<p>The Bentley 6-in-1 Stroller/Trike moves through six stages, from a fully supported stroller with a parent push handle to a free-pedalling trike.</p><p>Every finish is officially licensed by Bentley Motors and built with the same attention to detail as the cars that inspired it.</p>"
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Heading size",
+          "min": 28,
+          "max": 84,
+          "step": 2,
+          "unit": "px",
+          "default": 44
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "label": "Heading size on phones",
+          "min": 20,
+          "max": 44,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "body_size",
+          "label": "Description text size",
+          "min": 13,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "body_width",
+          "label": "Text width",
+          "min": 400,
+          "max": 900,
+          "step": 20,
+          "unit": "px",
+          "default": 640
+        },
+        {
+          "type": "checkbox",
+          "id": "text_on_phones",
+          "label": "Show the description on phones",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label (optional)"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "age",
+          "label": "Age",
+          "default": "10–12 Months"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "The First Steps"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "For the first-birthday walk, <strong>full stroller mode with a parent push handle</strong> — you steer, they take in the view.",
+          "info": "Make a phrase bold to highlight it."
+        },
+        {
+          "type": "image_picker",
+          "id": "background",
+          "label": "Background photo",
+          "info": "Leave empty to keep the previous photo."
+        },
+        {
+          "type": "image_picker",
+          "id": "background_mobile",
+          "label": "Phone photo (optional)",
+          "info": "A tall (portrait) photo works best. Leave empty to use the photo above."
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Price line (optional)",
+          "default": "Onyx Black · $599"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Discover the Onyx Black"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Gift Hero",
+      "blocks": [
+        {
+          "type": "intro"
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "age": "10–12 Months",
+            "title": "The First Steps",
+            "text": "For the first-birthday walk, <strong>full stroller mode with a parent push handle</strong> — you steer, they take in the view.",
+            "meta": "Onyx Black · $599",
+            "button_label": "Discover the Onyx Black"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "age": "12–18 Months",
+            "title": "The First Outings",
+            "text": "Canopy up, footrest down. <strong>Long afternoons out</strong>, from a seat that feels like the front row.",
+            "meta": "Mulliner Gold · $799",
+            "button_label": "Explore the Mulliner"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "age": "18–24 Months",
+            "title": "The First Pedals",
+            "text": "As little legs find their rhythm, <strong>the pedals come into play</strong> — your hand never far from the handle.",
+            "meta": "Mulliner Celeste · $799",
+            "button_label": "Choose Celeste"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "age": "2–3 Years",
+            "title": "The First Solo Ride",
+            "text": "Handle off, guard bar away. <strong>The Trike becomes entirely theirs.</strong>",
+            "meta": "Dragon Red · $599",
+            "button_label": "Make it theirs"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "age": "3+ Years",
+            "title": "The First Drive",
+            "text": "When the Trike is outgrown, <strong>an officially licensed Bentley Mulsanne Ride-On</strong> is waiting.",
+            "meta": "Mulsanne Electric Ride-On · $419",
+            "button_label": "Meet the Ride-On"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
