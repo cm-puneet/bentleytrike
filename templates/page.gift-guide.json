@@ -15,9 +15,42 @@
       "settings": {
         "content_width": "80ch"
       }
+    },
+    "gift_sticky_Kqfay7": {
+      "type": "gift-sticky",
+      "name": "BT Gift Sticky Cart",
+      "settings": {
+        "products": [],
+        "display_name": "Bentley Trike",
+        "separator": "",
+        "swatch_colours": "",
+        "swatch_label": "Colour",
+        "show_after": "px",
+        "show_after_px": 600,
+        "hide_at_footer": true,
+        "swatches_mobile": true,
+        "lift_chat": true,
+        "label_add": "Add to cart",
+        "label_adding": "Adding…",
+        "label_added": "Added",
+        "label_sold_out": "Sold out",
+        "label_error": "Sorry, that couldn’t be added. Please try again.",
+        "after_add": "stay",
+        "aria_label": "Quick add to cart",
+        "bg": "#ffffff",
+        "text_color": "#1a1a1a",
+        "thumb_bg": "#efe8df",
+        "button_bg": "#a83f2f",
+        "button_hover": "#8f3527",
+        "button_text": "#ffffff",
+        "heading_font": "playfair_display_n4",
+        "body_font": "poppins_n4",
+        "z_index": 60
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "gift_sticky_Kqfay7"
   ]
 }
