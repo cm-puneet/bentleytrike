@@ -61,9 +61,9 @@
             "heading_size": 52,
             "heading_size_mobile": 28,
             "text_on_phones": true,
-            "eyebrow": "A first birthday, considered",
-            "heading": "One year in. A lifetime of <em>firsts</em> ahead.",
-            "text": "Most first-birthday gifts are outgrown by the second. The Bentley 6-in-1 Stroller/Trike is designed to change with them — from the first walk you take together to the day they pedal off on their own.",
+            "eyebrow": "THE BENTLEY 6-IN-1",
+            "heading": "More than a gift. Their <em>first journey</em>.&nbsp;",
+            "text": "While other gifts mark a single afternoon, this one stays for the entire journey. Designed to grow alongside your little one, it effortlessly transforms from a comforting, parent-steered stroller into their first independent set of wheels.",
             "hint": "Scroll to begin"
           }
         },
@@ -101,7 +101,7 @@
             "background_mobile": "shopify://shop_images/8_31baf6e1-ffbf-4567-a337-b08ca30ef9f9.png",
             "meta": "Onyx Black · $599",
             "button_label": "Discover the Onyx Black",
-            "button_link": ""
+            "button_link": "shopify://products/onyx-black-bentley-stroller-trike"
           }
         },
         "milestone_gX66E4": {
@@ -114,7 +114,7 @@
             "background_mobile": "shopify://shop_images/9_a620b1f0-700b-4411-b7ac-e7e9bb4a55bd.png",
             "meta": "Mulliner Gold · $799",
             "button_label": "Explore the Mulliner",
-            "button_link": ""
+            "button_link": "shopify://products/bentley-mulliner-trike"
           }
         },
         "milestone_eBbym7": {
@@ -126,8 +126,8 @@
             "background": "shopify://shop_images/DAD-Mullinertrike-1.png",
             "background_mobile": "shopify://shop_images/10.png",
             "meta": "Mulliner Celeste · $799",
-            "button_label": "Choose Celeste",
-            "button_link": ""
+            "button_label": "Choose  White Satin",
+            "button_link": "shopify://products/white-satin-bentley-6-in-1-stroller-trike"
           }
         },
         "milestone_t7M7bc": {
@@ -140,7 +140,7 @@
             "background_mobile": "shopify://shop_images/11_1a716945-d231-4d47-9c59-ef23a1b07401.png",
             "meta": "Dragon Red · $599",
             "button_label": "Make it theirs",
-            "button_link": ""
+            "button_link": "shopify://products/limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike"
           }
         },
         "milestone_hPzaFW": {
