@@ -54,7 +54,9 @@
         "intro_AHGHCC": {
           "type": "intro",
           "settings": {
-            "text_position": "right",
+            "background": "shopify://shop_images/Mom-a.webp",
+            "background_mobile": "shopify://shop_images/7_43f297b2-95aa-45e0-b397-b3079b6f6fbf.png",
+            "text_position": "left",
             "shade": 55,
             "heading_size": 52,
             "heading_size_mobile": 28,
@@ -65,12 +67,38 @@
             "hint": "Scroll to begin"
           }
         },
+        "description_nTNKdK": {
+          "type": "description",
+          "settings": {
+            "bg_style": "photo",
+            "bg_colour": "#1a1a1a",
+            "copy_colour": "",
+            "background": "shopify://shop_images/Mom-Mullinertrike-2.1.png",
+            "background_mobile": "shopify://shop_images/Mom-Mullinertrike-2.1_1.png",
+            "shade": 55,
+            "text_position": "left",
+            "text_position_mobile": "bottom",
+            "text_align_mobile": "left",
+            "eyebrow": "About the Bentley 6-in-1",
+            "heading": "Designed to <em>grow</em> with them.",
+            "body": "<p>The Bentley 6-in-1 Stroller/Trike moves through six stages, from a fully supported stroller with a parent push handle to a free-pedalling trike.</p><p>Every finish is officially licensed by Bentley Motors and built with the same attention to detail as the cars that inspired it.</p>",
+            "heading_size": 44,
+            "heading_size_mobile": 26,
+            "body_size": 16,
+            "body_width": 640,
+            "text_on_phones": true,
+            "button_label": "",
+            "button_link": ""
+          }
+        },
         "milestone_z9fGdY": {
           "type": "milestone",
           "settings": {
             "age": "10–12 Months",
             "title": "The First Steps",
             "text": "For the first-birthday walk, <strong>full stroller mode with a parent push handle</strong> — you steer, they take in the view.",
+            "background": "shopify://shop_images/Electric_Ride_On_Car.png",
+            "background_mobile": "shopify://shop_images/8_31baf6e1-ffbf-4567-a337-b08ca30ef9f9.png",
             "meta": "Onyx Black · $599",
             "button_label": "Discover the Onyx Black",
             "button_link": ""
@@ -82,6 +110,8 @@
             "age": "12–18 Months",
             "title": "The First Outings",
             "text": "Canopy up, footrest down. <strong>Long afternoons out</strong>, from a seat that feels like the front row.",
+            "background": "shopify://shop_images/Mom-WhiteSatintrike-2.png",
+            "background_mobile": "shopify://shop_images/9_a620b1f0-700b-4411-b7ac-e7e9bb4a55bd.png",
             "meta": "Mulliner Gold · $799",
             "button_label": "Explore the Mulliner",
             "button_link": ""
@@ -93,6 +123,8 @@
             "age": "18–24 Months",
             "title": "The First Pedals",
             "text": "As little legs find their rhythm, <strong>the pedals come into play</strong> — your hand never far from the handle.",
+            "background": "shopify://shop_images/DAD-Mullinertrike-1.png",
+            "background_mobile": "shopify://shop_images/10.png",
             "meta": "Mulliner Celeste · $799",
             "button_label": "Choose Celeste",
             "button_link": ""
@@ -124,6 +156,7 @@
       },
       "block_order": [
         "intro_AHGHCC",
+        "description_nTNKdK",
         "milestone_z9fGdY",
         "milestone_gX66E4",
         "milestone_eBbym7",
@@ -138,7 +171,7 @@
         "wheel_size": 75,
         "label_spacing": 24,
         "snap": true,
-        "max_height": 900,
+        "max_height": 1100,
         "max_height_mobile": 1000,
         "scroll_per_step_mobile": 360,
         "wheel_size_mobile": 85,
@@ -152,7 +185,7 @@
         "button_hover_text": "#1a1a1a",
         "stage_bg": "#1a1a1a",
         "overlay": 40,
-        "ms_blur": 10,
+        "ms_blur": 0,
         "ms_dark": 20,
         "arc_labels": "age",
         "label_range": "1",
@@ -169,7 +202,7 @@
         "product_7cRYpT": {
           "type": "product",
           "settings": {
-            "product": "",
+            "product": "onyx-black-bentley-stroller-trike",
             "label": "Onyx Black",
             "swatch": "#141414"
           }
@@ -177,25 +210,25 @@
         "product_anVjHw": {
           "type": "product",
           "settings": {
-            "product": "",
-            "label": "Mulliner Gold",
-            "swatch": "#c6a15b"
+            "product": "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+            "label": "Centennial",
+            "swatch": "#48494C"
           }
         },
         "product_KADhcM": {
           "type": "product",
           "settings": {
-            "product": "",
-            "label": "Celeste",
-            "swatch": "#9ec5d8"
+            "product": "bentley-mulliner-trike",
+            "label": "Mulliner",
+            "swatch": "#BCAFA4"
           }
         },
         "product_VjjDHW": {
           "type": "product",
           "settings": {
-            "product": "",
-            "label": "Dragon Red",
-            "swatch": "#a8262b"
+            "product": "white-satin-bentley-6-in-1-stroller-trike",
+            "label": "White Satin",
+            "swatch": "#7A6253"
           }
         }
       },
@@ -209,7 +242,7 @@
       "settings": {
         "eyebrow": "The finishes",
         "heading": "Choose the one they’ll remember.",
-        "text": "Eight finishes of the Bentley 6-in-1 Stroller/Trike, from Onyx Black to the Mulliner collection.",
+        "text": "Best Sellers",
         "collection": "",
         "limit": 8,
         "show_compare": false,
@@ -240,6 +273,7 @@
         "review_aNtYyX": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Onyx_Black_2.png",
             "rating": 5,
             "quote": "It has turned our daily walks into a cherished routine.",
             "text": "“We really enjoy our Bentley trike. Beyond its performance, it’s a total head-turner with craftsmanship that truly stands out.”",
@@ -250,16 +284,18 @@
         "review_bRwwRY": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/01_ca_bentley_web_198.png",
             "rating": 5,
-            "quote": "A fantastic gift that combines style, fun, and comfort.",
-            "text": "“I bought this beautiful green Bentley car for my son and it has been an absolute joy! Highly recommend!”",
-            "author": "Irina D.",
+            "quote": "The highlight of his first birthday.",
+            "text": "We gave this to our grandson for his 1st birthday and it was the star of the party. The craftsmanship is pure luxury, it glides effortlessly, and he wants to be in it every single day. The best gift we’ve ever purchased!",
+            "author": "Eleanor M.",
             "role": "Bentley Ride-On owner"
           }
         },
         "review_Jq39E9": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/Sequin_Blue_3.png",
             "rating": 5,
             "quote": "So rich and classy — I get so many compliments.",
             "text": "“Absolutely love this product. I wish I could afford a Bentley, but my daughter definitely can with this stroller!”",
@@ -296,7 +332,7 @@
             "icon": "none",
             "icon_width": 20,
             "title": "Do you have instructional videos for the Bentley Trike?",
-            "content": "<p>We know how special the celebration is, so we make assembly effortless. Every trike comes with step-by-step video guides, safety tips, and stage-by-stage walkthroughs to ensure you're ready to roll right out of the box.</p><p>Watch our full library anytime here: <a href=\"https://bentleytrike.com/pages/bentley-trike-instructional-videos\" target=\"_blank\" title=\"Bentley Trike Instructional Videos\"><strong>Bentley Trike Instructional Videos</strong></a>.</p>",
+            "content": "<p>We know how special the celebration is, so we make assembly effortless. Every trike comes with step-by-step video guides, safety tips, and stage-by-stage walkthroughs to ensure you're ready to roll right out of the box.</p><p>Watch our full library anytime here: <a href=\"/pages/bentley-trike-instructional-videos\" target=\"_blank\" title=\"Bentley Trike Instructional Videos\"><strong>Bentley Trike Instructional Videos</strong></a>.</p>",
             "page": ""
           }
         },
@@ -315,8 +351,8 @@
           "settings": {
             "icon": "none",
             "icon_width": 20,
-            "title": "Question 3",
-            "content": "<p>Write content to help your customers to better understand your products or policies.</p>",
+            "title": "How does the official Bentley warranty protect our gift?",
+            "content": "<p>A milestone gift should come with lasting confidence. Every trike purchased directly through our official store includes a comprehensive <strong>2-year manufacturer warranty</strong>.</p><p>If you ever need assistance or dedicated support, simply submit your order details and our care team will resolve it promptly.</p><p><em>Please note : Warranty coverage applies exclusively to purchases made directly from us. If purchased elsewhere, kindly reach out to the original retailer for assistance</em></p>",
             "page": ""
           }
         }
