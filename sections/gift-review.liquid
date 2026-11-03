@@ -1,0 +1,487 @@
+{%- comment -%}
+  BT Gift Reviews — cover-style slideshow.
+  A frosted, blurred copy of each photo fills the background; the sharp photo
+  sits in a frame on the right. One Review block per slide.
+{%- endcomment -%}
+{%- liquid
+  assign uid = section.id | replace: '_', '' | downcase
+  assign hf = section.settings.heading_font
+  assign hfi = hf | font_modify: 'style', 'italic'
+  assign bf = section.settings.body_font
+  assign bfb = bf | font_modify: 'weight', 'bold'
+  assign overlay = section.settings.overlay | divided_by: 100.0
+  assign total = section.blocks.size
+  assign autoplay_ms = section.settings.autoplay | times: 1000
+-%}
+
+{% style %}
+  {{ hf | font_face: font_display: 'swap' }}
+  {%- if hfi -%}{{ hfi | font_face: font_display: 'swap' }}{%- endif -%}
+  {{ bf | font_face: font_display: 'swap' }}
+  {%- if bfb -%}{{ bfb | font_face: font_display: 'swap' }}{%- endif -%}
+
+  #btr-{{ uid }} {
+    --btr-head: {{ hf.family }}, {{ hf.fallback_families }};
+    --btr-body: {{ bf.family }}, {{ bf.fallback_families }};
+    --btr-text: {{ section.settings.text_color }};
+    --btr-bg: {{ section.settings.bg }};
+    --btr-overlay: {{ overlay }};
+    --btr-blur: {{ section.settings.blur }}px;
+    --btr-dur: {{ section.settings.autoplay }}s;
+    display: block; position: relative; overflow: hidden;
+    height: min(100vh, {{ section.settings.height }}px); min-height: 620px;
+    background: var(--btr-bg); color: var(--btr-text); font-family: var(--btr-body);
+  }
+  #btr-{{ uid }} .btr__bg { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; }
+  #btr-{{ uid }} .btr__bg img,
+  #btr-{{ uid }} .btr__bg svg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: blur(var(--btr-blur)) saturate(1.08); transform: scale(1.2); transition: transform 8s ease-out;
+  }
+  #btr-{{ uid }} .btr__bg.is-on { opacity: 1; }
+  #btr-{{ uid }} .btr__bg.is-on img { transform: scale(1.14); }
+  #btr-{{ uid }} .btr__shade {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, rgba(0,0,0, calc(var(--btr-overlay) + .14)) 0%, rgba(0,0,0, var(--btr-overlay)) 55%, rgba(0,0,0, calc(var(--btr-overlay) * .7)) 100%);
+  }
+  #btr-{{ uid }} .btr__inner {
+    position: relative; height: 100%; max-width: 1440px; margin: 0 auto; box-sizing: border-box;
+    padding: 48px clamp(20px, 4vw, 64px) 40px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+  }
+  #btr-{{ uid }} .btr__top {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 24px;
+    padding-bottom: 18px; border-bottom: 1px solid {{ section.settings.text_color | color_modify: 'alpha', 0.3 }};
+  }
+  #btr-{{ uid }} .btr__heading { margin: 0; font-family: var(--btr-head); font-style: italic; font-weight: 400; font-size: clamp(20px, 1.8vw, 26px); color: var(--btr-text); }
+  #btr-{{ uid }} .btr__label { font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; opacity: .85; }
+  #btr-{{ uid }} .btr__card {
+    position: absolute; right: clamp(20px, 4vw, 64px); top: 112px; bottom: 112px; aspect-ratio: 4 / 5;
+    overflow: hidden; background: #2a2622; box-shadow: 0 40px 90px rgba(0,0,0,.4);
+  }
+  #btr-{{ uid }} .btr__photo { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
+  #btr-{{ uid }} .btr__photo img,
+  #btr-{{ uid }} .btr__photo svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 8s ease-out; }
+  #btr-{{ uid }} .btr__photo.is-on { opacity: 1; }
+  #btr-{{ uid }} .btr__photo.is-on img { transform: scale(1); }
+  #btr-{{ uid }} .btr__stack { display: grid; max-width: min(720px, 52%); }
+  #btr-{{ uid }} .btr__q {
+    grid-area: 1 / 1; margin: 0; display: flex; flex-direction: column; gap: 24px;
+    opacity: 0; filter: blur(10px); transform: translateY(24px); visibility: hidden;
+    transition: opacity .9s ease, filter .9s ease, transform .9s cubic-bezier(.2,.7,.2,1), visibility 0s linear .9s;
+  }
+  #btr-{{ uid }} .btr__q.is-on {
+    opacity: 1; filter: blur(0); transform: none; visibility: visible;
+    transition: opacity 1.1s ease .3s, filter 1.1s ease .3s, transform 1.1s cubic-bezier(.2,.7,.2,1) .3s, visibility 0s;
+  }
+  #btr-{{ uid }} .btr__stars { display: inline-flex; gap: 4px; }
+  #btr-{{ uid }} .btr__quote { margin: 0; font-family: var(--btr-head); font-weight: 400; font-size: clamp(38px, 4.8vw, 74px); line-height: 1.08; letter-spacing: -.005em; }
+  #btr-{{ uid }} .btr__body { margin: 0; max-width: 520px; font-size: 15px; line-height: 1.7; opacity: .88; }
+  #btr-{{ uid }} .btr__by { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+  #btr-{{ uid }} .btr__by-line { width: 32px; height: 1px; background: var(--btr-text); }
+  #btr-{{ uid }} .btr__author { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+  #btr-{{ uid }} .btr__role { font-size: 12px; opacity: .8; }
+  #btr-{{ uid }} .btr__bar { display: flex; align-items: center; gap: 28px; }
+  #btr-{{ uid }} .btr__count { font-size: 11px; font-weight: 700; letter-spacing: .22em; opacity: .9; }
+  #btr-{{ uid }} .btr__num { font-family: var(--btr-head); font-style: italic; font-weight: 400; font-size: 22px; letter-spacing: 0; }
+  #btr-{{ uid }} .btr__segs { display: flex; gap: 10px; flex: 1; min-width: 0; }
+  #btr-{{ uid }} .btr__seg { position: relative; flex: 1; max-width: 120px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer; }
+  #btr-{{ uid }} .btr__seg::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: {{ section.settings.text_color | color_modify: 'alpha', 0.35 }}; }
+  #btr-{{ uid }} .btr__seg span { position: absolute; left: 0; top: 50%; height: 1px; width: 0; background: var(--btr-text); }
+  #btr-{{ uid }} .btr__seg.is-done span { width: 100%; }
+  #btr-{{ uid }} .btr__seg.is-on span { animation: btr-fill-{{ uid }} var(--btr-dur) linear forwards; }
+  #btr-{{ uid }}.is-paused .btr__seg.is-on span,
+  #btr-{{ uid }}.is-idle .btr__seg.is-on span { animation-play-state: paused; }
+  @keyframes btr-fill-{{ uid }} { to { width: 100%; } }
+  #btr-{{ uid }} .btr__arrows { display: flex; gap: 10px; }
+  #btr-{{ uid }} .btr__arrow {
+    width: 48px; height: 48px; border: 0; border-radius: 0; background: transparent; cursor: pointer;
+    color: var(--btr-text); box-shadow: inset 0 0 0 1px {{ section.settings.text_color | color_modify: 'alpha', 0.7 }};
+    display: inline-flex; align-items: center; justify-content: center; transition: background .3s ease, color .3s ease;
+  }
+  #btr-{{ uid }} .btr__arrow:hover { background: var(--btr-text); color: var(--btr-bg); }
+
+  @media (max-width: 749px) {
+    #btr-{{ uid }} { height: auto; min-height: 0; }
+    #btr-{{ uid }} .btr__shade { background: rgba(0,0,0, calc(var(--btr-overlay) + .05)); }
+    #btr-{{ uid }} .btr__inner { padding: 28px 20px 22px; justify-content: flex-start; gap: 24px; }
+    #btr-{{ uid }} .btr__label { display: none; }
+    #btr-{{ uid }} .btr__card { position: relative; right: auto; top: auto; bottom: auto; width: 100%; aspect-ratio: 4 / 3; box-shadow: 0 24px 60px rgba(0,0,0,.4); }
+    #btr-{{ uid }} .btr__stack { max-width: none; }
+    #btr-{{ uid }} .btr__q { gap: 18px; }
+    #btr-{{ uid }} .btr__quote { font-size: 33px; line-height: 1.1; }
+    #btr-{{ uid }} .btr__body { font-size: 14px; }
+    #btr-{{ uid }} .btr__bar { gap: 14px; }
+    #btr-{{ uid }} .btr__seg { max-width: none; }
+    #btr-{{ uid }} .btr__arrow { width: 44px; height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #btr-{{ uid }} .btr__bg, #btr-{{ uid }} .btr__photo, #btr-{{ uid }} .btr__q,
+    #btr-{{ uid }} .btr__bg img, #btr-{{ uid }} .btr__photo img { transition: none; }
+    #btr-{{ uid }} .btr__seg.is-on span { animation: none; width: 100%; }
+  }
+{% endstyle %}
+
+<bt-review-cover
+  id="btr-{{ uid }}"
+  class="is-idle"
+  data-autoplay="{{ autoplay_ms }}"
+  data-total="{{ total }}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ section.settings.heading | strip_html | escape }}"
+>
+  <div aria-hidden="true">
+    {%- for block in section.blocks -%}
+      {%- assign img = block.settings.image -%}
+      <div class="btr__bg{% if forloop.first %} is-on{% endif %}">
+        {%- if img -%}
+          {%- assign img_style = 'object-position: ' | append: img.presentation.focal_point -%}
+          {{
+            img
+            | image_url: width: 1200
+            | image_tag: widths: '600, 900, 1200', sizes: '100vw', alt: '', loading: 'lazy', style: img_style
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="btr__shade" aria-hidden="true"></div>
+
+  <div class="btr__inner">
+    <div class="btr__top">
+      <h2 class="btr__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.label != blank -%}
+        <span class="btr__label">{{ section.settings.label }}</span>
+      {%- endif -%}
+    </div>
+
+    <div class="btr__card">
+      {%- for block in section.blocks -%}
+        {%- assign img = block.settings.image -%}
+        <div class="btr__photo{% if forloop.first %} is-on{% endif %}">
+          {%- if img -%}
+            {%- assign img_style = 'object-position: ' | append: img.presentation.focal_point -%}
+            {%- assign img_alt = img.alt | default: block.settings.author -%}
+            {{
+              img
+              | image_url: width: 1400
+              | image_tag:
+                widths: '600, 900, 1200, 1400',
+                sizes: '(max-width: 749px) 100vw, 40vw',
+                alt: img_alt,
+                loading: 'lazy',
+                style: img_style
+            }}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="btr__stack" aria-live="polite">
+      {%- for block in section.blocks -%}
+        <figure
+          class="btr__q{% if forloop.first %} is-on{% endif %}"
+          aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+          {{ block.shopify_attributes }}
+          data-index="{{ forloop.index0 }}"
+        >
+          <span class="btr__stars" role="img" aria-label="{{ block.settings.rating }} out of 5 stars">
+            {%- for s in (1..5) -%}
+              {%- if s <= block.settings.rating -%}
+                <svg width="12" height="12" viewBox="0 0 15 15" fill="currentColor" aria-hidden="true">
+                  <path d="M7.5 0l2.2 4.8 5.3.6-3.9 3.6 1.1 5.2-4.7-2.7-4.7 2.7 1.1-5.2L0 5.4l5.3-.6z"></path>
+                </svg>
+              {%- else -%}
+                <svg width="12" height="12" viewBox="0 0 15 15" fill="none" stroke="currentColor" aria-hidden="true">
+                  <path d="M7.5 1.2l1.9 4.1 4.5.5-3.3 3.1.9 4.4-4-2.3-4 2.3.9-4.4L1.1 5.8l4.5-.5z"></path>
+                </svg>
+              {%- endif -%}
+            {%- endfor -%}
+          </span>
+          {%- if block.settings.quote != blank -%}
+            <blockquote class="btr__quote">“{{ block.settings.quote }}”</blockquote>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="btr__body">{{ block.settings.text }}</p>
+          {%- endif -%}
+          <figcaption class="btr__by">
+            <span class="btr__by-line" aria-hidden="true"></span>
+            <span class="btr__author">{{ block.settings.author }}</span>
+            {%- if block.settings.role != blank -%}
+              <span class="btr__role">{{ block.settings.role }}</span>
+            {%- endif -%}
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+
+    {%- if total > 1 -%}
+      <div class="btr__bar">
+        <span class="btr__count"
+          ><span class="btr__num">01</span> / {% if total < 10 %}0{% endif -%}
+          {{- total -}}
+        </span>
+        <div class="btr__segs">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="btr__seg{% if forloop.first %} is-on{% endif %}"
+              data-go="{{ forloop.index0 }}"
+              aria-label="Show review {{ forloop.index }}"
+            >
+              <span></span>
+            </button>
+          {%- endfor -%}
+        </div>
+        <div class="btr__arrows">
+          <button type="button" class="btr__arrow" data-dir="-1" aria-label="Previous review">
+            <svg width="16" height="8" viewBox="0 0 16 8" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+              <path d="M16 4H1M4.5 .5 1 4l3.5 3.5"></path>
+            </svg>
+          </button>
+          <button type="button" class="btr__arrow" data-dir="1" aria-label="Next review">
+            <svg width="16" height="8" viewBox="0 0 16 8" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+              <path d="M0 4h15M11.5 .5 15 4l-3.5 3.5"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</bt-review-cover>
+
+<script>
+  (function () {
+    if (customElements.get('bt-review-cover')) return;
+
+    class BTReviewCover extends HTMLElement {
+      connectedCallback() {
+        this.total = parseInt(this.dataset.total, 10) || 0;
+        this.dur = parseInt(this.dataset.autoplay, 10) || 6500;
+        this.i = 0;
+        this.elapsed = 0;
+        this.paused = false;
+        this.visible = false;
+        this.bgs = this.querySelectorAll('.btr__bg');
+        this.photos = this.querySelectorAll('.btr__photo');
+        this.quotes = this.querySelectorAll('.btr__q');
+        this.segs = this.querySelectorAll('.btr__seg');
+        this.num = this.querySelector('.btr__num');
+        if (this.total < 2) return;
+
+        var self = this;
+        this.onClick = function (e) {
+          var seg = e.target.closest('[data-go]');
+          var arrow = e.target.closest('[data-dir]');
+          if (seg) self.go(parseInt(seg.dataset.go, 10));
+          else if (arrow) self.go(self.i + parseInt(arrow.dataset.dir, 10));
+        };
+        this.onEnter = function () {
+          if (self.paused) return;
+          self.paused = true;
+          self.elapsed += Date.now() - (self.start || Date.now());
+          clearTimeout(self.t);
+          self.classList.add('is-paused');
+        };
+        this.onLeave = function () {
+          self.paused = false;
+          self.classList.remove('is-paused');
+          self.schedule();
+        };
+        this.onTouchStart = function (e) {
+          self.tx = e.touches && e.touches[0] ? e.touches[0].clientX : null;
+        };
+        this.onTouchEnd = function (e) {
+          if (self.tx == null) return;
+          var t = e.changedTouches && e.changedTouches[0];
+          var x0 = self.tx;
+          self.tx = null;
+          if (t && Math.abs(t.clientX - x0) > 40) self.go(self.i + (t.clientX < x0 ? 1 : -1));
+        };
+        this.onKey = function (e) {
+          if (e.key === 'ArrowRight') {
+            self.go(self.i + 1);
+          } else if (e.key === 'ArrowLeft') {
+            self.go(self.i - 1);
+          }
+        };
+        this.onBlockSelect = function (e) {
+          if (!self.contains(e.target)) return;
+          var idx = parseInt(e.target.dataset.index, 10);
+          if (!isNaN(idx)) {
+            self.paused = true;
+            clearTimeout(self.t);
+            self.show(idx);
+          }
+        };
+        this.onBlockDeselect = function (e) {
+          if (self.contains(e.target)) {
+            self.paused = false;
+            self.schedule();
+          }
+        };
+
+        this.addEventListener('click', this.onClick);
+        this.addEventListener('mouseenter', this.onEnter);
+        this.addEventListener('mouseleave', this.onLeave);
+        this.addEventListener('focusin', this.onEnter);
+        this.addEventListener('focusout', this.onLeave);
+        this.addEventListener('touchstart', this.onTouchStart, { passive: true });
+        this.addEventListener('touchend', this.onTouchEnd);
+        this.addEventListener('keydown', this.onKey);
+        document.addEventListener('shopify:block:select', this.onBlockSelect);
+        document.addEventListener('shopify:block:deselect', this.onBlockDeselect);
+
+        if ('IntersectionObserver' in window) {
+          this.io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting && !self.visible) {
+                  self.visible = true;
+                  self.classList.remove('is-idle');
+                  self.go(self.i);
+                }
+              });
+            },
+            { threshold: 0.35 },
+          );
+          this.io.observe(this);
+        } else {
+          this.visible = true;
+          this.classList.remove('is-idle');
+          this.schedule();
+        }
+      }
+
+      disconnectedCallback() {
+        clearTimeout(this.t);
+        if (this.io) this.io.disconnect();
+        document.removeEventListener('shopify:block:select', this.onBlockSelect);
+        document.removeEventListener('shopify:block:deselect', this.onBlockDeselect);
+      }
+
+      show(k) {
+        var n = this.total;
+        this.i = ((k % n) + n) % n;
+        for (var j = 0; j < n; j++) {
+          var on = j === this.i;
+          if (this.bgs[j]) this.bgs[j].classList.toggle('is-on', on);
+          if (this.photos[j]) this.photos[j].classList.toggle('is-on', on);
+          if (this.quotes[j]) {
+            this.quotes[j].classList.toggle('is-on', on);
+            this.quotes[j].setAttribute('aria-hidden', on ? 'false' : 'true');
+          }
+          if (this.segs[j]) {
+            this.segs[j].classList.remove('is-on', 'is-done');
+            if (j < this.i) this.segs[j].classList.add('is-done');
+          }
+        }
+        var seg = this.segs[this.i];
+        if (seg) {
+          void seg.offsetWidth;
+          seg.classList.add('is-on');
+        }
+        if (this.num) this.num.textContent = (this.i + 1 < 10 ? '0' : '') + (this.i + 1);
+      }
+
+      go(k) {
+        this.elapsed = 0;
+        this.start = Date.now();
+        this.show(k);
+        this.schedule();
+      }
+
+      schedule() {
+        clearTimeout(this.t);
+        if (this.paused || !this.visible) return;
+        var self = this;
+        this.start = Date.now();
+        this.t = setTimeout(
+          function () {
+            self.go(self.i + 1);
+          },
+          Math.max(300, this.dur - this.elapsed),
+        );
+      }
+    }
+
+    customElements.define('bt-review-cover', BTReviewCover);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Gift Reviews",
+  "class": "section-bt-gift-reviews",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "In their words" },
+    { "type": "text", "id": "label", "label": "Label (top right)", "default": "Notes from Bentley Trike families" },
+    { "type": "header", "content": "Slideshow" },
+    { "type": "range", "id": "autoplay", "label": "Time per review", "min": 3, "max": 15, "step": 1, "unit": "s", "default": 7 },
+    { "type": "range", "id": "height", "label": "Height on desktop", "min": 560, "max": 1000, "step": 20, "unit": "px", "default": 860 },
+    { "type": "range", "id": "blur", "label": "Background frost", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 28 },
+    { "type": "range", "id": "overlay", "label": "Background darkening", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 40 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#1a1a1a" },
+    { "type": "header", "content": "Fonts" },
+    { "type": "font_picker", "id": "heading_font", "label": "Headings", "default": "playfair_display_n4" },
+    { "type": "font_picker", "id": "body_font", "label": "Body text", "default": "poppins_n4" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Pull quote (large)", "info": "A short line taken from the review." },
+        { "type": "textarea", "id": "text", "label": "Full review (small)" },
+        { "type": "text", "id": "author", "label": "Name", "default": "Customer name" },
+        { "type": "text", "id": "role", "label": "Detail", "default": "Bentley Trike owner" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Gift Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "quote": "It has turned our daily walks into a cherished routine.",
+            "text": "“We really enjoy our Bentley trike. Beyond its performance, it’s a total head-turner with craftsmanship that truly stands out.”",
+            "author": "Raquel L.",
+            "role": "Bentley Trike owner"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "A fantastic gift that combines style, fun, and comfort.",
+            "text": "“I bought this beautiful green Bentley car for my son and it has been an absolute joy! Highly recommend!”",
+            "author": "Irina D.",
+            "role": "Bentley Ride-On owner"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "So rich and classy — I get so many compliments.",
+            "text": "“Absolutely love this product. I wish I could afford a Bentley, but my daughter definitely can with this stroller!”",
+            "author": "Autumn R.",
+            "role": "Bentley Trike owner"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
