@@ -1,0 +1,759 @@
+{%- comment -%}
+  BT Gift Sticky Cart: a slim add-to-cart bar fixed to the bottom of the screen.
+  Shows a thumbnail, "Product · Colour", the price, colour swatches and an Add to cart
+  button. It slides in once visitors scroll past the hero and slides away at the footer.
+
+  Swatches come from the Products list: one product per colour (each becomes a swatch),
+  or a single product with colour variants (its colours become the swatches).
+{%- endcomment -%}
+{%- liquid
+  assign uid = section.id | replace: '_', '' | downcase
+  assign hf = section.settings.heading_font
+  assign bf = section.settings.body_font
+  assign bfb = bf | font_modify: 'weight', 'bold'
+  assign plist = section.settings.products
+  assign main = null
+  assign mode = 'products'
+  if plist.size == 1
+    assign main = plist.first
+  endif
+
+  # Colour option: the first option named like colour / color / finish, else the first option.
+  assign color_index = 0
+  if main != blank
+    for opt in main.options_with_values
+      assign oname = opt.name | downcase
+      if oname contains 'colo' or oname contains 'finish'
+        assign color_index = forloop.index0
+        break
+      endif
+    endfor
+  endif
+  if main != blank and main.options_with_values[color_index].values.size > 1
+    assign mode = 'variants'
+  endif
+  assign display_name = section.settings.display_name
+  if display_name == blank and plist.size > 0
+    assign display_name = plist.first.title
+  endif
+-%}
+
+{% style %}
+  {{ hf | font_face: font_display: 'swap' }}
+  {{ bf | font_face: font_display: 'swap' }}
+  {%- if bfb -%}{{ bfb | font_face: font_display: 'swap' }}{%- endif -%}
+
+  #bts-{{ uid }} {
+    --bts-head: {{ hf.family }}, {{ hf.fallback_families }};
+    --bts-body: {{ bf.family }}, {{ bf.fallback_families }};
+    --bts-bg: {{ section.settings.bg }};
+    --bts-text: {{ section.settings.text_color }};
+    --bts-muted: {{ section.settings.text_color | color_modify: 'alpha', 0.65 }};
+    --bts-line: {{ section.settings.text_color | color_modify: 'alpha', 0.12 }};
+    --bts-btn: {{ section.settings.button_bg }};
+    --bts-btn-text: {{ section.settings.button_text }};
+    --bts-btn-hover: {{ section.settings.button_hover }};
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: {{ section.settings.z_index }};
+    background: var(--bts-bg); color: var(--bts-text); font-family: var(--bts-body);
+    border-top: 1px solid var(--bts-line); box-shadow: 0 -10px 30px rgba(0,0,0,.06);
+    transform: translateY(105%); transition: transform .45s cubic-bezier(.2,.7,.2,1), visibility 0s linear .45s;
+    visibility: hidden;
+  }
+  #bts-{{ uid }}.is-shown { transform: none; visibility: visible; transition: transform .45s cubic-bezier(.2,.7,.2,1), visibility 0s; }
+  #bts-{{ uid }} .bts__inner {
+    max-width: 1440px; margin: 0 auto; box-sizing: border-box;
+    padding: 12px clamp(20px, 6vw, 144px);
+    display: flex; align-items: center; gap: 24px;
+  }
+  #bts-{{ uid }} .bts__item { display: flex; align-items: center; gap: 16px; min-width: 0; flex: 1 1 auto; }
+  #bts-{{ uid }} .bts__thumb {
+    flex: none; width: 56px; height: 56px; background: {{ section.settings.thumb_bg }}; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #bts-{{ uid }} .bts__thumb img,
+  #bts-{{ uid }} .bts__thumb svg { width: 100%; height: 100%; object-fit: contain; }
+  #bts-{{ uid }} .bts__info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  #bts-{{ uid }} .bts__title {
+    margin: 0; font-family: var(--bts-head); font-weight: 400; font-size: 20px; line-height: 1.25; color: var(--bts-text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  #bts-{{ uid }} .bts__price { display: flex; gap: 8px; align-items: baseline; font-size: 13px; color: var(--bts-muted); }
+  #bts-{{ uid }} .bts__price s { font-size: 12px; }
+  #bts-{{ uid }} .bts__swatches {
+    display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0;
+    overflow-x: auto; scrollbar-width: none; padding: 4px 2px;
+  }
+  #bts-{{ uid }} .bts__swatches::-webkit-scrollbar { display: none; }
+  #bts-{{ uid }} .bts__sw {
+    flex: none; position: relative; width: 34px; height: 34px; border-radius: 50%; padding: 0; margin: 0;
+    border: 0; cursor: pointer; background: transparent;
+    box-shadow: inset 0 0 0 1px var(--bts-line); transition: box-shadow .2s ease;
+  }
+  #bts-{{ uid }} .bts__sw span {
+    position: absolute; inset: 4px; border-radius: 50%; background-size: cover; background-position: center;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+  }
+  #bts-{{ uid }} .bts__sw:hover { box-shadow: inset 0 0 0 1px var(--bts-muted); }
+  #bts-{{ uid }} .bts__sw[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px var(--bts-text); }
+  #bts-{{ uid }} .bts__sw.is-unavailable span::after {
+    content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px;
+    background: var(--bts-muted); transform: rotate(45deg);
+  }
+  #bts-{{ uid }} .bts__sw:focus-visible { outline: 2px solid var(--bts-text); outline-offset: 2px; }
+  #bts-{{ uid }} .bts__buy { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  #bts-{{ uid }} .bts__btn {
+    display: inline-flex !important; align-items: center; justify-content: center;
+    min-width: 172px; min-height: 50px; padding: 0 28px !important; box-sizing: border-box; border: 0; border-radius: 0;
+    background: var(--bts-btn); color: var(--bts-btn-text); cursor: pointer;
+    font-family: var(--bts-body); font-weight: 700; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; line-height: 1;
+    transition: background .25s ease;
+  }
+  #bts-{{ uid }} .bts__btn:hover { background: var(--bts-btn-hover); }
+  #bts-{{ uid }} .bts__btn[disabled] { opacity: .5; cursor: default; }
+  #bts-{{ uid }} .bts__btn.is-busy { cursor: progress; opacity: .8; }
+  #bts-{{ uid }} .bts__msg { min-height: 0; font-size: 12px; color: var(--bts-btn); }
+  #bts-{{ uid }} .bts__msg:empty { display: none; }
+
+  @media (max-width: 989px) {
+    #bts-{{ uid }} .bts__inner { padding: 10px 20px; gap: 16px; }
+    #bts-{{ uid }} .bts__title { font-size: 17px; }
+    #bts-{{ uid }} .bts__btn { min-width: 0; }
+  }
+  @media (max-width: 749px) {
+    #bts-{{ uid }} .bts__inner { flex-wrap: wrap; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); gap: 10px 12px; }
+    #bts-{{ uid }} .bts__item { flex: 1 1 0; gap: 10px; }
+    #bts-{{ uid }} .bts__thumb { width: 44px; height: 44px; }
+    #bts-{{ uid }} .bts__title { font-size: 15px; }
+    #bts-{{ uid }} .bts__price { font-size: 12px; }
+    #bts-{{ uid }} .bts__btn { min-height: 46px; padding: 0 18px !important; font-size: 11px; letter-spacing: .16em; }
+    #bts-{{ uid }} .bts__swatches { order: 3; flex: 1 0 100%; gap: 6px; padding: 2px; }
+    #bts-{{ uid }} .bts__sw { width: 30px; height: 30px; }
+    {%- unless section.settings.swatches_mobile -%}
+      #bts-{{ uid }} .bts__swatches { display: none; }
+    {%- endunless -%}
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #bts-{{ uid }}, #bts-{{ uid }}.is-shown { transition: none; }
+  }
+  {%- if section.settings.lift_chat -%}
+    /* Lift common chat buttons (Gorgias, Shopify Inbox) above the bar while it shows */
+    body.bt-sticky-cart-open #gorgias-chat-container iframe#chat-button,
+    body.bt-sticky-cart-open #gorgias-chat-container #chat-button,
+    body.bt-sticky-cart-open #shopify-chat,
+    body.bt-sticky-cart-open #ShopifyChat,
+    body.bt-sticky-cart-open inbox-online-store-chat {
+      bottom: calc(var(--bt-sticky-cart-h, 76px) + 12px) !important;
+      transition: bottom .3s ease !important;
+    }
+  {%- endif -%}
+{% endstyle %}
+
+{%- capture swatches_json -%}{{ section.settings.swatch_colours | newline_to_br | strip_newlines | replace: '<br />', '|' }}{%- endcapture -%}
+
+<bt-sticky-cart
+  id="bts-{{ uid }}"
+  role="region"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  data-mode="{{ mode }}"
+  data-color-index="{{ color_index }}"
+  data-show="{{ section.settings.show_after }}"
+  data-show-px="{{ section.settings.show_after_px }}"
+  data-hide-footer="{{ section.settings.hide_at_footer }}"
+  data-after-add="{{ section.settings.after_add }}"
+  data-cart-add="{{ routes.cart_add_url }}"
+  data-cart-url="{{ routes.cart_url }}"
+  data-display-name="{{ display_name | escape }}"
+  data-separator="{{ section.settings.separator | escape }}"
+  data-label-add="{{ section.settings.label_add | escape }}"
+  data-label-adding="{{ section.settings.label_adding | escape }}"
+  data-label-added="{{ section.settings.label_added | escape }}"
+  data-label-sold-out="{{ section.settings.label_sold_out | escape }}"
+  data-label-error="{{ section.settings.label_error | escape }}"
+  data-money-format="{{ shop.money_format | escape }}"
+>
+  <div class="bts__inner">
+    <div class="bts__item">
+      <div class="bts__thumb">
+        {%- liquid
+          assign thumb = null
+          if plist.size > 0
+            assign tp = plist.first
+            assign thumb = tp.selected_or_first_available_variant.featured_image | default: tp.featured_image
+          endif
+        -%}
+        {%- if thumb -%}
+          {{ thumb | image_url: width: 160 | image_tag: widths: '80, 120, 160', sizes: '56px', alt: '', loading: 'lazy', class: 'bts__thumb-img' }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="bts__info">
+        <p class="bts__title">{{ display_name | default: 'Choose a product' }}</p>
+        <div class="bts__price"><span class="bts__price-now"></span><s class="bts__price-was"></s></div>
+      </div>
+    </div>
+
+    <div class="bts__swatches" role="group" aria-label="{{ section.settings.swatch_label | escape }}"></div>
+
+    <div class="bts__buy">
+      <button type="button" class="bts__btn" disabled>{{ section.settings.label_add }}</button>
+      <span class="bts__msg" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+
+  {%- comment -%} Data the script reads {%- endcomment -%}
+  <script type="application/json" class="bts__data">
+    {
+      "colours": {{ swatches_json | json }},
+      "items": [
+        {%- if mode == 'products' -%}
+          {%- for p in plist -%}
+            {%- liquid
+              assign v = p.selected_or_first_available_variant
+              # Colour name: the part of the title before "Bentley", e.g. "Jetstream Blue Bentley 6 in 1…"
+              assign label = p.title | split: ' Bentley' | first | strip
+              if label == blank
+                assign label = p.title
+              endif
+              assign img = v.featured_image | default: p.featured_image
+            -%}
+            {%- unless forloop.first -%},{%- endunless -%}
+            {
+              "label": {{ label | json }},
+              "fullTitle": {{ p.title | json }},
+              "colour": "",
+              "swatchImage": "",
+              "variant": {{ v.id | json }},
+              "available": {{ v.available | json }},
+              "price": {{ v.price | json }},
+              "compare": {{ v.compare_at_price | default: 0 | json }},
+              "image": {% if img %}{{ img | image_url: width: 160 | json }}{% else %}""{% endif %},
+              "title": {{ display_name | json }}
+            }
+          {%- endfor -%}
+        {%- elsif main != blank -%}
+          {%- assign copt = main.options_with_values[color_index] -%}
+          {%- for val in copt.values -%}
+            {%- liquid
+              assign match = null
+              for v in main.variants
+                if v.options[color_index] == val.name
+                  if match == null
+                    assign match = v
+                  endif
+                  if v.available
+                    assign match = v
+                    break
+                  endif
+                endif
+              endfor
+              assign img = match.featured_image | default: main.featured_image
+              assign sw_colour = ''
+              assign sw_image = ''
+              if val.swatch.color
+                assign sw_colour = val.swatch.color | append: ''
+              endif
+              if val.swatch.image
+                assign sw_image = val.swatch.image | image_url: width: 80
+              endif
+            -%}
+            {%- unless forloop.first -%},{%- endunless -%}
+            {
+              "label": {{ val.name | json }},
+              "fullTitle": {{ val.name | json }},
+              "colour": {{ sw_colour | json }},
+              "swatchImage": {{ sw_image | json }},
+              "variant": {{ match.id | json }},
+              "available": {{ match.available | json }},
+              "price": {{ match.price | json }},
+              "compare": {{ match.compare_at_price | default: 0 | json }},
+              "image": {% if img %}{{ img | image_url: width: 160 | json }}{% else %}""{% endif %},
+              "title": {{ display_name | json }}
+            }
+          {%- endfor -%}
+        {%- endif -%}
+      ]
+    }
+  </script>
+</bt-sticky-cart>
+
+<script>
+  (function () {
+    if (customElements.get('bt-sticky-cart')) return;
+
+    function formatMoney(cents, format) {
+      if (typeof cents !== 'number') cents = parseInt(cents, 10) || 0;
+      format = String(format || '$' + '{' + '{amount}' + '}').replace(/<[^>]*>/g, '');
+      var withDelims = function (n, dec, thou, sep) {
+        var parts = (n / 100).toFixed(dec).split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thou);
+        return dec ? parts.join(sep) : parts[0];
+      };
+      var m = format.match(/\{\{\s*(\w+)\s*\}\}/);
+      var key = m ? m[1] : 'amount';
+      var value = withDelims(cents, 2, ',', '.');
+      if (key === 'amount_no_decimals') value = withDelims(cents, 0, ',', '.');
+      else if (key === 'amount_with_comma_separator') value = withDelims(cents, 2, '.', ',');
+      else if (key === 'amount_no_decimals_with_comma_separator') value = withDelims(cents, 0, '.', ',');
+      return format.replace(/\{\{\s*\w+\s*\}\}/, value);
+    }
+
+    class BTStickyCart extends HTMLElement {
+      connectedCallback() {
+        var self = this;
+        this.btn = this.querySelector('.bts__btn');
+        this.msg = this.querySelector('.bts__msg');
+        this.titleEl = this.querySelector('.bts__title');
+        this.now = this.querySelector('.bts__price-now');
+        this.was = this.querySelector('.bts__price-was');
+        this.thumb = this.querySelector('.bts__thumb');
+        this.wrap = this.querySelector('.bts__swatches');
+        if (!this.inited) {
+          this.inited = true;
+          var data = { items: [], colours: '' };
+          try { data = JSON.parse(this.querySelector('.bts__data').textContent); } catch (e) {}
+          this.items = data.items || [];
+          this.colourMap = this.parseColours(data.colours || '');
+          this.sel = 0;
+          for (var i = 0; i < this.items.length; i++) { if (this.items[i].available) { this.sel = i; break; } }
+          this.buildSwatches();
+          this.select(this.sel);
+          if (this.btn) this.btn.addEventListener('click', function () { self.add(); });
+        }
+
+        // Move to <body> so theme containers with transforms can't trap the fixed bar.
+        var designMode = window.Shopify && window.Shopify.designMode;
+        if (this.parentElement !== document.body && !designMode) {
+          this.placeholder = document.createComment('bt-sticky-cart');
+          this.parentElement.insertBefore(this.placeholder, this);
+          document.body.appendChild(this);
+          return; // connectedCallback runs again after the move
+        }
+
+        this.onScroll = this.onScroll.bind(this);
+        this.onResize = this.onResize.bind(this);
+        window.addEventListener('scroll', this.onScroll, { passive: true });
+        window.addEventListener('resize', this.onResize);
+        this.footerVisible = false;
+        if (this.dataset.hideFooter === 'true' && 'IntersectionObserver' in window) {
+          var footer = document.querySelector('.shopify-section-group-footer-group, footer, #shopify-section-footer, .site-footer');
+          if (footer) {
+            this.io = new IntersectionObserver(function (es) {
+              self.footerVisible = es.some(function (e) { return e.isIntersecting; });
+              self.onScroll();
+            }, { threshold: 0 });
+            this.io.observe(footer);
+          }
+        }
+        this.onSelect = function (e) { if (self.contains(e.target) || e.target.id === self.id || (e.detail && e.detail.sectionId && self.id.indexOf(String(e.detail.sectionId).replace(/_/g, '').toLowerCase()) > -1)) { self.forced = true; self.onScroll(); } };
+        this.onDeselect = function () { self.forced = false; self.onScroll(); };
+        document.addEventListener('shopify:section:select', this.onSelect);
+        document.addEventListener('shopify:section:deselect', this.onDeselect);
+        this.onResize();
+      }
+
+      disconnectedCallback() {
+        if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+        if (this.onResize) window.removeEventListener('resize', this.onResize);
+        if (this.io) this.io.disconnect();
+        if (this.onSelect) document.removeEventListener('shopify:section:select', this.onSelect);
+        if (this.onDeselect) document.removeEventListener('shopify:section:deselect', this.onDeselect);
+        document.body.classList.remove('bt-sticky-cart-open');
+      }
+
+      parseColours(text) {
+        // "Onyx Black: #141414 | Celeste: #9ec5d8"
+        var list = [];
+        String(text).split('|').forEach(function (line) {
+          var i = line.indexOf(':');
+          if (i < 1) return;
+          var name = line.slice(0, i).trim();
+          var hex = line.slice(i + 1).trim();
+          if (name && hex) list.push({ name: name, key: name.toLowerCase(), hex: hex });
+        });
+        return list;
+      }
+
+      // Find a colour for a swatch: an exact name match, or a list name that the colour name
+      // ends with ("Mulliner Celeste" → Celeste). Anything else keeps its own name and photo.
+      matchColour(it) {
+        var list = this.colourMap || [];
+        var label = String(it.label || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        if (!label) return null;
+        var best = null;
+        for (var i = 0; i < list.length; i++) {
+          var k = list[i].key;
+          if (k === label) return list[i];
+          var ends = label.length > k.length && label.slice(-k.length) === k && label.charAt(label.length - k.length - 1) === ' ';
+          if (ends && (!best || k.length > best.key.length)) best = list[i];
+        }
+        return best;
+      }
+
+      buildSwatches() {
+        var self = this;
+        if (!this.wrap) return;
+        if (this.items.length < 2) {
+          this.wrap.style.display = 'none';
+          var one = this.items[0];
+          if (one && one.fullTitle && one.fullTitle !== one.label) { var h = this.matchColour(one); if (h) one.label = h.name; }
+          return;
+        }
+        this.items.forEach(function (it, i) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'bts__sw' + (it.available ? '' : ' is-unavailable');
+          b.setAttribute('aria-pressed', 'false');
+          var dot = document.createElement('span');
+          var str = function (x) { return typeof x === 'string' && x.trim() ? x.trim() : ''; };
+          var c = str(it.colour);
+          if (!c) {
+            var hit = self.matchColour(it);
+            if (hit) {
+              c = hit.hex;
+              // One product per colour: use the tidy name from the list, e.g. "Jetstream Blue"
+              if (it.fullTitle && it.fullTitle !== it.label) it.label = hit.name;
+            }
+          }
+          if (str(it.swatchImage)) dot.style.backgroundImage = 'url("' + str(it.swatchImage) + '")';
+          else if (c) dot.style.background = c;
+          else if (str(it.image)) dot.style.backgroundImage = 'url("' + str(it.image) + '")';
+          else dot.style.background = '#ddd';
+          b.setAttribute('aria-label', it.label + (it.available ? '' : ' (sold out)'));
+          b.title = it.label;
+          b.appendChild(dot);
+          b.addEventListener('click', function () { self.select(i); });
+          self.wrap.appendChild(b);
+        });
+      }
+
+      select(i) {
+        var it = this.items[i];
+        this.sel = i;
+        if (this.msg) this.msg.textContent = '';
+        if (!it) {
+          if (this.btn) this.btn.disabled = true;
+          return;
+        }
+        var sws = this.wrap ? this.wrap.querySelectorAll('.bts__sw') : [];
+        for (var k = 0; k < sws.length; k++) sws[k].setAttribute('aria-pressed', k === i ? 'true' : 'false');
+        var sep = this.dataset.separator || ' · ';
+        var name = it.title || this.dataset.displayName || '';
+        if (this.titleEl) this.titleEl.textContent = this.items.length > 1 ? name + sep + it.label : name;
+        var fmt = this.dataset.moneyFormat;
+        if (this.now) this.now.textContent = formatMoney(it.price, fmt);
+        if (this.was) this.was.textContent = it.compare > it.price ? formatMoney(it.compare, fmt) : '';
+        if (typeof it.image === 'string' && it.image && this.thumb) {
+          var img = this.thumb.querySelector('img');
+          if (!img) {
+            this.thumb.innerHTML = '';
+            img = document.createElement('img');
+            img.alt = '';
+            this.thumb.appendChild(img);
+          }
+          img.removeAttribute('srcset');
+          img.src = it.image;
+        }
+        if (this.btn) {
+          this.btn.disabled = !it.available || !it.variant;
+          this.btn.textContent = it.available ? this.dataset.labelAdd || 'Add to cart' : this.dataset.labelSoldOut || 'Sold out';
+        }
+      }
+
+      onResize() {
+        document.documentElement.style.setProperty('--bt-sticky-cart-h', this.offsetHeight + 'px');
+        this.onScroll();
+      }
+
+      threshold() {
+        if (this.dataset.show === 'px') return parseInt(this.dataset.showPx, 10) || 0;
+        var hero = document.querySelector('bt-orbital-hero');
+        if (hero) return hero.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.5;
+        return window.innerHeight * 0.8;
+      }
+
+      onScroll() {
+        var show = this.forced || (window.scrollY > this.threshold() && !this.footerVisible);
+        if (show === this.shown) return;
+        this.shown = show;
+        this.classList.toggle('is-shown', show);
+        this.setAttribute('aria-hidden', show ? 'false' : 'true');
+        document.body.classList.toggle('bt-sticky-cart-open', show);
+      }
+
+      add() {
+        var self = this;
+        var it = this.items[this.sel];
+        if (!it || !it.variant || !it.available || this.btn.classList.contains('is-busy')) return;
+        this.btn.classList.add('is-busy');
+        this.btn.textContent = this.dataset.labelAdding || 'Adding…';
+        if (this.msg) this.msg.textContent = '';
+        fetch((this.dataset.cartAdd || '/cart/add') + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: [{ id: Number(it.variant), quantity: 1 }], sections: 'cart-icon-bubble,cart-drawer,cart-notification' })
+        })
+          .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, data: j }; }); })
+          .then(function (res) {
+            self.btn.classList.remove('is-busy');
+            if (!res.ok) throw new Error((res.data && (res.data.description || res.data.message)) || '');
+            if (self.dataset.afterAdd === 'cart') { window.location.href = self.dataset.cartUrl || '/cart'; return; }
+            self.refreshCart(res.data);
+            self.btn.textContent = self.dataset.labelAdded || 'Added';
+            clearTimeout(self.t);
+            self.t = setTimeout(function () { self.select(self.sel); }, 2200);
+          })
+          .catch(function (err) {
+            self.btn.classList.remove('is-busy');
+            self.select(self.sel);
+            if (self.msg) self.msg.textContent = (err && err.message) || self.dataset.labelError || 'Could not add to cart.';
+          });
+      }
+
+      refreshCart(data) {
+        var sections = data && data.sections;
+        if (sections && sections['cart-icon-bubble']) {
+          var bubble = document.getElementById('cart-icon-bubble');
+          if (bubble) {
+            var doc = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
+            var fresh = doc.querySelector('.shopify-section') || doc.body;
+            bubble.innerHTML = fresh.innerHTML;
+          }
+        }
+        var item = data && data.items ? data.items[0] : data;
+        ['cart:refresh', 'cart:updated', 'cart:build'].forEach(function (name) {
+          document.dispatchEvent(new CustomEvent(name, { bubbles: true, detail: { item: item } }));
+        });
+        document.dispatchEvent(new CustomEvent('ajaxProduct:added', { bubbles: true, detail: { product: item } }));
+        fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+          var counts = document.querySelectorAll('[data-cart-count], .cart-count, .cart-link__bubble-num, .site-nav__cart-bubble');
+          counts.forEach(function (el) { if (el.children.length === 0) el.textContent = cart.item_count; });
+        }).catch(function () {});
+      }
+    }
+
+    customElements.define('bt-sticky-cart', BTStickyCart);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Gift Sticky Cart",
+  "class": "section-bt-gift-sticky-cart",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 30,
+      "info": "Pick every colour you sell (one product per colour). Each one becomes a swatch, in this order. Or pick one product that has colour options."
+    },
+    {
+      "type": "text",
+      "id": "display_name",
+      "label": "Name shown in the bar",
+      "default": "Bentley Trike",
+      "info": "The colour is added after it, e.g. Bentley Trike · Jetstream Blue."
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": " · "
+    },
+    {
+      "type": "textarea",
+      "id": "swatch_colours",
+      "label": "Colour names and swatches",
+      "default": "Onyx Black: #141414\nMulliner: #c6a15b\nCentennial: #4a4a48\nCeleste: #9ec5d8\nDragon Red: #a8262b\nMandarin: #d9792b\nCool Stone: #c9c3bb\nJetstream Blue: #2a4d8f\nFuchsia Pink: #d14f8a",
+      "info": "One per line, as Name: #hex. Each product is matched by the name in its title (e.g. \"Jetstream Blue Bentley 6 in 1…\" → Jetstream Blue). Products with no match show their photo as the swatch."
+    },
+    {
+      "type": "text",
+      "id": "swatch_label",
+      "label": "Swatch group name (for screen readers)",
+      "default": "Colour"
+    },
+    {
+      "type": "header",
+      "content": "When it shows"
+    },
+    {
+      "type": "select",
+      "id": "show_after",
+      "label": "Show after",
+      "options": [
+        {
+          "value": "hero",
+          "label": "Scrolling past the hero"
+        },
+        {
+          "value": "px",
+          "label": "Scrolling a set distance"
+        }
+      ],
+      "default": "hero"
+    },
+    {
+      "type": "range",
+      "id": "show_after_px",
+      "label": "Distance (for set distance)",
+      "min": 0,
+      "max": 3000,
+      "step": 50,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_at_footer",
+      "label": "Hide when the footer is in view",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "swatches_mobile",
+      "label": "Show swatches on phones",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "lift_chat",
+      "label": "Lift the chat button above the bar",
+      "default": true,
+      "info": "Works with Gorgias and Shopify Inbox."
+    },
+    {
+      "type": "header",
+      "content": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "label_add",
+      "label": "Button label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "label_adding",
+      "label": "While adding",
+      "default": "Adding…"
+    },
+    {
+      "type": "text",
+      "id": "label_added",
+      "label": "After adding",
+      "default": "Added"
+    },
+    {
+      "type": "text",
+      "id": "label_sold_out",
+      "label": "Sold out label",
+      "default": "Sold out"
+    },
+    {
+      "type": "text",
+      "id": "label_error",
+      "label": "Error message",
+      "default": "Sorry, that couldn’t be added. Please try again."
+    },
+    {
+      "type": "select",
+      "id": "after_add",
+      "label": "After adding to cart",
+      "options": [
+        {
+          "value": "stay",
+          "label": "Stay on the page"
+        },
+        {
+          "value": "cart",
+          "label": "Go to the cart page"
+        }
+      ],
+      "default": "stay"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Bar name (for screen readers)",
+      "default": "Quick add to cart"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "thumb_bg",
+      "label": "Thumbnail background",
+      "default": "#efe8df"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button",
+      "default": "#a83f2f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover",
+      "label": "Button on hover",
+      "default": "#8f3527"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Fonts and layering"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Name",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body text",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "range",
+      "id": "z_index",
+      "label": "Layer (raise if hidden behind something)",
+      "min": 10,
+      "max": 990,
+      "step": 10,
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Gift Sticky Cart"
+    }
+  ]
+}
+{% endschema %}
