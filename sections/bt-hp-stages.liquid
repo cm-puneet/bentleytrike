@@ -1,0 +1,334 @@
+{%- comment -%}
+  BT Homepage — "It grows up with them" growth chart
+  Each stage is a taller mark along a measuring-tape baseline, joined by a growth
+  curve that fills in as you move through. Tap a stage or use the arrows; it also
+  moves on by itself while on screen.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign stages = section.blocks
+  assign n = stages.size
+  assign last = n | minus: 1 | at_least: 1
+  assign span_x = 312.0 | divided_by: last
+  assign span_y = 108.0 | divided_by: last
+  assign curve = ''
+  assign px = 0
+  assign py = 0
+-%}
+
+<style>
+  .bthp-stg{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-stg{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-stg{background:var(--bthp-bg);color:var(--bthp-ink);font-family:var(--text-font-family,Poppins,sans-serif)}
+  .bthp-stg__wrap{max-width:1440px;margin:0 auto;padding:clamp(96px,10vw,152px) clamp(20px,4.4vw,64px);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(40px,6vw,96px);align-items:center}
+  .bthp-stg__label{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--bthp-accent)}
+  .bthp-stg__h{margin:16px 0 14px;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(40px,4.6vw,72px) * var(--bthp-hs, 1));line-height:.98;letter-spacing:-.01em;color:var(--bthp-ink)}
+  .bthp-stg__h em{font-style:italic;color:var(--bthp-accent)}
+  .bthp-stg__lede{margin:0;max-width:440px;font-size:15px;line-height:1.7;opacity:.78}
+  .bthp-stg__chart{position:relative;max-width:520px;margin:28px 0 0}
+  .bthp-stg__chart svg{display:block;width:100%;height:auto;overflow:visible}
+  .bthp-stg__prog{transition:stroke-dashoffset 1.3s cubic-bezier(.34,1.1,.5,1)}
+  .bthp-stg__stem{transition:stroke .5s ease}
+  .bthp-stg__stop{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--bthp-bg);box-shadow:inset 0 0 0 1px rgba(26,26,26,.3);color:var(--bthp-ink);cursor:pointer;font-family:var(--heading-font-family,"Playfair Display",serif);font-style:italic;font-size:16px;transition:background .4s ease,color .4s ease,box-shadow .4s ease,transform .4s ease}
+  .bthp-stg__stop:hover{box-shadow:inset 0 0 0 1px var(--bthp-ink)}
+  .bthp-stg__stop.is-past{box-shadow:inset 0 0 0 1px var(--bthp-accent);color:var(--bthp-accent)}
+  .bthp-stg__stop[aria-selected="true"]{background:var(--bthp-accent);color:#ffffff;box-shadow:none}
+  .bthp-stg__read{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:12px;margin-top:10px;max-width:520px}
+  .bthp-stg__txt{display:grid;text-align:center}
+  .bthp-stg__rs{grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+  .bthp-stg__rs.is-on{opacity:1;transform:none}
+  .bthp-stg__rs b{font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:clamp(24px,2.4vw,34px);line-height:1.1}
+  .bthp-stg__rs span{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--bthp-accent)}
+  .bthp-stg__arw{width:48px;height:48px;border:0;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1px var(--bthp-ink);color:var(--bthp-ink);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s ease,color .3s ease}
+  .bthp-stg__arw:hover{background:var(--bthp-ink);color:var(--bthp-bg)}
+  .bthp-stg__time{position:relative;height:1px;margin:22px 0 0;max-width:520px;background:rgba(26,26,26,.14);overflow:hidden}
+  .bthp-stg__time i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--bthp-accent)}
+  .bthp-stg__time.is-run i{animation:bthpFillA var(--bthp-dur,6s) linear forwards}
+  .bthp-stg__time.is-run.is-odd i{animation-name:bthpFillB}
+  @keyframes bthpFillA{to{width:100%}}
+  @keyframes bthpFillB{to{width:100%}}
+  .bthp-stg__hint{margin:12px 0 0;max-width:520px;text-align:center;font-size:12px;opacity:.7}
+  .bthp-stg__media{position:relative;aspect-ratio:4/5;max-height:780px;overflow:hidden;background:#1a1a1a}
+  .bthp-stg__media img,.bthp-stg__media svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity 1.2s ease,transform 6s ease-out}
+  .bthp-stg__media .is-on{opacity:1;transform:scale(1)}
+  .bthp-stg__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.66) 100%)}
+  .bthp-stg__cap{position:absolute;left:0;right:0;bottom:0;padding:32px;display:grid;color:#ffffff}
+  .bthp-stg__cs{grid-area:1/1;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateY(12px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+  .bthp-stg__cs.is-on{opacity:1;transform:none}
+  .bthp-stg__cs p{margin:0}
+  .bthp-stg__cs .bthp-stg__k{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.9}
+  .bthp-stg__cs h3{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:clamp(28px,2.8vw,42px);line-height:1.05;color:#ffffff}
+  .bthp-stg__cs .bthp-stg__d{max-width:420px;font-size:14px;line-height:1.7;opacity:.9}
+  .bthp-stg__cta{display:inline-flex;margin-top:24px}
+  .bthp-stg__btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 30px;background:var(--bthp-accent);color:#ffffff;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border-radius:0;transition:background .3s ease}
+  .bthp-stg__btn:hover{background:var(--bthp-ink);color:#ffffff}
+  @media (max-width:749px){
+    /* Phone: everything on one screen — heading, square photo, chart, arrows and button */
+    .bthp-stg__wrap{display:flex;flex-direction:column;gap:0;padding:14px 20px 16px;height:calc(100svh - var(--bthp-top,64px));min-height:540px;justify-content:center}
+    .bthp-stg__wrap>div:first-child{display:contents}
+    .bthp-stg__label{order:1;font-size:9px}
+    .bthp-stg__h{order:2;font-size:calc(28px * var(--bthp-hs, 1));margin:6px 0 8px}
+    .bthp-stg__lede{order:3;display:var(--bthp-lede-m,block);margin:0 0 12px;font-size:13px;line-height:1.55}
+    .bthp-stg__media{order:4;align-self:center;flex:1 1 0;min-height:180px;max-height:var(--bthp-mh,100vw);aspect-ratio:var(--bthp-arm,1/1);width:auto;max-width:100vw;margin:0}
+    .bthp-stg__chart{order:5;align-self:center;flex:none;width:min(100%,260px);margin:8px 0 0}
+    .bthp-stg__stop{width:32px;height:32px;font-size:12px}
+    .bthp-stg__read{order:6;flex:none;grid-template-columns:40px minmax(0,1fr) 40px;margin-top:0}
+    .bthp-stg__arw{width:40px;height:40px}
+    .bthp-stg__rs b{display:none}
+    .bthp-stg__rs span{font-size:9px;letter-spacing:.18em}
+    .bthp-stg__time{order:7;flex:none;margin-top:8px}
+    .bthp-stg__hint{display:none}
+    .bthp-stg__cta{order:8;flex:none;display:flex;width:100%;margin-top:12px}
+    .bthp-stg__btn{width:100%;min-height:48px;box-sizing:border-box}
+    .bthp-stg__cap{padding:12px 14px}
+    .bthp-stg__cs{gap:3px}
+    .bthp-stg__cs .bthp-stg__k{font-size:9px}
+    .bthp-stg__cs h3{font-size:20px}
+    .bthp-stg__cs .bthp-stg__d{font-size:12px;line-height:1.45}
+  }
+  @media (max-width:749px) and (max-height:700px){
+    .bthp-stg__chart{width:min(100%,220px)}
+    .bthp-stg__lede{font-size:12px;margin-bottom:8px}
+  }
+  @media (prefers-reduced-motion:reduce){.bthp-stg__prog,.bthp-stg__media img{transition:none}}
+</style>
+
+<div
+  class="bthp-stg"
+  id="stages"
+  data-bthp-stages
+  data-auto="{{ s.autoplay }}"
+  data-seconds="{{ s.seconds }}"
+  data-count="{{ n }}"
+  style="--bthp-top: {{ s.header_space_mobile }}px; --bthp-lede-m: {% if s.lede_mobile %}block{% else %}none{% endif %}; --bthp-arm: {{ s.photo_shape_mobile | replace: 'x', ' / ' }}; --bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-accent: {{ s.accent }}; --bthp-dur: {{ s.seconds }}s; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+>
+  <div class="bthp-stg__wrap">
+    <div>
+      {%- if s.label != blank -%}<p class="bthp-stg__label">{{ s.label }}</p>{%- endif -%}
+      <h2 class="bthp-stg__h">{{ s.heading }} {% if s.heading_italic != blank %}<em>{{ s.heading_italic }}</em>{% endif %}</h2>
+      {%- if s.text != blank -%}<p class="bthp-stg__lede">{{ s.text }}</p>{%- endif -%}
+
+      {%- if n > 0 -%}
+        <div class="bthp-stg__chart">
+          <svg viewBox="0 0 400 230" aria-hidden="true">
+            <line x1="12" y1="196" x2="388" y2="196" stroke="rgba(26,26,26,.35)" stroke-width="1"></line>
+            {%- for k in (0..47) -%}
+              {%- liquid
+                assign tx = k | times: 8 | plus: 12
+                assign m5 = k | modulo: 5
+                assign ty = 190
+                if m5 == 0
+                  assign ty = 184
+                endif
+              -%}
+              <line x1="{{ tx }}" y1="196" x2="{{ tx }}" y2="{{ ty }}" stroke="rgba(26,26,26,.3)" stroke-width="1"></line>
+            {%- endfor -%}
+            {%- for block in stages -%}
+              {%- liquid
+                assign i = forloop.index0
+                assign x = i | times: span_x | plus: 44 | round: 1
+                assign y = i | times: span_y | minus: 150 | times: -1 | round: 1
+                assign y2 = y | plus: 24
+                if n == 1
+                  assign x = 200
+                  assign y = 100
+                  assign y2 = 124
+                endif
+                if forloop.first
+                  assign curve = 'M ' | append: x | append: ' ' | append: y
+                else
+                  assign mx = px | plus: x | divided_by: 2.0 | round: 1
+                  assign curve = curve | append: ' C ' | append: mx | append: ' ' | append: py | append: ', ' | append: mx | append: ' ' | append: y | append: ', ' | append: x | append: ' ' | append: y
+                endif
+                assign px = x
+                assign py = y
+              -%}
+              <line class="bthp-stg__stem" data-stem x1="{{ x }}" y1="196" x2="{{ x }}" y2="{{ y2 }}" stroke="rgba(26,26,26,.16)" stroke-width="1"></line>
+              <text x="{{ x }}" y="216" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="1.4" fill="rgba(26,26,26,.66)" style="font-family: var(--text-font-family, Poppins, sans-serif);" data-agetxt>{{ block.settings.short_age | upcase }}</text>
+            {%- endfor -%}
+            {%- if n > 1 -%}
+              <path d="{{ curve }}" fill="none" stroke="rgba(26,26,26,.1)" stroke-width="1.5"></path>
+              <path class="bthp-stg__prog" data-prog d="{{ curve }}" pathLength="100" fill="none" stroke="currentColor" style="color: var(--bthp-accent);" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="100"></path>
+            {%- endif -%}
+          </svg>
+          <div role="tablist" aria-label="{{ s.heading | escape }}">
+            {%- for block in stages -%}
+              {%- liquid
+                assign i = forloop.index0
+                assign x = i | times: span_x | plus: 44
+                assign y = i | times: span_y | minus: 150 | times: -1
+                if n == 1
+                  assign x = 200
+                  assign y = 100
+                endif
+                assign left = x | divided_by: 4.0 | round: 2
+                assign top = y | divided_by: 2.3 | round: 2
+                assign num = forloop.index | prepend: '0'
+              -%}
+              <button class="bthp-stg__stop" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ block.settings.title | escape }}, {{ block.settings.age | escape }}" data-stop="{{ i }}" style="left: {{ left }}%; top: {{ top }}%;" {{ block.shopify_attributes }}>{{ num }}</button>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="bthp-stg__read">
+          <button class="bthp-stg__arw" type="button" data-prev aria-label="Previous stage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div class="bthp-stg__txt" aria-live="polite">
+            {%- for block in stages -%}
+              {%- assign num = forloop.index | prepend: '0' -%}
+              {%- assign tot = n | prepend: '0' -%}
+              <div class="bthp-stg__rs{% if forloop.first %} is-on{% endif %}" data-read><span>Stage {{ num }} of {{ tot }} · {{ block.settings.age }}</span><b>{{ block.settings.title }}</b></div>
+            {%- endfor -%}
+          </div>
+          <button class="bthp-stg__arw" type="button" data-next aria-label="Next stage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+        {%- if s.autoplay -%}<div class="bthp-stg__time" data-time><i></i></div>{%- endif -%}
+        {%- if s.hint != blank -%}<p class="bthp-stg__hint">{{ s.hint }}</p>{%- endif -%}
+      {%- endif -%}
+      {%- if s.button_label != blank -%}<div class="bthp-stg__cta"><a class="bthp-stg__btn" href="{{ s.button_link | default: '#buy' }}">{{ s.button_label }}</a></div>{%- endif -%}
+    </div>
+
+    <div class="bthp-stg__media">
+      {%- assign fallback = s.image -%}
+      {%- for block in stages -%}
+        {%- assign im = block.settings.image | default: fallback -%}
+        {%- if im != blank -%}
+          {%- capture cls -%}{% if forloop.first %}is-on{% endif %}{%- endcapture -%}
+          {{ im | image_url: width: 1600 | image_tag: class: cls, loading: 'lazy', sizes: '(max-width: 749px) 100vw, 50vw', widths: '600,900,1200,1600', alt: block.settings.title }}
+        {%- else -%}
+          {%- capture cls -%}{% if forloop.first %}is-on{% endif %}{%- endcapture -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: cls }}
+        {%- endif -%}
+      {%- endfor -%}
+      <div class="bthp-stg__shade"></div>
+      <div class="bthp-stg__cap">
+        {%- for block in stages -%}
+          {%- assign num = forloop.index | prepend: '0' -%}
+          <div class="bthp-stg__cs{% if forloop.first %} is-on{% endif %}" data-cap aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+            <p class="bthp-stg__k">Stage {{ num }} · {{ block.settings.age }}</p>
+            <h3>{{ block.settings.title }}</h3>
+            {%- if block.settings.text != blank -%}<p class="bthp-stg__d">{{ block.settings.text }}</p>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-bthp-stages]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      var n = parseInt(el.getAttribute('data-count'), 10) || 0;
+      if (!n) return;
+      var media = el.querySelector('.bthp-stg__media');
+      var imgs = media ? [].slice.call(media.children).filter(function (c) { return c.tagName === 'IMG' || c.tagName === 'svg' || c.tagName === 'SVG'; }) : [];
+      var stops = el.querySelectorAll('[data-stop]');
+      var reads = el.querySelectorAll('[data-read]');
+      var caps = el.querySelectorAll('[data-cap]');
+      var stems = el.querySelectorAll('[data-stem]');
+      var ages = el.querySelectorAll('[data-agetxt]');
+      var prog = el.querySelector('[data-prog]');
+      var time = el.querySelector('[data-time]');
+      var auto = el.getAttribute('data-auto') === 'true';
+      var secs = parseFloat(el.getAttribute('data-seconds')) || 6;
+      var accent = getComputedStyle(el).getPropertyValue('--bthp-accent').trim() || '#a83f2f';
+      var cur = 0, held = false, seen = false, timer = 0;
+
+      function show(i) {
+        cur = (i + n) % n;
+        for (var k = 0; k < n; k++) {
+          var on = k === cur, past = k < cur;
+          if (stops[k]) { stops[k].setAttribute('aria-selected', on ? 'true' : 'false'); stops[k].classList.toggle('is-past', past); }
+          if (reads[k]) reads[k].classList.toggle('is-on', on);
+          if (caps[k]) { caps[k].classList.toggle('is-on', on); caps[k].setAttribute('aria-hidden', on ? 'false' : 'true'); }
+          if (imgs[k]) imgs[k].classList.toggle('is-on', on);
+          if (stems[k]) {
+            stems[k].setAttribute('stroke', on || past ? accent : 'rgba(26,26,26,.16)');
+            stems[k].setAttribute('stroke-width', on ? '2' : '1');
+          }
+          if (ages[k]) ages[k].setAttribute('fill', on ? accent : 'rgba(26,26,26,.66)');
+        }
+        if (prog) prog.setAttribute('stroke-dashoffset', String(Math.round(100 - (cur / Math.max(1, n - 1)) * 100)));
+        arm();
+      }
+      function arm() {
+        clearTimeout(timer);
+        var run = auto && seen && !held && n > 1;
+        if (time) { time.classList.remove('is-run', 'is-odd'); if (run) { void time.offsetWidth; time.classList.add('is-run'); if (cur % 2) time.classList.add('is-odd'); } }
+        if (run) timer = setTimeout(function () { show(cur + 1); }, secs * 1000);
+      }
+      stops.forEach(function (b) { b.addEventListener('click', function () { held = true; show(parseInt(b.getAttribute('data-stop'), 10)); }); });
+      var pv = el.querySelector('[data-prev]'), nx = el.querySelector('[data-next]');
+      if (pv) pv.addEventListener('click', function () { held = true; show(cur - 1); });
+      if (nx) nx.addEventListener('click', function () { held = true; show(cur + 1); });
+      el.addEventListener('mouseenter', function () { held = true; arm(); });
+      el.addEventListener('mouseleave', function () { held = false; arm(); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { seen = en[0].isIntersecting; arm(); }, { threshold: 0.35 }).observe(el);
+      } else { seen = true; }
+      document.addEventListener('shopify:block:select', function (e) {
+        if (!el.contains(e.target)) return;
+        var idx = [].indexOf.call(stops, e.target);
+        if (idx > -1) { held = true; show(idx); }
+      });
+      show(0);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Growth stages",
+  "tag": "section",
+  "class": "bthp-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Small label", "default": "6-in-1 convertible · From 6 months" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "It grows up" },
+    { "type": "text", "id": "heading_italic", "label": "Heading (italic part)", "default": "with them." },
+    { "type": "textarea", "id": "text", "label": "Intro", "default": "One Bentley that changes shape as they grow — from the first walk you steer to the first ride they steer themselves." },
+    { "type": "image_picker", "id": "image", "label": "Default photo", "info": "Used for any stage without its own photo." },
+    { "type": "header", "content": "Phone" },
+    { "type": "checkbox", "id": "lede_mobile", "label": "Show intro text on phones", "default": true, "info": "Turn off to give the photo a little more room." },
+    { "type": "range", "id": "header_space_mobile", "label": "Header height on phones", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64, "info": "Height of your store's sticky header, so the section fits the screen below it." },
+    { "type": "select", "id": "photo_shape_mobile", "label": "Photo shape (phone)", "options": [{ "value": "1x1", "label": "Square" }, { "value": "4x5", "label": "Portrait" }, { "value": "16x10", "label": "Wide" }], "default": "1x1" },
+    { "type": "checkbox", "id": "autoplay", "label": "Move through stages by itself", "default": true },
+    { "type": "range", "id": "seconds", "label": "Seconds per stage", "min": 3, "max": 12, "step": 1, "unit": "s", "default": 6 },
+    { "type": "text", "id": "hint", "label": "Hint under the chart", "default": "Tap a stage on the growth chart, or use the arrows." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Choose your finish" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Leave empty to jump to the buy box." },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#a83f2f" }
+  ],
+  "blocks": [
+    {
+      "type": "stage",
+      "name": "Stage",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Stage name", "default": "Infant Stroller" },
+        { "type": "text", "id": "age", "label": "Age", "default": "6 months & up" },
+        { "type": "text", "id": "short_age", "label": "Short age on chart", "default": "6 mo" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "The seat turns to face you, canopy up, for the very first outings." },
+        { "type": "image_picker", "id": "image", "label": "Photo" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Growth stages",
+      "blocks": [
+        { "type": "stage", "settings": { "title": "Infant Stroller", "age": "6 months & up", "short_age": "6 mo", "text": "The seat turns to face you, canopy up, for the very first outings." } },
+        { "type": "stage", "settings": { "title": "Front-Facing Stroller", "age": "6 months & up", "short_age": "6 mo+", "text": "Turned forward — the front-row view of every walk, with you steering." } },
+        { "type": "stage", "settings": { "title": "Guided Trike", "age": "12 months & up", "short_age": "12 mo", "text": "Feet on the pedals while you guide and steer from the push handle." } },
+        { "type": "stage", "settings": { "title": "Training Trike", "age": "24 months & up", "short_age": "24 mo", "text": "Free-handlebar mode lets them turn the wheel while you stay in control." } },
+        { "type": "stage", "settings": { "title": "Solo Ride", "age": "48 months & up", "short_age": "48 mo", "text": "Handle off, guard bar away. A classic trike, entirely their own." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
