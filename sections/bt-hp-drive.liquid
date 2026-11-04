@@ -1,0 +1,271 @@
+{%- comment -%}
+  BT Homepage — The first drive (ride-on cars)
+  Full-bleed photo with the headline, plus the cars in one of four layouts: compact cards on the photo's edge,
+  photo and cars side by side, cards below the photo, or large overlapping cards.
+  On phones the cars become a swipeable slider.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign img_m = s.image_mobile | default: s.image
+  assign lay = s.layout | default: 'compact'
+  assign ov = s.overlap
+  assign ovm = s.overlap_mobile
+  if lay == 'below' or lay == 'side'
+    assign ov = 0
+    assign ovm = 0
+  endif
+-%}
+
+<style>
+  .bthp-drv{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-drv{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-drv{padding-top:var(--bthp-mt,0px);content-visibility:auto;contain-intrinsic-size:auto 1300px;background:var(--bthp-bg);color:var(--bthp-ink);font-family:var(--text-font-family,Poppins,sans-serif)}
+  .bthp-drv__hero{position:relative;height:var(--bthp-ph,80vh);max-height:900px;min-height:480px;overflow:hidden;color:#ffffff}
+  .bthp-drv__hero img,.bthp-drv__hero video,.bthp-drv__hero .bthp-drv__ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .bthp-drv__m{display:none}
+  .bthp-drv__shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.2) 55%,rgba(0,0,0,0) 100%),linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.35) 100%)}
+  .bthp-drv__copy{position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-50% - var(--bthp-ov,0px) / 2))}
+  .bthp-drv__wrap{max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px);box-sizing:border-box}
+  .bthp-drv__in{max-width:600px;display:flex;flex-direction:column;gap:22px}
+  .bthp-drv__label{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.9}
+  .bthp-drv__h{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(46px,5.6vw,92px) * var(--bthp-hs, 1));line-height:.98;letter-spacing:-.01em;color:#ffffff}
+  .bthp-drv__gilt{display:block;font-style:italic;background:linear-gradient(180deg,#ffffff 30%,var(--bthp-sand) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .06em}
+  .bthp-drv__p{margin:0;max-width:460px;font-size:15px;line-height:1.7;opacity:.9}
+  .bthp-drv__cta{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;min-height:52px;padding:0 30px;color:#ffffff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:background .3s ease,color .3s ease}
+  .bthp-drv__cta:hover{background:#ffffff;color:#1a1a1a}
+  .bthp-drv__cars{position:relative;z-index:2;display:grid;grid-template-columns:repeat(var(--bthp-n,3),minmax(0,1fr));gap:20px;margin-top:calc(-1 * var(--bthp-ov,0px));padding-top:var(--bthp-gt,0px);padding-bottom:clamp(96px,10vw,152px)}
+  .bthp-drv__car{display:flex;flex-direction:column;background:var(--bthp-card);box-shadow:0 30px 60px rgba(26,26,26,.12)}
+  .bthp-drv__media{aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;overflow:hidden;text-decoration:none}
+  .bthp-drv__media img,.bthp-drv__media svg{width:80%;height:80%;object-fit:contain;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+  .bthp-drv__car:hover .bthp-drv__media img{transform:translateX(10px) scale(1.04)}
+  .bthp-drv__body{display:flex;flex-direction:column;gap:14px;padding:4px 24px 24px}
+  .bthp-drv__row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .bthp-drv__name{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:22px;line-height:1.2}
+  .bthp-drv__name a{color:inherit;text-decoration:none}
+  .bthp-drv__price{font-size:14px}
+  .bthp-drv__btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;border:0;border-radius:0;background:transparent;color:var(--bthp-ink);box-shadow:inset 0 0 0 1px var(--bthp-ink);cursor:pointer;font-family:inherit;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;transition:background .3s ease,color .3s ease}
+  .bthp-drv__btn:hover{background:var(--bthp-ink);color:var(--bthp-card)}
+  .bthp-drv__btn[aria-busy="true"]{opacity:.7;pointer-events:none}
+  .bthp-drv__btn[disabled]{opacity:.45;cursor:not-allowed}
+  /* Compact: short cards (photo left, details right) that only touch the photo's bottom edge */
+  .bthp-drv--row .bthp-drv__cars{gap:16px}
+  .bthp-drv--row .bthp-drv__car{flex-direction:row;align-items:stretch;box-shadow:0 24px 48px rgba(26,26,26,.14)}
+  .bthp-drv--row .bthp-drv__media{flex:0 0 42%;aspect-ratio:auto;min-height:132px}
+  .bthp-drv--row .bthp-drv__media img,.bthp-drv--row .bthp-drv__media svg{width:88%;height:88%}
+  .bthp-drv--row .bthp-drv__body{flex:1;min-width:0;justify-content:center;gap:10px;padding:18px 18px 18px 4px}
+  .bthp-drv--row .bthp-drv__row{flex-direction:column;align-items:flex-start;gap:4px}
+  .bthp-drv--row .bthp-drv__name{font-size:18px}
+  .bthp-drv--row .bthp-drv__price{font-size:13px;opacity:.75}
+  .bthp-drv--row .bthp-drv__btn{width:auto;align-self:flex-start;min-height:0;padding:0 0 4px;box-shadow:inset 0 -1px 0 var(--bthp-ink);font-size:10px;letter-spacing:.22em}
+  .bthp-drv--row .bthp-drv__btn:hover{background:transparent;color:var(--bthp-ink);box-shadow:inset 0 -2px 0 var(--bthp-ink)}
+  /* Side by side: photo left, cars on the right */
+  .bthp-drv--side{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:stretch}
+  .bthp-drv--side .bthp-drv__hero{max-height:none;min-height:640px}
+  .bthp-drv--side .bthp-drv__in{max-width:520px}
+  .bthp-drv--side .bthp-drv__h{font-size:calc(clamp(40px,4.4vw,76px) * var(--bthp-hs, 1))}
+  .bthp-drv--side > .bthp-drv__wrap{display:flex;align-items:center;max-width:none;padding:clamp(32px,3.6vw,56px)}
+  .bthp-drv--side .bthp-drv__cars{grid-template-columns:1fr;gap:14px;padding:0;width:100%;max-width:560px;margin:0 auto}
+  .bthp-drv--side .bthp-drv__car{box-shadow:0 14px 34px rgba(26,26,26,.07)}
+  @media (max-width:1100px) and (min-width:750px){
+    .bthp-drv--compact .bthp-drv__cars{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .bthp-drv--side{grid-template-columns:1fr}
+  }
+  @media (max-width:749px){
+    .bthp-drv{padding-top:var(--bthp-mtm,0px)}
+    .bthp-drv__hero{height:var(--bthp-phm,520px);max-height:none;min-height:0}
+    .bthp-drv__d{display:none}
+    .bthp-drv__m{display:block}
+    .bthp-drv__shade{background:linear-gradient(180deg,rgba(0,0,0,.1) 20%,rgba(0,0,0,.72) 100%)}
+    .bthp-drv__copy{top:auto;bottom:calc(var(--bthp-ovm,0px) + 36px);transform:none}
+    .bthp-drv__wrap{padding:0 20px}
+    .bthp-drv__h{font-size:calc(42px * var(--bthp-hs, 1))}
+    .bthp-drv__p{font-size:14px}
+    .bthp-drv__cars{display:flex;gap:12px;margin:calc(-1 * var(--bthp-ovm,0px)) -20px 0;padding:var(--bthp-gtm,0px) 20px 64px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:20px;scrollbar-width:none}
+    .bthp-drv__cars::-webkit-scrollbar{display:none}
+    .bthp-drv__car{flex:0 0 76%;scroll-snap-align:start}
+    .bthp-drv--row .bthp-drv__car{flex-basis:84%}
+    .bthp-drv--row .bthp-drv__media{min-height:112px}
+    .bthp-drv--side{display:block}
+    .bthp-drv--side .bthp-drv__hero{min-height:0}
+    .bthp-drv--side > .bthp-drv__wrap{display:block;padding:0 20px}
+    .bthp-drv--side .bthp-drv__cars{display:flex;margin:0 -20px;padding:28px 20px 64px}
+  }
+</style>
+
+<div
+  class="bthp-drv bthp-drv--{{ lay }}{% if lay == 'compact' or lay == 'side' %} bthp-drv--row{% endif %}"
+  id="drive"
+  data-bthp-drive
+  data-after="{{ s.after_add }}"
+  data-add="{{ s.add_label | escape }}"
+  data-added="{{ s.added_label | escape }}"
+  style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-card: {{ s.card_bg }}; --bthp-sand: {{ s.sand }}; --bthp-n: {{ s.products.size | at_least: 1 }}; --bthp-ph: {{ s.photo_height }}vh; --bthp-phm: {{ s.photo_height_mobile }}px; --bthp-mt: {{ s.margin_top }}px; --bthp-mtm: {{ s.margin_top_mobile }}px; --bthp-ov: {{ ov }}px; --bthp-ovm: {{ ovm }}px; --bthp-gt: {% if ov == 0 and lay != 'side' %}clamp(40px,4vw,64px){% else %}0px{% endif %}; --bthp-gtm: {% if ovm == 0 %}28px{% else %}0px{% endif %}; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+>
+  <div class="bthp-drv__hero">
+    {%- if s.video != blank -%}
+      {{ s.video | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-v', image_size: '2000x' }}
+    {%- else -%}
+      {%- if s.image != blank -%}
+        {{ s.image | image_url: width: 2800 | image_tag: class: 'bthp-drv__d', loading: 'lazy', sizes: '100vw', widths: '800,1200,1600,2000,2800', alt: s.image.alt }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'bthp-drv__ph bthp-drv__d' }}
+      {%- endif -%}
+      {%- if img_m != blank -%}
+        {{ img_m | image_url: width: 1200 | image_tag: class: 'bthp-drv__m', loading: 'lazy', sizes: '100vw', widths: '500,800,1200', alt: img_m.alt }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'bthp-drv__ph bthp-drv__m' }}
+      {%- endif -%}
+    {%- endif -%}
+    <div class="bthp-drv__shade"></div>
+    <div class="bthp-drv__copy">
+      <div class="bthp-drv__wrap">
+        <div class="bthp-drv__in">
+          {%- if s.label != blank -%}<p class="bthp-drv__label">{{ s.label }}</p>{%- endif -%}
+          <h2 class="bthp-drv__h">{{ s.heading }}{% if s.heading_italic != blank %}<span class="bthp-drv__gilt">{{ s.heading_italic }}</span>{% endif %}</h2>
+          {%- if s.text != blank -%}<p class="bthp-drv__p">{{ s.text }}</p>{%- endif -%}
+          {%- if s.button_label != blank -%}<a class="bthp-drv__cta" href="{{ s.button_link | default: '#' }}">{{ s.button_label }}</a>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- if s.products.size > 0 -%}
+    <div class="bthp-drv__wrap">
+      <div class="bthp-drv__cars">
+        {%- for p in s.products -%}
+          {%- assign v = p.selected_or_first_available_variant -%}
+          {%- assign nm = p.title -%}
+          {%- if s.strip_words != blank -%}
+            {%- assign strips = s.strip_words | split: ',' -%}
+            {%- for w in strips -%}{%- assign w2 = w | strip -%}{%- assign nm = nm | remove: w2 -%}{%- endfor -%}
+            {%- assign nm = nm | strip -%}
+          {%- endif -%}
+          <div class="bthp-drv__car">
+            <a class="bthp-drv__media" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+              {%- if p.featured_image -%}
+                {{ p.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 76vw, 30vw', widths: '400,600,900', alt: p.featured_image.alt }}
+              {%- else -%}
+                {{ 'product-2' | placeholder_svg_tag }}
+              {%- endif -%}
+            </a>
+            <div class="bthp-drv__body">
+              <div class="bthp-drv__row">
+                <h3 class="bthp-drv__name"><a href="{{ p.url }}">{{ nm }}</a></h3>
+                <span class="bthp-drv__price">{{ v.price | money }}</span>
+              </div>
+              <button class="bthp-drv__btn" type="button" data-variant="{{ v.id }}" data-url="{{ p.url }}" {% unless v.available %}disabled{% endunless %} aria-label="{{ s.add_label | escape }}: {{ nm | escape }}">{% if v.available %}{{ s.add_label }}{% else %}Sold out{% endif %}</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    window.bthpCart = window.bthpCart || function (items, opts) {
+      opts = opts || {};
+      var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+      var detail = { sections: [] };
+      document.dispatchEvent(new CustomEvent('cart:prepare-bundled-sections', { bubbles: true, detail: detail }));
+      var body = { items: items };
+      if (detail.sections.length) body.sections = detail.sections.join(',');
+      return fetch(root + 'cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw j; return j; }); })
+        .then(function (added) {
+          return fetch(root + 'cart.js', { headers: { Accept: 'application/json' } }).then(function (r) { return r.json(); }).then(function (cart) {
+            if (added && added.sections) cart.sections = added.sections;
+            if (opts.after === 'checkout') { window.location.href = root + 'checkout'; return cart; }
+            if (opts.after === 'cart') { window.location.href = root + 'cart'; return cart; }
+            document.dispatchEvent(new CustomEvent('variant:add', { bubbles: true, detail: { items: items, cart: cart } }));
+            document.documentElement.dispatchEvent(new CustomEvent('cart:change', { bubbles: true, detail: { baseEvent: 'variant:add', onSuccessDo: opts.after === 'stay' ? null : 'force_open_drawer', cart: cart } }));
+            document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+            return cart;
+          });
+        });
+    };
+
+    window.bthpWatch = window.bthpWatch || function (el) {
+      if (!el) return;
+      var vids = [].slice.call(el.querySelectorAll('video.bthp-v'));
+      function set(on) {
+        el.classList.toggle('bthp-off', !on);
+        vids.forEach(function (v) {
+          if (on && v.offsetParent !== null) {
+            if (v.getAttribute('preload') === 'none') v.setAttribute('preload', 'auto');
+            v.muted = true;
+            var pr = v.play();
+            if (pr && pr.catch) pr.catch(function () {});
+          } else if (!v.paused) { v.pause(); }
+        });
+      }
+      if (!('IntersectionObserver' in window)) { set(true); return; }
+      new IntersectionObserver(function (en) { set(en[0].isIntersecting); }, { rootMargin: '150px 0px' }).observe(el);
+      if (vids.length) window.addEventListener('resize', function () { set(!el.classList.contains('bthp-off')); });
+    };
+    document.querySelectorAll('[data-bthp-drive]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      window.bthpWatch(el);
+      var add = el.getAttribute('data-add'), added = el.getAttribute('data-added');
+      el.querySelectorAll('[data-variant]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          btn.setAttribute('aria-busy', 'true');
+          window.bthpCart([{ id: Number(btn.getAttribute('data-variant')), quantity: 1 }], { after: el.getAttribute('data-after') })
+            .then(function () { btn.removeAttribute('aria-busy'); btn.textContent = added; setTimeout(function () { btn.textContent = add; }, 1800); })
+            .catch(function () { btn.removeAttribute('aria-busy'); window.location.href = btn.getAttribute('data-url'); });
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT First drive",
+  "tag": "section",
+  "class": "bthp-section",
+  "settings": [
+    { "type": "header", "content": "Photo" },
+    { "type": "image_picker", "id": "image", "label": "Photo (desktop)" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Photo (phone)" },
+    { "type": "video", "id": "video", "label": "Video (optional)", "info": "Plays muted on a loop instead of the photo." },
+    { "type": "range", "id": "margin_top", "label": "Space above the photo (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_top_mobile", "label": "Space above the photo (phone)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 },
+    { "type": "paragraph", "content": "Tip: click the photo and use **Edit → Focal point** to keep the faces in view." },
+    { "type": "range", "id": "photo_height", "label": "Photo height (desktop)", "min": 50, "max": 100, "step": 5, "unit": "vh", "default": 80, "info": "Percent of the screen height." },
+    { "type": "range", "id": "photo_height_mobile", "label": "Photo height (phone)", "min": 320, "max": 720, "step": 20, "unit": "px", "default": 520 },
+    { "type": "header", "content": "Car cards layout" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "compact", "options": [
+      { "value": "compact", "label": "Compact cards on the photo's edge" },
+      { "value": "side", "label": "Photo and cars side by side" },
+      { "value": "below", "label": "Cards below the photo" },
+      { "value": "large", "label": "Large cards overlapping the photo" }
+    ] },
+    { "type": "range", "id": "overlap", "label": "Cards overlap the photo (desktop)", "min": 0, "max": 200, "step": 10, "unit": "px", "default": 60, "info": "For the two overlapping layouts. 0 puts the cards fully below the photo." },
+    { "type": "range", "id": "overlap_mobile", "label": "Cards overlap the photo (phone)", "min": 0, "max": 120, "step": 10, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "label", "label": "Small label", "default": "Electric ride-on cars · 3 years+" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "After the trike," },
+    { "type": "text", "id": "heading_italic", "label": "Heading (italic line)", "default": "the first drive." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Officially licensed ride-on cars, modelled on the Mulsanne, Bentayga, Bacalar and EXP 12 Speed 6e." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore ride-on cars" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Cars" },
+    { "type": "product_list", "id": "products", "label": "Cars", "limit": 4 },
+    { "type": "text", "id": "strip_words", "label": "Remove from car names", "info": "Separate with commas.", "default": "Bentley, Electric Ride-On Car for Kids, Ride-On Speed Car for Kids, Ride-On Car for Kids" },
+    { "type": "text", "id": "add_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "text", "id": "added_label", "label": "Added label", "default": "Added ✓" },
+    { "type": "select", "id": "after_add", "label": "After adding to cart", "options": [{ "value": "drawer", "label": "Open the cart drawer" }, { "value": "stay", "label": "Stay on the page" }, { "value": "cart", "label": "Go to the cart page" }], "default": "drawer" },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "card_bg", "label": "Car cards", "default": "#ffffff" },
+    { "type": "color", "id": "sand", "label": "Heading fade", "default": "#d9d0c5" }
+  ],
+  "presets": [{ "name": "BT First drive" }]
+}
+{% endschema %}
