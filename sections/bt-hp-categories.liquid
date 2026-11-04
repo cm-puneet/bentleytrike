@@ -1,0 +1,349 @@
+{%- comment -%}
+  BT Homepage — Category split entrance (Dior-style)
+  Full-height panels side by side; the hovered one widens while the others dim.
+  Each panel cross-fades two photos, or plays a video. Small links row below.
+  On phones the panels become a swipeable slider.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign panels = section.blocks | where: 'type', 'panel'
+  assign minis = section.blocks | where: 'type', 'link'
+  assign pn = panels.size | at_least: 1
+  assign pden = pn | minus: 1 | plus: 1.45
+  assign pw = 145.0 | divided_by: pden | round: 2
+  assign tw = 100.0 | divided_by: pden | round: 2
+  if s.desktop_layout == 'cards'
+    assign card_vw = 100 | divided_by: pn | plus: 2
+  else
+    assign card_vw = pw | ceil
+  endif
+  assign img_sizes = '(max-width: 749px) 82vw, ' | append: card_vw | append: 'vw'
+-%}
+
+<style>
+  .bthp-cat{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-cat{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-cat{background:var(--bthp-bg);color:var(--bthp-ink);font-family:var(--text-font-family,Poppins,sans-serif)}
+  .bthp-cat__wrap{max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px);box-sizing:border-box}
+  .bthp-cat__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;padding:clamp(72px,7vw,112px) 0 clamp(40px,4vw,56px)}
+  .bthp-cat__label{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--bthp-accent)}
+  .bthp-cat__h{margin:16px 0 0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(40px,5vw,80px) * var(--bthp-hs, 1));line-height:.98;letter-spacing:-.01em;color:var(--bthp-ink)}
+  .bthp-cat__h em{font-style:italic;color:var(--bthp-accent)}
+  .bthp-cat__lnk{display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--bthp-ink);background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-position:0 calc(100% - 11px);background-repeat:no-repeat;transition:background-size .5s cubic-bezier(.65,0,.35,1),color .3s ease}
+  .bthp-cat__lnk:hover{color:var(--bthp-accent);background-size:30% 1px}
+  .bthp-cat__split{position:relative;display:flex;height:var(--bthp-ph,min(100vh,960px));min-height:560px;background:#0b0b0a;overflow:hidden}
+  .bthp-cat__pan{position:relative;flex:1 1 0;min-width:0;overflow:hidden;color:#ffffff;text-decoration:none;transition:flex-grow 1s cubic-bezier(.65,0,.35,1)}
+  .bthp-cat__pan:hover{color:#ffffff}
+  .bthp-cat__pan+.bthp-cat__pan{box-shadow:inset 1px 0 0 rgba(255,255,255,.14)}
+  .bthp-cat__split:hover .bthp-cat__pan:hover,.bthp-cat__split:focus-within .bthp-cat__pan:focus-visible{flex-grow:1.45}
+  .bthp-cat__media{position:absolute;inset:0;transform:translateZ(0);transition:transform 1.6s cubic-bezier(.2,.7,.2,1);will-change:transform;backface-visibility:hidden}
+  .bthp-cat__pan img,.bthp-cat__pan video,.bthp-cat__pan .bthp-cat__ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;backface-visibility:hidden}
+  .bthp-cat__img,.bthp-cat__img--solo{will-change:opacity,transform}
+  .bthp-cat__img{opacity:1}
+  .bthp-cat__img--b{opacity:0}
+  .bthp-cat__pan.is-xf .bthp-cat__img{animation:bthpCatA 11s ease-in-out infinite;animation-delay:calc(var(--d,0s) * -1)}
+  .bthp-cat__pan.is-xf .bthp-cat__img--b{animation-name:bthpCatB}
+  .bthp-cat__media{background-color:#2a2622;background-size:cover;background-position:center}
+  .bthp-cat__img--solo{opacity:1;animation:bthpPanSolo 14s ease-in-out infinite alternate}
+  @keyframes bthpCatA{0%{opacity:1;transform:scale(1.04)}42%{opacity:1;transform:scale(1)}50%{opacity:0;transform:scale(1)}92%{opacity:0;transform:scale(1.04)}100%{opacity:1;transform:scale(1.04)}}
+  @keyframes bthpCatB{0%{opacity:0;transform:scale(1.04)}42%{opacity:0;transform:scale(1.04)}50%{opacity:1}92%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+  @keyframes bthpPanSolo{from{transform:scale(1.05)}to{transform:scale(1)}}
+  .bthp-cat__ph{background:#2a2622;fill:rgba(255,255,255,.25)}
+  .bthp-cat__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.66) 100%)}
+  .bthp-cat__dim{position:absolute;inset:0;background:#000000;opacity:0;transition:opacity .9s ease}
+  .bthp-cat__split:hover .bthp-cat__pan:not(:hover) .bthp-cat__dim{opacity:.58}
+  .bthp-cat__in{position:absolute;left:0;right:0;bottom:0;transform:translateZ(0);display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 24px clamp(40px,7vh,72px);text-align:center;transition:opacity .9s ease}
+  .bthp-cat__split:hover .bthp-cat__pan:not(:hover) .bthp-cat__in{opacity:.5}
+  .bthp-cat__n{font-family:var(--heading-font-family,"Playfair Display",serif);font-style:italic;font-size:18px;color:var(--bthp-sand)}
+  .bthp-cat__t{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:clamp(30px,3vw,48px);line-height:1.02;color:#ffffff}
+  .bthp-cat__d{margin:0;max-width:300px;min-height:3.2em;font-size:13px;line-height:1.6;color:rgba(255,255,255,.88);opacity:0;transform:translateY(6px);transition:opacity .7s ease,transform .7s ease}
+  .bthp-cat__pan:hover .bthp-cat__d,.bthp-cat__pan:focus-visible .bthp-cat__d{opacity:1;transform:none}
+  .bthp-cat__cta{display:inline-flex;align-items:center;min-height:44px;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-position:0 calc(100% - 12px);background-repeat:no-repeat;transition:background-size .5s cubic-bezier(.65,0,.35,1)}
+  .bthp-cat__pan:hover .bthp-cat__cta{background-size:40% 1px}
+  .bthp-cat__mark{position:absolute;left:50%;top:clamp(36px,6vh,64px);z-index:3;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#ffffff;pointer-events:none;text-align:center;white-space:nowrap}
+  .bthp-cat__mark b{font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:clamp(30px,3.2vw,48px);letter-spacing:.34em;margin-right:-.34em;line-height:1}
+  .bthp-cat__mark span{font-size:9px;font-weight:700;letter-spacing:.5em;margin-right:-.5em;text-transform:uppercase;opacity:.85}
+  .bthp-cat__row{display:grid;grid-template-columns:repeat(var(--bthp-cols,4),minmax(0,1fr));margin-bottom:clamp(72px,7vw,112px);border-bottom:1px solid var(--bthp-line)}
+  .bthp-cat__mini{display:flex;flex-direction:column;gap:8px;padding:28px 24px 26px;text-decoration:none;color:var(--bthp-ink);transition:background .4s ease}
+  .bthp-cat__mini+.bthp-cat__mini{border-left:1px solid var(--bthp-line)}
+  .bthp-cat__mini:hover{background:var(--bthp-hover);color:var(--bthp-ink)}
+  .bthp-cat__mtop{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .bthp-cat__md{display:block}
+  .bthp-cat__mt{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:22px;line-height:1.2;color:var(--bthp-ink)}
+  .bthp-cat__md{margin:0;font-size:13px;line-height:1.55;opacity:.76}
+  .bthp-cat__mini svg{flex:none;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+  .bthp-cat__mini:hover svg{transform:translateX(6px)}
+  .bthp-cat--no-row .bthp-cat__split{margin-bottom:0}
+
+  /* Full-width split (desktop): keep photos and text a fixed size so widening never re-crops or re-wraps */
+  @media (min-width:750px){
+    .bthp-cat:not(.bthp-cat--cards) .bthp-cat__media{left:50%;right:auto;width:var(--bthp-pw,42vw);transform:translate3d(-50%,0,0)}
+    .bthp-cat:not(.bthp-cat--cards) .bthp-cat__pan:hover .bthp-cat__media{transform:translate3d(-50%,0,0) scale(1.03)}
+    .bthp-cat:not(.bthp-cat--cards) .bthp-cat__in{left:50%;right:auto;width:var(--bthp-tw,29vw);transform:translate3d(-50%,0,0);box-sizing:border-box}
+  }
+
+  /* Card layout on desktop — like the phone version */
+  @media (min-width:750px){
+    .bthp-cat--cards .bthp-cat__split{gap:var(--bthp-gap,16px);max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px);box-sizing:border-box;background:transparent;overflow:visible}
+    .bthp-cat--cards .bthp-cat__pan{border-radius:var(--bthp-rad,0px)}
+    .bthp-cat--cards .bthp-cat__pan+.bthp-cat__pan{box-shadow:none}
+    .bthp-cat--cards .bthp-cat__split:hover .bthp-cat__pan:hover,.bthp-cat--cards .bthp-cat__split:focus-within .bthp-cat__pan:focus-visible{flex-grow:1}
+    .bthp-cat--cards .bthp-cat__pan{transition:none;transform:translateZ(0)}
+    .bthp-cat--cards .bthp-cat__pan:hover .bthp-cat__media,.bthp-cat--cards .bthp-cat__pan:focus-visible .bthp-cat__media{transform:translateZ(0) scale(1.045)}
+    .bthp-cat--cards .bthp-cat__split:hover .bthp-cat__pan:not(:hover) .bthp-cat__dim{opacity:.28}
+    .bthp-cat--cards .bthp-cat__split:hover .bthp-cat__pan:not(:hover) .bthp-cat__in{opacity:1}
+    .bthp-cat--cards .bthp-cat__d{opacity:1;transform:none}
+    .bthp-cat--cards .bthp-cat__mark{display:none}
+    .bthp-cat--cards .bthp-cat__in{padding-bottom:clamp(32px,5vh,56px)}
+  }
+
+  /* Small links */
+  .bthp-cat__minis{padding-top:var(--bthp-mpt,24px)}
+  .bthp-cat__mini--img{flex-direction:row;align-items:center;gap:18px}
+  .bthp-cat__mimg{flex:none;width:var(--bthp-mis,72px);height:var(--bthp-mis,72px);overflow:hidden;background:var(--bthp-hover)}
+  .bthp-cat__mimg img{display:block;width:100%;height:100%;object-fit:var(--bthp-mfit,contain);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+  .bthp-cat__mini:hover .bthp-cat__mimg img{transform:scale(1.06)}
+  .bthp-cat__mbody{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
+  @media (max-width:749px){
+    .bthp-cat__head{padding:48px 0 20px;gap:12px}
+    .bthp-cat__h{font-size:calc(40px * var(--bthp-hs, 1))}
+    .bthp-cat__split{display:flex;gap:8px;padding:0 20px;height:auto;min-height:0;background:transparent;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+    .bthp-cat__split::-webkit-scrollbar,.bthp-cat__row::-webkit-scrollbar{display:none}
+    .bthp-cat__pan{flex:0 0 80%;height:var(--bthp-phm,440px);scroll-snap-align:center}
+    .bthp-cat__pan+.bthp-cat__pan{box-shadow:none}
+    .bthp-cat__split:hover .bthp-cat__pan:not(:hover) .bthp-cat__dim{opacity:0}
+    .bthp-cat__split:hover .bthp-cat__pan:not(:hover) .bthp-cat__in{opacity:1}
+    .bthp-cat__d{opacity:1;transform:none;font-size:12px}
+    .bthp-cat__t{font-size:30px}
+    .bthp-cat__mark{display:none}
+    .bthp-cat__row{display:flex;gap:8px;margin:0 -20px 56px;padding:0 20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border:0}
+    .bthp-cat__mini,.bthp-cat__mini+.bthp-cat__mini{flex:0 0 62%;scroll-snap-align:start;border:1px solid var(--bthp-line);padding:18px 16px}
+    .bthp-cat__minis{padding-top:var(--bthp-mptm,16px)}
+    .bthp-cat__mini--img,.bthp-cat__mini--img+.bthp-cat__mini--img{flex-basis:78%;gap:14px}
+    .bthp-cat__mimg{width:var(--bthp-mism,56px);height:var(--bthp-mism,56px)}
+    .bthp-cat__mt{font-size:18px}
+    .bthp-cat__md{font-size:12px}
+  }
+  .bthp-off,.bthp-off *,.bthp-off *::before{animation-play-state:paused!important}
+  @media (prefers-reduced-motion:reduce){
+    .bthp-cat__img,.bthp-cat__img--solo{animation:none}
+    .bthp-cat__media,.bthp-cat__pan{transition:none}
+    .bthp-cat__img:not(.bthp-cat__img--b){opacity:1}
+    .bthp-cat__img--b{display:none}
+  }
+</style>
+
+<div
+  data-bthp-cat
+  class="bthp-cat{% if minis.size == 0 %} bthp-cat--no-row{% endif %}{% if s.desktop_layout == 'cards' %} bthp-cat--cards{% endif %}"
+  style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-accent: {{ s.accent }}; --bthp-sand: {{ s.sand }}; --bthp-line: {{ s.ink | color_modify: 'alpha', 0.14 }}; --bthp-hover: {{ s.hover_bg }}; --bthp-cols: {{ minis.size | at_least: 1 }}; --bthp-ph: {{ s.panel_height }}vh; --bthp-phm: {{ s.panel_height_mobile }}px; --bthp-gap: {{ s.card_gap }}px; --bthp-pw: {{ pw }}vw; --bthp-tw: {{ tw }}vw; --bthp-rad: {{ s.card_radius }}px; --bthp-mpt: {{ s.mini_space }}px; --bthp-mptm: {{ s.mini_space_mobile }}px; --bthp-mis: {{ s.mini_img_size }}px; --bthp-mism: {{ s.mini_img_size | times: 0.78 | round }}px; --bthp-mfit: {{ s.mini_img_fit }}; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+>
+  {%- if s.heading != blank or s.label != blank -%}
+    <div class="bthp-cat__wrap">
+      <div class="bthp-cat__head">
+        <div>
+          {%- if s.label != blank -%}<p class="bthp-cat__label">{{ s.label }}</p>{%- endif -%}
+          <h2 class="bthp-cat__h">{{ s.heading }} {% if s.heading_italic != blank %}<em>{{ s.heading_italic }}</em>{% endif %}</h2>
+        </div>
+        {%- if s.link_label != blank -%}<a class="bthp-cat__lnk" href="{{ s.link_url | default: '#' }}">{{ s.link_label }}</a>{%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="bthp-cat__split">
+    {%- if s.mark_word != blank -%}
+      <div class="bthp-cat__mark" aria-hidden="true"><b>{{ s.mark_word }}</b>{% if s.mark_sub != blank %}<span>{{ s.mark_sub }}</span>{% endif %}</div>
+    {%- endif -%}
+    {%- for block in panels -%}
+      {%- liquid
+        assign b = block.settings
+        assign delay = forloop.index0 | times: 1.8
+        assign num = forloop.index | prepend: '0'
+        assign alt = b.title | escape
+      -%}
+      <a class="bthp-cat__pan" href="{{ b.link | default: '#' }}" style="--d: {{ delay }}s;" {{ block.shopify_attributes }}>
+        {%- capture lqip -%}{% if b.image != blank %} style="background-image: url('{{ b.image | image_url: width: 48 }}');"{% endif %}{%- endcapture -%}
+        <div class="bthp-cat__media"{{ lqip }}>
+        {%- if b.video != blank -%}
+          {{ b.video | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-v', image_size: '1400x' }}
+        {%- elsif b.image != blank -%}
+          {%- if b.image_2 != blank -%}
+            {{ b.image | image_url: width: 1600 | image_tag: class: 'bthp-cat__img', loading: 'lazy', fetchpriority: 'high', decoding: 'async', sizes: img_sizes, widths: '400,600,800,1000,1300,1600', alt: alt }}
+            {%- capture b_set -%}{{ b.image_2 | image_url: width: 400 }} 400w, {{ b.image_2 | image_url: width: 600 }} 600w, {{ b.image_2 | image_url: width: 800 }} 800w, {{ b.image_2 | image_url: width: 1000 }} 1000w, {{ b.image_2 | image_url: width: 1300 }} 1300w, {{ b.image_2 | image_url: width: 1600 }} 1600w{%- endcapture -%}
+            <img class="bthp-cat__img bthp-cat__img--b" alt="" width="{{ b.image_2.width }}" height="{{ b.image_2.height }}" decoding="async" data-srcset="{{ b_set }}" data-sizes="{{ img_sizes }}">
+          {%- else -%}
+            {{ b.image | image_url: width: 1600 | image_tag: class: 'bthp-cat__img--solo', loading: 'lazy', fetchpriority: 'high', decoding: 'async', sizes: img_sizes, widths: '400,600,800,1000,1300,1600', alt: alt }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'bthp-cat__ph' }}
+        {%- endif -%}
+        </div>
+        <div class="bthp-cat__shade"></div>
+        <div class="bthp-cat__dim"></div>
+        <div class="bthp-cat__in">
+          {%- if s.show_numbers -%}<span class="bthp-cat__n">{{ num }}</span>{%- endif -%}
+          <h3 class="bthp-cat__t">{{ b.title }}</h3>
+          {%- if b.text != blank -%}<p class="bthp-cat__d">{{ b.text }}</p>{%- endif -%}
+          {%- if b.link_label != blank -%}<span class="bthp-cat__cta">{{ b.link_label }}</span>{%- endif -%}
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+
+  {%- if minis.size > 0 -%}
+    <div class="bthp-cat__wrap">
+      <div class="bthp-cat__minis"><div class="bthp-cat__row">
+        {%- for block in minis -%}
+          {%- assign mimg = block.settings.image -%}
+          {%- if mimg == blank and block.settings.product != blank -%}{%- assign mimg = block.settings.product.featured_image -%}{%- endif -%}
+          <a class="bthp-cat__mini{% if mimg != blank %} bthp-cat__mini--img{% endif %}" href="{{ block.settings.link | default: block.settings.product.url | default: '#' }}" {{ block.shopify_attributes }}>
+            {%- if mimg != blank -%}
+              <span class="bthp-cat__mimg">{{ mimg | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', sizes: '72px', alt: '' }}</span>
+            {%- endif -%}
+            <span class="bthp-cat__mbody">
+              <span class="bthp-cat__mtop">
+                <h3 class="bthp-cat__mt">{{ block.settings.title }}</h3>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+              </span>
+              {%- if block.settings.text != blank -%}<span class="bthp-cat__md">{{ block.settings.text }}</span>{%- endif -%}
+            </span>
+          </a>
+        {%- endfor -%}
+      </div></div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    window.bthpWatch = window.bthpWatch || function (el) {
+      if (!el) return;
+      var vids = [].slice.call(el.querySelectorAll('video.bthp-v'));
+      function set(on) {
+        el.classList.toggle('bthp-off', !on);
+        vids.forEach(function (v) {
+          if (on && v.offsetParent !== null) {
+            if (v.getAttribute('preload') === 'none') v.setAttribute('preload', 'auto');
+            v.muted = true;
+            var pr = v.play();
+            if (pr && pr.catch) pr.catch(function () {});
+          } else if (!v.paused) { v.pause(); }
+        });
+      }
+      if (!('IntersectionObserver' in window)) { set(true); return; }
+      new IntersectionObserver(function (en) { set(en[0].isIntersecting); }, { rootMargin: '150px 0px' }).observe(el);
+      if (vids.length) window.addEventListener('resize', function () { set(!el.classList.contains('bthp-off')); });
+    };
+    document.querySelectorAll('[data-bthp-cat]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      window.bthpWatch(el);
+      var reduce = false;
+      try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      if (reduce) return;
+      function loadSecond(pan) {
+        var a = pan.querySelector('.bthp-cat__img:not(.bthp-cat__img--b)');
+        var b = pan.querySelector('img[data-srcset]');
+        if (!a || !b) return;
+        function go() {
+          if (b.hasAttribute('srcset')) return;
+          b.addEventListener('load', function () { pan.classList.add('is-xf'); }, { once: true });
+          b.sizes = b.getAttribute('data-sizes');
+          b.srcset = b.getAttribute('data-srcset');
+        }
+        function afterA() { (window.requestIdleCallback || function (f) { setTimeout(f, 200); })(go); }
+        if (a.complete && a.naturalWidth) afterA(); else a.addEventListener('load', afterA, { once: true });
+      }
+      var pans = el.querySelectorAll('.bthp-cat__pan');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (en) {
+          if (!en[0].isIntersecting) return;
+          io.disconnect();
+          pans.forEach(loadSecond);
+        }, { rootMargin: '300px 0px' });
+        io.observe(el);
+      } else { pans.forEach(loadSecond); }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Category split",
+  "tag": "section",
+  "class": "bthp-section",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "label", "label": "Small label", "default": "The Bentley Kids Collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Their first" },
+    { "type": "text", "id": "heading_italic", "label": "Heading (italic part)", "default": "Bentley." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "View the full collection" },
+    { "type": "url", "id": "link_url", "label": "Link" },
+    { "type": "header", "content": "Panels" },
+    { "type": "text", "id": "mark_word", "label": "Wordmark over panels", "default": "BENTLEY", "info": "Full-width split layout only. Leave empty to hide." },
+    { "type": "text", "id": "mark_sub", "label": "Line under wordmark", "default": "Kids Collection" },
+    { "type": "select", "id": "desktop_layout", "label": "Desktop layout", "options": [{ "value": "cards", "label": "Cards with gaps (like phone)" }, { "value": "split", "label": "Full-width split" }], "default": "cards" },
+    { "type": "range", "id": "card_gap", "label": "Gap between cards", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16, "info": "Cards layout only." },
+    { "type": "range", "id": "card_radius", "label": "Card corner rounding", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 0, "info": "Cards layout only." },
+    { "type": "checkbox", "id": "show_numbers", "label": "Show 01 / 02 / 03", "default": true },
+    { "type": "range", "id": "panel_height", "label": "Panel height (desktop)", "min": 60, "max": 100, "step": 5, "unit": "vh", "default": 100 },
+    { "type": "range", "id": "panel_height_mobile", "label": "Panel height (phone)", "min": 320, "max": 620, "step": 20, "unit": "px", "default": 440 },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Small links" },
+    { "type": "range", "id": "mini_space", "label": "Space above small links (desktop)", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "mini_space_mobile", "label": "Space above small links (phone)", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "mini_img_size", "label": "Photo size", "min": 48, "max": 120, "step": 4, "unit": "px", "default": 72 },
+    { "type": "select", "id": "mini_img_fit", "label": "Photo fit", "options": [{ "value": "contain", "label": "Show the whole product" }, { "value": "cover", "label": "Fill the square" }], "default": "contain" },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#a83f2f" },
+    { "type": "color", "id": "sand", "label": "Panel numbers", "default": "#d9d0c5" },
+    { "type": "color", "id": "hover_bg", "label": "Small link hover", "default": "#efe8df" }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Category panel",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Bentley Trikes" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "The 6-in-1 convertible stroller trike, in eight finishes." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop now" },
+        { "type": "image_picker", "id": "image", "label": "Photo 1", "info": "Portrait, at least 1200px wide." },
+        { "type": "image_picker", "id": "image_2", "label": "Photo 2 (cross-fades)", "info": "Optional." },
+        { "type": "video", "id": "video", "label": "Video (optional)", "info": "Plays muted on a loop instead of the photos." }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Small link",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Bentley Helmet" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Sophisticated styling with the safety features little riders need." },
+        { "type": "image_picker", "id": "image", "label": "Photo", "info": "Small product photo shown on the left. A cut-out on a plain background works best." },
+        { "type": "product", "id": "product", "label": "Or use a product's photo", "info": "Used when no photo is chosen. Also sets the link if Link is empty." },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Category split",
+      "blocks": [
+        { "type": "panel", "settings": { "title": "Bentley Trikes", "text": "The 6-in-1 convertible stroller trike, in eight finishes. From $599." } },
+        { "type": "panel", "settings": { "title": "Ride-On Cars", "text": "Electric ride-on cars modelled on the Mulsanne, Bentayga, Bacalar and EXP 12." } },
+        { "type": "panel", "settings": { "title": "Balance Bikes", "text": "Your child's first balance bike, with the Bentley wings up front." } },
+        { "type": "link", "settings": { "title": "Bentley Helmet", "text": "Sophisticated styling with the safety features little riders need." } },
+        { "type": "link", "settings": { "title": "Logo Projector", "text": "Casts the Bentley wings beneath your 6-in-1 Stroller Trike." } },
+        { "type": "link", "settings": { "title": "Spare Parts", "text": "Replacement parts to keep your Bentley Trike like new." } },
+        { "type": "link", "settings": { "title": "Partner Brands", "text": "McLaren scooters & bikes, Baghera ride-on cars and the Rito folding trike." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
