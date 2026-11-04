@@ -12,6 +12,8 @@
   assign mul_count = 0
   assign sig_html = ''
   assign mul_html = ''
+  assign g3_count = 0
+  assign g3_html = ''
 -%}
 
 {%- capture finishes_json -%}
@@ -28,8 +30,13 @@
         endif
         assign label = b.name | default: p.title
         assign group = 'Signature'
+        assign gname = 'Signature'
         if b.group == '2'
           assign group = 'Mulliner'
+          assign gname = 'Mulliner'
+        elsif b.group == '3'
+          assign group = 'Group3'
+          assign gname = s.group_3_name | default: 'Group 3'
         endif
         assign img_url = ''
         if img
@@ -38,11 +45,14 @@
       -%}
       {%- if idx > 0 -%},{%- endif -%}
       {%- if idx == 0 -%}{%- assign init_img = img -%}{%- endif -%}
-      {"id":{{ v.id | json }},"block":{{ block.id | json }},"label":{{ label | json }},"title":{{ p.title | json }},"price":{{ v.price | json }},"compare":{{ v.compare_at_price | default: 0 | json }},"available":{{ v.available | json }},"img":{{ img_url | json }},"group":{{ group | json }},"swatch":{{ b.swatch | json }},"url":{{ p.url | append: '?variant=' | append: v.id | json }}}
+      {"id":{{ v.id | json }},"block":{{ block.id | json }},"label":{{ label | json }},"title":{{ p.title | json }},"price":{{ v.price | json }},"compare":{{ v.compare_at_price | default: 0 | json }},"available":{{ v.available | json }},"img":{{ img_url | json }},"group":{{ group | json }},"gname":{{ gname | json }},"swatch":{{ b.swatch | json }},"url":{{ p.url | append: '?variant=' | append: v.id | json }}}
       {%- capture sw -%}<button class="bthp-sw" type="button" role="radio" aria-checked="false" aria-label="{{ label | escape }}, {{ v.price | money_without_trailing_zeros | strip_html | escape }}{% unless v.available %} (sold out){% endunless %}" data-i="{{ idx }}"{% unless v.available %} data-soldout{% endunless %} {{ block.shopify_attributes }}><i style="background: {{ b.swatch }};"></i></button>{%- endcapture -%}
       {%- if group == 'Mulliner' -%}
         {%- assign mul_html = mul_html | append: sw -%}
         {%- assign mul_count = mul_count | plus: 1 -%}
+      {%- elsif group == 'Group3' -%}
+        {%- assign g3_html = g3_html | append: sw -%}
+        {%- assign g3_count = g3_count | plus: 1 -%}
       {%- else -%}
         {%- assign sig_html = sig_html | append: sw -%}
         {%- assign sig_count = sig_count | plus: 1 -%}
@@ -221,6 +231,12 @@
         <div class="bthp-sw-row" role="radiogroup" aria-label="{{ s.mulliner_title | escape }}" data-swatches="Mulliner">{{ mul_html }}</div>
       </div>
       {%- endif -%}
+      {%- if g3_count > 0 -%}
+      <div class="bthp-trk__grp" data-group="Group3">
+        <div class="bthp-trk__gh"><p>{{ s.group_3_title }}</p><span data-g-note></span></div>
+        <div class="bthp-sw-row" role="radiogroup" aria-label="{{ s.group_3_title | escape }}" data-swatches="Group3">{{ g3_html }}</div>
+      </div>
+      {%- endif -%}
 
       <div class="bthp-trk__btns">
         <button class="bthp-btn bthp-btn--a" type="button" data-add>{{ s.cart_label }}</button>
@@ -363,7 +379,7 @@
       }
       all('[data-swatches="all"]').forEach(function (row) { items.forEach(function (it, idx) { row.appendChild(swatchBtn(it, idx)); }); });
       all('.bthp-sw[data-i]').forEach(function (b) { b.addEventListener('click', function () { select(parseInt(b.getAttribute('data-i'), 10), true); }); });
-      ['Signature', 'Mulliner'].forEach(function (g) {
+      ['Signature', 'Mulliner', 'Group3'].forEach(function (g) {
         var prices = items.filter(function (it) { return it.group === g; }).map(function (it) { return it.price; });
         var grp = el.querySelector('[data-group="' + g + '"] [data-g-note]');
         if (!grp || !prices.length) return;
@@ -377,7 +393,7 @@
         all('[data-f-label]').forEach(function (n) { n.textContent = it.label; });
         all('[data-f-price]').forEach(function (n) { n.textContent = money(it.price); });
         all('[data-f-compare]').forEach(function (n) { n.textContent = it.compare > it.price ? money(it.compare) : ''; });
-        all('[data-f-cap]').forEach(function (n) { n.textContent = it.label + ' · ' + it.group; });
+        all('[data-f-cap]').forEach(function (n) { n.textContent = it.label + ' · ' + (it.gname || it.group); });
         all('[data-f-tag]').forEach(function (n) { n.hidden = it.group !== 'Mulliner'; });
         var inst = el.getAttribute('data-installment') || '';
         all('[data-f-inst]').forEach(function (n) { n.textContent = inst.replace('[quarter]', money(Math.round(it.price / 4))); });
@@ -468,6 +484,8 @@
     { "type": "text", "id": "installment_text", "label": "Instalments line", "default": "or 4 payments of [quarter] with Shop Pay", "info": "[quarter] becomes a quarter of the price." },
     { "type": "text", "id": "signature_title", "label": "Group 1 title", "default": "Signature finishes" },
     { "type": "text", "id": "mulliner_title", "label": "Group 2 title", "default": "Mulliner finishes" },
+    { "type": "text", "id": "group_3_title", "label": "Group 3 title", "default": "Folding finishes", "info": "Shows only when a Finish block is set to Group 3." },
+    { "type": "text", "id": "group_3_name", "label": "Group 3 short name", "default": "Folding", "info": "Used in the caption under the photo, e.g. \"Onyx Black · Folding\"." },
     { "type": "text", "id": "mulliner_tag", "label": "Mulliner tag", "default": "Mulliner" },
     { "type": "text", "id": "cart_label", "label": "Add to cart label", "default": "Add to cart" },
     { "type": "text", "id": "added_label", "label": "Added label", "default": "Added ✓" },
@@ -508,7 +526,7 @@
         { "type": "product", "id": "product", "label": "Product" },
         { "type": "text", "id": "name", "label": "Name shown", "default": "Onyx Black", "info": "Leave empty to use the product title." },
         { "type": "color", "id": "swatch", "label": "Colour circle", "default": "#141414" },
-        { "type": "select", "id": "group", "label": "Group", "options": [{ "value": "1", "label": "Group 1 (Signature)" }, { "value": "2", "label": "Group 2 (Mulliner)" }], "default": "1" },
+        { "type": "select", "id": "group", "label": "Group", "options": [{ "value": "1", "label": "Group 1 (Signature)" }, { "value": "2", "label": "Group 2 (Mulliner)" }, { "value": "3", "label": "Group 3" }], "default": "1" },
         { "type": "image_picker", "id": "image", "label": "Image (optional)", "info": "Replaces the product photo for this finish." }
       ]
     }

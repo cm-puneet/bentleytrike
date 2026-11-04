@@ -150,6 +150,156 @@
         "background_gradient": ""
       }
     },
+    "bt_hp_hero_cgend8": {
+      "type": "bt-hp-hero",
+      "disabled": true,
+      "name": "New: BT Hero + reveal",
+      "settings": {
+        "show_intro": true,
+        "intro_once": true,
+        "intro_word": "BENTLEY",
+        "intro_top": "Officially licensed by Bentley Motors",
+        "intro_bottom": "Trike",
+        "image": "shopify://shop_images/Mom-Mullinertrike-2.1.png",
+        "image_mobile": "shopify://shop_images/Mom-Mullinertrike-2.1_1.png",
+        "overlay": 10,
+        "height": "large",
+        "allow_transparent_header": true,
+        "align": "left",
+        "heading_width": 50,
+        "align_mobile": "left",
+        "heading_1": "Extraordinary journeys",
+        "heading_2": "start young.",
+        "meta_1": "The Bentley 6-in-1 Stroller Trike",
+        "meta_2": "Officially licensed by Bentley Motors",
+        "meta_3": "From 6 months",
+        "text": "A stroller you steer today, a trike that's entirely theirs tomorrow — finished in the colours of the cars from Crewe.",
+        "button_1_label": "Shop the Trike",
+        "button_1_link": "",
+        "button_2_label": "See how it grows",
+        "button_2_link": "",
+        "heading_size": 100,
+        "heading_size_mobile": 100,
+        "text_color": "#ffffff",
+        "accent_color": "#d9d0c5",
+        "button_bg": "#ffffff",
+        "button_text": "#1a1a1a",
+        "intro_bg": "#1a1a1a",
+        "intro_text": "#f8f4ef"
+      }
+    },
+    "bt_hp_categories_cLCE38": {
+      "type": "bt-hp-categories",
+      "blocks": {
+        "panel_GPFWyq": {
+          "type": "panel",
+          "settings": {
+            "title": "Bentley Trikes",
+            "text": "The 6-in-1 convertible stroller trike, in eight finishes. From $599.",
+            "link": "shopify://products/bentley-6-in-1-stroller-trike",
+            "link_label": "Shop now",
+            "image": "shopify://shop_images/Onyx_Black_3.png"
+          }
+        },
+        "panel_DCiMq9": {
+          "type": "panel",
+          "settings": {
+            "title": "Ride-On Cars",
+            "text": "Electric ride-on cars modelled on the Mulsanne, Bentayga, Bacalar and EXP 12.",
+            "link": "shopify://collections/bentley-ride-on-electric-cars",
+            "link_label": "Shop now",
+            "image": "shopify://shop_images/Electric_Ride_On_Car_-_mobile.png"
+          }
+        },
+        "panel_LabBwe": {
+          "type": "panel",
+          "settings": {
+            "title": "Balance Bikes",
+            "text": "Your child's first balance bike, with the Bentley wings up front.",
+            "link": "shopify://collections/balance-bikes",
+            "link_label": "Shop now",
+            "image": "shopify://shop_images/Balance_Bikes_mom_1_1.png"
+          }
+        },
+        "link_GKxCmE": {
+          "type": "link",
+          "settings": {
+            "title": "Bentley Helmet",
+            "text": "Sophisticated styling with the safety features little riders need.",
+            "image": "shopify://shop_images/11.png",
+            "product": "",
+            "link": ""
+          }
+        },
+        "link_iGeDea": {
+          "type": "link",
+          "settings": {
+            "title": "Logo Projector",
+            "text": "Casts the Bentley wings beneath your 6-in-1 Stroller Trike.",
+            "image": "shopify://shop_images/BentleyLogoLightProjectorfor6-in-1StrollerTrike.webp",
+            "product": "",
+            "link": ""
+          }
+        },
+        "link_FBWTzy": {
+          "type": "link",
+          "disabled": true,
+          "settings": {
+            "title": "Spare Parts",
+            "text": "Replacement parts to keep your Bentley Trike like new.",
+            "product": "",
+            "link": ""
+          }
+        },
+        "link_GRXWpG": {
+          "type": "link",
+          "settings": {
+            "title": "Partner Brands",
+            "text": "McLaren scooters & bikes, Baghera ride-on cars and the Rito folding trike.",
+            "image": "shopify://shop_images/1938FE_2.jpg",
+            "product": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "panel_GPFWyq",
+        "panel_DCiMq9",
+        "panel_LabBwe",
+        "link_GKxCmE",
+        "link_iGeDea",
+        "link_FBWTzy",
+        "link_GRXWpG"
+      ],
+      "disabled": true,
+      "name": "New: BT Category split",
+      "settings": {
+        "label": "The Bentley Kids Collection",
+        "heading": "Their first",
+        "heading_italic": "Bentley.",
+        "link_label": "View the full collection",
+        "link_url": "",
+        "mark_word": "BENTLEY",
+        "mark_sub": "Kids Collection",
+        "desktop_layout": "cards",
+        "card_gap": 16,
+        "card_radius": 0,
+        "show_numbers": true,
+        "panel_height": 65,
+        "panel_height_mobile": 440,
+        "heading_size": 100,
+        "heading_size_mobile": 100,
+        "mini_space": 24,
+        "mini_space_mobile": 16,
+        "mini_img_size": 72,
+        "mini_img_fit": "contain",
+        "bg": "#f8f4ef",
+        "ink": "#1a1a1a",
+        "accent": "#a83f2f",
+        "sand": "#d9d0c5",
+        "hover_bg": "#efe8df"
+      }
+    },
     "video_z6PwFG": {
       "type": "video",
       "blocks": {
@@ -215,6 +365,28 @@
         "background": "#f8f4ef",
         "background_gradient": "",
         "text_color": ""
+      }
+    },
+    "bt_hp_statement_wBcEmg": {
+      "type": "bt-hp-statement",
+      "disabled": true,
+      "name": "New: BT Brand statement",
+      "settings": {
+        "label": "Officially licensed by Bentley Motors",
+        "text": "Crafted with authentic Bentley paint, iconic wheels, and the legendary winged badge of Crewe. Built for the unforgettable early years—where every stroll is an adventure, and every journey is their first.",
+        "emphasis": "Crewe, first.",
+        "reveal": true,
+        "link_label": "Meet the Trike",
+        "link_url": "shopify://pages/bentley-collection",
+        "heading_size": 90,
+        "heading_size_mobile": 100,
+        "pad_top": 0,
+        "pad_bottom": 0,
+        "pad_top_mobile": 20,
+        "pad_bottom_mobile": 16,
+        "bg": "#f8f4ef",
+        "ink": "#1a1a1a",
+        "accent": "#a83f2f"
       }
     },
     "ss_collection_13_nmaRRb": {
@@ -797,50 +969,6 @@
         "text_color": ""
       }
     },
-    "multiple_images_with_text_P3dkUC": {
-      "type": "multiple-images-with-text",
-      "blocks": {
-        "item_XbVicJ": {
-          "type": "item",
-          "settings": {
-            "image_rotation_degrees": 15,
-            "subheading": "",
-            "title": "Heading 1",
-            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
-            "button_url": "",
-            "button_text": ""
-          }
-        },
-        "item_zqaRcw": {
-          "type": "item",
-          "settings": {
-            "image_rotation_degrees": 5.5,
-            "subheading": "",
-            "title": "Heading 2",
-            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
-            "button_url": "",
-            "button_text": ""
-          }
-        }
-      },
-      "block_order": [
-        "item_XbVicJ",
-        "item_zqaRcw"
-      ],
-      "disabled": true,
-      "custom_css": [],
-      "name": "Multiple images with text",
-      "settings": {
-        "full_width": true,
-        "images_layout": "stacked",
-        "collage_images_alignment": "shifted",
-        "background": "#00221c",
-        "background_gradient": "",
-        "text_color": "#ffffff",
-        "button_background": "",
-        "button_text_color": ""
-      }
-    },
     "media_grid_zqVX76": {
       "type": "media-grid",
       "blocks": {
@@ -1127,7 +1255,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_wCxJAE": {
-          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "5ig1jxrobid59"
           }
@@ -1145,162 +1273,129 @@
         "text_color": ""
       }
     },
-    "ss_slider_VrdnnT": {
-      "type": "ss-slider",
+    "bt_hp_trike_XhiYRa": {
+      "type": "bt-hp-trike",
       "blocks": {
-        "custom_ijG7gX": {
-          "type": "custom",
+        "finish_gk33Fe": {
+          "type": "finish",
           "settings": {
-            "title": "Infant Stroller",
-            "sub_title": "Stage 1: FOR 6 MONTHS & UP",
-            "url": ""
+            "product": "",
+            "name": "Onyx Black",
+            "swatch": "#141414",
+            "group": "1"
           }
         },
-        "custom_PcMQFU": {
-          "type": "custom",
+        "finish_aEtNYP": {
+          "type": "finish",
           "settings": {
-            "title": "Front-Facing Stroller",
-            "sub_title": "Stage 2: FOR 6 MONTHS & UP",
-            "url": ""
+            "product": "",
+            "name": "Dragon Red",
+            "swatch": "#a8262b",
+            "group": "1"
           }
         },
-        "custom_Q8HGEX": {
-          "type": "custom",
+        "finish_NR6WTe": {
+          "type": "finish",
           "settings": {
-            "title": "Guided Trike",
-            "sub_title": "Stage 3: FOR 12 MONTHS & UP",
-            "url": ""
+            "product": "",
+            "name": "Jetstream Blue",
+            "swatch": "#2a4d8f",
+            "group": "1"
           }
         },
-        "custom_9wWcd4": {
-          "type": "custom",
+        "finish_94zrHL": {
+          "type": "finish",
           "settings": {
-            "title": "Training Trike",
-            "sub_title": "Stage 4: 24 MONTHS & UP",
-            "url": ""
+            "product": "",
+            "name": "Fuchsia Pink",
+            "swatch": "#d14f8a",
+            "group": "1"
           }
         },
-        "custom_zykhpt": {
-          "type": "custom",
+        "finish_c4jknC": {
+          "type": "finish",
           "settings": {
-            "title": "Solo Ride",
-            "sub_title": "STAGE 4: 48 MONTHS & UP",
-            "url": ""
+            "product": "",
+            "name": "Mulliner Gold",
+            "swatch": "#c6a15b",
+            "group": "2"
+          }
+        },
+        "finish_jYmRFn": {
+          "type": "finish",
+          "settings": {
+            "product": "",
+            "name": "Celeste",
+            "swatch": "#9ec5d8",
+            "group": "2"
+          }
+        },
+        "finish_V3cmPf": {
+          "type": "finish",
+          "settings": {
+            "product": "",
+            "name": "Mandarin",
+            "swatch": "#d9792b",
+            "group": "2"
+          }
+        },
+        "finish_KKLBM4": {
+          "type": "finish",
+          "settings": {
+            "product": "",
+            "name": "Cool Stone",
+            "swatch": "#c9c3bb",
+            "group": "2"
           }
         }
       },
       "block_order": [
-        "custom_ijG7gX",
-        "custom_PcMQFU",
-        "custom_Q8HGEX",
-        "custom_9wWcd4",
-        "custom_zykhpt"
+        "finish_gk33Fe",
+        "finish_aEtNYP",
+        "finish_NR6WTe",
+        "finish_94zrHL",
+        "finish_c4jknC",
+        "finish_jYmRFn",
+        "finish_V3cmPf",
+        "finish_KKLBM4"
       ],
       "disabled": true,
+      "name": "New: BT Trike buy box",
       "settings": {
-        "body_padding_vertical": 70,
-        "body_padding_vertical_mobile": 30,
-        "body_padding_horizontal": 70,
-        "body_padding_horizontal_mobile": 30,
-        "body_radius": 0,
-        "body_border_thickness": 0,
-        "layout_gap": 20,
-        "layout_gap_mobile": 20,
-        "heading": "<h5>Designed to Grow with Your Child </h5>",
-        "heading_custom": true,
-        "heading_font": "playfair_display_n4",
-        "heading_size": 44,
-        "heading_size_mobile": 22,
-        "heading_height": 130,
-        "heading_align": "left",
-        "heading_align_mobile": "center",
-        "sub_heading": "A luxurious aesthetic option for parents looking to keep their child safe and comfortable, while giving them room to learn over the course of their early years.",
-        "sub_heading_custom": false,
-        "sub_heading_font": "poppins_n4",
-        "sub_heading_size": 18,
-        "sub_heading_size_mobile": 18,
-        "sub_heading_height": 150,
-        "sub_heading_align": "left",
-        "sub_heading_align_mobile": "center",
-        "sub_heading_mt": 16,
-        "slider_width": 68,
-        "slider_width_mobile": 100,
-        "slider_view": 3,
-        "slider_view_mobile": 1.3,
-        "slider_gap": 16,
-        "slider_gap_mobile": 16,
-        "arrow_size": 40,
-        "arrow_size_mobile": 40,
-        "arrow_icon_size": 16,
-        "arrow_icon_size_mobile": 16,
-        "arrow_border_thickness": 0,
-        "arrow_show_desktop": true,
-        "arrow_show_mobile": true,
-        "scrollbar_height": 2,
-        "scrollbar_mt": 20,
-        "scrollbar_show_desktop": true,
-        "scrollbar_show_mobile": true,
-        "card_padding_vertical": 0,
-        "card_padding_vertical_mobile": 0,
-        "card_padding_horizontal": 0,
-        "card_padding_horizontal_mobile": 0,
-        "card_radius": 8,
-        "card_border_thickness": 0,
-        "image_radius": 8,
-        "image_border_thickness": 0,
-        "image_ratio": "portrait",
-        "radius_top": true,
-        "content_padding_vertical": 16,
-        "content_padding_vertical_mobile": 16,
-        "content_padding_horizontal": 16,
-        "content_padding_horizontal_mobile": 16,
-        "content_radius": 8,
-        "content_border_thickness": 0,
-        "slide_title_custom": false,
-        "slide_title_font": "playfair_display_n4",
-        "slide_title_size": 14,
-        "slide_title_size_mobile": 14,
-        "slide_title_height": 130,
-        "slide_title_align": "left",
-        "slide_title_mt": 4,
-        "slide_sub_title_custom": false,
-        "slide_sub_title_font": "josefin_sans_n4",
-        "slide_sub_title_size": 12,
-        "slide_sub_title_size_mobile": 12,
-        "slide_sub_title_height": 130,
-        "slide_sub_title_align": "left",
-        "card_bg_color": "#fef6ee",
-        "card_border_color": "#000000",
-        "image_border_color": "#000000",
-        "content_bg_color": "#ffffff",
-        "content_border_color": "#000000",
-        "slide_title_color": "#000000",
-        "slide_sub_title_color": "#000000",
-        "arrow_color": "#ffffff",
-        "arrow_hover_color": "#ffffff",
-        "arrow_bg_color": "#394d46",
-        "arrow_bg_hover_color": "#454545",
-        "arrow_border_color": "#111111",
-        "arrow_border_hover_color": "#454545",
-        "scrollbar_bg_color": "#f0efd5",
-        "scrollbar_drag_bg_color": "#111111",
-        "body_bg_color": "#d4d2cd",
-        "body_border_color": "#000000",
-        "heading_color": "#121212",
-        "sub_heading_color": "#f0efd5",
-        "background_color": "#fef6ee",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "margin_top": 12,
-        "margin_bottom": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 8,
-        "padding_horizontal_mobile": 1.5,
-        "full_width": false,
-        "content_width": 120,
-        "border_thickness": 0,
-        "lazy": true
+        "image_number": 1,
+        "label": "6-in-1 Stroller Trike · From 6 months",
+        "heading": "The Bentley Trike in",
+        "rating_text": "4.8 · 1,017 reviews",
+        "rating_link": "",
+        "installment_text": "or 4 payments of [quarter] with Shop Pay",
+        "signature_title": "Signature finishes",
+        "mulliner_title": "Mulliner finishes",
+        "mulliner_tag": "Mulliner",
+        "cart_label": "Add to cart",
+        "added_label": "Added ✓",
+        "show_buy_now": true,
+        "buy_now_label": "Buy it now",
+        "after_add": "drawer",
+        "assure_1": "Officially licensed by Bentley Motors",
+        "assure_2": "Official USA distributor",
+        "assure_3": "",
+        "features": "Seat rotates 180° to face you\nUPF 50 waterproof canopy\nAir wheels with rear brake\n5-point safety harness",
+        "more_label": "How it grows with them",
+        "more_link": "",
+        "show_sheen": true,
+        "stage_height_mobile": 340,
+        "sticky_bar": true,
+        "bar_prefix": "Bentley Trike ·",
+        "bar_button": "Add to cart",
+        "heading_size": 100,
+        "heading_size_mobile": 100,
+        "bg": "#f8f4ef",
+        "ink": "#1a1a1a",
+        "accent": "#a83f2f",
+        "stage_bg": "#efe8df",
+        "tag_bg": "#00221c",
+        "button_bg": "#a83f2f",
+        "button_text": "#ffffff"
       }
     },
     "image_with_text_overlay_cGjVBF": {
@@ -1488,8 +1583,11 @@
   },
   "order": [
     "slideshow_yQqxE8",
+    "bt_hp_hero_cgend8",
+    "bt_hp_categories_cLCE38",
     "video_z6PwFG",
     "rich_text_7YeDLk",
+    "bt_hp_statement_wBcEmg",
     "ss_collection_13_nmaRRb",
     "blocks_nT4rJH",
     "17752051696ea75ce8",
@@ -1498,12 +1596,11 @@
     "rich_text_3z89EG",
     "featured-collection",
     "rich_text_jpDJzQ",
-    "multiple_images_with_text_P3dkUC",
     "media_grid_zqVX76",
     "testimonials_NKm8c7",
     "slideshow_MmGWdb",
     "174259779279421f63",
-    "ss_slider_VrdnnT",
+    "bt_hp_trike_XhiYRa",
     "image_with_text_overlay_cGjVBF",
     "media_with_text_yVqAxc",
     "rich_text_9CaXBf",
