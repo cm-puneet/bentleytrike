@@ -770,76 +770,6 @@
       ],
       "settings": {}
     },
-    "collection-list": {
-      "type": "collection-list",
-      "blocks": {
-        "collection_EpUQmH": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "subheading": "TRIKE",
-            "title": "",
-            "url": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
-            "heading_tag": "h2",
-            "text_position": "place-self-end-center text-center",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        },
-        "collection_JHnw7f": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "subheading": "RIDE-ON CARS",
-            "title": "",
-            "url": "shopify://collections/bentley-ride-on-electric-cars",
-            "heading_tag": "h2",
-            "text_position": "place-self-end-center text-center",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        },
-        "collection_6QyWrd": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "subheading": "BALANCE BIKE",
-            "title": "",
-            "url": "shopify://products/bentley-balance-bikes",
-            "heading_tag": "h2",
-            "text_position": "place-self-end-center text-center",
-            "text_color": "#ffffff",
-            "overlay_color": "#000000",
-            "overlay_opacity": 0
-          }
-        }
-      },
-      "block_order": [
-        "collection_EpUQmH",
-        "collection_JHnw7f",
-        "collection_6QyWrd"
-      ],
-      "disabled": true,
-      "settings": {
-        "full_width": true,
-        "stack_collections": false,
-        "collections_per_row_mobile": "1",
-        "collections_per_row": 3,
-        "show_progress_bar": false,
-        "subheading": "",
-        "title": "",
-        "content": "",
-        "link_url": "shopify://products/bentley-balance-bikes",
-        "link_text": "",
-        "background": "",
-        "background_gradient": "",
-        "text_color": "",
-        "heading_color": "",
-        "heading_gradient": ""
-      }
-    },
     "video_gwrtTz": {
       "type": "video",
       "blocks": {
@@ -1523,62 +1453,6 @@
         "accent": "#a83f2f"
       }
     },
-    "image_with_text_overlay_cGjVBF": {
-      "type": "image-with-text-overlay",
-      "blocks": {
-        "subheading_yY4ngB": {
-          "type": "subheading",
-          "settings": {
-            "text": "New Collection"
-          }
-        },
-        "heading_dMmyxC": {
-          "type": "heading",
-          "settings": {
-            "text": "Ride-on Cars",
-            "heading_tag": "h2"
-          }
-        },
-        "richtext_p4RG7y": {
-          "type": "richtext",
-          "settings": {
-            "content": "<p>Crafted for parents and kids who embrace timeless elegance.</p>"
-          }
-        },
-        "button_e6YUKp": {
-          "type": "button",
-          "settings": {
-            "style": "fill",
-            "size": "lg",
-            "text": "SHOP NOW",
-            "url": "shopify://collections/bentley-ride-on-electric-cars",
-            "background": "#00221c",
-            "text_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "subheading_yY4ngB",
-        "heading_dMmyxC",
-        "richtext_p4RG7y",
-        "button_e6YUKp"
-      ],
-      "disabled": true,
-      "custom_css": [],
-      "settings": {
-        "full_width": false,
-        "allow_transparent_header": false,
-        "enable_parallax": false,
-        "image_size": "auto",
-        "image": "shopify://shop_images/bentley_Cars_1.png",
-        "mobile_image": "shopify://shop_images/Bentley_cars_mobile_4.png",
-        "mobile_text_position": "place-self-start text-start",
-        "desktop_text_position": "sm:place-self-end-start sm:text-start",
-        "text_color": "#ffffff",
-        "overlay_color": "#ffffff",
-        "overlay_opacity": 8
-      }
-    },
     "media_with_text_yVqAxc": {
       "type": "media-with-text",
       "blocks": {
@@ -1716,7 +1590,6 @@
     "ss_collection_13_nmaRRb",
     "blocks_nT4rJH",
     "17752051696ea75ce8",
-    "collection-list",
     "video_gwrtTz",
     "rich_text_3z89EG",
     "featured-collection",
@@ -1727,7 +1600,6 @@
     "174259779279421f63",
     "bt_hp_trike_XhiYRa",
     "bt_hp_stages_qYxdfa",
-    "image_with_text_overlay_cGjVBF",
     "media_with_text_yVqAxc",
     "rich_text_9CaXBf",
     "174180357643579c9e",
