@@ -1,0 +1,532 @@
+{%- comment -%}
+  BT Homepage — The Trike: product stage + buy box + sticky add-to-cart bar
+  Each finish is a block under this section: pick its product, then set the name,
+  colour circle and group. One quick pass over the blocks builds everything.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id | replace: '_', '' | replace: '-', '' | downcase
+  assign img_n = s.image_number | minus: 1
+  assign idx = 0
+  assign sig_count = 0
+  assign mul_count = 0
+  assign sig_html = ''
+  assign mul_html = ''
+-%}
+
+{%- capture finishes_json -%}
+  [
+  {%- for block in section.blocks -%}
+    {%- assign b = block.settings -%}
+    {%- assign p = b.product -%}
+    {%- if p != blank -%}
+      {%- liquid
+        assign v = p.selected_or_first_available_variant
+        assign img = b.image
+        if img == blank
+          assign img = p.images[img_n] | default: p.featured_image
+        endif
+        assign label = b.name | default: p.title
+        assign group = 'Signature'
+        if b.group == '2'
+          assign group = 'Mulliner'
+        endif
+        assign img_url = ''
+        if img
+          assign img_url = img | image_url: width: 1000
+        endif
+      -%}
+      {%- if idx > 0 -%},{%- endif -%}
+      {%- if idx == 0 -%}{%- assign init_img = img -%}{%- endif -%}
+      {"id":{{ v.id | json }},"block":{{ block.id | json }},"label":{{ label | json }},"title":{{ p.title | json }},"price":{{ v.price | json }},"compare":{{ v.compare_at_price | default: 0 | json }},"available":{{ v.available | json }},"img":{{ img_url | json }},"group":{{ group | json }},"swatch":{{ b.swatch | json }},"url":{{ p.url | append: '?variant=' | append: v.id | json }}}
+      {%- capture sw -%}<button class="bthp-sw" type="button" role="radio" aria-checked="false" aria-label="{{ label | escape }}, {{ v.price | money_without_trailing_zeros | strip_html | escape }}{% unless v.available %} (sold out){% endunless %}" data-i="{{ idx }}"{% unless v.available %} data-soldout{% endunless %} {{ block.shopify_attributes }}><i style="background: {{ b.swatch }};"></i></button>{%- endcapture -%}
+      {%- if group == 'Mulliner' -%}
+        {%- assign mul_html = mul_html | append: sw -%}
+        {%- assign mul_count = mul_count | plus: 1 -%}
+      {%- else -%}
+        {%- assign sig_html = sig_html | append: sw -%}
+        {%- assign sig_count = sig_count | plus: 1 -%}
+      {%- endif -%}
+      {%- assign idx = idx | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+  ]
+{%- endcapture -%}
+
+<style>
+  .bthp-trk,.bthp-bar{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-trk,.bthp-bar{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-trk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--bthp-bg);color:var(--bthp-ink);font-family:var(--text-font-family,Poppins,sans-serif);border-top:1px solid var(--bthp-line)}
+  .bthp-trk__l{position:relative}
+  .bthp-trk__stage{position:sticky;top:var(--bthp-top,68px);height:min(calc(100vh - var(--bthp-top,68px)),900px);min-height:560px;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 58%,#ffffff 0%,var(--bthp-stage) 62%,var(--bthp-stage-2) 100%);display:flex;align-items:center;justify-content:center}
+  .bthp-trk__ghost{position:absolute;left:28px;right:28px;top:26px;margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-style:italic;font-size:clamp(56px,7vw,120px);line-height:.92;color:var(--bthp-ink);opacity:.06;white-space:nowrap;overflow:hidden}
+  .bthp-trk__floor{position:absolute;left:50%;bottom:15%;width:46%;height:26px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(26,26,26,.28),rgba(26,26,26,0));filter:blur(4px)}
+  .bthp-trk__cap{position:absolute;left:28px;bottom:24px;margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.7}
+  .bthp-prod{position:relative;width:min(78%,640px);aspect-ratio:1/1}
+  .bthp-prod img{display:block;width:100%;height:100%;object-fit:contain}
+  .bthp-prod.is-in{animation:bthpProdIn .9s cubic-bezier(.2,.7,.2,1)}
+  @keyframes bthpProdIn{from{opacity:0;transform:translateX(28px) scale(.97)}to{opacity:1;transform:none}}
+  .bthp-sheen{position:absolute;inset:0;pointer-events:none;overflow:hidden;-webkit-mask-image:var(--m);mask-image:var(--m);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;mix-blend-mode:soft-light}
+  .bthp-sheen:not([style*="--m"]){display:none}
+  .bthp-sheen::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,255,255,.85) 50%,rgba(255,255,255,0));transform:translateX(-110%);animation:bthpSheenX 7s ease-in-out infinite}
+  @keyframes bthpSheenX{0%,58%{transform:translateX(-110%)}86%,100%{transform:translateX(260%)}}
+  .bthp-trk__buy{display:flex;flex-direction:column;gap:30px;padding:112px clamp(28px,5vw,96px) 104px;max-width:640px;box-sizing:border-box}
+  .bthp-trk__label{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--bthp-accent)}
+  .bthp-trk__h{margin:16px 0 0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(36px,3.6vw,56px) * var(--bthp-hs, 1));line-height:1.02;letter-spacing:-.006em;color:var(--bthp-ink)}
+  .bthp-trk__h em{font-style:italic;color:var(--bthp-accent)}
+  .bthp-trk__rate{display:flex;align-items:center;gap:12px;margin-top:14px;font-size:13px}
+  .bthp-trk__rate a{color:inherit;opacity:.8}
+  .bthp-trk__stars{display:inline-flex;gap:3px;color:var(--bthp-accent)}
+  .bthp-trk__price{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px}
+  .bthp-trk__pn{font-family:var(--heading-font-family,"Playfair Display",serif);font-size:34px;line-height:1}
+  .bthp-trk__pc{font-size:16px;opacity:.55;text-decoration:line-through}
+  .bthp-trk__ps{flex-basis:100%;font-size:13px;opacity:.72}
+  .bthp-trk__tag{display:inline-flex;align-items:center;min-height:24px;padding:0 10px;background:var(--bthp-tag);color:#f8f4ef;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+  .bthp-trk__tag[hidden]{display:none}
+  .bthp-trk__grp{display:flex;flex-direction:column;gap:10px}
+  .bthp-trk__empty{margin:0;padding:18px;border:1px dashed var(--bthp-line);font-size:13px}
+  .bthp-trk__gh{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .bthp-trk__gh p{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
+  .bthp-trk__gh span{font-size:13px;opacity:.72}
+  .bthp-sw-row{display:flex;flex-wrap:wrap;gap:8px}
+  .bthp-sw{width:44px;height:44px;border-radius:50%;border:0;padding:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(26,26,26,.16);transition:box-shadow .3s ease}
+  .bthp-sw:hover{box-shadow:inset 0 0 0 1px rgba(26,26,26,.55)}
+  .bthp-sw[aria-checked="true"]{box-shadow:inset 0 0 0 1.5px var(--bthp-ink)}
+  .bthp-sw i{display:block;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+  .bthp-sw[data-soldout] i{opacity:.4}
+  .bthp-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:56px;padding:0 24px;box-sizing:border-box;border:0;border-radius:0;font-family:var(--text-font-family,Poppins,sans-serif);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .3s ease,color .3s ease,box-shadow .3s ease}
+  .bthp-btn--a{background:var(--bthp-btn-bg);color:var(--bthp-btn-text)}
+  .bthp-btn--a:hover{background:var(--bthp-btn-hover);color:var(--bthp-btn-text)}
+  .bthp-btn--b{background:transparent;color:var(--bthp-ink);box-shadow:inset 0 0 0 1px var(--bthp-ink)}
+  .bthp-btn--b:hover{background:var(--bthp-ink);color:var(--bthp-bg)}
+  .bthp-btn[aria-busy="true"]{opacity:.7;pointer-events:none}
+  .bthp-btn[disabled]{opacity:.45;cursor:not-allowed}
+  .bthp-btn.is-done{background:var(--bthp-ink);color:var(--bthp-bg)}
+  .bthp-trk__btns{display:flex;flex-direction:column;gap:10px}
+  .bthp-trk__msg{margin:0;font-size:13px;color:var(--bthp-accent)}
+  .bthp-trk__msg:empty{display:none}
+  .bthp-trk__assure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--bthp-line);border-bottom:1px solid var(--bthp-line)}
+  .bthp-trk__assure div{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px 14px 18px 0;font-size:12px;line-height:1.45;opacity:.85}
+  .bthp-trk__assure div+div{padding-left:14px;border-left:1px solid var(--bthp-line)}
+  .bthp-trk__feats{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;font-size:13px;line-height:1.5}
+  .bthp-trk__feats li{display:flex;gap:10px;align-items:flex-start}
+  .bthp-trk__feats svg{flex:none;margin-top:3px;color:var(--bthp-accent)}
+  .bthp-trk__more{align-self:flex-start;display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--bthp-ink);background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-position:0 calc(100% - 11px);background-repeat:no-repeat;transition:background-size .5s cubic-bezier(.65,0,.35,1)}
+  .bthp-trk__more:hover{color:var(--bthp-accent);background-size:30% 1px}
+
+  /* Sticky bar (moved to <body> by the script) */
+  .bthp-bar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:#ffffff;box-shadow:0 -1px 0 rgba(26,26,26,.1),0 -18px 40px rgba(26,26,26,.06);transform:translateY(110%);transition:transform .55s cubic-bezier(.2,.7,.2,1);font-family:var(--text-font-family,Poppins,sans-serif);color:var(--bthp-ink)}
+  .bthp-bar.is-on{transform:none}
+  .bthp-bar__row{display:flex;align-items:center;gap:20px;min-height:80px;max-width:1440px;margin:0 auto;padding:0 clamp(16px,4.4vw,64px);box-sizing:border-box}
+  .bthp-bar__p{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
+  .bthp-bar__img{flex:none;width:56px;height:56px;background:var(--bthp-stage);object-fit:contain}
+  .bthp-bar__n{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:19px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bthp-bar__pr{font-size:13px;opacity:.75}
+  .bthp-bar__sw{display:flex;gap:2px}
+  .bthp-bar__sw .bthp-sw{width:36px;height:36px}
+  .bthp-bar__sw .bthp-sw i{width:22px;height:22px}
+  .bthp-bar .bthp-btn{width:auto;min-height:52px;padding:0 32px}
+
+  @media (max-width:749px){
+    .bthp-trk{grid-template-columns:minmax(0,1fr)}
+    .bthp-trk__stage{position:relative;top:auto;height:var(--bthp-stage-m,340px);min-height:0}
+    .bthp-trk__stage .bthp-prod{width:min(82%,340px)}
+    .bthp-trk__ghost{font-size:52px;left:16px;top:16px}
+    .bthp-trk__cap{left:16px;bottom:14px}
+    .bthp-trk__buy{padding:28px 20px 44px;gap:20px;max-width:none}
+    .bthp-trk__h{font-size:calc(34px * var(--bthp-hs, 1))}
+    .bthp-trk__pn{font-size:28px}
+    .bthp-trk__assure{display:flex;gap:8px;margin:0 -20px;padding:0 20px;overflow-x:auto;scrollbar-width:none;border:0}
+    .bthp-trk__assure::-webkit-scrollbar{display:none}
+    .bthp-trk__assure div,.bthp-trk__assure div+div{flex:0 0 auto;flex-direction:row;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--bthp-line);white-space:nowrap}
+    .bthp-trk__feats{gap:10px 14px;font-size:12px}
+    .bthp-bar__row{min-height:72px;gap:12px}
+    .bthp-bar__img{width:48px;height:48px}
+    .bthp-bar__n{font-size:16px}
+    .bthp-bar__sw{display:none}
+    .bthp-bar .bthp-btn{padding:0 18px;font-size:11px;letter-spacing:.16em}
+  }
+  .bthp-off,.bthp-off *,.bthp-off *::before{animation-play-state:paused!important}
+  @media (prefers-reduced-motion:reduce){.bthp-sheen::before,.bthp-prod.is-in{animation:none}}
+</style>
+
+{%- capture vars -%}--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-accent: {{ s.accent }}; --bthp-tag: {{ s.tag_bg }}; --bthp-stage: {{ s.stage_bg }}; --bthp-stage-2: {{ s.stage_bg | color_darken: 4 }}; --bthp-line: {{ s.ink | color_modify: 'alpha', 0.14 }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-hover: {{ s.button_bg | color_darken: 8 }}; --bthp-btn-text: {{ s.button_text }}; --bthp-stage-m: {{ s.stage_height_mobile }}px; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};{%- endcapture -%}
+
+<div
+  class="bthp-trk"
+  id="buy"
+  data-bthp-trike="{{ uid }}"
+  data-after="{{ s.after_add }}"
+  data-sticky="{{ s.sticky_bar }}"
+  data-label="{{ s.cart_label | escape }}"
+  data-added="{{ s.added_label | escape }}"
+  data-installment="{{ s.installment_text | escape }}"
+  style="{{ vars }}"
+>
+  <script type="application/json" data-finishes>{{ finishes_json }}</script>
+  <script type="application/json" data-money>{{ shop.money_format | json }}</script>
+
+  <div class="bthp-trk__l">
+    <div class="bthp-trk__stage">
+      <p class="bthp-trk__ghost" aria-hidden="true" data-f-label></p>
+      <div class="bthp-trk__floor" aria-hidden="true"></div>
+      <div class="bthp-prod" data-f-stage>
+        {%- if init_img -%}
+          {{ init_img | image_url: width: 1400 | image_tag: class: 'bthp-f-img', alt: '', loading: 'lazy', sizes: '(max-width: 749px) 82vw, 640px' }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+        {%- if s.show_sheen -%}<span class="bthp-sheen" data-f-sheen></span>{%- endif -%}
+      </div>
+      <p class="bthp-trk__cap" data-f-cap></p>
+    </div>
+  </div>
+
+  <div>
+    <div class="bthp-trk__buy" data-buybox>
+      <div>
+        {%- if s.label != blank -%}<p class="bthp-trk__label">{{ s.label }}</p>{%- endif -%}
+        <h2 class="bthp-trk__h">{{ s.heading }} <em data-f-label></em></h2>
+        {%- if s.rating_text != blank -%}
+          <div class="bthp-trk__rate">
+            <span class="bthp-trk__stars" role="img" aria-label="5 out of 5 stars">
+              {%- for i in (1..5) -%}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 16.9 6.4 20l1.3-6.2L3 9.5l6.3-.7L12 3Z"/></svg>
+              {%- endfor -%}
+            </span>
+            <a href="{{ s.rating_link | default: '#reviews' }}">{{ s.rating_text }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="bthp-trk__price">
+        <span class="bthp-trk__pn" data-f-price></span>
+        <span class="bthp-trk__pc" data-f-compare></span>
+        <span class="bthp-trk__tag" data-f-tag hidden>{{ s.mulliner_tag }}</span>
+        {%- if s.installment_text != blank -%}<span class="bthp-trk__ps" data-f-inst></span>{%- endif -%}
+      </div>
+
+      {%- if idx == 0 -%}
+        <p class="bthp-trk__empty">Add a <b>Finish</b> block under this section and pick its product.</p>
+      {%- endif -%}
+      {%- if sig_count > 0 -%}
+      <div class="bthp-trk__grp" data-group="Signature">
+        <div class="bthp-trk__gh"><p>{{ s.signature_title }}</p><span data-g-note></span></div>
+        <div class="bthp-sw-row" role="radiogroup" aria-label="{{ s.signature_title | escape }}" data-swatches="Signature">{{ sig_html }}</div>
+      </div>
+      {%- endif -%}
+      {%- if mul_count > 0 -%}
+      <div class="bthp-trk__grp" data-group="Mulliner">
+        <div class="bthp-trk__gh"><p>{{ s.mulliner_title }}</p><span data-g-note></span></div>
+        <div class="bthp-sw-row" role="radiogroup" aria-label="{{ s.mulliner_title | escape }}" data-swatches="Mulliner">{{ mul_html }}</div>
+      </div>
+      {%- endif -%}
+
+      <div class="bthp-trk__btns">
+        <button class="bthp-btn bthp-btn--a" type="button" data-add>{{ s.cart_label }}</button>
+        {%- if s.show_buy_now -%}<button class="bthp-btn bthp-btn--b" type="button" data-buynow>{{ s.buy_now_label }}</button>{%- endif -%}
+        <p class="bthp-trk__msg" role="status" aria-live="polite" data-msg></p>
+      </div>
+
+      {%- if s.assure_1 != blank or s.assure_2 != blank or s.assure_3 != blank -%}
+        <div class="bthp-trk__assure">
+          {%- if s.assure_1 != blank -%}<div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12 2.3 2.3 4.2-4.3"/></svg><span>{{ s.assure_1 }}</span></div>{%- endif -%}
+          {%- if s.assure_2 != blank -%}<div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg><span>{{ s.assure_2 }}</span></div>{%- endif -%}
+          {%- if s.assure_3 != blank -%}<div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg><span>{{ s.assure_3 }}</span></div>{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <ul class="bthp-trk__feats">
+        {%- assign feats = s.features | newline_to_br | split: '<br />' -%}
+        {%- for f in feats -%}
+          {%- assign f2 = f | strip -%}
+          {%- if f2 != blank -%}
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg>{{ f2 }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      {%- if s.more_label != blank -%}<a class="bthp-trk__more" href="{{ s.more_link | default: '#stages' }}">{{ s.more_label }}</a>{%- endif -%}
+    </div>
+  </div>
+
+  {%- if s.sticky_bar -%}
+    <div class="bthp-bar" data-bar aria-hidden="true" style="{{ vars }}">
+      <div class="bthp-bar__row">
+        <div class="bthp-bar__p">
+          {%- if init_img -%}
+            {{ init_img | image_url: width: 160 | image_tag: class: 'bthp-bar__img bthp-f-img', alt: '', loading: 'lazy', sizes: '56px' }}
+          {%- endif -%}
+          <div style="min-width: 0;">
+            <p class="bthp-bar__n">{{ s.bar_prefix }} <span data-f-label></span></p>
+            <span class="bthp-bar__pr" data-f-price></span>
+          </div>
+        </div>
+        <div class="bthp-bar__sw" data-swatches="all"></div>
+        <button class="bthp-btn bthp-btn--a" type="button" data-add tabindex="-1">{{ s.bar_button }}</button>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    window.bthpWatch = window.bthpWatch || function (el) {
+      if (!el) return;
+      var vids = [].slice.call(el.querySelectorAll('video.bthp-v'));
+      function set(on) {
+        el.classList.toggle('bthp-off', !on);
+        vids.forEach(function (v) {
+          if (on && v.offsetParent !== null) {
+            if (v.getAttribute('preload') === 'none') v.setAttribute('preload', 'auto');
+            v.muted = true;
+            var pr = v.play();
+            if (pr && pr.catch) pr.catch(function () {});
+          } else if (!v.paused) { v.pause(); }
+        });
+      }
+      if (!('IntersectionObserver' in window)) { set(true); return; }
+      new IntersectionObserver(function (en) { set(en[0].isIntersecting); }, { rootMargin: '150px 0px' }).observe(el);
+      if (vids.length) window.addEventListener('resize', function () { set(!el.classList.contains('bthp-off')); });
+    };
+    window.bthpCart = window.bthpCart || function (items, opts) {
+      opts = opts || {};
+      var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+      var detail = { sections: [] };
+      document.dispatchEvent(new CustomEvent('cart:prepare-bundled-sections', { bubbles: true, detail: detail }));
+      var body = { items: items };
+      if (detail.sections.length) body.sections = detail.sections.join(',');
+      return fetch(root + 'cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw j; return j; }); })
+        .then(function (added) {
+          return fetch(root + 'cart.js', { headers: { Accept: 'application/json' } }).then(function (r) { return r.json(); }).then(function (cart) {
+            if (added && added.sections) cart.sections = added.sections;
+            if (opts.after === 'checkout') { window.location.href = root + 'checkout'; return cart; }
+            if (opts.after === 'cart') { window.location.href = root + 'cart'; return cart; }
+            document.dispatchEvent(new CustomEvent('variant:add', { bubbles: true, detail: { items: items, cart: cart } }));
+            document.documentElement.dispatchEvent(new CustomEvent('cart:change', { bubbles: true, detail: { baseEvent: 'variant:add', onSuccessDo: opts.after === 'stay' ? null : 'force_open_drawer', cart: cart } }));
+            document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+            return cart;
+          });
+        });
+    };
+
+    document.querySelectorAll('[data-bthp-trike]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      window.bthpWatch(el);
+      var items = [];
+      var fmt = '';
+      try { items = JSON.parse(el.querySelector('[data-finishes]').textContent) || []; } catch (e) {}
+      try { fmt = JSON.parse(el.querySelector('[data-money]').textContent) || fmt; } catch (e) {}
+      fmt = String(fmt || '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim();
+      if (!items.length) return;
+      var bar = el.querySelector('[data-bar]');
+      if (bar && el.getAttribute('data-sticky') === 'true') {
+        var old = document.querySelector('[data-bthp-bar="' + el.getAttribute('data-bthp-trike') + '"]');
+        if (old) old.remove();
+        bar.setAttribute('data-bthp-bar', el.getAttribute('data-bthp-trike'));
+        document.body.appendChild(bar);
+      }
+      var scope = [el].concat(bar ? [bar] : []);
+      function all(sel) { var out = []; scope.forEach(function (n) { out = out.concat([].slice.call(n.querySelectorAll(sel))); }); return out; }
+
+      function money(c) {
+        var a = (c / 100);
+        var two = a.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        var none = Math.round(a).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if (!fmt) return '$' + two.replace(/\.00$/, '');
+        return fmt.replace(/\{\{\s*amount_no_decimals\s*\}\}/, none).replace(/\{\{\s*amount_with_comma_separator\s*\}\}/, two.replace('.', ',')).replace(/\{\{\s*amount\s*\}\}/, two.replace(/\.00$/, ''));
+      }
+
+      var current = 0, shown = 0;
+      var stageImg = el.querySelector('[data-f-stage] .bthp-f-img');
+      var sheen = el.querySelector('[data-f-sheen]');
+      function syncMask() {
+        if (!sheen || !stageImg) return;
+        function go() { var u = stageImg.currentSrc || stageImg.src; if (u) sheen.style.setProperty('--m', 'url("' + u + '")'); }
+        if (stageImg.complete && stageImg.naturalWidth) go(); else stageImg.addEventListener('load', go, { once: true });
+      }
+      for (var i = 0; i < items.length; i++) { if (items[i].available) { current = i; break; } }
+
+      var alive = function () { return document.documentElement.contains(el); };
+      function swatchBtn(it, idx) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'bthp-sw';
+        b.setAttribute('role', 'radio');
+        b.setAttribute('data-i', idx);
+        b.setAttribute('aria-label', it.label + ', ' + money(it.price) + (it.available ? '' : ' (sold out)'));
+        if (!it.available) b.setAttribute('data-soldout', '');
+        var dot = document.createElement('i');
+        dot.style.background = it.swatch;
+        b.appendChild(dot);
+        return b;
+      }
+      all('[data-swatches="all"]').forEach(function (row) { items.forEach(function (it, idx) { row.appendChild(swatchBtn(it, idx)); }); });
+      all('.bthp-sw[data-i]').forEach(function (b) { b.addEventListener('click', function () { select(parseInt(b.getAttribute('data-i'), 10), true); }); });
+      ['Signature', 'Mulliner'].forEach(function (g) {
+        var prices = items.filter(function (it) { return it.group === g; }).map(function (it) { return it.price; });
+        var grp = el.querySelector('[data-group="' + g + '"] [data-g-note]');
+        if (!grp || !prices.length) return;
+        var lo = Math.min.apply(null, prices), hi = Math.max.apply(null, prices);
+        grp.textContent = lo === hi ? money(lo) : money(lo) + ' – ' + money(hi);
+      });
+
+      function select(idx, user) {
+        current = idx;
+        var it = items[idx];
+        all('[data-f-label]').forEach(function (n) { n.textContent = it.label; });
+        all('[data-f-price]').forEach(function (n) { n.textContent = money(it.price); });
+        all('[data-f-compare]').forEach(function (n) { n.textContent = it.compare > it.price ? money(it.compare) : ''; });
+        all('[data-f-cap]').forEach(function (n) { n.textContent = it.label + ' · ' + it.group; });
+        all('[data-f-tag]').forEach(function (n) { n.hidden = it.group !== 'Mulliner'; });
+        var inst = el.getAttribute('data-installment') || '';
+        all('[data-f-inst]').forEach(function (n) { n.textContent = inst.replace('[quarter]', money(Math.round(it.price / 4))); });
+        if (it.img && idx !== shown) {
+          all('.bthp-f-img').forEach(function (n) { n.removeAttribute('srcset'); n.removeAttribute('sizes'); n.src = it.img; });
+          shown = idx;
+        }
+        all('.bthp-f-img').forEach(function (n) { n.alt = n.closest('[data-bar]') ? '' : it.title; });
+        syncMask();
+        var stage = el.querySelector('[data-f-stage]');
+        if (stage && user) { stage.classList.remove('is-in'); void stage.offsetWidth; stage.classList.add('is-in'); }
+        all('.bthp-sw[data-i]').forEach(function (b) { b.setAttribute('aria-checked', parseInt(b.getAttribute('data-i'), 10) === idx ? 'true' : 'false'); });
+        var label = el.getAttribute('data-label');
+        all('[data-add]').forEach(function (b) {
+          b.disabled = !it.available;
+          if (!b.closest('[data-bar]')) b.textContent = it.available ? label + ' — ' + money(it.price) : 'Sold out';
+        });
+        if (user) document.dispatchEvent(new CustomEvent('bthp:finish', { detail: { id: it.id, source: el.getAttribute('data-bthp-trike') } }));
+      }
+      document.addEventListener('shopify:block:select', function (e) {
+        if (!alive() || !el.contains(e.target) || !e.target.hasAttribute('data-i')) return;
+        select(parseInt(e.target.getAttribute('data-i'), 10), true);
+      });
+      document.addEventListener('bthp:finish', function (e) {
+        if (!alive() || !e.detail || e.detail.source === el.getAttribute('data-bthp-trike')) return;
+        for (var j = 0; j < items.length; j++) if (items[j].id === e.detail.id) { select(j, true); break; }
+      });
+      select(current, false);
+
+      var msg = el.querySelector('[data-msg]');
+      function add(btn, after) {
+        var it = items[current];
+        if (!it || !it.available) return;
+        btn.setAttribute('aria-busy', 'true');
+        if (msg) msg.textContent = '';
+        window.bthpCart([{ id: it.id, quantity: 1 }], { after: after })
+          .then(function () {
+            btn.removeAttribute('aria-busy');
+            btn.classList.add('is-done');
+            var t = btn.textContent;
+            btn.textContent = el.getAttribute('data-added');
+            setTimeout(function () { btn.classList.remove('is-done'); select(current, false); }, 1800);
+          })
+          .catch(function (err) {
+            btn.removeAttribute('aria-busy');
+            if (msg) msg.textContent = (err && (err.description || err.message)) || 'Something went wrong, please try again.';
+          });
+      }
+      all('[data-add]').forEach(function (b) { b.addEventListener('click', function () { add(b, el.getAttribute('data-after')); }); });
+      var bn = el.querySelector('[data-buynow]');
+      if (bn) bn.addEventListener('click', function () { add(bn, 'checkout'); });
+
+      if (bar) {
+        var box = el.querySelector('[data-buybox]');
+        var raf = 0;
+        function check() {
+          raf = 0;
+          var r = box.getBoundingClientRect();
+          var foot = document.querySelector('.shopify-section-group-footer-group, footer');
+          var fr = foot ? foot.getBoundingClientRect() : null;
+          var vh = window.innerHeight || 800;
+          var on = r.bottom < 60 && !(fr && fr.top < vh - 40);
+          bar.classList.toggle('is-on', on);
+          bar.setAttribute('aria-hidden', on ? 'false' : 'true');
+          bar.querySelectorAll('button').forEach(function (b) { b.tabIndex = on ? 0 : -1; });
+        }
+        window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(check); }, { passive: true });
+        check();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Trike buy box",
+  "tag": "section",
+  "class": "bthp-section",
+  "settings": [
+    { "type": "header", "content": "Products" },
+    { "type": "paragraph", "content": "Each finish is a **Finish** block under this section: pick its product, then set its name, colour circle and group." },
+    { "type": "range", "id": "image_number", "label": "Product image to show", "min": 1, "max": 6, "step": 1, "default": 1, "info": "Used when a finish has no image of its own. Pick the cut-out photo on a plain background." },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "label", "label": "Small label", "default": "6-in-1 Stroller Trike · From 6 months" },
+    { "type": "text", "id": "heading", "label": "Heading (finish name follows)", "default": "The Bentley Trike in" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.8 · 1,017 reviews" },
+    { "type": "url", "id": "rating_link", "label": "Rating link", "info": "Leave empty to scroll to the reviews section." },
+    { "type": "text", "id": "installment_text", "label": "Instalments line", "default": "or 4 payments of [quarter] with Shop Pay", "info": "[quarter] becomes a quarter of the price." },
+    { "type": "text", "id": "signature_title", "label": "Group 1 title", "default": "Signature finishes" },
+    { "type": "text", "id": "mulliner_title", "label": "Group 2 title", "default": "Mulliner finishes" },
+    { "type": "text", "id": "mulliner_tag", "label": "Mulliner tag", "default": "Mulliner" },
+    { "type": "text", "id": "cart_label", "label": "Add to cart label", "default": "Add to cart" },
+    { "type": "text", "id": "added_label", "label": "Added label", "default": "Added ✓" },
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show Buy it now", "default": true },
+    { "type": "text", "id": "buy_now_label", "label": "Buy it now label", "default": "Buy it now" },
+    { "type": "select", "id": "after_add", "label": "After adding to cart", "options": [{ "value": "drawer", "label": "Open the cart drawer" }, { "value": "stay", "label": "Stay on the page" }, { "value": "cart", "label": "Go to the cart page" }], "default": "drawer" },
+    { "type": "text", "id": "assure_1", "label": "Trust point 1", "default": "Officially licensed by Bentley Motors" },
+    { "type": "text", "id": "assure_2", "label": "Trust point 2", "default": "Official USA distributor" },
+    { "type": "text", "id": "assure_3", "label": "Trust point 3", "info": "e.g. your returns promise. Leave empty to hide." },
+    { "type": "textarea", "id": "features", "label": "Key features", "info": "One per line.", "default": "Seat rotates 180° to face you\nUPF 50 waterproof canopy\nAir wheels with rear brake\n5-point safety harness" },
+    { "type": "text", "id": "more_label", "label": "Link under features", "default": "How it grows with them" },
+    { "type": "url", "id": "more_link", "label": "Link", "info": "Leave empty to scroll to the growth stages." },
+    { "type": "header", "content": "Product stage" },
+    { "type": "checkbox", "id": "show_sheen", "label": "Light sweep over the product", "default": true },
+    { "type": "range", "id": "stage_height_mobile", "label": "Stage height (phone)", "min": 260, "max": 480, "step": 20, "unit": "px", "default": 340 },
+    { "type": "header", "content": "Sticky bar" },
+    { "type": "checkbox", "id": "sticky_bar", "label": "Show sticky add-to-cart bar", "default": true },
+    { "type": "text", "id": "bar_prefix", "label": "Bar product name", "default": "Bentley Trike ·" },
+    { "type": "text", "id": "bar_button", "label": "Bar button", "default": "Add to cart" },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#a83f2f" },
+    { "type": "color", "id": "stage_bg", "label": "Product stage", "default": "#efe8df" },
+    { "type": "color", "id": "tag_bg", "label": "Mulliner tag", "default": "#00221c" },
+    { "type": "color", "id": "button_bg", "label": "Button", "default": "#a83f2f" },
+    { "type": "color", "id": "button_text", "label": "Button text", "default": "#ffffff" }
+  ],
+  "max_blocks": 16,
+  "blocks": [
+    {
+      "type": "finish",
+      "name": "Finish",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "name", "label": "Name shown", "default": "Onyx Black", "info": "Leave empty to use the product title." },
+        { "type": "color", "id": "swatch", "label": "Colour circle", "default": "#141414" },
+        { "type": "select", "id": "group", "label": "Group", "options": [{ "value": "1", "label": "Group 1 (Signature)" }, { "value": "2", "label": "Group 2 (Mulliner)" }], "default": "1" },
+        { "type": "image_picker", "id": "image", "label": "Image (optional)", "info": "Replaces the product photo for this finish." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Trike buy box",
+      "blocks": [
+        {"type": "finish", "settings": {"name": "Onyx Black", "swatch": "#141414", "group": "1"}},
+        {"type": "finish", "settings": {"name": "Dragon Red", "swatch": "#a8262b", "group": "1"}},
+        {"type": "finish", "settings": {"name": "Jetstream Blue", "swatch": "#2a4d8f", "group": "1"}},
+        {"type": "finish", "settings": {"name": "Fuchsia Pink", "swatch": "#d14f8a", "group": "1"}},
+        {"type": "finish", "settings": {"name": "Mulliner Gold", "swatch": "#c6a15b", "group": "2"}},
+        {"type": "finish", "settings": {"name": "Celeste", "swatch": "#9ec5d8", "group": "2"}},
+        {"type": "finish", "settings": {"name": "Mandarin", "swatch": "#d9792b", "group": "2"}},
+        {"type": "finish", "settings": {"name": "Cool Stone", "swatch": "#c9c3bb", "group": "2"}}
+      ]
+    }
+  ]
+}
+{% endschema %}
