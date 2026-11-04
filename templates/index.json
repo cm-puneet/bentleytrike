@@ -1279,7 +1279,7 @@
         "finish_gk33Fe": {
           "type": "finish",
           "settings": {
-            "product": "",
+            "product": "onyx-black-bentley-stroller-trike",
             "name": "Onyx Black",
             "swatch": "#141414",
             "group": "1"
@@ -1288,26 +1288,35 @@
         "finish_aEtNYP": {
           "type": "finish",
           "settings": {
-            "product": "",
-            "name": "Dragon Red",
-            "swatch": "#a8262b",
+            "product": "white-satin-bentley-6-in-1-stroller-trike",
+            "name": "White Satin",
+            "swatch": "#EDEBE9",
+            "group": "1"
+          }
+        },
+        "finish_L8zrLf": {
+          "type": "finish",
+          "settings": {
+            "product": "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+            "name": "Centennial",
+            "swatch": "#827C62",
             "group": "1"
           }
         },
         "finish_NR6WTe": {
           "type": "finish",
           "settings": {
-            "product": "",
-            "name": "Jetstream Blue",
-            "swatch": "#2a4d8f",
-            "group": "1"
+            "product": "bentley-mulliner-trike",
+            "name": "Mulliner",
+            "swatch": "#CFC7BA",
+            "group": "2"
           }
         },
         "finish_94zrHL": {
           "type": "finish",
           "settings": {
-            "product": "",
-            "name": "Fuchsia Pink",
+            "product": "fuscia-pink-bentley-stroller-trike",
+            "name": "Fuchsia",
             "swatch": "#d14f8a",
             "group": "1"
           }
@@ -1315,36 +1324,63 @@
         "finish_c4jknC": {
           "type": "finish",
           "settings": {
-            "product": "",
-            "name": "Mulliner Gold",
-            "swatch": "#c6a15b",
-            "group": "2"
+            "product": "jetstream-blue-bentley-6-in-1-stroller-trike",
+            "name": "Jetstream Blue",
+            "swatch": "#DDE0E6",
+            "group": "1"
           }
         },
         "finish_jYmRFn": {
           "type": "finish",
           "settings": {
-            "product": "",
-            "name": "Celeste",
-            "swatch": "#9ec5d8",
+            "product": "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+            "name": "Cool Stone",
+            "swatch": "#496192",
             "group": "2"
           }
         },
         "finish_V3cmPf": {
           "type": "finish",
           "settings": {
-            "product": "",
-            "name": "Mandarin",
-            "swatch": "#d9792b",
+            "product": "dragon-red-bentley-stroller-trike",
+            "name": "Dragon Red",
+            "swatch": "#C74642",
             "group": "2"
           }
         },
         "finish_KKLBM4": {
           "type": "finish",
           "settings": {
-            "product": "",
-            "name": "Cool Stone",
-            "swatch": "#c9c3bb",
+            "product": "spruce-green-6-in-1-stroller-trike",
+            "name": "Spruce Green",
+            "swatch": "#60837F",
+            "group": "1"
+          }
+        },
+        "finish_LzqL3P": {
+          "type": "finish",
+          "settings": {
+            "product": "sequin-blue-bentley-stroller-trike",
+            "name": "Sequin Blue",
+            "swatch": "#293A57",
+            "group": "1"
+          }
+        },
+        "finish_qfULdG": {
+          "type": "finish",
+          "settings": {
+            "product": "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
+            "name": "Mandarin",
+            "swatch": "#E17854",
+            "group": "2"
+          }
+        },
+        "finish_F7JbLV": {
+          "type": "finish",
+          "settings": {
+            "product": "mulliner-celeste-bentley-6-in-1-stroller-trike",
+            "name": "Celeste",
+            "swatch": "#8DE0D4",
             "group": "2"
           }
         }
@@ -1352,12 +1388,16 @@
       "block_order": [
         "finish_gk33Fe",
         "finish_aEtNYP",
+        "finish_L8zrLf",
         "finish_NR6WTe",
         "finish_94zrHL",
         "finish_c4jknC",
         "finish_jYmRFn",
         "finish_V3cmPf",
-        "finish_KKLBM4"
+        "finish_KKLBM4",
+        "finish_LzqL3P",
+        "finish_qfULdG",
+        "finish_F7JbLV"
       ],
       "disabled": true,
       "name": "New: BT Trike buy box",
@@ -1370,6 +1410,8 @@
         "installment_text": "or 4 payments of [quarter] with Shop Pay",
         "signature_title": "Signature finishes",
         "mulliner_title": "Mulliner finishes",
+        "group_3_title": "Folding finishes",
+        "group_3_name": "Folding",
         "mulliner_tag": "Mulliner",
         "cart_label": "Add to cart",
         "added_label": "Added ✓",
@@ -1379,7 +1421,7 @@
         "assure_1": "Officially licensed by Bentley Motors",
         "assure_2": "Official USA distributor",
         "assure_3": "",
-        "features": "Seat rotates 180° to face you\nUPF 50 waterproof canopy\nAir wheels with rear brake\n5-point safety harness",
+        "features": "Seat rotates 180° to face you\n5-point safety harness\nElegant Essential Bag\nSignature Emblem",
         "more_label": "How it grows with them",
         "more_link": "",
         "show_sheen": true,
