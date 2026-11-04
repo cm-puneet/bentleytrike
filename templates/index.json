@@ -1440,6 +1440,89 @@
         "button_text": "#ffffff"
       }
     },
+    "bt_hp_stages_qYxdfa": {
+      "type": "bt-hp-stages",
+      "blocks": {
+        "stage_LYn4tQ": {
+          "type": "stage",
+          "settings": {
+            "title": "Infant Stroller",
+            "age": "6 months & up",
+            "short_age": "6 mo",
+            "text": "The seat turns to face you, canopy up, for the very first outings."
+          }
+        },
+        "stage_NC4MfP": {
+          "type": "stage",
+          "settings": {
+            "title": "Front-Facing Stroller",
+            "age": "6 months & up",
+            "short_age": "6 mo+",
+            "text": "Turned forward — the front-row view of every walk, with you steering.",
+            "image": "shopify://shop_images/CelesteMulliner_5b95db4e-c1fe-40ac-8832-7e72406aa2de.png"
+          }
+        },
+        "stage_UkMig9": {
+          "type": "stage",
+          "settings": {
+            "title": "Guided Trike",
+            "age": "12 months & up",
+            "short_age": "12 mo",
+            "text": "Feet on the pedals while you guide and steer from the push handle.",
+            "image": "shopify://shop_images/Guided_Trike_Mom.png"
+          }
+        },
+        "stage_Ckc7AV": {
+          "type": "stage",
+          "settings": {
+            "title": "Training Trike",
+            "age": "24 months & up",
+            "short_age": "24 mo",
+            "text": "Free-handlebar mode lets them turn the wheel while you stay in control.",
+            "image": "shopify://shop_images/Training_Trike-Mom1.png"
+          }
+        },
+        "stage_7wzwNb": {
+          "type": "stage",
+          "settings": {
+            "title": "Solo Ride",
+            "age": "48 months & up",
+            "short_age": "48 mo",
+            "text": "Handle off, guard bar away. A classic trike, entirely their own.",
+            "image": "shopify://shop_images/compressed_5587_27_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "stage_LYn4tQ",
+        "stage_NC4MfP",
+        "stage_UkMig9",
+        "stage_Ckc7AV",
+        "stage_7wzwNb"
+      ],
+      "disabled": true,
+      "name": "New: BT Growth stages",
+      "settings": {
+        "label": "6-in-1 convertible · From 6 months",
+        "heading": "It grows up",
+        "heading_italic": "with them.",
+        "text": "One Bentley that changes shape as they grow — from the first walk you steer to the first ride they steer themselves.",
+        "image": "shopify://shop_images/OnyxBlack_fdc824dc-133d-425a-843a-f5c0d23142f6.png",
+        "lede_mobile": true,
+        "header_space_mobile": 64,
+        "photo_shape_mobile": "1x1",
+        "autoplay": true,
+        "seconds": 6,
+        "hint": "Tap a stage on the growth chart, or use the arrows.",
+        "button_label": "Choose your finish",
+        "button_link": "",
+        "heading_size": 100,
+        "heading_size_mobile": 100,
+        "bg": "#f8f4ef",
+        "ink": "#1a1a1a",
+        "accent": "#a83f2f"
+      }
+    },
     "image_with_text_overlay_cGjVBF": {
       "type": "image-with-text-overlay",
       "blocks": {
@@ -1643,6 +1726,7 @@
     "slideshow_MmGWdb",
     "174259779279421f63",
     "bt_hp_trike_XhiYRa",
+    "bt_hp_stages_qYxdfa",
     "image_with_text_overlay_cGjVBF",
     "media_with_text_yVqAxc",
     "rich_text_9CaXBf",
