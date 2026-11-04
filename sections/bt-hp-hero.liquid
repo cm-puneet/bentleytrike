@@ -1,0 +1,320 @@
+{%- comment -%}
+  BT Homepage — Opening reveal + Hero
+  Black screen, BENTLEY wordmark letters appear, the screen splits through the
+  wordmark to reveal the hero, then the headline rises in. Hero stays full-screen
+  with a gentle parallax on scroll.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign word = s.intro_word | default: 'BENTLEY' | upcase
+  assign letters = word | split: ''
+  assign img_d = s.image
+  assign img_m = s.image_mobile | default: s.image
+  assign pos_d = '50% 50%'
+  if img_d.presentation.focal_point
+    assign pos_d = img_d.presentation.focal_point
+  endif
+  assign pos_m = pos_d
+  if img_m.presentation.focal_point
+    assign pos_m = img_m.presentation.focal_point
+  endif
+-%}
+
+<style>
+  .bthp-hero{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-hero{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-hero{position:relative;height:var(--bthp-h,100vh);height:var(--bthp-h,100svh);min-height:600px;max-height:1000px;overflow:hidden;background:#0b0b0a;color:var(--bthp-text);--y:0}
+  .bthp-hero[data-transparent]{margin-block-start:calc(-1 * var(--header-height, 0px) * var(--section-is-first, 0))}
+  .bthp-hero__media{position:absolute;inset:0;transform:translate3d(0,calc(var(--y) * 16%),0) scale(calc(1 + var(--y) * .06));will-change:transform}
+  .bthp-hero__media img,.bthp-hero__media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pd,50% 50%)}
+  .bthp-hero__media .bthp-hero__m{display:none}
+  .bthp-hero__photo{animation:bthpHeroIn 4s cubic-bezier(.2,.7,.2,1) both}
+  .bthp-hero.is-plain .bthp-hero__photo{animation:none}
+  @keyframes bthpHeroIn{0%,42%{transform:scale(1.24)}100%{transform:scale(1)}}
+  .bthp-hero__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,calc(var(--bthp-ov) + .3)) 0%,rgba(0,0,0,calc(var(--bthp-ov) * .3)) 28%,rgba(0,0,0,calc(var(--bthp-ov) * .5)) 50%,rgba(0,0,0,calc(var(--bthp-ov) + .45)) 100%)}
+  .bthp-hero__in{position:absolute;left:0;right:0;bottom:0;padding:0 clamp(20px,4.4vw,64px) clamp(36px,6vh,64px);max-width:1440px;margin:0 auto;box-sizing:border-box;opacity:calc(1 - var(--y) * 1.6);transform:translate3d(0,calc(var(--y) * -70px),0)}
+  .bthp-hero__h{margin:0 0 clamp(28px,4vh,44px);max-width:var(--bthp-hw,50%);font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(52px,6.4vw,112px) * var(--bthp-hs, 1));line-height:.9;letter-spacing:-.02em;color:var(--bthp-text)}
+  .bthp-hero__ln{display:block;overflow:hidden;padding:0 .08em .24em;margin:0 -.08em -.24em}
+  .bthp-hero__ln>span{display:block;transform:translateY(160%);animation:bthpLn 1.3s cubic-bezier(.2,.7,.2,1) 3s forwards}
+  .bthp-hero__ln+.bthp-hero__ln>span{animation-delay:3.16s}
+  .bthp-hero.is-plain .bthp-hero__ln>span{animation-delay:.1s}
+  .bthp-hero.is-plain .bthp-hero__ln+.bthp-hero__ln>span{animation-delay:.24s}
+  @keyframes bthpLn{to{transform:none}}
+  .bthp-hero__gilt{font-style:italic;background:linear-gradient(180deg,var(--bthp-text) 25%,var(--bthp-sand) 80%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .1em .24em;margin:0 -.1em -.24em}
+  .bthp-hero__foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:40px;align-items:end;padding-top:24px;border-top:1px solid rgba(255,255,255,.3);opacity:0;animation:bthpUp 1.1s ease 3.45s forwards}
+  .bthp-hero.is-plain .bthp-hero__foot{animation-delay:.45s}
+  @keyframes bthpUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .bthp-hero__meta{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
+  .bthp-hero__meta span{font-family:var(--text-font-family,Poppins,sans-serif);font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;opacity:.85}
+  .bthp-hero__sub{margin:0 0 20px;font-family:var(--text-font-family,Poppins,sans-serif);font-size:15px;line-height:1.7;opacity:.92}
+  .bthp-hero__ctas{display:flex;flex-wrap:wrap;gap:12px}
+  .bthp-hero__btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 34px;box-sizing:border-box;border-radius:0;font-family:var(--text-font-family,Poppins,sans-serif);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:background .3s ease,color .3s ease,box-shadow .3s ease}
+  .bthp-hero__btn--a{background:var(--bthp-btn-bg);color:var(--bthp-btn-text)}
+  .bthp-hero__btn--a:hover{background:var(--bthp-btn-text);color:var(--bthp-btn-bg)}
+  .bthp-hero__btn--b{background:transparent;color:var(--bthp-text);box-shadow:inset 0 0 0 1px currentColor}
+  .bthp-hero__btn--b:hover{background:var(--bthp-text);color:#1a1a1a}
+
+  /* Alignment */
+  @media (min-width:750px){
+    .bthp-hero[data-al="center"] .bthp-hero__h{text-align:center;margin-left:auto;margin-right:auto}
+    .bthp-hero[data-al="right"] .bthp-hero__h{text-align:right;margin-left:auto}
+    .bthp-hero[data-al="center"] .bthp-hero__foot,.bthp-hero[data-al="right"] .bthp-hero__foot{display:flex;flex-direction:column;gap:22px}
+    .bthp-hero[data-al="center"] .bthp-hero__foot{align-items:center;text-align:center}
+    .bthp-hero[data-al="right"] .bthp-hero__foot{align-items:flex-end;text-align:right}
+    .bthp-hero[data-al="center"] .bthp-hero__foot>div:last-child,.bthp-hero[data-al="right"] .bthp-hero__foot>div:last-child{max-width:560px}
+    .bthp-hero[data-al="center"] .bthp-hero__meta,.bthp-hero[data-al="right"] .bthp-hero__meta{order:2}
+    .bthp-hero[data-al="center"] .bthp-hero__meta,.bthp-hero[data-al="center"] .bthp-hero__ctas{justify-content:center}
+    .bthp-hero[data-al="right"] .bthp-hero__meta,.bthp-hero[data-al="right"] .bthp-hero__ctas{justify-content:flex-end}
+  }
+  @media (max-width:749px){
+    .bthp-hero[data-alm="center"] .bthp-hero__in{text-align:center}
+    .bthp-hero[data-alm="right"] .bthp-hero__in{text-align:right}
+    .bthp-hero[data-alm="center"] .bthp-hero__ctas{justify-content:center}
+    .bthp-hero[data-alm="right"] .bthp-hero__ctas{justify-content:flex-end}
+  }
+
+  /* Opening reveal */
+  .bthp-intro{position:fixed;inset:0;z-index:999;pointer-events:none}
+  .bthp-hero.is-plain .bthp-intro{display:none}
+  .bthp-intro__p{position:absolute;left:0;right:0;height:50.5%;background:var(--bthp-intro-bg);overflow:hidden;will-change:transform}
+  .bthp-intro__p--t{top:0;animation:bthpIpT 3.6s cubic-bezier(.76,0,.24,1) forwards}
+  .bthp-intro__p--b{bottom:0;animation:bthpIpB 3.6s cubic-bezier(.76,0,.24,1) forwards}
+  @keyframes bthpIpT{0%,46%{transform:translateY(0)}62%,72%{transform:translateY(-26%)}100%{transform:translateY(-101%)}}
+  @keyframes bthpIpB{0%,46%{transform:translateY(0)}62%,72%{transform:translateY(26%)}100%{transform:translateY(101%)}}
+  .bthp-intro__m{position:absolute;left:50%;color:var(--bthp-intro-text)}
+  .bthp-intro__p--t .bthp-intro__m{bottom:0;transform:translate(-50%,50%)}
+  .bthp-intro__p--b .bthp-intro__m{top:0;transform:translate(-50%,-50%)}
+  .bthp-intro__row{position:relative;display:flex;align-items:center;gap:clamp(14px,2.4vw,32px)}
+  .bthp-intro__line{display:block;width:min(16vw,200px);height:1px;background:var(--bthp-sand);transform:scaleX(0);animation:bthpLine 1.2s cubic-bezier(.2,.7,.2,1) .2s forwards}
+  .bthp-intro__line--l{transform-origin:100% 50%}
+  .bthp-intro__line--r{transform-origin:0 50%}
+  @keyframes bthpLine{to{transform:scaleX(1)}}
+  .bthp-intro__word{display:flex;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:clamp(34px,5vw,72px);line-height:1;letter-spacing:.3em;margin-right:-.3em;white-space:nowrap}
+  .bthp-intro__word span{display:inline-block;opacity:0;transform:translateY(36%);filter:blur(8px);animation:bthpL 1s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes bthpL{to{opacity:1;transform:none;filter:blur(0)}}
+  .bthp-intro__sub,.bthp-intro__sup{position:absolute;left:0;right:0;margin:0;text-align:center;font-family:var(--text-font-family,Poppins,sans-serif);font-size:9px;font-weight:700;text-transform:uppercase;opacity:0;animation:bthpS .9s ease forwards}
+  .bthp-intro__sub{top:calc(100% + 22px);letter-spacing:.62em;margin-right:-.62em;color:var(--bthp-sand);animation-delay:1.2s}
+  .bthp-intro__sup{bottom:calc(100% + 22px);letter-spacing:.5em;margin-right:-.5em;color:var(--bthp-intro-text);animation-delay:.9s}
+  @keyframes bthpS{to{opacity:.75}}
+
+  @media (max-width:749px){
+    .bthp-hero{height:var(--bthp-hm,92vh);height:var(--bthp-hm,92svh);min-height:540px}
+    .bthp-hero__media .bthp-hero__d{display:none}
+    .bthp-hero__media .bthp-hero__m{display:block}
+    .bthp-hero__media img,.bthp-hero__media video{object-position:var(--pm,50% 50%)}
+    .bthp-hero__in{padding:0 20px 36px}
+    .bthp-hero__h{max-width:none}
+    .bthp-hero__h{font-size:calc(48px * var(--bthp-hs, 1));margin-bottom:22px}
+    .bthp-hero__foot{grid-template-columns:minmax(0,1fr);gap:16px;padding-top:18px}
+    .bthp-hero__meta{display:none}
+    .bthp-hero__sub{font-size:14px;margin-bottom:16px}
+    .bthp-hero__ctas{flex-wrap:nowrap}
+    .bthp-hero__btn{flex:1 1 0;padding:0 10px;min-height:50px;font-size:11px;letter-spacing:.14em}
+    .bthp-intro__line{width:12vw}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .bthp-intro{display:none}
+    .bthp-hero__photo,.bthp-hero__ln>span,.bthp-hero__foot{animation:none;transform:none;opacity:1}
+  }
+</style>
+
+<div
+  class="bthp-hero{% if s.show_intro %} is-intro{% else %} is-plain{% endif %}"
+  data-bthp-hero
+  data-once="{{ s.intro_once }}"
+  data-al="{{ s.align }}"
+  data-alm="{{ s.align_mobile }}"
+  {% if s.allow_transparent_header %}data-transparent allow-transparent-header{% endif %}
+  style="--bthp-text: {{ s.text_color }}; --bthp-sand: {{ s.accent_color }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-text: {{ s.button_text }}; --bthp-ov: {{ s.overlay | divided_by: 100.0 }}; --bthp-intro-bg: {{ s.intro_bg }}; --bthp-intro-text: {{ s.intro_text }};{% if s.height == 'large' %} --bthp-h: 86vh;{% endif %} --bthp-hw: {{ s.heading_width }}%; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+>
+  {%- if s.show_intro -%}
+    <div class="bthp-intro" aria-hidden="true">
+      {%- for half in (1..2) -%}
+        <div class="bthp-intro__p {% if half == 1 %}bthp-intro__p--t{% else %}bthp-intro__p--b{% endif %}">
+          <div class="bthp-intro__m">
+            <div class="bthp-intro__row">
+              {%- if s.intro_top != blank -%}<p class="bthp-intro__sup">{{ s.intro_top }}</p>{%- endif -%}
+              <span class="bthp-intro__line bthp-intro__line--l"></span>
+              <span class="bthp-intro__word">
+                {%- for l in letters -%}
+                  {%- assign d = forloop.index0 | times: 0.09 | plus: 0.35 -%}
+                  <span style="animation-delay: {{ d }}s;">{{ l }}</span>
+                {%- endfor -%}
+              </span>
+              <span class="bthp-intro__line bthp-intro__line--r"></span>
+              {%- if s.intro_bottom != blank -%}<p class="bthp-intro__sub">{{ s.intro_bottom }}</p>{%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="bthp-hero__media" style="--pd: {{ pos_d }}; --pm: {{ pos_m }};">
+    {%- liquid
+      assign vid_d = s.video
+      assign vid_m = s.video_mobile
+      if vid_m == blank and s.image_mobile == blank
+        assign vid_m = s.video
+      endif
+    -%}
+    {%- if vid_d == blank and vid_m == blank -%}
+      {%- comment -%} Photos only: one <picture>, so each device downloads just its own photo. {%- endcomment -%}
+      {%- if img_d != blank -%}
+        <picture>
+          {%- if s.image_mobile != blank -%}
+            <source media="(max-width: 749px)" sizes="100vw" srcset="{{ img_m | image_url: width: 500 }} 500w, {{ img_m | image_url: width: 750 }} 750w, {{ img_m | image_url: width: 1000 }} 1000w, {{ img_m | image_url: width: 1400 }} 1400w">
+          {%- endif -%}
+          {{ img_d | image_url: width: 3000 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000,2600,3000' }}
+        </picture>
+      {%- elsif img_m != blank -%}
+        {{ img_m | image_url: width: 1400 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '500,750,1000,1400' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'bthp-hero__photo' }}
+      {%- endif -%}
+    {%- else -%}
+      {%- comment -%} Video: nothing downloads until the script plays the one that fits the screen. {%- endcomment -%}
+      {%- if vid_d != blank -%}
+        {{ vid_d | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-hero__photo bthp-hero__d bthp-v', image_size: '2000x' }}
+      {%- elsif img_d != blank -%}
+        {{ img_d | image_url: width: 3000 | image_tag: class: 'bthp-hero__photo bthp-hero__d', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000,2600,3000' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'bthp-hero__photo bthp-hero__d' }}
+      {%- endif -%}
+      {%- if vid_m != blank -%}
+        {{ vid_m | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-hero__photo bthp-hero__m bthp-v', image_size: '900x' }}
+      {%- elsif img_m != blank -%}
+        {{ img_m | image_url: width: 1400 | image_tag: class: 'bthp-hero__photo bthp-hero__m', loading: 'lazy', sizes: '100vw', widths: '500,750,1000,1400' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'bthp-hero__photo bthp-hero__m' }}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  <div class="bthp-hero__shade"></div>
+
+  <div class="bthp-hero__in">
+    <h1 class="bthp-hero__h">
+      <span class="bthp-hero__ln"><span>{{ s.heading_1 }}</span></span>
+      {%- if s.heading_2 != blank -%}
+        <span class="bthp-hero__ln"><span class="bthp-hero__gilt">{{ s.heading_2 }}</span></span>
+      {%- endif -%}
+    </h1>
+    <div class="bthp-hero__foot">
+      <div class="bthp-hero__meta">
+        {%- if s.meta_1 != blank -%}<span>{{ s.meta_1 }}</span>{%- endif -%}
+        {%- if s.meta_2 != blank -%}<span>{{ s.meta_2 }}</span>{%- endif -%}
+        {%- if s.meta_3 != blank -%}<span>{{ s.meta_3 }}</span>{%- endif -%}
+      </div>
+      <div>
+        {%- if s.text != blank -%}<p class="bthp-hero__sub">{{ s.text }}</p>{%- endif -%}
+        <div class="bthp-hero__ctas">
+          {%- if s.button_1_label != blank -%}
+            <a class="bthp-hero__btn bthp-hero__btn--a" href="{{ s.button_1_link | default: '#buy' }}">{{ s.button_1_label }}</a>
+          {%- endif -%}
+          {%- if s.button_2_label != blank -%}
+            <a class="bthp-hero__btn bthp-hero__btn--b" href="{{ s.button_2_link | default: '#stages' }}">{{ s.button_2_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    window.bthpWatch = window.bthpWatch || function (el) {
+      if (!el) return;
+      var vids = [].slice.call(el.querySelectorAll('video.bthp-v'));
+      function set(on) {
+        el.classList.toggle('bthp-off', !on);
+        vids.forEach(function (v) {
+          if (on && v.offsetParent !== null) {
+            if (v.getAttribute('preload') === 'none') v.setAttribute('preload', 'auto');
+            v.muted = true;
+            var pr = v.play();
+            if (pr && pr.catch) pr.catch(function () {});
+          } else if (!v.paused) { v.pause(); }
+        });
+      }
+      if (!('IntersectionObserver' in window)) { set(true); return; }
+      new IntersectionObserver(function (en) { set(en[0].isIntersecting); }, { rootMargin: '150px 0px' }).observe(el);
+      if (vids.length) window.addEventListener('resize', function () { set(!el.classList.contains('bthp-off')); });
+    };
+    var roots = document.querySelectorAll('[data-bthp-hero]:not([data-ready])');
+    roots.forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      var KEY = 'bthp-intro-seen';
+      var skip = false;
+      try { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) skip = true; } catch (e) {}
+      if (el.getAttribute('data-once') === 'true' && !(window.Shopify && window.Shopify.designMode)) {
+        try { if (sessionStorage.getItem(KEY)) skip = true; else sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      }
+      if (skip) { el.classList.remove('is-intro'); el.classList.add('is-plain'); }
+      var intro = el.querySelector('.bthp-intro');
+      if (intro && !skip) setTimeout(function () { intro.style.display = 'none'; }, 3800);
+
+      window.bthpWatch(el);
+      var raf = 0, near = true;
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { near = en[0].isIntersecting; }).observe(el);
+      function update() {
+        raf = 0;
+        if (!near) return;
+        var r = el.getBoundingClientRect();
+        var y = Math.max(0, Math.min(1, -r.top / Math.max(r.height, 1)));
+        el.style.setProperty('--y', y.toFixed(3));
+      }
+      function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      update();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Hero + reveal",
+  "class": "bthp-section",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Opening reveal" },
+    { "type": "checkbox", "id": "show_intro", "label": "Play the opening reveal", "default": true },
+    { "type": "checkbox", "id": "intro_once", "label": "Only on a visitor's first page view", "info": "Plays once per visit. In the theme editor it always plays.", "default": true },
+    { "type": "text", "id": "intro_word", "label": "Wordmark", "default": "BENTLEY" },
+    { "type": "text", "id": "intro_top", "label": "Line above wordmark", "default": "Officially licensed by Bentley Motors" },
+    { "type": "text", "id": "intro_bottom", "label": "Line below wordmark", "default": "Trike" },
+    { "type": "header", "content": "Images & video" },
+    { "type": "image_picker", "id": "image", "label": "Image (desktop)", "info": "Landscape, at least 2400px wide. Set a focal point in the image settings." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Image (phone)", "info": "Portrait works best. Leave empty to use the desktop image." },
+    { "type": "video", "id": "video", "label": "Video (desktop, optional)", "info": "Plays muted on a loop instead of the image." },
+    { "type": "video", "id": "video_mobile", "label": "Video (phone, optional)" },
+    { "type": "range", "id": "overlay", "label": "Darken image", "min": 0, "max": 60, "step": 5, "unit": "%", "default": 10 },
+    { "type": "select", "id": "height", "label": "Height (desktop)", "options": [{ "value": "full", "label": "Full screen" }, { "value": "large", "label": "Large" }], "default": "full" },
+    { "type": "checkbox", "id": "allow_transparent_header", "label": "Allow transparent header", "info": "Only applies when this section is first on the page.", "default": true },
+    { "type": "header", "content": "Text" },
+    { "type": "select", "id": "align", "label": "Text position (desktop)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "range", "id": "heading_width", "label": "Heading width (desktop)", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 50, "info": "How much of the screen width the heading can use before it wraps." },
+    { "type": "select", "id": "align_mobile", "label": "Text position (phone)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "text", "id": "heading_1", "label": "Heading line 1", "default": "Extraordinary journeys" },
+    { "type": "text", "id": "heading_2", "label": "Heading line 2 (italic)", "default": "start young." },
+    { "type": "text", "id": "meta_1", "label": "Small detail 1", "default": "The Bentley 6-in-1 Stroller Trike" },
+    { "type": "text", "id": "meta_2", "label": "Small detail 2", "default": "Officially licensed by Bentley Motors" },
+    { "type": "text", "id": "meta_3", "label": "Small detail 3", "default": "From 6 months" },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "A stroller you steer today, a trike that's entirely theirs tomorrow — finished in the colours of the cars from Crewe." },
+    { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "Shop the Trike" },
+    { "type": "url", "id": "button_1_link", "label": "Button 1 link", "info": "Leave empty to scroll to the Trike buy box." },
+    { "type": "text", "id": "button_2_label", "label": "Button 2 label", "default": "See how it grows" },
+    { "type": "url", "id": "button_2_link", "label": "Button 2 link", "info": "Leave empty to scroll to the growth stages." },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "Accent (sand)", "default": "#d9d0c5" },
+    { "type": "color", "id": "button_bg", "label": "Button background", "default": "#ffffff" },
+    { "type": "color", "id": "button_text", "label": "Button text", "default": "#1a1a1a" },
+    { "type": "color", "id": "intro_bg", "label": "Reveal background", "default": "#1a1a1a" },
+    { "type": "color", "id": "intro_text", "label": "Reveal wordmark", "default": "#f8f4ef" }
+  ],
+  "presets": [{ "name": "BT Hero + reveal" }]
+}
+{% endschema %}
