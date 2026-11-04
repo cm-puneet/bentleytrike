@@ -1,0 +1,235 @@
+{%- comment -%}
+  BT — Footer with smoke & giant wordmark
+  A faint BENTLEY spreads edge to edge; the mouse leaves a soft smoke trail and
+  catches the letters in a gentle glow. Big serif menu links, client care menu,
+  newsletter sign-up and a legal row.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign letters = s.wordmark | upcase | split: ''
+-%}
+
+<style>
+  .bthp-ft{--bthp-hs:var(--bthp-hs-d,1);--bthp-ts:var(--bthp-ts-d,1)}
+  @media (max-width:749px){.bthp-ft{--bthp-hs:var(--bthp-hs-m,1);--bthp-ts:var(--bthp-ts-m,1)}}
+  .bthp-ft{position:relative;overflow:hidden;background:var(--bthp-bg);color:var(--bthp-ink);padding:clamp(24px,3vw,40px) 0 var(--bthp-pb,48px);font-family:var(--text-font-family,Poppins,sans-serif);font-size:calc(13px * var(--bthp-ts, 1));--mx:-999px;--my:-999px}
+  .bthp-smoke{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:blur(22px);opacity:.8}
+  .bthp-ft__in{position:relative;max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px);box-sizing:border-box}
+  .bthp-ft__mark{position:relative;overflow:hidden;padding-top:.04em;user-select:none;-webkit-mask-image:linear-gradient(180deg,#000 52%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(180deg,#000 52%,rgba(0,0,0,0) 100%)}
+  .bthp-ft__word{display:flex;justify-content:space-between;margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(64px,16.5vw,250px) * var(--bthp-hs, 1));line-height:.86;color:var(--bthp-ink);opacity:.075}
+  .bthp-ft__word--lit{position:absolute;inset:0;opacity:1;-webkit-mask-image:radial-gradient(circle 300px at var(--mx) var(--my),rgba(0,0,0,.32) 0%,rgba(0,0,0,.1) 45%,rgba(0,0,0,0) 72%);mask-image:radial-gradient(circle 300px at var(--mx) var(--my),rgba(0,0,0,.32) 0%,rgba(0,0,0,.1) 45%,rgba(0,0,0,0) 72%)}
+  .bthp-ft__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,2fr) minmax(0,2fr);gap:32px;margin-top:clamp(24px,3vw,40px)}
+  .bthp-ft__k{margin:0;font-size:calc(10px * var(--bthp-ts, 1));font-weight:700;letter-spacing:.26em;text-transform:uppercase;opacity:.82}
+  .bthp-ft__big{display:flex;flex-direction:column;align-items:flex-start}
+  .bthp-ft__big a{font-family:var(--heading-font-family,"Playfair Display",serif);font-size:calc(clamp(30px,2.9vw,44px) * var(--bthp-hs, 1));line-height:1.14;color:var(--bthp-ink);text-decoration:none;transition:opacity .45s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .bthp-ft__big:hover a{opacity:.32}
+  .bthp-ft__big a:hover,.bthp-ft__big a:focus-visible{opacity:1;transform:translateX(10px)}
+  .bthp-ft__col{display:flex;flex-direction:column;gap:14px}
+  .bthp-ft__col a{color:var(--bthp-ink);opacity:.86;text-decoration:none;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:calc(17px * var(--bthp-hs, 1));line-height:1.5;transition:opacity .3s ease}
+  .bthp-ft__col a:hover{opacity:1}
+  .bthp-ft__p{margin:0;max-width:340px;font-size:calc(13px * var(--bthp-ts, 1));line-height:1.7;opacity:.8}
+  .bthp-ft__form{display:flex;width:100%;max-width:400px;box-shadow:inset 0 -1px 0 rgba(248,244,239,.5)}
+  .bthp-ft__input{flex:1;min-width:0;min-height:52px;padding:0;border:0;border-radius:0;background:transparent;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:calc(17px * var(--bthp-hs, 1));color:var(--bthp-ink);outline-offset:4px}
+  .bthp-ft__input::placeholder{color:var(--bthp-ink);opacity:.6}
+  .bthp-ft__join{min-height:52px;padding:0 0 0 16px;border:0;background:transparent;color:var(--bthp-ink);cursor:pointer;font-family:inherit;font-size:calc(11px * var(--bthp-ts, 1));font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+  .bthp-ft__join:hover{opacity:.7}
+  .bthp-ft__ok,.bthp-ft__err{margin:0;font-size:calc(13px * var(--bthp-ts, 1))}
+  .bthp-ft__base{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,2fr) minmax(0,2fr);gap:32px;margin-top:clamp(88px,10vw,150px);font-size:calc(10px * var(--bthp-ts, 1));font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.78}
+  .bthp-ft__base a{color:inherit;text-decoration:none}
+  .bthp-ft__base a:hover{text-decoration:underline}
+  .bthp-ft__legal a+a::before{content:", "}
+  .bthp-ft__right{text-align:right}
+  .bthp-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @media (max-width:749px){
+    .bthp-ft__in{padding:0 20px}
+    .bthp-ft__word{font-size:calc(17vw * var(--bthp-hs, 1))}
+    .bthp-ft__grid{grid-template-columns:minmax(0,1fr);gap:22px}
+    .bthp-ft__big a{font-size:calc(28px * var(--bthp-hs, 1))}
+    .bthp-ft__base{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:44px}
+    .bthp-ft__right{text-align:left}
+  }
+</style>
+
+<div class="bthp-ft" data-bthp-ft data-smoke="{{ s.smoke }}" data-glow="{{ s.glow }}" style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-pb: {{ s.pad_bottom }}px; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }}; --bthp-ts-d: {{ section.settings.text_size | divided_by: 100.0 }}; --bthp-ts-m: {{ section.settings.text_size_mobile | divided_by: 100.0 }};">
+  {%- if s.smoke -%}<canvas class="bthp-smoke" aria-hidden="true"></canvas>{%- endif -%}
+  <div class="bthp-ft__in">
+    {%- if letters.size > 0 -%}
+      <div class="bthp-ft__mark" aria-hidden="true">
+        <p class="bthp-ft__word">{%- for l in letters -%}<span>{{ l }}</span>{%- endfor -%}</p>
+        {%- if s.glow -%}<p class="bthp-ft__word bthp-ft__word--lit">{%- for l in letters -%}<span>{{ l }}</span>{%- endfor -%}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="bthp-ft__grid">
+      <p class="bthp-ft__k">{{ s.explore_title }}</p>
+      <nav class="bthp-ft__big" aria-label="{{ s.explore_title | escape }}">
+        {%- for link in s.explore_menu.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+      <div class="bthp-ft__col">
+        <p class="bthp-ft__k">{{ s.care_title }}</p>
+        {%- for link in s.care_menu.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+        {%- if s.email != blank -%}<a href="mailto:{{ s.email }}">{{ s.email }}</a>{%- endif -%}
+      </div>
+      <div class="bthp-ft__col">
+        <p class="bthp-ft__k">{{ s.news_title }}</p>
+        {%- if s.news_text != blank -%}<p class="bthp-ft__p">{{ s.news_text }}</p>{%- endif -%}
+        {%- assign form_id = 'bthp-news-' | append: section.id -%}
+        {%- form 'customer', id: form_id -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p class="bthp-ft__ok" role="status">{{ s.news_success }}</p>
+          {%- else -%}
+            <div class="bthp-ft__form">
+              {%- assign input_id = 'bthp-email-' | append: section.id -%}
+              <label class="bthp-sr" for="{{ input_id }}">Email address</label>
+              <input class="bthp-ft__input" id="{{ input_id }}" type="email" name="contact[email]" placeholder="{{ s.news_placeholder | escape }}" autocomplete="email" required>
+              <button class="bthp-ft__join" type="submit">{{ s.news_button }}</button>
+            </div>
+            {%- if form.errors -%}<p class="bthp-ft__err" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+
+    <div class="bthp-ft__base">
+      <span>© {{ 'now' | date: '%Y' }}</span>
+      <span>{{ s.copyright }}</span>
+      <span class="bthp-ft__legal">
+        {%- for link in s.legal_menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </span>
+      <span class="bthp-ft__right">{{ s.right_text }}</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    window.bthpSmoke = window.bthpSmoke || function (host, cv, opts) {
+      opts = opts || {};
+      if (!host || !cv || !cv.getContext) return;
+      try { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
+      var ctx = cv.getContext('2d');
+      var rgb = opts.rgb || '217,208,197';
+      var strength = typeof opts.strength === 'number' ? opts.strength : 1;
+      var SCALE = 0.5, parts = [], raf = 0, visible = false, W = 0, H = 0, t = 0, idle = 0;
+      var tx = null, ty = null, px = null, py = null, inside = false;
+      function size() {
+        W = host.offsetWidth; H = host.offsetHeight;
+        cv.width = Math.max(1, Math.round(W * SCALE)); cv.height = Math.max(1, Math.round(H * SCALE));
+        ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+      }
+      function puff(x, y, vx, vy, r, a) {
+        if (parts.length > 200) parts.shift();
+        parts.push({ x: x, y: y, vx: vx, vy: vy, r: r, r0: r, a: a, life: 1, seed: Math.random() * 1000 });
+      }
+      function frame() {
+        raf = 0;
+        if (!visible) return;
+        t++;
+        if (inside && tx !== null) {
+          if (px === null) { px = tx; py = ty; }
+          var nx = px + (tx - px) * 0.16, ny = py + (ty - py) * 0.16;
+          var dx = nx - px, dy = ny - py, d = Math.sqrt(dx * dx + dy * dy);
+          var steps = Math.min(3, Math.ceil(d / 18));
+          for (var k = 1; k <= steps; k++) {
+            var f = k / steps;
+            puff(px + dx * f + (Math.random() - 0.5) * 30, py + dy * f + (Math.random() - 0.5) * 30, dx * 0.03 + (Math.random() - 0.5) * 0.4, dy * 0.03 - 0.15, 46 + Math.random() * 30, 0.6);
+          }
+          px = nx; py = ny; idle = d > 0.4 ? 0 : idle + 1;
+        } else { idle++; }
+        if (opts.idle && idle > 90 && t % 26 === 0) puff(W * (0.15 + Math.random() * 0.7), H * (0.7 + Math.random() * 0.25), (Math.random() - 0.5) * 0.3, -0.3, 70, 0.5);
+        ctx.clearRect(0, 0, W, H);
+        for (var i = parts.length - 1; i >= 0; i--) {
+          var p = parts[i];
+          p.vx += Math.sin((p.y + p.seed) * 0.011 + t * 0.012) * 0.018;
+          p.vy -= 0.006;
+          p.vx *= 0.985; p.vy *= 0.985;
+          p.x += p.vx; p.y += p.vy;
+          p.life -= 0.0042;
+          if (p.life <= 0) { parts.splice(i, 1); continue; }
+          p.r = p.r0 + (1 - p.life) * 150;
+          var ease = p.life * p.life * (3 - 2 * p.life);
+          var alpha = 0.022 * strength * p.a * ease * Math.min(1, (1 - p.life) * 6 + 0.1);
+          ctx.fillStyle = 'rgba(' + rgb + ',' + alpha.toFixed(4) + ')';
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+        }
+        if (parts.length || inside || opts.idle) raf = requestAnimationFrame(frame);
+      }
+      function move(e) {
+        var r = host.getBoundingClientRect();
+        tx = e.clientX - r.left; ty = e.clientY - r.top; inside = true;
+        if (opts.onMove) opts.onMove(tx, ty);
+        if (!raf && visible) raf = requestAnimationFrame(frame);
+      }
+      function leave() { inside = false; px = null; py = null; if (opts.onLeave) opts.onLeave(); }
+      size();
+      if ('ResizeObserver' in window) new ResizeObserver(size).observe(host); else window.addEventListener('resize', size);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(frame); }).observe(host);
+      } else { visible = true; }
+      host.addEventListener('pointermove', move);
+      host.addEventListener('pointerleave', leave);
+    };
+    document.querySelectorAll('[data-bthp-ft]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      var glow = el.getAttribute('data-glow') === 'true';
+      var mark = el.querySelector('.bthp-ft__mark');
+      function setPos(x, y) {
+        if (!glow || !mark) return;
+        var r = mark.getBoundingClientRect(), h = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (x - (r.left - h.left)) + 'px');
+        el.style.setProperty('--my', (y - (r.top - h.top)) + 'px');
+      }
+      function off() { el.style.setProperty('--mx', '-999px'); el.style.setProperty('--my', '-999px'); }
+      if (el.getAttribute('data-smoke') === 'true') {
+        window.bthpSmoke(el, el.querySelector('.bthp-smoke'), { idle: true, onMove: setPos, onLeave: off });
+      } else if (glow) {
+        el.addEventListener('pointermove', function (e) { var h = el.getBoundingClientRect(); setPos(e.clientX - h.left, e.clientY - h.top); });
+        el.addEventListener('pointerleave', off);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Smoke footer",
+  "tag": "footer",
+  "class": "bthp-section",
+  "settings": [
+    { "type": "text", "id": "wordmark", "label": "Giant wordmark", "default": "BENTLEY" },
+    { "type": "checkbox", "id": "smoke", "label": "Smoke trail behind the mouse", "default": true },
+    { "type": "checkbox", "id": "glow", "label": "Letters glow under the mouse", "default": true },
+    { "type": "header", "content": "Menus" },
+    { "type": "text", "id": "explore_title", "label": "Big menu title", "default": "Explore" },
+    { "type": "link_list", "id": "explore_menu", "label": "Big menu", "default": "main-menu" },
+    { "type": "text", "id": "care_title", "label": "Second menu title", "default": "Client care" },
+    { "type": "link_list", "id": "care_menu", "label": "Second menu", "default": "footer" },
+    { "type": "text", "id": "email", "label": "Contact email", "info": "Leave empty to hide." },
+    { "type": "link_list", "id": "legal_menu", "label": "Legal links menu", "info": "Privacy policy, Terms of use…" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "news_title", "label": "Title", "default": "The inner circle" },
+    { "type": "textarea", "id": "news_text", "label": "Text", "default": "Exclusive offers, new launches and Bentley Trike news, first." },
+    { "type": "text", "id": "news_placeholder", "label": "Email placeholder", "default": "Your email" },
+    { "type": "text", "id": "news_button", "label": "Button", "default": "Join" },
+    { "type": "text", "id": "news_success", "label": "Thank-you message", "default": "Thank you — you're on the list." },
+    { "type": "header", "content": "Bottom row" },
+    { "type": "text", "id": "copyright", "label": "Middle text", "default": "Bentley Trike · Officially licensed by Bentley Motors" },
+    { "type": "text", "id": "right_text", "label": "Right text", "default": "United States · USD" },
+    { "type": "range", "id": "pad_bottom", "label": "Space at the bottom", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 104, "info": "Keeps the last row clear of the sticky add-to-cart bar." },
+    { "type": "header", "content": "Text size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "text_size", "label": "Text size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "Body text, labels and buttons." },
+    { "type": "range", "id": "text_size_mobile", "label": "Text size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#1a1a1a" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#f8f4ef" }
+  ],
+  "presets": [{ "name": "BT Smoke footer" }]
+}
+{% endschema %}
