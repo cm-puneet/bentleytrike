@@ -1220,7 +1220,7 @@
           "settings": {
             "product": "white-satin-bentley-6-in-1-stroller-trike",
             "name": "White Satin",
-            "swatch": "#EDEBE9",
+            "swatch": "#edebe9",
             "group": "1"
           }
         },
@@ -1229,7 +1229,7 @@
           "settings": {
             "product": "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
             "name": "Centennial",
-            "swatch": "#827C62",
+            "swatch": "#827c62",
             "group": "1"
           }
         },
@@ -1238,7 +1238,7 @@
           "settings": {
             "product": "bentley-mulliner-trike",
             "name": "Mulliner",
-            "swatch": "#CFC7BA",
+            "swatch": "#cfc7ba",
             "group": "2"
           }
         },
@@ -1256,7 +1256,7 @@
           "settings": {
             "product": "jetstream-blue-bentley-6-in-1-stroller-trike",
             "name": "Jetstream Blue",
-            "swatch": "#DDE0E6",
+            "swatch": "#dde0e6",
             "group": "1"
           }
         },
@@ -1274,7 +1274,7 @@
           "settings": {
             "product": "dragon-red-bentley-stroller-trike",
             "name": "Dragon Red",
-            "swatch": "#C74642",
+            "swatch": "#c74642",
             "group": "2"
           }
         },
@@ -1283,7 +1283,7 @@
           "settings": {
             "product": "spruce-green-6-in-1-stroller-trike",
             "name": "Spruce Green",
-            "swatch": "#60837F",
+            "swatch": "#60837f",
             "group": "1"
           }
         },
@@ -1292,7 +1292,7 @@
           "settings": {
             "product": "sequin-blue-bentley-stroller-trike",
             "name": "Sequin Blue",
-            "swatch": "#293A57",
+            "swatch": "#293a57",
             "group": "1"
           }
         },
@@ -1301,7 +1301,7 @@
           "settings": {
             "product": "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
             "name": "Mandarin",
-            "swatch": "#E17854",
+            "swatch": "#e17854",
             "group": "2"
           }
         },
@@ -1310,7 +1310,7 @@
           "settings": {
             "product": "mulliner-celeste-bentley-6-in-1-stroller-trike",
             "name": "Celeste",
-            "swatch": "#8DE0D4",
+            "swatch": "#8de0d4",
             "group": "2"
           }
         }
@@ -1451,6 +1451,154 @@
         "bg": "#f8f4ef",
         "ink": "#1a1a1a",
         "accent": "#a83f2f"
+      }
+    },
+    "bt_hp_craft_YTJPW8": {
+      "type": "bt-hp-craft",
+      "blocks": {
+        "version_3pTKCY": {
+          "type": "version",
+          "settings": {
+            "title": "Signature",
+            "subtitle": "Eight Bentley colours",
+            "image": "shopify://shop_images/20190226_PoshBaby_kids1562.png",
+            "circle_color": "#1f1f1f",
+            "link": "shopify://products/bentley-6-in-1-stroller-trike",
+            "link_label": "Shop Signature"
+          }
+        },
+        "version_R4mTYt": {
+          "type": "version",
+          "settings": {
+            "title": "Mulliner",
+            "subtitle": "Hand-finished Mulliner editions",
+            "image": "shopify://shop_images/M_11.png",
+            "circle_color": "#6b5a45",
+            "link": "shopify://collections/new-mulliners",
+            "link_label": "Shop Mulliner"
+          }
+        },
+        "version_Fw9z8m": {
+          "type": "version",
+          "settings": {
+            "title": "Folding",
+            "subtitle": "Folds flat for travel",
+            "image": "shopify://shop_images/SilverBentleyFoldableTricycle_d7bc65b9-3512-4665-b6f4-74fcd09a80d2.png",
+            "circle_color": "#3a3f45",
+            "link": "shopify://products/cool-stone-bentley-foldable-tricycle",
+            "link_label": "Shop Folding"
+          }
+        },
+        "note_dje9QB": {
+          "type": "note",
+          "settings": {
+            "number": "I",
+            "title": "The winged B",
+            "text": "Bentley wings below the handlebar, and a \"B\" on the centre cap of every wheel.",
+            "image": "shopify://shop_images/Signature_Emblem.png",
+            "show_for": "1"
+          }
+        },
+        "note_AdyHDF": {
+          "type": "note",
+          "settings": {
+            "number": "II",
+            "title": "Wheels from the cars",
+            "text": "Features understated matte satin wheels with a smooth, non-reflective finish for a modern, stealth-luxury aesthetic.",
+            "image": "shopify://shop_images/Wheels.png",
+            "show_for": "1"
+          }
+        },
+        "note_Pw9KKm": {
+          "type": "note",
+          "settings": {
+            "number": "III",
+            "title": "Anti-slip pedals",
+            "text": "Engineered from high-durability composite with a textured grip surface to give small feet total confidence.",
+            "image": "shopify://shop_images/Engineered_Pedals.png",
+            "show_for": "1"
+          }
+        },
+        "note_QmA7G4": {
+          "type": "note",
+          "settings": {
+            "number": "IV",
+            "title": "Cabin comfort",
+            "text": "Plush, breathable padded seating with classic Bentley diamond stitching for all-day comfort.",
+            "image": "shopify://shop_images/Padded_Comfort.png",
+            "show_for": "1"
+          }
+        },
+        "note_xxp3Qg": {
+          "type": "note",
+          "settings": {
+            "number": "V",
+            "title": "Essential bag",
+            "text": "Crafted from premium, weather-resistant woven canvas—lightweight, easy to clean, and designed for everyday family essentials.",
+            "image": "shopify://shop_images/Elegant_Essentials_Bag.png",
+            "show_for": "all"
+          }
+        },
+        "spec_UfDNBp": {
+          "type": "spec",
+          "settings": {
+            "value": "6-in-1",
+            "label": "Convertible design"
+          }
+        },
+        "spec_aED89R": {
+          "type": "spec",
+          "settings": {
+            "value": "180°",
+            "label": "Rotating seat"
+          }
+        },
+        "spec_KncFeC": {
+          "type": "spec",
+          "settings": {
+            "value": "UPF 50",
+            "label": "Waterproof canopy"
+          }
+        },
+        "spec_hL4XGU": {
+          "type": "spec",
+          "settings": {
+            "value": "5-point",
+            "label": "Safety harness"
+          }
+        }
+      },
+      "block_order": [
+        "version_3pTKCY",
+        "version_R4mTYt",
+        "version_Fw9z8m",
+        "note_dje9QB",
+        "note_AdyHDF",
+        "note_Pw9KKm",
+        "note_QmA7G4",
+        "note_xxp3Qg",
+        "spec_UfDNBp",
+        "spec_aED89R",
+        "spec_KncFeC",
+        "spec_hL4XGU"
+      ],
+      "disabled": true,
+      "name": "New: BT The craft",
+      "settings": {
+        "label": "The craft",
+        "heading": "Beyond ordinary,",
+        "heading_italic": "a Bentley detail.",
+        "show_picker": true,
+        "more_label": "View the detail",
+        "back_label": "Show the trike",
+        "picker_label": "Choose a version",
+        "show_sheen": true,
+        "smoke": true,
+        "heading_size": 100,
+        "heading_size_mobile": 100,
+        "bg": "#1a1a1a",
+        "ink": "#f8f4ef",
+        "sand": "#d9d0c5"
       }
     },
     "media_with_text_yVqAxc": {
@@ -1600,6 +1748,7 @@
     "174259779279421f63",
     "bt_hp_trike_XhiYRa",
     "bt_hp_stages_qYxdfa",
+    "bt_hp_craft_YTJPW8",
     "media_with_text_yVqAxc",
     "rich_text_9CaXBf",
     "174180357643579c9e",
