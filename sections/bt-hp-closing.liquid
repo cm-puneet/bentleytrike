@@ -1,0 +1,243 @@
+{%- comment -%}
+  BT Homepage — Closing call to action
+  A large "Begin their journey." next to a final buy box showing the current pick.
+  Stays in sync with the finish chosen anywhere else on the page.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id | replace: '_', '' | replace: '-', '' | downcase
+  assign map_lines = s.finish_map | newline_to_br | split: '<br />'
+  assign img_n = s.image_number | minus: 1
+-%}
+
+{%- capture finishes_json -%}
+  {%- assign first = true -%}
+  [
+  {%- for p in s.products -%}
+    {%- liquid
+      assign use_variants = false
+      if s.products.size == 1 and p.variants.size > 1
+        assign use_variants = true
+      endif
+      if use_variants
+        assign vlist = p.variants
+      else
+        assign vlist = p.variants | where: 'id', p.selected_or_first_available_variant.id
+      endif
+    -%}
+    {%- for v in vlist -%}
+      {%- liquid
+        if use_variants
+          assign name_src = v.title
+          assign img = v.featured_image | default: p.featured_image
+        else
+          assign name_src = p.title
+          assign img = p.images[img_n] | default: p.featured_image
+        endif
+        assign label = name_src
+        assign swatch = '#cccccc'
+        assign group = 'Signature'
+        if name_src contains 'Mulliner'
+          assign group = 'Mulliner'
+        endif
+        assign matched = false
+        for line in map_lines
+          if matched
+            continue
+          endif
+          assign parts = line | strip_newlines | split: '|'
+          if parts.size < 3
+            continue
+          endif
+          assign keys = parts[0] | split: ','
+          for k in keys
+            assign k2 = k | strip
+            if k2 != blank and name_src contains k2 and matched == false
+              assign matched = true
+              assign label = parts[1] | strip
+              assign swatch = parts[2] | strip
+            endif
+          endfor
+        endfor
+        assign img_url = ''
+        if img
+          assign img_url = img | image_url: width: 1000
+        endif
+      -%}
+      {%- unless first -%},{%- endunless -%}
+      {%- if first -%}{%- assign init_img = img -%}{%- endif -%}
+      {%- assign first = false -%}
+      {"id":{{ v.id | json }},"label":{{ label | json }},"title":{{ p.title | json }},"price":{{ v.price | json }},"compare":{{ v.compare_at_price | default: 0 | json }},"available":{{ v.available | json }},"img":{{ img_url | json }},"group":{{ group | json }},"swatch":{{ swatch | json }},"url":{{ p.url | append: '?variant=' | append: v.id | json }}}
+    {%- endfor -%}
+  {%- endfor -%}
+  ]
+{%- endcapture -%}
+
+<style>
+  .bthp-cls{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-cls{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-cls{content-visibility:auto;contain-intrinsic-size:auto 700px;background:var(--bthp-bg);color:var(--bthp-ink);font-family:var(--text-font-family,Poppins,sans-serif)}
+  .bthp-cls__wrap{max-width:1440px;margin:0 auto;padding:clamp(96px,10vw,160px) clamp(20px,4.4vw,64px);box-sizing:border-box;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(40px,6vw,96px);align-items:center}
+  .bthp-cls__h{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(56px,7.6vw,128px) * var(--bthp-hs, 1));line-height:.94;letter-spacing:-.014em;color:var(--bthp-ink)}
+  .bthp-cls__h em{display:block;font-style:italic;color:var(--bthp-accent)}
+  .bthp-cls__box{display:flex;flex-direction:column;gap:22px;padding:36px;background:var(--bthp-box);box-shadow:0 30px 70px rgba(26,26,26,.08)}
+  .bthp-cls__prod{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;align-items:center}
+  .bthp-cls__thumb{width:96px;height:96px;background:var(--bthp-thumb);display:flex;align-items:center;justify-content:center}
+  .bthp-cls__thumb img{width:100%;height:100%;object-fit:contain}
+  .bthp-cls__k{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.7}
+  .bthp-cls__name{margin:4px 0;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:24px;line-height:1.15}
+  .bthp-cls__row{display:flex;flex-wrap:wrap;gap:8px}
+  .bthp-cls .bthp-sw{width:44px;height:44px;border-radius:50%;border:0;padding:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(26,26,26,.16);transition:box-shadow .3s ease}
+  .bthp-cls .bthp-sw:hover{box-shadow:inset 0 0 0 1px rgba(26,26,26,.55)}
+  .bthp-cls .bthp-sw[aria-checked="true"]{box-shadow:inset 0 0 0 1.5px var(--bthp-ink)}
+  .bthp-cls .bthp-sw i{display:block;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+  .bthp-cls__btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:0;background:var(--bthp-btn-bg);color:var(--bthp-btn-text);cursor:pointer;font-family:inherit;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;transition:background .3s ease}
+  .bthp-cls__btn:hover{background:var(--bthp-ink)}
+  .bthp-cls__btn[aria-busy="true"]{opacity:.7;pointer-events:none}
+  .bthp-cls__btn[disabled]{opacity:.45;cursor:not-allowed}
+  .bthp-cls__note{margin:0;font-size:12px;line-height:1.6;text-align:center;opacity:.72}
+  @media (max-width:749px){
+    .bthp-cls__wrap{grid-template-columns:minmax(0,1fr);gap:22px;padding:56px 20px}
+    .bthp-cls__h{font-size:calc(46px * var(--bthp-hs, 1))}
+    .bthp-cls__box{padding:24px 20px}
+  }
+</style>
+
+<div
+  class="bthp-cls"
+  data-bthp-close="{{ uid }}"
+  data-after="{{ s.after_add }}"
+  data-label="{{ s.button_label | escape }}"
+  data-added="{{ s.added_label | escape }}"
+  style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-accent: {{ s.accent }}; --bthp-box: {{ s.box_bg }}; --bthp-thumb: {{ s.thumb_bg }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-text: {{ s.button_text }}; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+>
+  <script type="application/json" data-finishes>{{ finishes_json }}</script>
+  <div class="bthp-cls__wrap">
+    <h2 class="bthp-cls__h">{{ s.heading }} {% if s.heading_italic != blank %}<em>{{ s.heading_italic }}</em>{% endif %}</h2>
+    <div class="bthp-cls__box">
+      <div class="bthp-cls__prod">
+        <div class="bthp-cls__thumb">
+          {%- if init_img -%}
+            {{ init_img | image_url: width: 240 | image_tag: class: 'bthp-f-img', alt: '', loading: 'lazy', sizes: '96px' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+        <div>
+          <p class="bthp-cls__k">{{ s.selection_label }}</p>
+          <p class="bthp-cls__name" data-f-label></p>
+          <span data-f-price></span>
+        </div>
+      </div>
+      <div class="bthp-cls__row" role="radiogroup" aria-label="{{ s.selection_label | escape }}" data-swatches></div>
+      <button class="bthp-cls__btn" type="button" data-add>{{ s.button_label }}</button>
+      {%- if s.note != blank -%}<p class="bthp-cls__note">{{ s.note }}</p>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    window.bthpCart = window.bthpCart || function (items, opts) {
+      opts = opts || {};
+      var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+      var detail = { sections: [] };
+      document.dispatchEvent(new CustomEvent('cart:prepare-bundled-sections', { bubbles: true, detail: detail }));
+      var body = { items: items };
+      if (detail.sections.length) body.sections = detail.sections.join(',');
+      return fetch(root + 'cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw j; return j; }); })
+        .then(function (added) {
+          return fetch(root + 'cart.js', { headers: { Accept: 'application/json' } }).then(function (r) { return r.json(); }).then(function (cart) {
+            if (added && added.sections) cart.sections = added.sections;
+            if (opts.after === 'checkout') { window.location.href = root + 'checkout'; return cart; }
+            if (opts.after === 'cart') { window.location.href = root + 'cart'; return cart; }
+            document.dispatchEvent(new CustomEvent('variant:add', { bubbles: true, detail: { items: items, cart: cart } }));
+            document.documentElement.dispatchEvent(new CustomEvent('cart:change', { bubbles: true, detail: { baseEvent: 'variant:add', onSuccessDo: opts.after === 'stay' ? null : 'force_open_drawer', cart: cart } }));
+            document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+            return cart;
+          });
+        });
+    };
+
+    document.querySelectorAll('[data-bthp-close]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      var items = [];
+      try { items = JSON.parse(el.querySelector('[data-finishes]').textContent) || []; } catch (e) {}
+      if (!items.length) return;
+      var row = el.querySelector('[data-swatches]');
+      var btn = el.querySelector('[data-add]');
+      var label = el.getAttribute('data-label');
+      var cur = 0, shown = 0;
+      for (var i = 0; i < items.length; i++) { if (items[i].available) { cur = i; break; } }
+      function money(c) { return '$' + (c / 100).toFixed(2).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+      function select(i, user) {
+        cur = i;
+        var it = items[i];
+        el.querySelectorAll('[data-f-label]').forEach(function (n) { n.textContent = it.label; });
+        el.querySelectorAll('[data-f-price]').forEach(function (n) { n.textContent = money(it.price); });
+        if (it.img && i !== shown) {
+          el.querySelectorAll('.bthp-f-img').forEach(function (n) { n.removeAttribute('srcset'); n.removeAttribute('sizes'); n.src = it.img; });
+          shown = i;
+        }
+        el.querySelectorAll('.bthp-f-img').forEach(function (n) { n.alt = it.title; });
+        if (row) [].forEach.call(row.children, function (b, k) { b.setAttribute('aria-checked', k === i ? 'true' : 'false'); });
+        if (btn) { btn.disabled = !it.available; btn.textContent = it.available ? label + ' — ' + money(it.price) : 'Sold out'; }
+        if (user) document.dispatchEvent(new CustomEvent('bthp:finish', { detail: { id: it.id, source: el.getAttribute('data-bthp-close') } }));
+      }
+      if (row) items.forEach(function (it, k) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'bthp-sw'; b.setAttribute('role', 'radio');
+        b.setAttribute('aria-label', it.label + ', ' + money(it.price));
+        var d = document.createElement('i'); d.style.background = it.swatch; b.appendChild(d);
+        b.addEventListener('click', function () { select(k, true); });
+        row.appendChild(b);
+      });
+      document.addEventListener('bthp:finish', function (e) {
+        if (!e.detail || e.detail.source === el.getAttribute('data-bthp-close')) return;
+        for (var j = 0; j < items.length; j++) if (items[j].id === e.detail.id) { select(j, false); break; }
+      });
+      if (btn) btn.addEventListener('click', function () {
+        var it = items[cur];
+        btn.setAttribute('aria-busy', 'true');
+        window.bthpCart([{ id: it.id, quantity: 1 }], { after: el.getAttribute('data-after') })
+          .then(function () { btn.removeAttribute('aria-busy'); btn.textContent = el.getAttribute('data-added'); setTimeout(function () { select(cur, false); }, 1800); })
+          .catch(function () { btn.removeAttribute('aria-busy'); window.location.href = it.url; });
+      });
+      select(cur, false);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Closing buy box",
+  "tag": "section",
+  "class": "bthp-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Begin their" },
+    { "type": "text", "id": "heading_italic", "label": "Heading (italic line)", "default": "journey." },
+    { "type": "text", "id": "selection_label", "label": "Selection label", "default": "Your selection" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "text", "id": "added_label", "label": "Added label", "default": "Added ✓" },
+    { "type": "text", "id": "note", "label": "Note under button", "default": "Officially licensed by Bentley Motors" },
+    { "type": "select", "id": "after_add", "label": "After adding to cart", "options": [{ "value": "drawer", "label": "Open the cart drawer" }, { "value": "stay", "label": "Stay on the page" }, { "value": "cart", "label": "Go to the cart page" }], "default": "drawer" },
+    { "type": "header", "content": "Products" },
+    { "type": "product_list", "id": "products", "label": "Finishes", "limit": 16, "info": "Pick one product per finish. Or pick a single product and its colour variants become the finishes." },
+    { "type": "range", "id": "image_number", "label": "Product image to show", "min": 1, "max": 6, "step": 1, "default": 1, "info": "Use the cut-out photo on a plain background." },
+    { "type": "textarea", "id": "finish_map", "label": "Finish names & colours", "info": "One per line: words in the product title | name shown | swatch colour. First match wins.", "default": "Onyx | Onyx Black | #141414\nDragon | Dragon Red | #a8262b\nJetstream | Jetstream Blue | #2a4d8f\nFuscia, Fuchsia | Fuchsia Pink | #d14f8a\nWhite Satin | White Satin | #f1efe9\nSpruce | Spruce Green | #2f4a3a\nSequin | Sequin Blue | #1f2f5c\nCeleste | Celeste | #9ec5d8\nCool Stone | Cool Stone | #c9c3bb\nMandarin | Mandarin | #d9792b\nMatte Black | Matte Black Gold | #2b2722\nMulliner | Mulliner Gold | #c6a15b" },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#a83f2f" },
+    { "type": "color", "id": "box_bg", "label": "Box", "default": "#ffffff" },
+    { "type": "color", "id": "thumb_bg", "label": "Product thumbnail", "default": "#efe8df" },
+    { "type": "color", "id": "button_bg", "label": "Button", "default": "#a83f2f" },
+    { "type": "color", "id": "button_text", "label": "Button text", "default": "#ffffff" }
+  ],
+  "presets": [{ "name": "BT Closing buy box" }]
+}
+{% endschema %}
