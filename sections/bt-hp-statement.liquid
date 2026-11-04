@@ -1,0 +1,110 @@
+{%- comment -%}
+  BT Homepage — Brand statement
+  A large centred line whose words light up from faint to full as you scroll.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign words = s.text | strip_newlines | split: ' '
+  assign em_list = s.emphasis | split: ','
+-%}
+
+<style>
+  .bthp-stm{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-stm{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-stm{background:var(--bthp-bg);color:var(--bthp-ink);padding:var(--bthp-pt,96px) 0 var(--bthp-pb,96px);font-family:var(--text-font-family,Poppins,sans-serif)}
+  .bthp-stm__in{max-width:1120px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px);display:flex;flex-direction:column;align-items:center;gap:36px;text-align:center}
+  .bthp-stm__label{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--bthp-accent)}
+  .bthp-stm__p{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(30px,3.7vw,58px) * var(--bthp-hs, 1));line-height:1.2;letter-spacing:-.006em;color:var(--bthp-ink)}
+  .bthp-stm__w{opacity:.14;transition:opacity .6s ease,color .6s ease}
+  .bthp-stm__w.is-on{opacity:1}
+  .bthp-stm__w--em{font-style:italic}
+  .bthp-stm__w--em.is-on{color:var(--bthp-accent)}
+  .bthp-stm.is-static .bthp-stm__w{opacity:1}
+  .bthp-stm__lnk{display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--bthp-ink);background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-position:0 calc(100% - 11px);background-repeat:no-repeat;transition:background-size .5s cubic-bezier(.65,0,.35,1),color .3s ease}
+  .bthp-stm__lnk:hover{color:var(--bthp-accent);background-size:30% 1px}
+  @media (max-width:749px){
+    .bthp-stm{padding:var(--bthp-ptm,56px) 0 var(--bthp-pbm,56px)}
+    .bthp-stm__in{gap:22px;padding:0 20px}
+    .bthp-stm__p{font-size:calc(24px * var(--bthp-hs, 1))}
+  }
+  @media (prefers-reduced-motion:reduce){.bthp-stm__w{opacity:1;transition:none}}
+</style>
+
+<div
+  class="bthp-stm{% unless s.reveal %} is-static{% endunless %}"
+  data-bthp-stm
+  style="--bthp-pt: {{ s.pad_top }}px; --bthp-pb: {{ s.pad_bottom }}px; --bthp-ptm: {{ s.pad_top_mobile }}px; --bthp-pbm: {{ s.pad_bottom_mobile }}px; --bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-accent: {{ s.accent }}; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+>
+  <div class="bthp-stm__in">
+    {%- if s.label != blank -%}<p class="bthp-stm__label">{{ s.label }}</p>{%- endif -%}
+    <p class="bthp-stm__p">
+      {%- for w in words -%}
+        {%- liquid
+          assign is_em = false
+          for e in em_list
+            assign e2 = e | strip
+            if e2 != blank and w contains e2
+              assign is_em = true
+            endif
+          endfor
+        -%}
+        <span class="bthp-stm__w{% if is_em %} bthp-stm__w--em{% endif %}">{{ w }} </span>
+      {%- endfor -%}
+    </p>
+    {%- if s.link_label != blank -%}<a class="bthp-stm__lnk" href="{{ s.link_url | default: '#buy' }}">{{ s.link_label }}</a>{%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-bthp-stm]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      if (el.classList.contains('is-static')) return;
+      var words = el.querySelectorAll('.bthp-stm__w');
+      var lit = -1, raf = 0;
+      function update() {
+        raf = 0;
+        var vh = window.innerHeight || 800;
+        var r = el.getBoundingClientRect();
+        var p = Math.max(0, Math.min(1, (vh * 0.82 - r.top) / (r.height * 0.75)));
+        var n = Math.round(p * words.length);
+        if (n === lit) return;
+        lit = n;
+        for (var i = 0; i < words.length; i++) words[i].classList.toggle('is-on', i < n);
+      }
+      function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      update();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT Brand statement",
+  "tag": "section",
+  "class": "bthp-section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Small label", "default": "Officially licensed by Bentley Motors" },
+    { "type": "textarea", "id": "text", "label": "Statement", "default": "Some firsts deserve more than ordinary. The Bentley Trike carries the paint, the wheels and the winged B of the cars from Crewe — made for the years when every walk is an adventure, and every ride is their first." },
+    { "type": "text", "id": "emphasis", "label": "Words in italic accent", "info": "Separate with commas.", "default": "Crewe, first." },
+    { "type": "checkbox", "id": "reveal", "label": "Light up words on scroll", "default": true },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Meet the Trike" },
+    { "type": "url", "id": "link_url", "label": "Link", "info": "Leave empty to scroll to the Trike buy box." },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "pad_top", "label": "Space above (desktop)", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 96 },
+    { "type": "range", "id": "pad_bottom", "label": "Space below (desktop)", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 96 },
+    { "type": "range", "id": "pad_top_mobile", "label": "Space above (phone)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "pad_bottom_mobile", "label": "Space below (phone)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f8f4ef" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#1a1a1a" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#a83f2f" }
+  ],
+  "presets": [{ "name": "BT Brand statement" }]
+}
+{% endschema %}
