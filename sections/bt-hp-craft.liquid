@@ -1,0 +1,647 @@
+{%- comment -%}
+  BT Homepage — The craft (dark spotlight)
+  The selected finish sits in a soft spotlight with the Bentley details around it.
+  Its finishes come straight from the Trike buy box on the same page, so there is
+  nothing to set up here; the colour circles stay in sync with the buy box.
+  A faint smoke trail follows the mouse.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id | replace: '_', '' | replace: '-', '' | downcase
+  assign notes = section.blocks | where: 'type', 'note'
+  assign specs = section.blocks | where: 'type', 'spec'
+  assign vers = section.blocks | where: 'type', 'version'
+-%}
+
+<style>
+  .bthp-crf{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-crf{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-crf{content-visibility:auto;contain-intrinsic-size:auto 1100px;position:relative;overflow:hidden;background:var(--bthp-bg);color:var(--bthp-ink);font-family:var(--text-font-family,Poppins,sans-serif);padding:clamp(96px,10vw,152px) 0 clamp(72px,8vw,120px)}
+  .bthp-crf__glow{position:absolute;left:50%;top:46%;width:min(980px,90vw);aspect-ratio:1/1;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(248,244,239,.24),rgba(248,244,239,.07) 55%,rgba(248,244,239,0));pointer-events:none}
+  .bthp-smoke{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.2}
+  .bthp-crf__wrap{position:relative;max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px);box-sizing:border-box}
+  .bthp-crf__head{text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;margin-bottom:24px}
+  .bthp-crf__label{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--bthp-sand)}
+  .bthp-crf__h{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(40px,5.2vw,84px) * var(--bthp-hs, 1));line-height:.98;letter-spacing:-.01em;color:var(--bthp-ink)}
+  .bthp-crf__h em{display:block;font-style:italic;color:var(--bthp-sand)}
+  .bthp-crf__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);align-items:center;gap:24px}
+  .bthp-crf__col{display:flex;flex-direction:column;gap:64px}
+  .bthp-crf__col--r{text-align:right;align-items:flex-end}
+  .bthp-crf__note{display:flex;flex-direction:column;gap:12px;max-width:290px;transition:opacity .5s ease}
+  button.bthp-crf__note{margin:0;padding:0;border:0;background:none;font:inherit;color:inherit;text-align:inherit;cursor:pointer;align-items:inherit}
+  .bthp-crf__col--r button.bthp-crf__note{align-items:flex-end}
+  .bthp-crf__note h3{transition:color .4s ease}
+  button.bthp-crf__note:hover h3,.bthp-crf__note.is-on h3{color:var(--bthp-sand)}
+  .bthp-crf__n::after{transition:width .5s cubic-bezier(.2,.7,.2,1)}
+  button.bthp-crf__note:hover .bthp-crf__n::after,.bthp-crf__note.is-on .bthp-crf__n::after{width:88px}
+  .bthp-crf.has-detail .bthp-crf__note:not(.is-on){opacity:.42}
+  .bthp-crf__more{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--bthp-sand);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+  .bthp-crf__note.is-on .bthp-crf__more{text-decoration:none;opacity:.6}
+  button.bthp-crf__note:focus-visible{outline:1px solid var(--bthp-sand);outline-offset:8px}
+  .bthp-crf__n{display:flex;align-items:center;gap:14px;font-size:10px;font-weight:700;letter-spacing:.28em;color:var(--bthp-sand)}
+  .bthp-crf__col--r .bthp-crf__n{flex-direction:row-reverse}
+  .bthp-crf__n::after{content:"";display:block;width:56px;height:1px;background:currentColor;opacity:.6}
+  .bthp-crf__note h3{margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:26px;line-height:1.15;color:var(--bthp-ink)}
+  .bthp-crf__note p{margin:0;font-size:14px;line-height:1.7;opacity:.8}
+  .bthp-crf__stage{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+  .bthp-crf__stage .bthp-prod{position:relative;width:92%;aspect-ratio:1/1;transition:opacity .5s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .bthp-crf.has-detail .bthp-crf__stage .bthp-prod{opacity:0;transform:scale(.94)}
+  .bthp-crf__dm{position:absolute;inset:5%;pointer-events:none}
+  .bthp-crf__dimg{position:absolute;inset:0;margin:0;display:none;overflow:hidden;background:#2a2622;opacity:0;transform:scale(1.04);transition:opacity .6s ease,transform .9s cubic-bezier(.2,.7,.2,1);box-shadow:0 40px 80px rgba(0,0,0,.45)}
+  .bthp-crf__dimg.is-shown{display:block}
+  .bthp-crf__dimg.is-on{opacity:1;transform:none}
+  .bthp-crf__dimg img{display:block;width:100%;height:100%;object-fit:cover}
+  .bthp-crf__dimg figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:baseline;gap:12px;padding:40px 20px 18px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.62) 100%);font-family:var(--heading-font-family,"Playfair Display",serif);font-size:22px;color:#ffffff;text-align:left}
+  .bthp-crf__dimg figcaption span{font-family:var(--text-font-family,Poppins,sans-serif);font-size:10px;font-weight:700;letter-spacing:.24em;color:var(--bthp-sand)}
+  .bthp-crf__back{position:absolute;top:12px;right:12px;z-index:2;display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:0 14px;border:1px solid rgba(248,244,239,.35);border-radius:0;background:rgba(26,26,26,.72);color:var(--bthp-ink);cursor:pointer;pointer-events:auto;font-family:var(--text-font-family,Poppins,sans-serif);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;transition:background .3s ease}
+  .bthp-crf__back:hover{background:rgba(26,26,26,.92)}
+  .bthp-crf__back[hidden]{display:none}
+  .bthp-crf__stage .bthp-prod .bthp-f-ph{width:100%;height:100%;opacity:.25;fill:currentColor}
+  .bthp-crf__stage .bthp-prod img{filter:drop-shadow(0 40px 50px rgba(0,0,0,.45))}
+  .bthp-prod img{display:block;width:100%;height:100%;object-fit:contain}
+  .bthp-prod.is-in{animation:bthpProdIn .9s cubic-bezier(.2,.7,.2,1)}
+  @keyframes bthpProdIn{from{opacity:0;transform:translateX(28px) scale(.97)}to{opacity:1;transform:none}}
+  .bthp-sheen{position:absolute;inset:0;pointer-events:none;overflow:hidden;-webkit-mask-image:var(--m);mask-image:var(--m);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;mix-blend-mode:soft-light}
+  .bthp-sheen:not([style*="--m"]){display:none}
+  .bthp-sheen::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,255,255,.85) 50%,rgba(255,255,255,0));transform:translateX(-110%);animation:bthpSheenX 7s ease-in-out infinite}
+  @keyframes bthpSheenX{0%,58%{transform:translateX(-110%)}86%,100%{transform:translateX(260%)}}
+  .bthp-crf__pick{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:8px}
+  .bthp-crf__row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .bthp-crf .bthp-sw{width:44px;height:44px;border-radius:50%;border:0;padding:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(248,244,239,.24);transition:box-shadow .3s ease}
+  .bthp-crf .bthp-sw:hover{box-shadow:inset 0 0 0 1px rgba(248,244,239,.6)}
+  .bthp-crf .bthp-sw[aria-checked="true"]{box-shadow:inset 0 0 0 1.5px var(--bthp-ink)}
+  .bthp-crf .bthp-sw i{display:block;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+  .bthp-crf__note[hidden]{display:none!important}
+  .bthp-crf__col.is-in,.bthp-crf__slider.is-in{animation:bthpNotesIn .6s cubic-bezier(.2,.7,.2,1)}
+  @keyframes bthpNotesIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .bthp-crf__vers{display:flex;justify-content:center;gap:clamp(20px,3vw,40px)}
+  .bthp-crf__ver{display:flex;flex-direction:column;align-items:center;gap:10px;border:0;padding:0;background:none;color:inherit;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .bthp-crf__vc{position:relative;display:block;width:76px;height:76px;border-radius:50%;padding:5px;box-shadow:inset 0 0 0 1px rgba(248,244,239,.24);transition:box-shadow .3s ease}
+  .bthp-crf__vc span,.bthp-crf__vc img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--c,#2a2a2a)}
+  .bthp-crf__vc img{object-fit:contain;background:var(--c,rgba(248,244,239,.08))}
+  .bthp-crf__ver:hover .bthp-crf__vc{box-shadow:inset 0 0 0 1px rgba(248,244,239,.6)}
+  .bthp-crf__ver[aria-checked="true"] .bthp-crf__vc{box-shadow:inset 0 0 0 1.5px var(--bthp-ink)}
+  .bthp-crf__vt{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;opacity:.6;transition:opacity .3s ease}
+  .bthp-crf__ver[aria-checked="true"] .bthp-crf__vt,.bthp-crf__ver:hover .bthp-crf__vt{opacity:1}
+  .bthp-crf__vinfo{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:6px 14px;min-height:20px;text-align:center}
+  .bthp-crf__vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .bthp-crf__vinfo [data-v-sub]{font-size:13px;opacity:.75}
+  .bthp-crf__vlink{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:inherit;text-decoration:none;border-bottom:1px solid var(--bthp-sand);padding-bottom:3px}
+  .bthp-crf__vlink[hidden]{display:none}
+  .bthp-crf__sel{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.8}
+  .bthp-crf__specs{position:relative;display:grid;grid-template-columns:repeat(var(--bthp-specs,4),minmax(0,1fr));margin-top:clamp(56px,6vw,88px);border-top:1px solid rgba(248,244,239,.16)}
+  .bthp-crf__spec{display:flex;flex-direction:column;gap:8px;padding:32px 24px 0;text-align:center}
+  .bthp-crf__spec+.bthp-crf__spec{border-left:1px solid rgba(248,244,239,.16)}
+  .bthp-crf__spec b{font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-style:italic;font-size:clamp(34px,3.4vw,52px);line-height:1}
+  .bthp-crf__spec span{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;opacity:.75}
+  .bthp-crf__slider{display:none}
+  @media (max-width:989px) and (min-width:750px){
+    .bthp-crf__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .bthp-crf__stage{grid-column:1 / -1;order:-1;max-width:560px;margin:0 auto;width:100%}
+    .bthp-crf__col{gap:40px}
+  }
+  @media (max-width:749px){
+    .bthp-crf{padding:48px 0 36px}
+    .bthp-crf__wrap{padding:0 20px}
+    .bthp-crf__head{gap:10px;margin-bottom:8px}
+    .bthp-crf__h{font-size:calc(32px * var(--bthp-hs, 1))}
+    .bthp-crf__grid{display:block}
+    .bthp-crf__col{display:none}
+    .bthp-crf__stage{max-width:230px;margin:0 auto}
+    .bthp-crf__slider{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:8px -20px 0;padding:0 20px;scrollbar-width:none}
+    .bthp-crf__slider::-webkit-scrollbar,.bthp-crf__row::-webkit-scrollbar,.bthp-crf__specs::-webkit-scrollbar{display:none}
+    .bthp-crf__slider .bthp-crf__note{flex:0 0 62%;max-width:none;scroll-snap-align:start;padding:14px 14px 16px;gap:8px;box-shadow:inset 0 0 0 1px rgba(248,244,239,.16)}
+    .bthp-crf__slider .bthp-crf__n::after{width:32px}
+    .bthp-crf__note h3{font-size:18px}
+    .bthp-crf__note p{font-size:12px;line-height:1.55}
+    .bthp-crf__slider button.bthp-crf__note{align-items:flex-start;text-align:left}
+    .bthp-crf__slider .bthp-crf__note.is-on{box-shadow:inset 0 0 0 1px var(--bthp-sand)}
+    .bthp-crf.has-detail .bthp-crf__slider .bthp-crf__note:not(.is-on){opacity:.55}
+    .bthp-crf__dimg figcaption{font-size:15px;padding:28px 12px 10px}
+    .bthp-crf__back{top:6px;right:6px;width:34px;min-height:34px;padding:0;justify-content:center;gap:0}
+    .bthp-crf__backl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    .bthp-crf__pick{margin-top:16px;gap:8px}
+    .bthp-crf__row{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;max-width:100%;scrollbar-width:none;padding:2px}
+    .bthp-crf .bthp-sw{flex:none;width:38px;height:38px}
+    .bthp-crf .bthp-sw i{width:26px;height:26px}
+    .bthp-crf__vers{gap:18px}
+    .bthp-crf__vc{width:62px;height:62px;padding:4px}
+    .bthp-crf__vt{font-size:9px;letter-spacing:.2em}
+    .bthp-crf__specs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:22px -20px 0;padding:0 20px;border-top:0;scrollbar-width:none}
+    .bthp-crf__spec,.bthp-crf__spec+.bthp-crf__spec{flex:0 0 36%;scroll-snap-align:start;padding:12px 6px;border:0;border-left:1px solid rgba(248,244,239,.16)}
+    .bthp-crf__spec b{font-size:26px}
+    .bthp-crf__spec span{font-size:9px;letter-spacing:.16em}
+  }
+  .bthp-off,.bthp-off *,.bthp-off *::before{animation-play-state:paused!important}
+  @media (prefers-reduced-motion:reduce){.bthp-sheen::before,.bthp-prod.is-in,.bthp-crf__col.is-in,.bthp-crf__slider.is-in{animation:none}.bthp-crf__dimg,.bthp-crf__stage .bthp-prod{transition:none}}
+</style>
+
+<div
+  class="bthp-crf"
+  id="craft"
+  data-bthp-craft="{{ uid }}"
+  data-smoke="{{ s.smoke }}"
+  style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-sand: {{ s.sand }}; --bthp-specs: {{ specs.size | at_least: 1 }}; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+>
+  <div class="bthp-crf__glow" aria-hidden="true"></div>
+  {%- if s.smoke -%}<canvas class="bthp-smoke" aria-hidden="true"></canvas>{%- endif -%}
+  <div class="bthp-crf__wrap">
+    <div class="bthp-crf__head">
+      {%- if s.label != blank -%}<p class="bthp-crf__label">{{ s.label }}</p>{%- endif -%}
+      <h2 class="bthp-crf__h">{{ s.heading }} {% if s.heading_italic != blank %}<em>{{ s.heading_italic }}</em>{% endif %}</h2>
+    </div>
+    <div class="bthp-crf__grid">
+{%- liquid
+  assign vis_n = 0
+  for block in notes
+    assign fv = block.settings.show_for | default: 'all'
+    if vers.size == 0 or fv == 'all' or fv == '1'
+      assign vis_n = vis_n | plus: 1
+    endif
+  endfor
+  assign half = vis_n | plus: 1 | divided_by: 2 | floor
+  assign col_l = ''
+  assign col_r = ''
+  assign col_h = ''
+  assign sl = ''
+  assign k = 0
+-%}
+{%- for block in notes -%}
+  {%- assign nb = block.settings -%}
+  {%- assign fv = nb.show_for | default: 'all' -%}
+  {%- assign on = false -%}
+  {%- if vers.size == 0 or fv == 'all' or fv == '1' -%}{%- assign on = true -%}{%- endif -%}
+  {%- capture inner -%}<span class="bthp-crf__n">{{ nb.number }}</span><h3>{{ nb.title }}</h3><p>{{ nb.text }}</p>{% if nb.image != blank and s.more_label != blank %}<span class="bthp-crf__more">{{ s.more_label }}</span>{% endif %}{%- endcapture -%}
+  {%- capture attrs %} data-d="{{ forloop.index0 }}" data-for="{% if vers.size == 0 %}all{% else %}{{ fv }}{% endif %}"{% unless on %} hidden{% endunless %}{%- endcapture -%}
+  {%- if nb.image != blank -%}
+    {%- capture nh -%}<button class="bthp-crf__note" type="button" aria-pressed="false"{{ attrs }} {{ block.shopify_attributes }}>{{ inner }}</button>{%- endcapture -%}
+    {%- capture sh -%}<button class="bthp-crf__note" type="button" aria-pressed="false"{{ attrs }}>{{ inner }}</button>{%- endcapture -%}
+  {%- else -%}
+    {%- capture nh -%}<div class="bthp-crf__note"{{ attrs }} {{ block.shopify_attributes }}>{{ inner }}</div>{%- endcapture -%}
+    {%- capture sh -%}<div class="bthp-crf__note"{{ attrs }}>{{ inner }}</div>{%- endcapture -%}
+  {%- endif -%}
+  {%- if on -%}
+    {%- if k < half -%}{%- assign col_l = col_l | append: nh -%}{%- else -%}{%- assign col_r = col_r | append: nh -%}{%- endif -%}
+    {%- assign k = k | plus: 1 -%}
+  {%- else -%}
+    {%- assign col_h = col_h | append: nh -%}
+  {%- endif -%}
+  {%- assign sl = sl | append: sh -%}
+{%- endfor -%}
+      <div class="bthp-crf__col" data-col-l>
+        {{ col_l }}{{ col_h }}
+      </div>
+      <div class="bthp-crf__stage">
+        <div class="bthp-prod" data-f-stage>
+          {%- assign v0 = vers.first.settings.image -%}
+          {%- if v0 != blank -%}
+            {{ v0 | image_url: width: 1000 | image_tag: class: 'bthp-f-img', alt: vers.first.settings.title, loading: 'lazy', sizes: '(max-width: 749px) 230px, 40vw' }}
+          {%- elsif s.image != blank -%}
+            {{ s.image | image_url: width: 1000 | image_tag: class: 'bthp-f-img', alt: '', loading: 'lazy', sizes: '(max-width: 749px) 230px, 40vw' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'bthp-f-ph' }}
+          {%- endif -%}
+          {%- if s.show_sheen -%}<span class="bthp-sheen" data-f-sheen></span>{%- endif -%}
+        </div>
+        <div class="bthp-crf__dm">
+          {%- for block in notes -%}
+            {%- if block.settings.image != blank -%}
+              <figure class="bthp-crf__dimg" data-dimg="{{ forloop.index0 }}">
+                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 230px, 40vw', widths: '400,600,900,1200', alt: block.settings.title }}
+                <figcaption><span>{{ block.settings.number }}</span>{{ block.settings.title }}</figcaption>
+              </figure>
+            {%- endif -%}
+          {%- endfor -%}
+          <button class="bthp-crf__back" type="button" data-back hidden><span class="bthp-crf__backl">{{ s.back_label }}</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+        </div>
+      </div>
+      <div class="bthp-crf__col bthp-crf__col--r" data-col-r>
+        {{ col_r }}
+      </div>
+    </div>
+    <div class="bthp-crf__slider" data-col-s>
+      {{ sl }}
+    </div>
+    {%- if vers.size > 0 -%}
+      <div class="bthp-crf__pick" data-vers>
+        <div class="bthp-crf__vers" role="radiogroup" aria-label="{{ s.picker_label | escape }}">
+          {%- for block in vers -%}
+            {%- assign vb = block.settings -%}
+            {%- assign vthumb = vb.circle_image | default: vb.image -%}
+            <button class="bthp-crf__ver" type="button" role="radio" aria-checked="{% if forloop.first %}true{% else %}false{% endif %}" data-v="{{ forloop.index0 }}"{% if vb.image != blank %} data-src="{{ vb.image | image_url: width: 1000 }}" data-srcset="{{ vb.image | image_url: width: 600 }} 600w, {{ vb.image | image_url: width: 1000 }} 1000w, {{ vb.image | image_url: width: 1400 }} 1400w"{% endif %} data-sub="{{ vb.subtitle | escape }}" data-url="{{ vb.link }}" data-ll="{{ vb.link_label | escape }}" {{ block.shopify_attributes }}>
+              <span class="bthp-crf__vc" style="--c:{{ vb.circle_color }}">
+                {%- if vthumb != blank -%}{{ vthumb | image_url: width: 160 | image_tag: alt: '', loading: 'lazy', width: 80, height: 80 }}{%- else -%}<span></span>{%- endif -%}
+              </span>
+              <span class="bthp-crf__vt">{{ vb.title }}</span>
+            </button>
+          {%- endfor -%}
+        </div>
+        {%- assign vf = vers.first.settings -%}
+        <p class="bthp-crf__vinfo"><span class="bthp-crf__vh" aria-live="polite" data-v-title>{{ vf.title }}</span><span data-v-sub>{{ vf.subtitle }}</span><a class="bthp-crf__vlink" data-v-link href="{{ vf.link | default: '#' }}"{% if vf.link == blank or vf.link_label == blank %} hidden{% endif %}>{{ vf.link_label }}</a></p>
+      </div>
+    {%- elsif s.show_picker -%}
+      <div class="bthp-crf__pick">
+        <div class="bthp-crf__row" role="radiogroup" aria-label="{{ s.picker_label | escape }}" data-swatches></div>
+        <p class="bthp-crf__sel" data-f-sel></p>
+      </div>
+    {%- endif -%}
+    {%- if specs.size > 0 -%}
+      <div class="bthp-crf__specs">
+        {%- for block in specs -%}
+          <div class="bthp-crf__spec" {{ block.shopify_attributes }}><b>{{ block.settings.value }}</b><span>{{ block.settings.label }}</span></div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    window.bthpSmoke = window.bthpSmoke || function (host, cv, opts) {
+      opts = opts || {};
+      if (!host || !cv || !cv.getContext) return;
+      try {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (window.matchMedia('(hover: none)').matches) { cv.style.display = 'none'; return; }
+      } catch (e) {}
+      var ctx = cv.getContext('2d');
+      var rgb = opts.rgb || '217,208,197';
+      var strength = typeof opts.strength === 'number' ? opts.strength : 1;
+      // One soft puff drawn once, then stamped — no live blur filter needed.
+      var sprite = document.createElement('canvas');
+      sprite.width = sprite.height = 128;
+      var sg = sprite.getContext('2d');
+      var grd = sg.createRadialGradient(64, 64, 0, 64, 64, 64);
+      grd.addColorStop(0, 'rgba(' + rgb + ',1)');
+      grd.addColorStop(0.45, 'rgba(' + rgb + ',0.5)');
+      grd.addColorStop(1, 'rgba(' + rgb + ',0)');
+      sg.fillStyle = grd; sg.fillRect(0, 0, 128, 128);
+      var SCALE = 0.25, parts = [], raf = 0, visible = false, W = 0, H = 0, t = 0, idle = 0;
+      var tx = null, ty = null, px = null, py = null, inside = false;
+      function size() {
+        W = host.offsetWidth; H = host.offsetHeight;
+        cv.width = Math.max(1, Math.round(W * SCALE)); cv.height = Math.max(1, Math.round(H * SCALE));
+        ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+      }
+      function puff(x, y, vx, vy, r, a) {
+        if (parts.length > 110) parts.shift();
+        parts.push({ x: x, y: y, vx: vx, vy: vy, r: r, r0: r, a: a, life: 1, seed: Math.random() * 1000 });
+      }
+      function frame() {
+        raf = 0;
+        if (!visible) return;
+        t++;
+        if (!inside && opts.idle && (t & 1)) { raf = requestAnimationFrame(frame); return; }
+        if (inside && tx !== null) {
+          if (px === null) { px = tx; py = ty; }
+          var nx = px + (tx - px) * 0.16, ny = py + (ty - py) * 0.16;
+          var dx = nx - px, dy = ny - py, d = Math.sqrt(dx * dx + dy * dy);
+          var steps = Math.min(2, Math.ceil(d / 24));
+          for (var k = 1; k <= steps; k++) {
+            var f = k / steps;
+            puff(px + dx * f + (Math.random() - 0.5) * 30, py + dy * f + (Math.random() - 0.5) * 30, dx * 0.03 + (Math.random() - 0.5) * 0.4, dy * 0.03 - 0.15, 46 + Math.random() * 30, 0.6);
+          }
+          px = nx; py = ny; idle = d > 0.4 ? 0 : idle + 1;
+        } else { idle++; }
+        if (opts.idle && idle > 90 && t % 26 === 0) puff(W * (0.15 + Math.random() * 0.7), H * (0.7 + Math.random() * 0.25), (Math.random() - 0.5) * 0.3, -0.3, 70, 0.5);
+        ctx.clearRect(0, 0, W, H);
+        for (var i = parts.length - 1; i >= 0; i--) {
+          var p = parts[i];
+          p.vx += Math.sin((p.y + p.seed) * 0.011 + t * 0.012) * 0.018;
+          p.vy -= 0.006;
+          p.vx *= 0.985; p.vy *= 0.985;
+          p.x += p.vx; p.y += p.vy;
+          p.life -= 0.0042;
+          if (p.life <= 0) { parts.splice(i, 1); continue; }
+          p.r = p.r0 + (1 - p.life) * 150;
+          var ease = p.life * p.life * (3 - 2 * p.life);
+          ctx.globalAlpha = Math.min(1, 0.15 * strength * p.a * ease * Math.min(1, (1 - p.life) * 6 + 0.1));
+          var R = p.r + 22;
+          ctx.drawImage(sprite, p.x - R, p.y - R, R * 2, R * 2);
+        }
+        ctx.globalAlpha = 1;
+        if (parts.length || inside || opts.idle) raf = requestAnimationFrame(frame);
+      }
+      function move(e) {
+        var r = host.getBoundingClientRect();
+        tx = e.clientX - r.left; ty = e.clientY - r.top; inside = true;
+        if (opts.onMove) opts.onMove(tx, ty);
+        if (!raf && visible) raf = requestAnimationFrame(frame);
+      }
+      function leave() { inside = false; px = null; py = null; if (opts.onLeave) opts.onLeave(); }
+      size();
+      if ('ResizeObserver' in window) new ResizeObserver(size).observe(host); else window.addEventListener('resize', size);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(frame); }).observe(host);
+      } else { visible = true; }
+      host.addEventListener('pointermove', move, { passive: true });
+      host.addEventListener('pointerleave', leave);
+    };
+    window.bthpWatch = window.bthpWatch || function (el) {
+      if (!el) return;
+      var vids = [].slice.call(el.querySelectorAll('video.bthp-v'));
+      function set(on) {
+        el.classList.toggle('bthp-off', !on);
+        vids.forEach(function (v) {
+          if (on && v.offsetParent !== null) {
+            if (v.getAttribute('preload') === 'none') v.setAttribute('preload', 'auto');
+            v.muted = true;
+            var pr = v.play();
+            if (pr && pr.catch) pr.catch(function () {});
+          } else if (!v.paused) { v.pause(); }
+        });
+      }
+      if (!('IntersectionObserver' in window)) { set(true); return; }
+      new IntersectionObserver(function (en) { set(en[0].isIntersecting); }, { rootMargin: '150px 0px' }).observe(el);
+      if (vids.length) window.addEventListener('resize', function () { set(!el.classList.contains('bthp-off')); });
+    };
+    document.querySelectorAll('[data-bthp-craft]:not([data-ready])').forEach(function (el) {
+      el.setAttribute('data-ready', '');
+      if (el.getAttribute('data-smoke') === 'true') window.bthpSmoke(el, el.querySelector('.bthp-smoke'), {});
+      window.bthpWatch(el);
+      var pick = el.querySelector('.bthp-crf__pick');
+      // Details: choosing one shows its photo in place of the trike.
+      var noteEls = el.querySelectorAll('[data-d]');
+      var dimgs = {};
+      el.querySelectorAll('[data-dimg]').forEach(function (fg) { dimgs[fg.getAttribute('data-dimg')] = fg; });
+      var back = el.querySelector('[data-back]');
+      var curD = null;
+      var goVersion = null;
+      function showDetail(d, keep) {
+        d = d === null ? null : String(d);
+        if (d !== null && !dimgs[d]) return;
+        if (!keep && d !== null && d === curD) d = null;
+        curD = d;
+        el.classList.toggle('has-detail', d !== null);
+        noteEls.forEach(function (n) {
+          var on = n.getAttribute('data-d') === d;
+          n.classList.toggle('is-on', on);
+          if (n.tagName === 'BUTTON') n.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        Object.keys(dimgs).forEach(function (k) {
+          var fg = dimgs[k];
+          if (k === d) {
+            fg.classList.add('is-shown');
+            requestAnimationFrame(function () { requestAnimationFrame(function () { if (curD === k) fg.classList.add('is-on'); }); });
+          } else if (fg.classList.contains('is-on')) {
+            fg.classList.remove('is-on');
+            setTimeout(function () { if (curD !== k) fg.classList.remove('is-shown'); }, 650);
+          }
+        });
+        if (back) back.hidden = d === null;
+      }
+      noteEls.forEach(function (n) {
+        if (n.tagName !== 'BUTTON') return;
+        var k = n.getAttribute('data-d');
+        n.addEventListener('click', function () { showDetail(k); });
+        n.addEventListener('pointerenter', function () { var fg = dimgs[k]; if (fg) fg.classList.add('is-shown'); }, { passive: true });
+      });
+      if (back) back.addEventListener('click', function () { showDetail(null); });
+      el.addEventListener('keydown', function (e) { if (e.key === 'Escape' && curD !== null) showDetail(null); });
+      document.addEventListener('shopify:block:select', function (e) {
+        if (!document.documentElement.contains(el) || !el.contains(e.target) || !e.target.hasAttribute('data-d')) return;
+        var f = e.target.getAttribute('data-for');
+        if (e.target.hidden && goVersion && /^\d+$/.test(f)) goVersion(parseInt(f, 10) - 1);
+        showDetail(e.target.getAttribute('data-d'), true);
+      });
+      // Finishes come from the Trike buy box on this page.
+      function start() {
+        var vbox = el.querySelector('[data-vers]');
+        if (vbox) { versions(vbox); return; }
+        var src = document.querySelector('[data-bthp-trike] [data-finishes]');
+        var items = [];
+        try { items = src ? JSON.parse(src.textContent) || [] : []; } catch (e) {}
+        if (!items.length) { if (pick) pick.style.display = 'none'; return; }
+        var row = el.querySelector('[data-swatches]');
+        var cur = -1, shown = -1;
+        var stage = el.querySelector('[data-f-stage]');
+        var sheen = el.querySelector('[data-f-sheen]');
+        function stageImg() {
+          var img = stage && stage.querySelector('.bthp-f-img');
+          if (!img && stage) {
+            img = document.createElement('img');
+            img.className = 'bthp-f-img'; img.alt = ''; img.width = 1000; img.height = 1000; img.loading = 'lazy';
+            var ph = stage.querySelector('.bthp-f-ph');
+            if (ph) ph.remove();
+            stage.insertBefore(img, stage.firstChild);
+          }
+          return img;
+        }
+        function syncMask(img) {
+          if (!sheen || !img) return;
+          function go() { var u = img.currentSrc || img.src; if (u) sheen.style.setProperty('--m', 'url("' + u + '")'); }
+          if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, { once: true });
+        }
+        function money(c) { return '$' + (c / 100).toFixed(2).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+        function select(i, user) {
+          if (curD !== null && (user || cur !== -1)) showDetail(null);
+          cur = i;
+          var it = items[i];
+          var img = stageImg();
+          if (img && it.img && i !== shown) { img.removeAttribute('srcset'); img.removeAttribute('sizes'); img.src = it.img; shown = i; }
+          if (img) img.alt = it.title;
+          syncMask(img);
+          var sel = el.querySelector('[data-f-sel]');
+          if (sel) sel.textContent = it.label + ' · ' + money(it.price);
+          if (row) [].forEach.call(row.children, function (b, k) { b.setAttribute('aria-checked', k === i ? 'true' : 'false'); });
+          if (stage && user) { stage.classList.remove('is-in'); void stage.offsetWidth; stage.classList.add('is-in'); }
+          if (user) document.dispatchEvent(new CustomEvent('bthp:finish', { detail: { id: it.id, source: el.getAttribute('data-bthp-craft') } }));
+        }
+        if (row) items.forEach(function (it, i) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'bthp-sw'; b.setAttribute('role', 'radio');
+          b.setAttribute('aria-label', it.label + ', ' + money(it.price));
+          var d = document.createElement('i'); d.style.background = it.swatch; b.appendChild(d);
+          b.addEventListener('click', function () { select(i, true); });
+          row.appendChild(b);
+        });
+        document.addEventListener('bthp:finish', function (e) {
+          if (!document.documentElement.contains(el) || !e.detail || e.detail.source === el.getAttribute('data-bthp-craft')) return;
+          for (var j = 0; j < items.length; j++) if (items[j].id === e.detail.id) { select(j, false); break; }
+        });
+        // Start on whichever finish the buy box is showing.
+        var on = document.querySelector('[data-bthp-trike] .bthp-sw[aria-checked="true"][data-i]');
+        var first = on ? parseInt(on.getAttribute('data-i'), 10) : 0;
+        if (!(first >= 0 && first < items.length)) first = 0;
+        select(first, false);
+      }
+      // Version circles (Signature, Mulliner, Folding...): each one shows its own photo.
+      function versions(box) {
+        var btns = box.querySelectorAll('[data-v]');
+        var stage = el.querySelector('[data-f-stage]');
+        var sheen = el.querySelector('[data-f-sheen]');
+        var tEl = box.querySelector('[data-v-title]'), sEl = box.querySelector('[data-v-sub]'), lEl = box.querySelector('[data-v-link]');
+        var cur = 0;
+        function img() {
+          var im = stage && stage.querySelector('.bthp-f-img');
+          if (!im && stage) {
+            im = document.createElement('img');
+            im.className = 'bthp-f-img'; im.alt = ''; im.width = 1000; im.height = 1000;
+            var ph = stage.querySelector('.bthp-f-ph'); if (ph) ph.remove();
+            stage.insertBefore(im, stage.firstChild);
+          }
+          return im;
+        }
+        function mask(im) {
+          if (!sheen || !im) return;
+          function go() { var u = im.currentSrc || im.src; if (u) sheen.style.setProperty('--m', 'url("' + u + '")'); }
+          if (im.complete && im.naturalWidth) go(); else im.addEventListener('load', go, { once: true });
+        }
+        function warm(b) {
+          if (b._w || !b.getAttribute('data-src')) return; b._w = 1;
+          var p = new Image(); p.sizes = '(max-width: 749px) 230px, 40vw'; p.srcset = b.getAttribute('data-srcset'); p.src = b.getAttribute('data-src');
+        }
+        function pickV(i, user) {
+          var b = btns[i]; if (!b) return;
+          if (curD !== null && user) showDetail(null);
+          if (i === cur && user) return;
+          cur = i;
+          [].forEach.call(btns, function (x, k) { x.setAttribute('aria-checked', k === i ? 'true' : 'false'); });
+          var name = b.querySelector('.bthp-crf__vt').textContent;
+          if (tEl) tEl.textContent = name;
+          if (sEl) sEl.textContent = b.getAttribute('data-sub') || '';
+          if (lEl) {
+            var u = b.getAttribute('data-url'), l = b.getAttribute('data-ll');
+            if (u && l) { lEl.href = u; lEl.textContent = l; lEl.hidden = false; } else lEl.hidden = true;
+          }
+          var src = b.getAttribute('data-src');
+          if (src) {
+            var im = img();
+            im.sizes = '(max-width: 749px) 230px, 40vw'; im.srcset = b.getAttribute('data-srcset'); im.src = src; im.alt = name;
+            mask(im);
+          }
+          if (stage && user) { stage.classList.remove('is-in'); void stage.offsetWidth; stage.classList.add('is-in'); }
+          swapNotes(String(i + 1), user);
+        }
+        // Details on the left and right follow the chosen circle.
+        var colL = el.querySelector('[data-col-l]'), colR = el.querySelector('[data-col-r]'), colS = el.querySelector('[data-col-s]');
+        var shownV = '1';
+        function swapNotes(v, anim) {
+          if (v === shownV || !colL || !colR) return;
+          shownV = v;
+          var list = [].slice.call(el.querySelectorAll('[data-col-l] [data-d], [data-col-r] [data-d]'));
+          list.sort(function (x, y) { return x.getAttribute('data-d') - y.getAttribute('data-d'); });
+          var vis = list.filter(function (n) { var f = n.getAttribute('data-for'); return f === 'all' || f === v; });
+          var half = Math.ceil(vis.length / 2);
+          list.forEach(function (n) { n.hidden = vis.indexOf(n) < 0; });
+          vis.forEach(function (n, k) { (k < half ? colL : colR).appendChild(n); });
+          list.forEach(function (n) { if (n.hidden) colL.appendChild(n); });
+          if (colS) {
+            [].forEach.call(colS.querySelectorAll('[data-d]'), function (n) { var f = n.getAttribute('data-for'); n.hidden = !(f === 'all' || f === v); });
+            colS.scrollLeft = 0;
+          }
+          if (anim) [colL, colR, colS].forEach(function (c) { if (!c) return; c.classList.remove('is-in'); void c.offsetWidth; c.classList.add('is-in'); });
+        }
+        goVersion = function (k) { pickV(k, false); };
+        [].forEach.call(btns, function (b, i) {
+          b.addEventListener('click', function () { pickV(i, true); });
+          b.addEventListener('pointerenter', function () { warm(b); });
+          b.addEventListener('focus', function () { warm(b); });
+        });
+        box.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+          if (!d) return; e.preventDefault();
+          var n = (cur + d + btns.length) % btns.length; pickV(n, true); btns[n].focus();
+        });
+        mask(stage && stage.querySelector('.bthp-f-img'));
+        el.addEventListener('shopify:block:select', function (e) {
+          for (var k = 0; k < btns.length; k++) if (btns[k].contains(e.target) || btns[k] === e.target) { pickV(k, true); break; }
+        });
+      }
+      if (el.querySelector('[data-vers]') || document.querySelector('[data-bthp-trike] [data-finishes]') || document.readyState !== 'loading') start();
+      else document.addEventListener('DOMContentLoaded', start);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BT The craft",
+  "tag": "section",
+  "class": "bthp-section",
+  "max_blocks": 30,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Small label", "default": "The craft" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every detail," },
+    { "type": "text", "id": "heading_italic", "label": "Heading (italic line)", "default": "a Bentley detail." },
+    { "type": "header", "content": "Product in the spotlight" },
+    { "type": "paragraph", "content": "Add a **Version** block for each version (Signature, Mulliner, Folding). Each one becomes a circle under the trike and shows its own photo. With no Version blocks, the circles follow the colours in the **BT Trike buy box** instead." },
+    { "type": "image_picker", "id": "image", "label": "Image if there's no buy box", "info": "Optional. Shown only when the page has no Trike buy box." },
+    { "type": "checkbox", "id": "show_picker", "label": "Show colour circles", "default": true, "info": "Used only when there are no Version blocks." },
+    { "type": "header", "content": "Detail photos" },
+    { "type": "text", "id": "more_label", "label": "Link under each detail", "default": "View the detail", "info": "Shown on details that have a photo." },
+    { "type": "text", "id": "back_label", "label": "Back button", "default": "Show the trike" },
+    { "type": "text", "id": "picker_label", "label": "Circles name (screen readers)", "default": "Choose a version" },
+    { "type": "checkbox", "id": "show_sheen", "label": "Light sweep over the product", "default": true },
+    { "type": "checkbox", "id": "smoke", "label": "Smoke trail behind the mouse", "default": true },
+    { "type": "header", "content": "Heading size" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The main heading only." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#1a1a1a" },
+    { "type": "color", "id": "ink", "label": "Text", "default": "#f8f4ef" },
+    { "type": "color", "id": "sand", "label": "Accent (sand)", "default": "#d9d0c5" }
+  ],
+  "blocks": [
+    {
+      "type": "version",
+      "name": "Version",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Name", "default": "Signature" },
+        { "type": "text", "id": "subtitle", "label": "Line under the circles", "default": "Eight Bentley colours", "info": "For example a price, \"From $599\", or a short description." },
+        { "type": "image_picker", "id": "image", "label": "Trike photo", "info": "Shown in the spotlight when this circle is chosen. A cut-out photo on a clear background works best." },
+        { "type": "image_picker", "id": "circle_image", "label": "Photo inside the circle", "info": "Optional. Uses the trike photo if empty." },
+        { "type": "color", "id": "circle_color", "label": "Circle colour", "default": "#2a2a2a", "info": "Shown behind the photo, or on its own if there's no photo." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "link_label", "label": "Link text", "default": "Shop this version" }
+      ]
+    },
+    {
+      "type": "note",
+      "name": "Detail",
+      "limit": 16,
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "I" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The winged B" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Bentley wings below the handlebar, and a \"B\" on the centre cap of every wheel." },
+        { "type": "image_picker", "id": "image", "label": "Photo when chosen", "info": "A close-up of this detail. Clicking the detail shows it in place of the trike. Square photos work best." },
+        { "type": "select", "id": "show_for", "label": "Show with", "default": "all", "options": [
+          { "value": "all", "label": "Every circle" },
+          { "value": "1", "label": "1st circle only" },
+          { "value": "2", "label": "2nd circle only" },
+          { "value": "3", "label": "3rd circle only" },
+          { "value": "4", "label": "4th circle only" }
+        ], "info": "Which version this detail belongs to. Circles are counted left to right, in the order of your Version blocks." }
+      ]
+    },
+    {
+      "type": "spec",
+      "name": "Number highlight",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "6-in-1" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Convertible design" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT The craft",
+      "blocks": [
+        { "type": "version", "settings": { "title": "Signature", "subtitle": "Eight Bentley colours", "circle_color": "#1f1f1f", "link_label": "Shop Signature" } },
+        { "type": "version", "settings": { "title": "Mulliner", "subtitle": "Hand-finished Mulliner editions", "circle_color": "#6b5a45", "link_label": "Shop Mulliner" } },
+        { "type": "version", "settings": { "title": "Folding", "subtitle": "Folds flat for travel", "circle_color": "#3a3f45", "link_label": "Shop Folding" } },
+        { "type": "note", "settings": { "number": "I", "title": "The winged B", "text": "Bentley wings below the handlebar, and a \"B\" on the centre cap of every wheel." } },
+        { "type": "note", "settings": { "number": "II", "title": "Wheels from the cars", "text": "Air wheels styled after Bentley's own, for a smooth ride over cobbles and kerbs." } },
+        { "type": "note", "settings": { "number": "III", "title": "Paint, matched", "text": "Every finish is matched to a Bentley exterior colour — from Onyx to Dragon Red." } },
+        { "type": "note", "settings": { "number": "IV", "title": "Cabin stitching", "text": "Coloured seats with contrast stitching, inspired by the interiors in Crewe." } },
+        { "type": "spec", "settings": { "value": "6-in-1", "label": "Convertible design" } },
+        { "type": "spec", "settings": { "value": "180°", "label": "Rotating seat" } },
+        { "type": "spec", "settings": { "value": "UPF 50", "label": "Waterproof canopy" } },
+        { "type": "spec", "settings": { "value": "5-point", "label": "Safety harness" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
