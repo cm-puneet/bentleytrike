@@ -1,0 +1,112 @@
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- render 'btf-style', s: section, colors: false -%}
+<script src="{{ 'bt-foldable.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign c = section.settings
+  assign sel = '#shopify-section-' | append: section.id
+-%}
+{%- style -%}
+  {%- if c.c_bg != blank %} {{ sel }} .btf-compare, {{ sel }} .btf-compare__table > .is-label, {{ sel }} .btf-compare__table > .is-blank:first-child { background: {{ c.c_bg }}; }{% endif %}
+  {%- if c.c_heading != blank %} {{ sel }} .btf-compare h2 { color: {{ c.c_heading }}; }{% endif %}
+  {%- if c.c_text != blank %} {{ sel }} .btf-compare__table > div:not(.is-hl) { color: {{ c.c_text }}; }{% endif %}
+  {%- if c.c_top != blank %} {{ sel }} .btf-compare__table > .is-top:not(.is-hl) { color: {{ c.c_top }}; }{% endif %}
+  {%- if c.c_label != blank %} {{ sel }} .btf-compare__table > .is-label:not(.is-hl) { color: {{ c.c_label }}; }{% endif %}
+  {%- if c.c_link != blank %} {{ sel }} .btf-compare__table > .is-top a { color: {{ c.c_link }}; }{% endif %}
+  {%- if c.c_line != blank %} {{ sel }} .btf-compare__table > div:not(.is-hl) { border-top-color: {{ c.c_line }}; }{% endif %}
+  {%- if c.c_hl_bg != blank %} {{ sel }} .btf-compare__table > .is-hl { background: {{ c.c_hl_bg }}; }{% endif %}
+  {%- if c.c_hl_text != blank %} {{ sel }} .btf-compare__table > .is-hl { color: {{ c.c_hl_text }}; }{% endif %}
+  {%- if c.c_btn_bg != blank %} {{ sel }} .btf-compare__cta .button { background: {{ c.c_btn_bg }}; border-color: {{ c.c_btn_bg }}; }{% endif %}
+  {%- if c.c_btn_text != blank %} {{ sel }} .btf-compare__cta .button { color: {{ c.c_btn_text }}; }{% endif %}
+  {%- if c.c_mbtn_bg != blank %} {{ sel }} .btf-compare__mobile-cta .button { background: {{ c.c_mbtn_bg }}; border-color: {{ c.c_mbtn_bg }}; }{% endif %}
+  {%- if c.c_mbtn_text != blank %} {{ sel }} .btf-compare__mobile-cta .button { color: {{ c.c_mbtn_text }}; }{% endif %}
+{%- endstyle -%}
+
+{%- comment -%} Column 1 is the product on this page (or a picked one), column 2 a picked product; their prices come from the products. {%- endcomment -%}
+{%- liquid
+  assign p1 = c.col1_product | default: product
+  assign p2 = c.col2_product
+  assign price1 = p1.selected_or_first_available_variant.price | money_without_trailing_zeros
+  if p2 != blank
+    assign price2 = p2.selected_or_first_available_variant.price | money_without_trailing_zeros
+  endif
+-%}
+<div class="btf btf-sand btf-section btf-anchor btf-compare" id="{{ section.settings.anchor | handleize }}">
+  <div class="container btf-compare__wrap">
+    <h2 class="h2" style="text-align: center; margin-block-end: var(--spacing-8)">{{ section.settings.heading | escape }}</h2>
+    <div class="btf-compare__scroll">
+      <div class="btf-compare__table">
+        <div class="is-top is-blank"></div>
+        <div class="is-top is-hl">{{ section.settings.col1 | default: p1.title | escape }}<span>{{ price1 }}</span></div>
+        <div class="is-top">{{ section.settings.col2 | default: p2.title | escape }}
+          {%- if p2 != blank -%}<a href="{{ p2.url }}">{{ price2 }}{% if section.settings.col2_link_label != blank %} · {{ section.settings.col2_link_label | escape }} →{% endif %}</a>{%- endif -%}
+        </div>
+        {%- if section.settings.price_label != blank -%}
+          <div class="is-label">{{ section.settings.price_label | escape }}</div>
+          <div class="is-hl">{{ price1 }}</div>
+          <div>{{ price2 }}</div>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <div class="is-label" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</div>
+          <div class="is-hl">{{ block.settings.a | escape }}</div>
+          <div>{{ block.settings.b | escape }}</div>
+        {%- endfor -%}
+        {%- if section.settings.cta != blank -%}
+          <div class="is-blank btf-compare__cta-pad"></div>
+          <div class="is-hl btf-compare__cta"><a class="button" href="#choose-finish">{{ section.settings.cta | escape }}</a></div>
+          <div class="is-blank btf-compare__cta-pad"></div>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if section.settings.cta != blank -%}
+      <div class="btf-compare__mobile-cta"><a class="button button--xl" href="#choose-finish">{{ section.settings.cta | escape }}</a></div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "BT: compare",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor ID", "default": "compare" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Which Bentley 6 in 1 is right for you?" },
+    { "type": "paragraph", "content": "Prices come from the products, so they follow any price change in admin." },
+    { "type": "text", "id": "col1", "label": "Column 1 (highlighted) name", "info": "Leave empty to use the product title", "default": "The Foldable 6 in 1" },
+    { "type": "product", "id": "col1_product", "label": "Column 1 product", "info": "Leave empty to use this page's product (its selected finish)" },
+    { "type": "text", "id": "col2", "label": "Column 2 name", "info": "Leave empty to use the product title", "default": "The Bentley 6 in 1" },
+    { "type": "product", "id": "col2_product", "label": "Column 2 product" },
+    { "type": "text", "id": "col2_link_label", "label": "Column 2 link label", "info": "Shown after its price, links to the product", "default": "View" },
+    { "type": "text", "id": "price_label", "label": "Price row label", "info": "Leave empty to hide the price row", "default": "Price" },
+    { "type": "text", "id": "cta", "label": "Button label", "info": "Scrolls to the finish picker", "default": "ADD TO CART" },
+    { "type": "header", "content": "Colors", "info": "Leave a color empty to use the theme color." },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#d9d0c5" },
+    { "type": "color", "id": "c_heading", "label": "Heading", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_top", "label": "Column titles", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_link", "label": "Column 2 price link", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_label", "label": "Row labels", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_text", "label": "Table text", "default": "#1a1a1a" },
+    { "type": "color", "id": "c_line", "label": "Row lines", "default": "#bcb5ab" },
+    { "type": "color", "id": "c_hl_bg", "label": "Highlighted column background", "default": "#00221c" },
+    { "type": "color", "id": "c_hl_text", "label": "Highlighted column text", "default": "#ffffff" },
+    { "type": "color", "id": "c_btn_bg", "label": "Button background", "default": "#f8f4ef", "info": "Button inside the highlighted column (desktop)" },
+    { "type": "color", "id": "c_btn_text", "label": "Button text", "default": "#00221c" },
+    { "type": "color", "id": "c_mbtn_bg", "label": "Mobile button background", "default": "#a83f2f", "info": "Button under the table on mobile" },
+    { "type": "color", "id": "c_mbtn_text", "label": "Mobile button text", "default": "#ffffff" },
+    {"type": "header", "content": "Typography"},
+    {"type": "select", "id": "t_heading_font", "label": "Heading font", "options": [{"value": "heading", "label": "Theme heading font"}, {"value": "body", "label": "Theme body font"}], "default": "heading"},
+    {"type": "range", "id": "t_heading_scale", "label": "Heading size", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100},
+    {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
+  ],
+  "blocks": [
+    {
+      "type": "row", "name": "Row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Row label" },
+        { "type": "text", "id": "a", "label": "Column 1" },
+        { "type": "text", "id": "b", "label": "Column 2" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "BT: compare" }]
+}
+{% endschema %}
