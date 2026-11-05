@@ -69,22 +69,30 @@ Supported variables
       </compare-at-price>
     {%- endif -%}
   {%- elsif line_item != blank -%}
+    {%- comment -%} show_order_discount (cart drawer): the line price also takes off its share of order-wide codes such as BF30. {%- endcomment -%}
+    {%- assign line_final_price = line_item.final_line_price -%}
+    {%- if show_order_discount -%}
+      {%- assign line_final_price = line_item.original_line_price -%}
+      {%- for allocation in line_item.discount_allocations -%}
+        {%- assign line_final_price = line_final_price | minus: allocation.amount -%}
+      {%- endfor -%}
+    {%- endif -%}
     {%- comment -%}
     --------------------------------------------------------------------------------------------------------------------
     LINE ITEM CASE (used on cart, order page...)
     --------------------------------------------------------------------------------------------------------------------
     {%- endcomment -%}
-    <sale-price class="{% if line_item.original_line_price > line_item.final_line_price %}{{ on_sale_price_classes }}{% else %}{{ regular_price_classes }}{% endif %}">
+    <sale-price class="{% if line_item.original_line_price > line_final_price %}{{ on_sale_price_classes }}{% else %}{{ regular_price_classes }}{% endif %}">
       <span class="sr-only">{{ 'product.price.sale_price' | t }}</span>
 
       {%- if settings.currency_code_enabled -%}
-        {{- line_item.final_line_price | money_with_currency -}}
+        {{- line_final_price | money_with_currency -}}
       {%- else -%}
-        {{- line_item.final_line_price | money -}}
+        {{- line_final_price | money -}}
       {%- endif -%}
     </sale-price>
 
-    {%- if line_item.original_line_price > line_item.final_line_price -%}
+    {%- if line_item.original_line_price > line_final_price -%}
       <compare-at-price class="{{ compare_at_price_classes }}">
         <span class="sr-only">{{ 'product.price.regular_price' | t }}</span>
 

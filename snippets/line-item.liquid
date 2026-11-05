@@ -11,6 +11,7 @@ Supported variables
 
 * line_item: the line item to render (required)
 * show_desktop_quantity: if set to true (for instance on cart drawer), the quantity is also shown on the line
+* show_order_discount: if set to true (cart drawer), the price also takes off the line's share of order-wide discounts
 {%- endcomment -%}
 
 {% liquid
@@ -45,7 +46,7 @@ Supported variables
         <p class="bold">{{ line_item.product.title | default: line_item.title }}</p>
       {%- endif -%}
 
-      {%- render 'price-list', line_item: line_item -%}
+      {%- render 'price-list', line_item: line_item, show_order_discount: show_order_discount -%}
     </div>
 
     {%- unless line_item.product.has_only_default_variant or line_item.gift_card -%}
