@@ -1519,6 +1519,16 @@
             "show_for": "2"
           }
         },
+        "note_3RL7dF": {
+          "type": "note",
+          "settings": {
+            "number": "II",
+            "title": "Wheels from the cars",
+            "text": "Equipped with high-gloss, mirror-polished alloy wheels featuring chrome-style.",
+            "image": "shopify://shop_images/Replica_Bentley_wheels.jpg",
+            "show_for": "3"
+          }
+        },
         "note_Pw9KKm": {
           "type": "note",
           "settings": {
@@ -1615,6 +1625,7 @@
         "note_dje9QB",
         "note_AdyHDF",
         "note_Bqtk4c",
+        "note_3RL7dF",
         "note_Pw9KKm",
         "note_nyQyyx",
         "note_QmA7G4",
