@@ -189,6 +189,7 @@
         },
         "product_variations_WFpMqc": {
           "type": "product_variations",
+          "disabled": true,
           "settings": {
             "varient_in_slider": true,
             "option_name": "COLOR",
@@ -208,6 +209,37 @@
               "mulliner-mandarin-bentley-6-in-1-stroller-trike"
             ],
             "selector_style": "variant_image"
+          }
+        },
+        "bt_finish_RWnXFC": {
+          "type": "bt_finish",
+          "settings": {
+            "show_heading": true,
+            "heading": "1. Choose your finish",
+            "show_name": true,
+            "show_labels": false,
+            "columns_desktop": 5,
+            "columns_mobile": 5,
+            "products": [
+              "onyx-black-bentley-stroller-trike",
+              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+              "bentley-mulliner-trike",
+              "fuscia-pink-bentley-stroller-trike",
+              "jetstream-blue-bentley-6-in-1-stroller-trike",
+              "spruce-green-6-in-1-stroller-trike",
+              "sequin-blue-bentley-stroller-trike",
+              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+              "mulliner-mandarin-bentley-6-in-1-stroller-trike",
+              "mulliner-celeste-bentley-6-in-1-stroller-trike",
+              "dragon-red-bentley-stroller-trike"
+            ],
+            "labels": "Onyx Black\nCentennial\nMulliner Gold\nFuchsia Pink\nJetstream Blue\nSpruce Green\nSequin Blue\nMulliner Cool Stone\nMulliner Mandarin\nMulliner Celeste\nDragon Red"
+          }
+        },
+        "bt_heading_RKE7yN": {
+          "type": "bt_heading",
+          "settings": {
+            "heading": "2. Choose your offer"
           }
         },
         "liquid_bVzUBe": {
@@ -322,6 +354,8 @@
         "offer_TtAFeJ",
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
+        "bt_finish_RWnXFC",
+        "bt_heading_RKE7yN",
         "liquid_bVzUBe",
         "quantity_selector",
         "text_q6Hc7E",
@@ -1912,7 +1946,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_ECEE8A": {
-          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "08cawi3nxdp4j"
           }
