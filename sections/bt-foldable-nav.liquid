@@ -1,0 +1,42 @@
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- render 'btf-style', s: section -%}
+<script src="{{ 'bt-foldable.js' | asset_url }}" defer></script>
+
+<btf-section-nav class="btf btf-nav" style="display: block">
+  <nav class="container" aria-label="{{ section.settings.label | escape }}">
+    <div class="btf-nav__links">
+      {%- for block in section.blocks -%}
+        <a href="#{{ block.settings.anchor | handleize }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</a>
+      {%- endfor -%}
+    </div>
+  </nav>
+</btf-section-nav>
+
+{% schema %}
+{
+  "name": "BT: section nav",
+  "class": "btf-nav-section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Accessible name", "default": "On this page" },
+    { "type": "paragraph", "content": "Each link jumps to the section with the matching anchor ID (set in that section's settings)." },
+    {"type": "header", "content": "Colors", "info": "Leave a color empty to use the theme color."},
+    {"type": "color", "id": "c_bg", "label": "Background", "default": "#f8f4ef"},
+    {"type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_accent", "label": "Accent", "default": "#a83f2f", "info": "Active link underline"},
+    {"type": "header", "content": "Typography"},
+    {"type": "select", "id": "t_heading_font", "label": "Heading font", "options": [{"value": "heading", "label": "Theme heading font"}, {"value": "body", "label": "Theme body font"}], "default": "heading"},
+    {"type": "range", "id": "t_heading_scale", "label": "Heading size", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100},
+    {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
+  ],
+  "blocks": [
+    {
+      "type": "link", "name": "Link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "OVERVIEW" },
+        { "type": "text", "id": "anchor", "label": "Anchor ID", "default": "overview" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "BT: section nav" }]
+}
+{% endschema %}
