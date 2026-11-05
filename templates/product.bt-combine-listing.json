@@ -199,6 +199,7 @@
         },
         "variant_picker": {
           "type": "variant_picker",
+          "disabled": true,
           "settings": {
             "hide_sold_out_variants": false,
             "varients_in_slider": true,
@@ -207,6 +208,25 @@
             "swatch_selector_style": "swatch",
             "variant_image_options": "Color",
             "size_chart_page": ""
+          }
+        },
+        "bt_finish_DjknTk": {
+          "type": "bt_finish",
+          "settings": {
+            "show_heading": true,
+            "heading": "1. Choose your finish",
+            "show_name": true,
+            "show_labels": false,
+            "columns_desktop": 5,
+            "columns_mobile": 5,
+            "products": [],
+            "labels": ""
+          }
+        },
+        "bt_heading_TtYdRb": {
+          "type": "bt_heading",
+          "settings": {
+            "heading": "2. Choose your offer"
           }
         },
         "quantity_selector": {
@@ -331,6 +351,8 @@
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
         "variant_picker",
+        "bt_finish_DjknTk",
+        "bt_heading_TtYdRb",
         "quantity_selector",
         "liquid_6cGiha",
         "text_q6Hc7E",
@@ -1731,7 +1753,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_99gyHT": {
-          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "vlgy6zzuljecp"
           }
