@@ -40,7 +40,7 @@
       <div class="v-stack gap-6 sm:gap-8">
         <div class="cart-drawer__line-items">
           {%- for line_item in cart.items -%}
-            {%- render 'line-item', line_item: line_item, show_desktop_quantity: true -%}
+            {%- render 'line-item', line_item: line_item, show_desktop_quantity: true, show_order_discount: true -%}
           {%- endfor -%}
         </div>
 

@@ -466,6 +466,17 @@ Supported variables
             {%- endif -%}
           </product-recommendations>
 
+        {%- when 'bt_heading' -%}
+          {%- if block.settings.heading != blank -%}
+            {{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+            <div class="btf" style="margin-block-end: -16px" {{ block.shopify_attributes }}>
+              <div class="btf-step__label"><span>{{ block.settings.heading | escape }}</span></div>
+            </div>
+          {%- endif -%}
+
+        {%- when 'bt_finish' -%}
+          {%- render 'bt-finish-picker', block: block, product: product -%}
+
         {%- when 'offer' -%}
           {%- if block.settings.title != blank or block.settings.content != blank -%}
             {%- render 'offer', block: block -%}
