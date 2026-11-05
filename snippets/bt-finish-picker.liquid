@@ -1,0 +1,80 @@
+{%- comment -%}
+  "BT: choose your finish" block for the theme's product section: the same finish tiles as the foldable buy box.
+  One tile per picked product (links to it); with no products picked, the product's own variants become the tiles.
+  - block: the bt_finish block
+{%- endcomment -%}
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bt-foldable.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign labels = block.settings.labels | newline_to_br | split: '<br />'
+  assign finish_name = product.title
+  unless product.has_only_default_variant
+    assign finish_name = variant.title
+  endunless
+-%}
+
+{%- capture finishes -%}
+  {%- for p in block.settings.products -%}
+    {%- assign label = labels[forloop.index0] | strip | default: p.title -%}
+    {%- if p.id == product.id -%}{%- assign finish_name = label -%}{%- endif -%}
+    <a class="btf-finish" href="{{ p.url }}" {% if p.id == product.id %}aria-current="true"{% endif %} title="{{ label | escape }}">
+      {%- if p.featured_media -%}
+        {%- render 'btf-image', image: p.featured_media.preview_image, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
+      {%- else -%}<span class="btf-placeholder"></span>{%- endif -%}
+      {%- if block.settings.show_labels -%}<span>{{ label | escape }}</span>{%- endif -%}
+    </a>
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if finishes == blank and product.has_only_default_variant == false -%}
+  {%- capture finishes -%}
+    {%- for v in product.variants -%}
+      {%- assign thumb = v.featured_image | default: product.featured_media.preview_image -%}
+      <a class="btf-finish" href="{{ v.url }}" {% if v.id == variant.id %}aria-current="true"{% endif %} {% unless v.available %}aria-disabled="true"{% endunless %} title="{{ v.title | escape }}">
+        {%- if thumb -%}
+          {%- render 'btf-image', image: thumb, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
+        {%- else -%}<span class="btf-placeholder"></span>{%- endif -%}
+        {%- if block.settings.show_labels -%}<span>{{ v.title | escape }}</span>{%- endif -%}
+      </a>
+    {%- endfor -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if finishes != blank -%}
+  {%- assign finish_count = finishes | split: 'class="btf-finish"' | size | minus: 1 -%}
+  {%- comment -%} Tiles per row for each screen size. All the tiles fit: no arrows. Arrow offset centres them on the image, as in the buy box. {%- endcomment -%}
+  <style>
+    {%- assign screens = 'min-width: 700px,max-width: 699px' | split: ',' -%}
+    {%- for screen in screens -%}
+      {%- assign per_row = block.settings.columns_desktop -%}
+      {%- if forloop.last -%}{%- assign per_row = block.settings.columns_mobile -%}{%- endif -%}
+      {%- assign gaps = per_row | minus: 1 | times: 8 -%}
+      @media screen and ({{ screen }}) {
+        #btf-finish-{{ block.id }} .btf-finishes--rail { grid-auto-columns: calc((100% - {{ gaps }}px) / {{ per_row }}); overflow-y: hidden; }
+        {%- if finish_count > per_row -%}
+          #btf-finish-{{ block.id }} .btf-arrow { margin-block-start: calc((100cqw - {{ gaps | plus: 86 }}px) / {{ per_row | times: 2 }} + 3px - 16px); }
+        {%- else -%}
+          #btf-finish-{{ block.id }} .btf-finish-rail { grid-template-columns: minmax(0, 1fr); }
+          #btf-finish-{{ block.id }} .btf-arrow { display: none; }
+        {%- endif -%}
+      }
+    {%- endfor -%}
+  </style>
+  <div class="btf btf-finish-block" id="btf-finish-{{ block.id }}" {{ block.shopify_attributes }}>
+    <div class="btf-step">
+      {%- assign show_heading = false -%}
+      {%- if block.settings.show_heading and block.settings.heading != blank -%}{%- assign show_heading = true -%}{%- endif -%}
+      {%- if show_heading or block.settings.show_name -%}
+        <div class="btf-step__label"><span>{% if show_heading %}{{ block.settings.heading | escape }}{% endif %}</span>{% if block.settings.show_name %}<span>{{ finish_name | escape }}</span>{% endif %}</div>
+      {%- endif -%}
+      <btf-finish-rail class="btf-finish-rail">
+        <button type="button" class="btf-arrow btf-arrow--sm" data-step="-1" aria-label="Previous finishes" disabled>{%- render 'icon' with 'chevron-left', width: 7, height: 11 -%}</button>
+        <div class="btf-finishes btf-finishes--rail"{% unless block.settings.show_labels %} style="padding-block-end: 4px"{% endunless %}>{{ finishes }}</div>
+        <button type="button" class="btf-arrow btf-arrow--sm" data-step="1" aria-label="More finishes">{%- render 'icon' with 'chevron-right', width: 7, height: 11 -%}</button>
+      </btf-finish-rail>
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <p class="text-xs" {{ block.shopify_attributes }}>BT: choose your finish: pick the finish products, or use it on a product with variants.</p>
+{%- endif -%}
