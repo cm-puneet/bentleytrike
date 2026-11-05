@@ -1,0 +1,1046 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "bt-foldable-main",
+      "blocks": {
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "text": "Folds with seat and canopy attached"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "text": "Six modes from 10 months to 6 years"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "text": "Diamond-quilted seat, 5-point harness, 2-position canopy"
+          }
+        },
+        "finish_1": {
+          "type": "finish",
+          "settings": {
+            "product": "black-bentley-foldable-tricycle",
+            "label": "Black",
+            "asset": ""
+          }
+        },
+        "finish_2": {
+          "type": "finish",
+          "settings": {
+            "product": "purple-bentley-foldable-tricycle",
+            "label": "Purple",
+            "asset": ""
+          }
+        },
+        "finish_3": {
+          "type": "finish",
+          "settings": {
+            "product": "gold-bentley-foldable-tricycle",
+            "label": "Gold",
+            "asset": ""
+          }
+        },
+        "finish_4": {
+          "type": "finish",
+          "settings": {
+            "product": "cool-stone-bentley-foldable-tricycle",
+            "label": "Cool Stone",
+            "asset": ""
+          }
+        },
+        "liquid_Kj9fgP": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'adb-ebf-offer-bianca', product: product, pill: 'BLACK FRIDAY SALE' %}"
+          }
+        },
+        "set_1": {
+          "type": "set",
+          "disabled": true,
+          "settings": {
+            "title": "Trike only",
+            "tag": "",
+            "description": "The Foldable 6 in 1 in [finish]",
+            "products": [],
+            "discount": 0
+          }
+        },
+        "set_2": {
+          "type": "set",
+          "disabled": true,
+          "settings": {
+            "title": "Trike + Kids Helmet",
+            "tag": "",
+            "description": "",
+            "products": [
+              "bentley-helmet-collection"
+            ],
+            "discount": 0
+          }
+        },
+        "set_3": {
+          "type": "set",
+          "disabled": true,
+          "settings": {
+            "title": "First Ride Set",
+            "tag": "",
+            "description": "Trike, Kids Helmet + Logo Projector",
+            "products": [
+              "bentley-helmet-collection",
+              "bentley-logo-light-projector-for-6-in-1-stroller-trike"
+            ],
+            "discount": 0
+          }
+        },
+        "trust_1": {
+          "type": "trust",
+          "settings": {
+            "title": "Official Bentley licence",
+            "text": "Designed with Bentley Motors"
+          }
+        },
+        "trust_2": {
+          "type": "trust",
+          "settings": {
+            "title": "Manufacturer warranty",
+            "text": "1–2 years, by region"
+          }
+        },
+        "trust_3": {
+          "type": "trust",
+          "disabled": true,
+          "settings": {
+            "title": "Free US shipping",
+            "text": "Dispatched in 1–2 days"
+          }
+        },
+        "trust_4": {
+          "type": "trust",
+          "settings": {
+            "title": "30-day returns",
+            "text": "Full refund if unused"
+          }
+        }
+      },
+      "block_order": [
+        "bullet_1",
+        "bullet_2",
+        "bullet_3",
+        "finish_1",
+        "finish_2",
+        "finish_3",
+        "finish_4",
+        "liquid_Kj9fgP",
+        "set_1",
+        "set_2",
+        "set_3",
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4"
+      ],
+      "settings": {
+        "gallery_source": "auto",
+        "media_limit": 8,
+        "first_label": "",
+        "gallery_1_asset": "",
+        "gallery_1_label": "FOLDED",
+        "gallery_2_asset": "",
+        "gallery_2_label": "",
+        "gallery_3_asset": "",
+        "gallery_3_label": "",
+        "gallery_4_asset": "",
+        "gallery_4_label": "",
+        "crop_images": true,
+        "main_bg": "",
+        "show_labels": true,
+        "badge": "New",
+        "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS",
+        "title_size": "h2",
+        "finish_heading": "1. CHOOSE YOUR FINISH",
+        "set_heading": "2. CHOOSE YOUR SET",
+        "set_note_off": "Add a set to save up to [percent]%.",
+        "set_note_on": "[percent]% set discount applied automatically in your cart.",
+        "addon_link": "Choose options",
+        "addon_included": "Included in this set",
+        "addon_auto_open": true,
+        "addon_done": "Done",
+        "show_stars": true,
+        "stars_anchor": "reviews",
+        "stars_label": "Read the reviews",
+        "show_cta": false,
+        "cta_label": "ADD TO CART",
+        "show_installments": true,
+        "show_stock": true,
+        "stock_text": "In stock · [count] available",
+        "stock_text_untracked": "In stock",
+        "theme_blocks_position": "after_finish",
+        "theme_blocks_heading": "2. CHOOSE YOUR OFFER",
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#1a1a1a",
+        "c_highlight": "#00221c",
+        "c_badge_bg": "#00221c",
+        "c_badge_text": "#ffffff",
+        "c_save_text": "#ffffff",
+        "c_selected": "#1a1a1a",
+        "c_card_bg": "#f8f4ef",
+        "c_btn_bg": "#a83f2f",
+        "c_btn_text": "#ffffff",
+        "c_accent": "#a83f2f",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_nav": {
+      "type": "bt-foldable-nav",
+      "blocks": {
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "label": "OVERVIEW",
+            "anchor": "overview"
+          }
+        },
+        "link_2": {
+          "type": "link",
+          "settings": {
+            "label": "THE ATELIER",
+            "anchor": "craft"
+          }
+        },
+        "link_3": {
+          "type": "link",
+          "settings": {
+            "label": "SIX STAGES",
+            "anchor": "stages"
+          }
+        },
+        "link_4": {
+          "type": "link",
+          "settings": {
+            "label": "REVIEWS",
+            "anchor": "reviews"
+          }
+        },
+        "link_5": {
+          "type": "link",
+          "settings": {
+            "label": "COMPARE",
+            "anchor": "compare"
+          }
+        },
+        "link_6": {
+          "type": "link",
+          "settings": {
+            "label": "GUARANTEE",
+            "anchor": "care"
+          }
+        },
+        "link_8": {
+          "type": "link",
+          "settings": {
+            "label": "DETAILS",
+            "anchor": "details"
+          }
+        },
+        "link_7": {
+          "type": "link",
+          "settings": {
+            "label": "FAQ",
+            "anchor": "faq"
+          }
+        }
+      },
+      "block_order": [
+        "link_1",
+        "link_2",
+        "link_3",
+        "link_4",
+        "link_5",
+        "link_6",
+        "link_8",
+        "link_7"
+      ],
+      "settings": {
+        "label": "On this page",
+        "c_bg": "#f8f4ef",
+        "c_text": "#1a1a1a",
+        "c_accent": "#a83f2f",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_stats": {
+      "type": "bt-foldable-stats",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "big": "Foldable",
+            "small": "seat and canopy stay attached"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "big": "6 in 1",
+            "small": "from 10 months to 6 years"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "big": "Official",
+            "small": "designed with Bentley Motors"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
+      "disabled": true,
+      "settings": {
+        "interval": 3,
+        "c_bg": "#000000",
+        "c_heading": "#ffffff",
+        "c_text": "#ffffff",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_overview": {
+      "type": "bt-foldable-overview",
+      "blocks": {
+        "mini_1": {
+          "type": "mini",
+          "settings": {
+            "big": "6 in 1",
+            "small": "One frame, every stage"
+          }
+        },
+        "mini_2": {
+          "type": "mini",
+          "settings": {
+            "big": "10 mo – 6 yrs",
+            "small": "Years of daily use"
+          }
+        }
+      },
+      "block_order": [
+        "mini_1",
+        "mini_2"
+      ],
+      "settings": {
+        "anchor": "overview",
+        "eyebrow": "THE FIRST HEIRLOOM",
+        "heading": "Arrive the way <em>they</em> will remember.",
+        "text": "<p>The same stitching, wheel design and paint names as the cars it is named after. Built to be pushed, pedalled and one day passed down.</p>",
+        "image_asset": "btf-purple-shade-3.jpg",
+        "image_alt": "Mother and toddler with the Purple Shade trike on a city street",
+        "fallback_media": 3,
+        "c_bg": "#d9d0c5",
+        "c_heading": "#000000",
+        "c_text": "#000000",
+        "c_eyebrow": "#a83f2f",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_atelier": {
+      "type": "bt-foldable-hotspots",
+      "blocks": {
+        "hotspot_1": {
+          "type": "hotspot",
+          "settings": {
+            "title": "Two-position canopy",
+            "body": "Piped like Bentley interior trim, with a hidden zip-open window so you can check on them mid-walk.",
+            "x": 62,
+            "y": 16,
+            "image_asset": "btf-hs-canopy.png"
+          }
+        },
+        "hotspot_2": {
+          "type": "hotspot",
+          "settings": {
+            "title": "Diamond-quilted seat",
+            "body": "Contrast-stitched quilting, a soft headrest, a 2-position backrest and a 5-point harness with a winged-B buckle.",
+            "x": 61,
+            "y": 31,
+            "image_asset": "btf-hs-seat.png"
+          }
+        },
+        "hotspot_3": {
+          "type": "hotspot",
+          "settings": {
+            "title": "Removable safety guard",
+            "body": "A padded bar that keeps little ones secure in the early stages and lifts away once they ride on their own.",
+            "x": 64,
+            "y": 50,
+            "image_asset": "btf-hs-guard.png"
+          }
+        },
+        "hotspot_4": {
+          "type": "hotspot",
+          "settings": {
+            "title": "Adjustable parent handle",
+            "body": "Three height positions, a Bentley cupholder and a quilted handle bag with a magnetic buckle.",
+            "x": 84,
+            "y": 23,
+            "image_asset": "btf-hs-handle.png"
+          }
+        },
+        "hotspot_5": {
+          "type": "hotspot",
+          "settings": {
+            "title": "B-badged wheels and foot brake",
+            "body": "A 12-inch front and 10-inch rear wheels with Bentley wheel design. Step on the right brake to stop, the left to release.",
+            "x": 75,
+            "y": 77,
+            "image_asset": "btf-hs-wheels.png"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_1",
+        "hotspot_2",
+        "hotspot_3",
+        "hotspot_4",
+        "hotspot_5"
+      ],
+      "settings": {
+        "anchor": "craft",
+        "eyebrow": "THE ATELIER",
+        "heading": "Five details, finished like the cars.",
+        "intro": "Designed in collaboration with Bentley Motors the perfect combination of elegance and function.",
+        "image_asset": "btf-hs-main.png",
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "c_accent": "#a83f2f",
+        "c_card_bg": "#ffffff",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_stages": {
+      "type": "bt-foldable-stages",
+      "blocks": {
+        "stage_1": {
+          "type": "stage",
+          "settings": {
+            "age": "10 MONTHS+",
+            "title": "Stroller",
+            "text": "Harness, guard and canopy on. You push.",
+            "asset": "btf-purple-shade-1.jpg",
+            "fallback_media": 0
+          }
+        },
+        "stage_2": {
+          "type": "stage",
+          "settings": {
+            "age": "18 MONTHS+",
+            "title": "Steer-assist",
+            "text": "They turn the bars. You steer.",
+            "asset": "btf-purple-shade-s1.jpg",
+            "fallback_media": 1
+          }
+        },
+        "stage_3": {
+          "type": "stage",
+          "settings": {
+            "age": "2 YEARS+",
+            "title": "First pedals",
+            "text": "Pedals engaged, handle still on.",
+            "image": "shopify://shop_images/BentleyFoldableStroller_TrikeBlackPushover.png",
+            "asset": "btf-purple-shade-3.jpg",
+            "fallback_media": 2
+          }
+        },
+        "stage_4": {
+          "type": "stage",
+          "settings": {
+            "age": "UP TO 6 YEARS",
+            "title": "Tricycle",
+            "text": "Handle and seat back off. Their ride.",
+            "image": "shopify://shop_images/BentleyFoldableStroller_Trike-Trike.png",
+            "asset": "btf-metamorphic.jpg",
+            "fallback_media": 3
+          }
+        }
+      },
+      "block_order": [
+        "stage_1",
+        "stage_2",
+        "stage_3",
+        "stage_4"
+      ],
+      "settings": {
+        "anchor": "stages",
+        "eyebrow": "HOW IT GROWS",
+        "heading": "From first walk to first solo ride",
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_fold": {
+      "type": "bt-foldable-fold",
+      "settings": {
+        "eyebrow": "SEE THE FOLD",
+        "open_label": "OPEN",
+        "open_heading": "Open, it rides like a stroller.",
+        "open_text": "Canopy, safety guard, 5-point harness, infant footrests and parent handle, ready for the first walk from 10 months.",
+        "open_image": "shopify://shop_images/BentleyFoldableStroller_TrikePurplePushover.png",
+        "open_asset": "btf-metamorphic.jpg",
+        "open_fallback": 0,
+        "folded_label": "FOLDED",
+        "folded_heading": "Closed, it rolls like luggage.",
+        "folded_text": "Seat, backrest and canopy stay attached when folded. Clip on the included travel wheels and it rolls behind you like a carry-on, then slips into its own storage bag. 9.67 kg (21.3 lb).",
+        "folded_image": "shopify://shop_images/BTFoldable.png",
+        "folded_asset": "btf-cool-crystal-folded.jpg",
+        "folded_fallback": 1,
+        "c_bg": "#d9d0c5",
+        "c_eyebrow": "#00221c",
+        "c_heading": "#00221c",
+        "c_text": "#00221c",
+        "c_tab_border": "#77827a",
+        "c_tab_text": "#00221c",
+        "c_tab_active_bg": "#00221c",
+        "c_tab_active_text": "#d9d0c5",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_testimonials": {
+      "type": "bt-foldable-testimonials",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Versatile, ergonomic and elegant",
+            "quote": "<p>Loved the utilitarian aspects of the trike. The small compartments and thoughtful modifications make it really useful on all sorts of trips.</p>",
+            "author": "Vedant S.",
+            "detail": ""
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Happy customer",
+            "quote": "<p>We really enjoy our Bentley trike. It has turned our daily walks into a cherished routine. Beyond its performance, it's a total head-turner with craftsmanship that truly stands out.</p>",
+            "author": "Raquel L.",
+            "detail": ""
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "A must-have stroller",
+            "quote": "<p>Absolutely love this product, so rich and classy! I get so many compliments. I wish I could afford a Bentley, but my daughter definitely can with this stroller!</p>",
+            "author": "Autumn R.",
+            "detail": ""
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "anchor": "reviews",
+        "eyebrow": "FROM THE OWNERS",
+        "heading": "What parents say",
+        "text": "Families on life with their Bentley Trike.",
+        "hide_from": 1,
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "c_accent": "#a83f2f",
+        "c_card_bg": "#d9d0c5",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "1793729955338a9d5b": {
+      "type": "apps",
+      "blocks": {
+        "okendo_reviews_widget_qB8aaY": {
+          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "{{product}}",
+            "widget_type": "reviews_widget"
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_widget_qB8aaY"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "background": "",
+        "background_gradient": "",
+        "text_color": ""
+      }
+    },
+    "btf_reviews": {
+      "type": "bt-foldable-reviews",
+      "blocks": {
+        "okendo_reviews_widget_VWLJfa": {
+          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "{{product}}",
+            "widget_type": "reviews_widget"
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_widget_VWLJfa"
+      ],
+      "disabled": true,
+      "settings": {
+        "anchor": "reviews",
+        "eyebrow": "FROM THE OWNERS",
+        "heading": "What parents say",
+        "always_widget": true,
+        "min_reviews": 1,
+        "write_heading": "Own a Bentley Foldable Trike?",
+        "write_text": "Tell other parents what you think. Be the first to review it.",
+        "write_label": "WRITE A REVIEW",
+        "subscriber_id": "68a6b46a-2297-4060-967c-6b2bc7f361f4",
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "c_btn_bg": "#1a1a1a",
+        "c_btn_text": "#1a1a1a",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_compare": {
+      "type": "bt-foldable-compare",
+      "blocks": {
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Ages",
+            "a": "10 mo – 6 yrs",
+            "b": "6 mo and up"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Into the car",
+            "a": "Folds flat, seat attached",
+            "b": "Partial disassembly"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Travel wheels + storage bag",
+            "a": "✓ Included",
+            "b": "✗"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Becomes a pedal trike",
+            "a": "✓ 6 modes",
+            "b": "✓ 6 modes"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "Bentley licence & detailing",
+            "a": "✓",
+            "b": "✓"
+          }
+        },
+        "row_7": {
+          "type": "row",
+          "settings": {
+            "label": "Colour options",
+            "a": "4 colours",
+            "b": "9+ colours"
+          }
+        }
+      },
+      "block_order": [
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "row_7"
+      ],
+      "settings": {
+        "anchor": "compare",
+        "heading": "Which Bentley 6 in 1 is right for you?",
+        "col1": "The Foldable 6 in 1",
+        "col1_product": "",
+        "col2": "The Bentley 6 in 1",
+        "col2_product": "bentley-6-in-1-stroller-trike",
+        "col2_link_label": "View",
+        "price_label": "Price",
+        "cta": "ADD TO CART",
+        "c_bg": "#d9d0c5",
+        "c_heading": "#1a1a1a",
+        "c_top": "#1a1a1a",
+        "c_link": "#1a1a1a",
+        "c_label": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_line": "#bcb5ab",
+        "c_hl_bg": "#00221c",
+        "c_hl_text": "#ffffff",
+        "c_btn_bg": "#f8f4ef",
+        "c_btn_text": "#00221c",
+        "c_mbtn_bg": "#a83f2f",
+        "c_mbtn_text": "#ffffff",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_guarantee": {
+      "type": "bt-foldable-guarantee",
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-shield",
+            "title": "Manufacturer Warranty",
+            "text": "1–2 years on materials and workmanship."
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-return",
+            "title": "30-Day Returns",
+            "text": "Unused and boxed? Full refund within 30 days."
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-customer-support",
+            "title": "Parent Care Team",
+            "text": "Real people, replying within one business day."
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-award-gift",
+            "title": "Genuine Bentley",
+            "text": "Made under licence from Bentley Motors."
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
+      "settings": {
+        "anchor": "care",
+        "heading": "Buy with confidence.",
+        "text": "Warranty, easy returns and real people behind every Foldable.",
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "c_accent": "#a83f2f",
+        "c_card_bg": "#f8f4ef",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_videos": {
+      "type": "bt-foldable-videos",
+      "blocks": {
+        "video_assembly": {
+          "type": "video",
+          "settings": {
+            "title": "Assembly",
+            "text": "Out of the box and ready to ride."
+          }
+        },
+        "video_transform": {
+          "type": "video",
+          "settings": {
+            "title": "Transformation",
+            "text": "From stroller to trike, step by step."
+          }
+        },
+        "video_fold": {
+          "type": "video",
+          "settings": {
+            "title": "Folding",
+            "text": "Fold it flat with the seat and canopy attached."
+          }
+        }
+      },
+      "block_order": [
+        "video_assembly",
+        "video_transform",
+        "video_fold"
+      ],
+      "settings": {
+        "anchor": "videos",
+        "eyebrow": "SEE IT IN ACTION",
+        "heading": "Assembly, transformation and folding",
+        "text": "",
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_details": {
+      "type": "bt-foldable-details",
+      "blocks": {
+        "description": {
+          "type": "description",
+          "settings": {
+            "title": "Product details"
+          }
+        },
+        "specs": {
+          "type": "detail",
+          "settings": {
+            "title": "Specifications",
+            "content": "<ul><li><strong>Assembled size:</strong> 32.5 × 20 × 41.5 in</li><li><strong>Weight:</strong> 9.67 kg (21.3 lb) net; 11.35 kg boxed</li><li><strong>Age:</strong> 10 to 72 months</li><li><strong>Child height:</strong> 72–115 cm</li><li><strong>Maximum load:</strong> 25 kg (55 lb), one rider at a time</li><li><strong>Modes:</strong> 6 in 1, from stroller to pedal trike</li></ul>"
+          }
+        },
+        "box": {
+          "type": "detail",
+          "settings": {
+            "title": "What's in the box",
+            "content": "<p>Pre-assembled base, seat and backrest, safety guard, infant footrests, push handle, canopy set, cupholder, quilted handle bag, tricycle-mode cap, rear B logos, tool and manual, plus a storage bag and travel wheels.</p>"
+          }
+        },
+        "care": {
+          "type": "detail",
+          "settings": {
+            "title": "Materials & care",
+            "content": "<p>Metal frame with PVC, PP, ABS and TPR parts. Wipe with a damp sponge or cloth; do not submerge it. Store it out of direct sunlight to protect the fabric.</p>"
+          }
+        },
+        "dl_manual": {
+          "type": "download",
+          "disabled": true,
+          "settings": {
+            "title": "Owner's manual",
+            "meta": "PDF",
+            "url": "https://cdn.shopify.com/s/files/1/0008/3368/3521/files/Bentley_Foldable_Tricycle_Assembly_User_Manual_3.pdf?v=1793298666"
+          }
+        },
+        "dl_assembly": {
+          "type": "download",
+          "settings": {
+            "title": "Assembly guide",
+            "meta": "PDF",
+            "url": "https://cdn.shopify.com/s/files/1/0008/3368/3521/files/Bentley_Foldable_Tricycle_Assembly_User_Manual_3.pdf?v=1793298666"
+          }
+        }
+      },
+      "block_order": [
+        "description",
+        "specs",
+        "box",
+        "care",
+        "dl_manual",
+        "dl_assembly"
+      ],
+      "settings": {
+        "anchor": "details",
+        "eyebrow": "THE DETAILS",
+        "heading": "Everything about your Foldable Trike",
+        "text": "",
+        "open_first": false,
+        "downloads_heading": "Manuals & guides",
+        "parts_heading": "Spare parts",
+        "parts_text": "Lost a cap or need a new wheel? Order replacement parts.",
+        "parts_link": "",
+        "parts_link_label": "Shop spare parts",
+        "c_bg": "rgba(0,0,0,0)",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "c_card_bg": "#d9d0c5",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_faq": {
+      "type": "bt-foldable-faq",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "What are the dimensions and weight?",
+            "answer": "<p>32.5 × 20 × 41.5 in assembled. Net weight 9.67 kg (21.3 lb); 11.35 kg boxed.</p>"
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "What age and size is it for?",
+            "answer": "<p>10 to 72 months, children 72–115 cm tall, up to 25 kg (55 lb). One rider at a time.</p>"
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "How do I take it in the car or on a trip?",
+            "answer": "<p>Fold it with the seat attached, clip on the included travel wheels and roll it like luggage. The included storage bag keeps it clean; unzip the canopy edge before bagging.</p>"
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I stop the pedals turning while I push?",
+            "answer": "<p>Yes. The pedal clutch in the centre of the front wheel switches the front free-wheel on, so the pedals stay still until your child is ready.</p>"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "What comes in the box?",
+            "answer": "<p>Pre-assembled base, seat and backrest, safety guard, infant footrests, push handle, canopy set, cupholder, quilted handle bag, tricycle-mode cap, rear B logos, tool and manual, plus a storage bag and travel wheels.</p>"
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "What is it made of, and how do I clean it?",
+            "answer": "<p>Metal frame with PVC, PP, ABS and TPR parts. Wipe with a damp sponge or cloth; do not submerge it. Store it out of direct sunlight to protect the fabric.</p>"
+          }
+        },
+        "question_7": {
+          "type": "question",
+          "settings": {
+            "question": "What does the warranty cover?",
+            "answer": "<p>Defects in materials and workmanship for 1–2 years by region. It does not cover normal wear, incorrect assembly, misuse, sun fading or commercial use.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5",
+        "question_6",
+        "question_7"
+      ],
+      "settings": {
+        "anchor": "faq",
+        "heading": "Questions, answered",
+        "text": "Still deciding? Talk to our parent care team. We reply within one business day.",
+        "button_label": "TALK TO US",
+        "button_link": "",
+        "c_bg": "rgba(0,0,0,0)",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_eyebrow": "#a83f2f",
+        "c_btn_bg": "#1a1a1a",
+        "c_btn_text": "#1a1a1a",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    },
+    "btf_related": {
+      "type": "bt-foldable-related",
+      "settings": {
+        "heading": "Complete the collection",
+        "products": [
+          "bentley-logo-light-projector-for-6-in-1-stroller-trike",
+          "bentley-balance-bikes",
+          "bentley-mulsanne-electric-ride-on-car-for-kids"
+        ],
+        "add_label": "QUICK ADD",
+        "added_label": "ADDED ✓",
+        "options_label": "CHOOSE OPTIONS",
+        "c_bg": "#f8f4ef",
+        "c_heading": "#1a1a1a",
+        "c_text": "#1a1a1a",
+        "c_card_bg": "",
+        "c_btn_bg": "#a83f2f",
+        "c_btn_text": "#a83f2f",
+        "t_heading_font": "heading",
+        "t_heading_scale": 100,
+        "t_text_scale": 100
+      }
+    }
+  },
+  "order": [
+    "main",
+    "btf_nav",
+    "btf_stats",
+    "btf_overview",
+    "btf_atelier",
+    "btf_stages",
+    "btf_fold",
+    "btf_testimonials",
+    "1793729955338a9d5b",
+    "btf_reviews",
+    "btf_compare",
+    "btf_guarantee",
+    "btf_videos",
+    "btf_details",
+    "btf_faq",
+    "btf_related"
+  ]
+}
