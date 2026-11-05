@@ -1,0 +1,46 @@
+{%- comment -%}
+  Per-section colours and type for the bt-foldable sections, from the shared "Colors" and "Typography" settings.
+  Empty colours keep the theme colours; 100% sizes keep the theme sizes. Only settings that are set write any CSS.
+  - s: the section
+  - colors: false to skip the colour settings (sections with their own colour rules)
+{%- endcomment -%}
+{%- liquid
+  assign c = s.settings
+  assign sel = '#shopify-section-' | append: s.id
+  assign hs = c.t_heading_scale | default: 100
+  assign ts = c.t_text_scale | default: 100
+  assign headings = ':is(h1, h2, h3, h4, h5, h6, .h0, .h1, .h2, .h3, .h4, .h5, .h6)'
+-%}
+{%- style -%}
+  {%- unless colors == false -%}
+    {%- if c.c_bg != blank %} {{ sel }} > .btf { background: {{ c.c_bg }}; }{% endif %}
+    {%- if c.c_text != blank %} {{ sel }} .btf { --btf-ink: {{ c.c_text.red }} {{ c.c_text.green }} {{ c.c_text.blue }}; color: {{ c.c_text }}; }{% endif %}
+    {%- if c.c_accent != blank %} {{ sel }} .btf { --btf-accent: {{ c.c_accent.red }} {{ c.c_accent.green }} {{ c.c_accent.blue }}; }{% endif %}
+    {%- if c.c_highlight != blank %} {{ sel }} .btf { --btf-green: {{ c.c_highlight.red }} {{ c.c_highlight.green }} {{ c.c_highlight.blue }}; }{% endif %}
+    {%- if c.c_heading != blank %} {{ sel }} {{ headings }} { color: {{ c.c_heading }}; }{% endif %}
+    {%- if c.c_eyebrow != blank %} {{ sel }} :is(.btf-eyebrow, .btf-buy__eyebrow) { color: {{ c.c_eyebrow }}; }{% endif %}
+    {%- if c.c_card_bg != blank %} {{ sel }} :is(.btf-quote, .btf-details__card, .btf-cells > div, .btf-trust > div, .btf-hs__panel, .btf-card img) { background: {{ c.c_card_bg }}; }{% endif %}
+    {%- if c.c_btn_bg != blank %}
+      {{ sel }} .button:not(.button--outline) { --button-background: {{ c.c_btn_bg.red }} {{ c.c_btn_bg.green }} {{ c.c_btn_bg.blue }} / var(--button-background-opacity, 1) !important; }
+      {{ sel }} .button--outline:not([aria-pressed="true"]) { --button-outline-color: {{ c.c_btn_bg.red }} {{ c.c_btn_bg.green }} {{ c.c_btn_bg.blue }} !important; }
+    {%- endif -%}
+    {%- if c.c_badge_bg != blank %} {{ sel }} .btf-buy__badges .badge { background: {{ c.c_badge_bg }}; }{% endif %}
+    {%- if c.c_badge_text != blank %} {{ sel }} .btf-buy__badges .badge { color: {{ c.c_badge_text }}; }{% endif %}
+    {%- if c.c_save_text != blank %} {{ sel }} .btf-save { color: {{ c.c_save_text }}; }{% endif %}
+    {%- if c.c_selected != blank %} {{ sel }} .btf-set:has(input:checked) { box-shadow: inset 0 0 0 2px {{ c.c_selected }}; } {{ sel }} .btf-finish[aria-current="true"] img { box-shadow: 0 0 0 2px rgb(var(--btf-page)), 0 0 0 3px {{ c.c_selected }}; }{% endif %}
+    {%- if c.c_btn_text != blank %} {{ sel }} .button:not(.button--outline) { --button-text-color: {{ c.c_btn_text.red }} {{ c.c_btn_text.green }} {{ c.c_btn_text.blue }} !important; } {{ sel }} .button--outline:not([aria-pressed="true"]) { color: {{ c.c_btn_text }} !important; }{% endif %}
+  {%- endunless -%}
+  {%- if c.t_heading_font == 'body' %} {{ sel }} {{ headings }} { font-family: var(--text-font-family); font-weight: var(--text-font-weight); }{% endif %}
+  {%- if hs != 100 -%}
+    {%- assign f = hs | divided_by: 100.0 -%}
+    {{ sel }} .btf { --btf-hs: {{ f }}; }
+    {%- for n in (1..6) %} {{ sel }} h{{ n }} { font-size: calc(var(--text-h{{ n }}) * {{ f }}); }{% endfor -%}
+    {%- for n in (0..6) %} {{ sel }} .h{{ n }} { font-size: calc(var(--text-h{{ n }}) * {{ f }}); }{% endfor -%}
+  {%- endif -%}
+  {%- if ts != 100 -%}
+    {%- assign f = ts | divided_by: 100.0 -%}
+    {%- assign sizes = 'xs,sm,base,lg' | split: ',' -%}
+    {{ sel }} .btf { --btf-ts: {{ f }}; font-size: calc(var(--text-base) * {{ f }}); }
+    {%- for n in sizes %} {{ sel }} .text-{{ n }} { font-size: calc(var(--text-{{ n }}) * {{ f }}); }{% endfor -%}
+  {%- endif -%}
+{%- endstyle -%}
