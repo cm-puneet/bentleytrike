@@ -7,6 +7,7 @@
   @param {number} [pct] - % off (default 30)
   @param {string} [car_handles] - Free car product handles, comma-separated (one button per car)
   @param {string} [after] - 'drawer', 'cart' or 'checkout' (default drawer)
+  @param {string} [pill] - Text of the tab on the top edge (default "BLACK FRIDAY SALE · CHOOSE YOUR OFFER"; '' hides it)
   @param {string} [extras] - Add-on product handles to show, comma-separated (default: the helmet + logo light projector)
   @param {string} [extras_title] - Heading of the add-on row (default "Complete the Bentley experience"; '' hides it)
 
@@ -87,7 +88,9 @@
       data-product-id="{{ first_p.id }}"
       data-recs-url="{{ routes.product_recommendations_url }}"
     >
-      <span class="bt-ebf__pill"><i></i>BLACK FRIDAY SALE · CHOOSE YOUR OFFER</span>
+      {%- assign pill_text = pill | default: 'BLACK FRIDAY SALE · CHOOSE YOUR OFFER' -%}
+      {%- if pill == '' -%}{%- assign pill_text = '' -%}{%- endif -%}
+      {%- if pill_text != '' -%}<span class="bt-ebf__pill"><i></i>{{ pill_text | escape }}</span>{%- endif -%}
 
       {%- if first_v -%}
         {%- comment -%} Hidden: holds the trike + prices. Follows the page's own colour picker if there is one. {%- endcomment -%}
@@ -100,7 +103,35 @@
             assign own_colors = true
           endif
         -%}
+        {%- comment -%}
+          The page's own trike. Its variants that aren't listed below (sold out, or a product outside trike_handles)
+          are added first, so the box follows the page instead of falling back to another trike.
+        {%- endcomment -%}
+        {%- liquid
+          assign page_p = nil
+          if product == blank and request.page_type == 'product'
+            assign page_handle = request.path | split: '/products/' | last | split: '/' | first
+            assign page_p = all_products[page_handle]
+          endif
+        -%}
         {%- capture ebf_opts -%}
+          {%- if page_p != blank -%}
+            {%- for v in page_p.variants -%}
+              {%- if v.available and trike_handles contains page_p.handle -%}{%- continue -%}{%- endif -%}
+              {%- assign d = v.price | times: pct | divided_by: 100.0 | round -%}
+              <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}"{% unless v.available %} data-soldout="true"{% endunless %}>{{ page_p.title | escape }}</option>
+            {%- endfor -%}
+          {%- endif -%}
+          {%- comment -%} A trike that isn't in trike_handles (e.g. the foldable trikes) is listed first, so the script keeps its own price. {%- endcomment -%}
+          {%- if product != blank and own_colors == false -%}
+            {%- unless trike_handles contains product.handle -%}
+              {%- for v in product.variants -%}
+                {%- unless v.available -%}{%- continue -%}{%- endunless -%}
+                {%- assign d = v.price | times: pct | divided_by: 100.0 | round -%}
+                <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" {% if v.id == first_v.id %}selected{% endif %}>{{ product.title | escape }}</option>
+              {%- endfor -%}
+            {%- endunless -%}
+          {%- endif -%}
           {%- for h in trike_handles -%}
             {%- if own_colors -%}
               {%- assign tp = product -%}
@@ -765,6 +796,20 @@
   .bt-ebf__atc[aria-busy='true'] {
     cursor: wait;
     opacity: 0.6;
+  }
+  .bt-ebf.is-sold .bt-ebf__atc {
+    width: 100%;
+    background: #5c5c5c;
+    color: #fff;
+    cursor: not-allowed;
+    filter: none;
+    opacity: 1;
+  }
+  .bt-ebf.is-sold .bt-ebf__actions {
+    display: block;
+  }
+  .bt-ebf.is-sold .bt-ebf__pay {
+    display: none;
   }
   .bt-ebf__atc-main {
     line-height: 1.2;
@@ -1525,7 +1570,7 @@
           var syncTheme = function () {
             if (!tSel) return;
             var scope = box.closest('.product-info, product-info, .shopify-section') || document;
-            var inp = scope.querySelector('form[action*="/cart/add"] [name="id"]');
+            var inp = scope.querySelector('form[action*="/cart/add"]:not([data-ebf-pay]) [name="id"]');
             if (!inp && scope !== document) {
               var bb = scope.querySelector('buy-buttons[form]');
               var f = bb && document.forms[bb.getAttribute('form')];
@@ -1576,6 +1621,11 @@
               var ti = q('[data-ebf-timg]');
               if (ti && o.dataset.img && ti.getAttribute('src') !== o.dataset.img) ti.setAttribute('src', o.dataset.img);
             }
+            var sold = !!(tSel && tSel.selectedOptions[0] && tSel.selectedOptions[0].dataset.soldout);
+            box.classList.toggle('is-sold', sold);
+            if (btn) btn.disabled = sold;
+            setText(lab, sold ? 'Sold out' : origLabel);
+            if (sold) return setText(sub, '');
             var subTxt = offer() === 'off' ? box.dataset.pct + '% off applied' : 'Free car included';
             var picked = box.querySelectorAll('[data-ebf-ex-add][aria-pressed="true"]');
             if (picked.length === 1) subTxt += ' + ' + (picked[0].getAttribute('data-short') || '1 extra');
@@ -1824,7 +1874,7 @@
 
           var running = false;
           var run = function (goCheckout) {
-            if (running || !tSel || !tSel.value) return;
+            if (running || !tSel || !tSel.value || box.classList.contains('is-sold')) return;
             running = true;
             showErr('');
             if (btn) btn.setAttribute('aria-busy', 'true');
