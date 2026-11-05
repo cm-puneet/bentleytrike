@@ -1496,7 +1496,7 @@
             "title": "The winged B",
             "text": "Bentley wings below the handlebar, and a \"B\" on the centre cap of every wheel.",
             "image": "shopify://shop_images/Signature_Emblem.png",
-            "show_for": "1"
+            "show_for": "all"
           }
         },
         "note_AdyHDF": {
@@ -1509,6 +1509,16 @@
             "show_for": "1"
           }
         },
+        "note_Bqtk4c": {
+          "type": "note",
+          "settings": {
+            "number": "II",
+            "title": "Wheels from the cars",
+            "text": "Equipped with high-gloss, mirror-polished alloy wheels featuring chrome-style.",
+            "image": "shopify://shop_images/Replica_Bentley_wheels.jpg",
+            "show_for": "2"
+          }
+        },
         "note_Pw9KKm": {
           "type": "note",
           "settings": {
@@ -1517,6 +1527,16 @@
             "text": "Engineered from high-durability composite with a textured grip surface to give small feet total confidence.",
             "image": "shopify://shop_images/Engineered_Pedals.png",
             "show_for": "1"
+          }
+        },
+        "note_nyQyyx": {
+          "type": "note",
+          "settings": {
+            "number": "III",
+            "title": "Anti-slip pedals",
+            "text": "Signature Bentley Mulliner metal sports pedals with anti-slip rubber inlays and machined alloy finishes.",
+            "image": "shopify://shop_images/footrest.jpg",
+            "show_for": "2"
           }
         },
         "note_QmA7G4": {
@@ -1529,6 +1549,16 @@
             "show_for": "1"
           }
         },
+        "note_h9KtJp": {
+          "type": "note",
+          "settings": {
+            "number": "IV",
+            "title": "Cabin comfort",
+            "text": "Bentley Double Diamond-quilted padding and an embroidered headrest bring first-class comfort to every ride.",
+            "image": "shopify://shop_images/5_Point_Safety_Harness_Firm_Safety_Guards.jpg",
+            "show_for": "2"
+          }
+        },
         "note_xxp3Qg": {
           "type": "note",
           "settings": {
@@ -1536,7 +1566,17 @@
             "title": "Essential bag",
             "text": "Crafted from premium, weather-resistant woven canvas—lightweight, easy to clean, and designed for everyday family essentials.",
             "image": "shopify://shop_images/Elegant_Essentials_Bag.png",
-            "show_for": "all"
+            "show_for": "1"
+          }
+        },
+        "note_nRdx67": {
+          "type": "note",
+          "settings": {
+            "number": "VI",
+            "title": "Leather Touchpoints",
+            "text": "Every grip wrapped in hand-stitched vegan leather for timeless comfort and elevated style.",
+            "image": "shopify://shop_images/Leather_touchpoints.png",
+            "show_for": "1"
           }
         },
         "spec_UfDNBp": {
@@ -1574,9 +1614,13 @@
         "version_Fw9z8m",
         "note_dje9QB",
         "note_AdyHDF",
+        "note_Bqtk4c",
         "note_Pw9KKm",
+        "note_nyQyyx",
         "note_QmA7G4",
+        "note_h9KtJp",
         "note_xxp3Qg",
+        "note_nRdx67",
         "spec_UfDNBp",
         "spec_aED89R",
         "spec_KncFeC",
