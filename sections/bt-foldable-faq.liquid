@@ -1,0 +1,56 @@
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- render 'btf-style', s: section -%}
+
+<div class="btf btf-faq btf-section btf-anchor" id="{{ section.settings.anchor | handleize }}">
+  <div class="container btf-faq__grid">
+    <div class="btf-faq__intro">
+      <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <div><a class="button button--outline" style="--button-outline-color: var(--text-primary)" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label | escape }}</a></div>
+      {%- endif -%}
+    </div>
+    <div>
+      {%- for block in section.blocks -%}
+        <details {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question | escape }}</summary>
+          <div class="prose btf-muted">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "BT: FAQ",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor ID", "default": "faq" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "TALK TO US" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    {"type": "header", "content": "Colors", "info": "Leave a color empty to use the theme color."},
+    {"type": "color", "id": "c_bg", "label": "Background", "default": "#ffffff"},
+    {"type": "color", "id": "c_heading", "label": "Headings", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_eyebrow", "label": "Eyebrow", "default": "#a83f2f"},
+    {"type": "color", "id": "c_btn_bg", "label": "Button", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_btn_text", "label": "Button text", "default": "#1a1a1a"},
+    {"type": "header", "content": "Typography"},
+    {"type": "select", "id": "t_heading_font", "label": "Heading font", "options": [{"value": "heading", "label": "Theme heading font"}, {"value": "body", "label": "Theme body font"}], "default": "heading"},
+    {"type": "range", "id": "t_heading_scale", "label": "Heading size", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100},
+    {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
+  ],
+  "blocks": [
+    {
+      "type": "question", "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "BT: FAQ" }]
+}
+{% endschema %}

@@ -1,0 +1,103 @@
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- render 'btf-style', s: section, colors: false -%}
+<script src="{{ 'bt-foldable.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign c = section.settings
+  assign sel = '#shopify-section-' | append: section.id
+-%}
+{%- style -%}
+  {{ sel }} .btf-fold { {% if c.c_bg != blank %}background: {{ c.c_bg }};{% endif %} {% if c.c_text != blank %}color: {{ c.c_text }};{% endif %} }
+  {%- if c.c_eyebrow != blank %} {{ sel }} .btf-eyebrow { color: {{ c.c_eyebrow }}; }{% endif %}
+  {%- if c.c_heading != blank %} {{ sel }} h2 { color: {{ c.c_heading }}; }{% endif %}
+  {%- if c.c_tab_border != blank %} {{ sel }} .btf-fold__tabs { box-shadow: inset 0 0 0 1px {{ c.c_tab_border }}; }{% endif %}
+  {%- if c.c_tab_text != blank %} {{ sel }} .btf-fold__tabs label { color: {{ c.c_tab_text }}; }{% endif %}
+  {{ sel }} .btf-fold:has(.btf-fold__r0:checked) label[data-i="0"], {{ sel }} .btf-fold:has(.btf-fold__r1:checked) label[data-i="1"] { background: {{ c.c_tab_active_bg | default: 'rgb(var(--btf-green))' }}; color: {{ c.c_tab_active_text | default: 'rgb(var(--btf-sand))' }}; }
+{%- endstyle -%}
+
+{%- comment -%} Open / folded toggle is pure CSS (radio + :has), no script. {%- endcomment -%}
+<div class="btf btf-sand btf-section btf-fold">
+  <input type="radio" class="btf-fold__r0 btf-sr" id="btf-fold-{{ section.id }}-0" name="btf-fold-{{ section.id }}" checked aria-label="{{ section.settings.open_label | escape }}">
+  <input type="radio" class="btf-fold__r1 btf-sr" id="btf-fold-{{ section.id }}-1" name="btf-fold-{{ section.id }}" aria-label="{{ section.settings.folded_label | escape }}">
+  <div class="container btf-split">
+    {%- for i in (0..1) -%}
+      {%- liquid
+        if i == 0
+          assign heading = section.settings.open_heading
+          assign text = section.settings.open_text
+          assign img = section.settings.open_image | default: product.media[section.settings.open_fallback].preview_image
+          assign asset = section.settings.open_asset
+          assign video = section.settings.open_video
+          if section.settings.open_image != blank
+            assign asset = ''
+          endif
+        else
+          assign heading = section.settings.folded_heading
+          assign text = section.settings.folded_text
+          assign img = section.settings.folded_image | default: product.media[section.settings.folded_fallback].preview_image
+          assign asset = section.settings.folded_asset
+          assign video = section.settings.folded_video
+          if section.settings.folded_image != blank
+            assign asset = ''
+          endif
+        endif
+      -%}
+      <div class="btf-fold__panel btf-fold__panel--{{ i }}">
+        <div class="btf-split__text">
+          {%- if section.settings.eyebrow != blank -%}<div class="btf-eyebrow btf-eyebrow--rule">{{ section.settings.eyebrow | escape }}</div>{%- endif -%}
+          <h2 class="h1">{{ heading | escape }}</h2>
+          <p>{{ text | escape }}</p>
+          <div class="btf-fold__tabs">
+            <label for="btf-fold-{{ section.id }}-0" data-i="0">{{ section.settings.open_label | escape }}</label>
+            <label for="btf-fold-{{ section.id }}-1" data-i="1">{{ section.settings.folded_label | escape }}</label>
+          </div>
+        </div>
+        {%- if asset != blank -%}{%- assign img = nil -%}{%- endif -%}
+        {%- if video != blank -%}
+          <div class="btf-video">{{- video | video_tag: muted: true, loop: true, playsinline: true, preload: 'none', image_size: '1200x', class: 'btf-autovideo' -}}</div>
+        {%- elsif img or asset != blank -%}
+          {%- render 'btf-image', image: img, asset: asset, widths: '500,800,1200', sizes: '(min-width: 1000px) 50vw, 100vw', alt: heading -%}
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "BT: see the fold",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "SEE THE FOLD" },
+    { "type": "header", "content": "Open" },
+    { "type": "text", "id": "open_label", "label": "Tab label", "default": "OPEN" },
+    { "type": "text", "id": "open_heading", "label": "Heading", "default": "Open, it rides like a stroller." },
+    { "type": "textarea", "id": "open_text", "label": "Text" },
+    { "type": "image_picker", "id": "open_image", "label": "Image" },
+    { "type": "text", "id": "open_asset", "label": "Design file", "info": "Used when no image is picked. Clear it to use the product images.", "default": "btf-metamorphic.jpg" },
+    { "type": "video", "id": "open_video", "label": "Video", "info": "Plays instead of the image (muted, loops while in view)" },
+    { "type": "range", "id": "open_fallback", "label": "If no image, use product image #", "min": 0, "max": 10, "step": 1, "default": 0 },
+    { "type": "header", "content": "Folded" },
+    { "type": "text", "id": "folded_label", "label": "Tab label", "default": "FOLDED" },
+    { "type": "text", "id": "folded_heading", "label": "Heading", "default": "Closed, it rolls like luggage." },
+    { "type": "textarea", "id": "folded_text", "label": "Text" },
+    { "type": "image_picker", "id": "folded_image", "label": "Image" },
+    { "type": "text", "id": "folded_asset", "label": "Design file", "info": "Used when no image is picked. Clear it to use the product images.", "default": "btf-cool-crystal-folded.jpg" },
+    { "type": "video", "id": "folded_video", "label": "Video", "info": "E.g. the folding video. Plays instead of the image (muted, loops while in view)" },
+    { "type": "range", "id": "folded_fallback", "label": "If no image, use product image #", "min": 0, "max": 10, "step": 1, "default": 1 },
+    { "type": "header", "content": "Colors", "info": "Leave a color empty to use the theme color." },
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#d9d0c5" },
+    { "type": "color", "id": "c_eyebrow", "label": "Eyebrow", "default": "#00221c" },
+    { "type": "color", "id": "c_heading", "label": "Heading", "default": "#00221c" },
+    { "type": "color", "id": "c_text", "label": "Text", "default": "#00221c" },
+    { "type": "color", "id": "c_tab_border", "label": "Toggle border", "default": "#77827a" },
+    { "type": "color", "id": "c_tab_text", "label": "Toggle text", "default": "#00221c" },
+    { "type": "color", "id": "c_tab_active_bg", "label": "Selected toggle background", "default": "#00221c" },
+    { "type": "color", "id": "c_tab_active_text", "label": "Selected toggle text", "default": "#d9d0c5" },
+    {"type": "header", "content": "Typography"},
+    {"type": "select", "id": "t_heading_font", "label": "Heading font", "options": [{"value": "heading", "label": "Theme heading font"}, {"value": "body", "label": "Theme body font"}], "default": "heading"},
+    {"type": "range", "id": "t_heading_scale", "label": "Heading size", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100},
+    {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
+  ],
+  "presets": [{ "name": "BT: see the fold" }]
+}
+{% endschema %}
