@@ -7,7 +7,7 @@
   @param {number} [pct] - % off (default 30)
   @param {string} [car_handles] - Free car product handles, comma-separated (one button per car)
   @param {string} [after] - 'drawer', 'cart' or 'checkout' (default drawer)
-  @param {string} [pill] - Text of the tab on the top edge (default "BLACK FRIDAY SALE · CHOOSE YOUR OFFER"; '' hides it)
+  @param {string} [pill] - Text of the tab on the top edge (default "BLACK FRIDAY SALE"; '' hides it)
   @param {string} [extras] - Add-on product handles to show, comma-separated (default: the helmet + logo light projector)
   @param {string} [extras_title] - Heading of the add-on row (default "Complete the Bentley experience"; '' hides it)
 
@@ -88,7 +88,7 @@
       data-product-id="{{ first_p.id }}"
       data-recs-url="{{ routes.product_recommendations_url }}"
     >
-      {%- assign pill_text = pill | default: 'BLACK FRIDAY SALE · CHOOSE YOUR OFFER' -%}
+      {%- assign pill_text = pill | default: 'BLACK FRIDAY SALE' -%}
       {%- if pill == '' -%}{%- assign pill_text = '' -%}{%- endif -%}
       {%- if pill_text != '' -%}<span class="bt-ebf__pill"><i></i>{{ pill_text | escape }}</span>{%- endif -%}
 
