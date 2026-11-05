@@ -14,7 +14,6 @@
       "blocks": {
         "image_XiWCHQ": {
           "type": "image",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/BT_CA_-_HP_2_4.png",
             "mobile_image": "shopify://shop_images/Bentley_CA_-_Mobile.png",
@@ -38,6 +37,7 @@
         },
         "image_GwV6Xh": {
           "type": "image",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/BT_CA_-_HP_2_4.png",
             "mobile_image": "shopify://shop_images/Bentley_CA_-_Mobile.png",
@@ -48,7 +48,7 @@
             "title": "The Bentley Kids Collection",
             "heading_tag": "h2",
             "button_text": "SHOP NOW",
-            "button_link": "shopify://pages/bentley-collection",
+            "button_link": "shopify://pages/the-bentley-trike-hidden-sale",
             "text_color": "#ffffff",
             "button_background": "#a83f2f",
             "button_text_color": "#ffffff",
