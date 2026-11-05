@@ -1,0 +1,102 @@
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- render 'btf-style', s: section -%}
+
+{%- comment -%}
+  Okendo reviews. With enough reviews (count from Okendo's okendo.ReviewCount product metafield) the full widget shows (add it as an app block).
+  Before that, only a "Write a review" bar shows; it links to Okendo's own review form, the same link as the widget's button.
+  Reviews shared from an Okendo product group don't count in that metafield: "Always show the reviews widget" covers them.
+{%- endcomment -%}
+{%- assign review_count = product.metafields.okendo.ReviewCount.value | default: 0 -%}
+{%- liquid
+  comment
+    Grouped reviews: the product's own count stays 0, so the page asks Okendo (same public API as its widget) and swaps:
+    reviews found -> the widget shows and the testimonials hide; none -> the Write a review bar and testimonials stay.
+  endcomment
+  assign check = false
+  if section.settings.always_widget and review_count < section.settings.min_reviews
+    assign check = true
+  endif
+-%}
+{%- if review_count >= section.settings.min_reviews or check -%}
+  {%- comment -%} In the theme editor the widget always shows (Okendo fills it with demo reviews there), so it can be seen and styled. {%- endcomment -%}
+  <div class="btf btf-section btf-anchor" {% if check %}{% unless request.design_mode %}hidden{% endunless %} data-btf-reviews-widget{% else %}id="{{ section.settings.anchor | handleize }}"{% endif %}>
+    <div class="container">
+      <div class="btf-head">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}<div class="btf-eyebrow">{{ section.settings.eyebrow | escape }}</div>{%- endif -%}
+          <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+        </div>
+      </div>
+      {%- for block in section.blocks -%}
+        {%- render block -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+{%- if review_count < section.settings.min_reviews and section.settings.subscriber_id != blank -%}
+  <div class="btf btf-anchor" id="{{ section.settings.anchor | handleize }}-write" {% if check %}data-btf-reviews-write{% endif %}>
+    <div class="container">
+      <div class="btf-write-review">
+        <div>
+          <span class="h5">{{ section.settings.write_heading | escape }}</span>
+          {%- if section.settings.write_text != blank -%}<p class="text-sm btf-muted">{{ section.settings.write_text | escape }}</p>{%- endif -%}
+        </div>
+        <a class="button button--outline" style="--button-outline-color: var(--text-primary)" href="https://okendo.reviews/?subscriberId={{ section.settings.subscriber_id | url_encode }}&productId=shopify-{{ product.id }}&locale={{ request.locale.iso_code }}&okeChannel=reviews-widget-write-review-button" target="_blank" rel="noopener">
+          {{- section.settings.write_label | escape -}}
+        </a>
+      </div>
+      {%- if request.design_mode -%}<p class="text-xs btf-muted">Editor only: {% if check %}customers see the reviews above once Okendo has reviews for this product (including grouped ones); until then they see this bar and the testimonials.{% else %}the full reviews widget shows here once this product has {{ section.settings.min_reviews }} or more reviews.{% endif %}</p>{%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if check and section.settings.subscriber_id != blank -%}
+  <script>
+    (() => {
+      const root = document.getElementById('shopify-section-{{ section.id }}');
+      fetch('https://api.okendo.io/v1/stores/{{ section.settings.subscriber_id | url_encode }}/products/shopify-{{ product.id }}/review_aggregate')
+        .then((r) => r.json())
+        .then((d) => {
+          const a = d.reviewAggregate || {};
+          if (!((a.ratingAndReviewCount || a.reviewCount || 0) > 0)) return;
+          const widget = root.querySelector('[data-btf-reviews-widget]'), write = root.querySelector('[data-btf-reviews-write]');
+          // The testimonials give up the anchor, so "Reviews" links land on the real reviews.
+          document.querySelectorAll('[data-btf-testimonials]').forEach((t) => { t.hidden = true; t.removeAttribute('id'); });
+          if (write) write.hidden = true;
+          widget.id = {{ section.settings.anchor | handleize | json }};
+          widget.hidden = false;
+        })
+        .catch(() => {});
+    })();
+  </script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "BT: reviews",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor ID", "default": "reviews" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FROM THE OWNERS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews" },
+    { "type": "checkbox", "id": "always_widget", "label": "Always show the reviews widget", "info": "Turn on when the reviews come from an Okendo product group (the product's own count stays 0). The page then asks Okendo: with reviews, the widget replaces the testimonials; without, the Write a review bar and testimonials show", "default": false },
+    { "type": "range", "id": "min_reviews", "label": "Show the full reviews from", "info": "Below this number of reviews only the Write a review bar shows", "min": 1, "max": 10, "step": 1, "unit": "rev", "default": 1 },
+    { "type": "header", "content": "Write a review bar" },
+    { "type": "text", "id": "write_heading", "label": "Heading", "default": "Own a Bentley Foldable Trike?" },
+    { "type": "text", "id": "write_text", "label": "Text", "default": "Tell other parents what you think. Be the first to review it." },
+    { "type": "text", "id": "write_label", "label": "Button label", "default": "WRITE A REVIEW" },
+    { "type": "text", "id": "subscriber_id", "label": "Okendo subscriber ID", "info": "From Okendo; it's in the link of Okendo's own Write a Review button", "default": "b2e3f2f2-5224-4a4f-9f00-aaac32a4f44b" },
+    {"type": "header", "content": "Colors", "info": "Leave a color empty to use the theme color."},
+    {"type": "color", "id": "c_bg", "label": "Background", "default": "#f8f4ef"},
+    {"type": "color", "id": "c_heading", "label": "Headings", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_eyebrow", "label": "Eyebrow", "default": "#a83f2f"},
+    {"type": "color", "id": "c_btn_bg", "label": "Button", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_btn_text", "label": "Button text", "default": "#1a1a1a"},
+    {"type": "header", "content": "Typography"},
+    {"type": "select", "id": "t_heading_font", "label": "Heading font", "options": [{"value": "heading", "label": "Theme heading font"}, {"value": "body", "label": "Theme body font"}], "default": "heading"},
+    {"type": "range", "id": "t_heading_scale", "label": "Heading size", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100},
+    {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "BT: reviews" }]
+}
+{% endschema %}
