@@ -1,0 +1,46 @@
+{%- comment -%}
+  Responsive image for the bt-foldable sections. Uses the editor-picked image if set, otherwise a design image stored as a theme asset.
+  - image: image object (optional)
+  - asset: theme asset file name, e.g. btf-metamorphic.jpg (optional)
+  - widths: comma list of widths, sizes, loading, priority, alt
+{%- endcomment -%}
+{%- if image != blank -%}
+  {{- image | image_url: width: 1800 | image_tag: widths: widths, sizes: sizes, loading: loading, fetchpriority: priority, alt: alt -}}
+{%- elsif asset != blank -%}
+  {%- liquid
+    case asset
+      when 'btf-hidden-depths.jpg'
+        assign w = 1600
+        assign h = 893
+      when 'btf-purple-shade-1.jpg', 'btf-purple-shade-3.jpg'
+        assign w = 1275
+        assign h = 1600
+      when 'btf-hs-main.png'
+        assign w = 1632
+        assign h = 2048
+      when 'btf-hs-canopy.png', 'btf-hs-seat.png', 'btf-hs-guard.png', 'btf-hs-handle.png', 'btf-hs-wheels.png'
+        assign w = 1600
+        assign h = 1000
+      when 'btf-purple-shade-s1.jpg'
+        assign w = 1289
+        assign h = 1600
+      else
+        assign w = 1067
+        assign h = 1600
+    endcase
+    assign ws = widths | split: ','
+    assign srcset = ''
+    for x in ws
+      assign n = x | plus: 0
+      if n <= w
+        assign size = x | append: 'x'
+        capture entry
+          echo asset | asset_img_url: size | append: ' ' | append: x | append: 'w, '
+        endcapture
+        assign srcset = srcset | append: entry
+      endif
+    endfor
+    assign srcset = srcset | strip | remove_last: ','
+  -%}
+  <img src="{{ asset | asset_img_url: '1000x' }}" srcset="{{ srcset }}" sizes="{{ sizes }}" width="{{ w }}" height="{{ h }}" loading="{{ loading | default: 'lazy' }}" {% if priority == 'high' %}fetchpriority="high"{% endif %} alt="{{ alt | escape }}">
+{%- endif -%}
