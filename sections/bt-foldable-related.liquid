@@ -1,0 +1,63 @@
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- render 'btf-style', s: section -%}
+<script src="{{ 'bt-foldable.js' | asset_url }}" defer></script>
+
+{%- if section.settings.products.count > 0 -%}
+<div class="btf btf-section">
+  <div class="container">
+    <h2 class="h2" style="margin-block-end: var(--spacing-8)">{{ section.settings.heading | escape }}</h2>
+    <div class="btf-related">
+      {%- for p in section.settings.products -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        <div class="btf-card">
+          <a href="{{ p.url }}">
+            {%- if p.featured_media -%}
+              {{- p.featured_media.preview_image | image_url: width: 600 | image_tag: widths: '300,450,600', sizes: '(min-width: 1000px) 25vw, 90vw', loading: 'lazy', alt: p.title | escape -}}
+            {%- endif -%}
+            <span class="bold text-sm">{{ p.title | escape }}</span>
+          </a>
+          {%- assign r = p.metafields.reviews.rating.value -%}
+          {%- if r != blank -%}
+            <span class="text-xs btf-rating"><span class="btf-rating__stars">{%- render 'icon' with 'rating-star', width: 12, height: 12 -%}</span>{{ r.rating | round: 1 }} ({{ p.metafields.reviews.rating_count.value }})</span>
+          {%- endif -%}
+          <div class="btf-card__row">
+            <span class="text-lg bold">{{ v.price | money }}</span>
+            {%- if v.available and p.has_only_default_variant -%}
+              <button type="button" class="button button--outline button--sm" data-btf-quick-add="{{ v.id }}" data-added-label="{{ section.settings.added_label | escape }}" aria-pressed="false">{{ section.settings.add_label | escape }}</button>
+            {%- elsif v.available -%}
+              <a class="button button--outline button--sm" href="{{ p.url }}">{{ section.settings.options_label | escape }}</a>
+            {%- else -%}
+              <span class="text-sm btf-muted">{{ 'product.general.sold_out_button' | t }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "BT: Complete the set",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the collection" },
+    { "type": "product_list", "id": "products", "label": "Products", "limit": 4 },
+    { "type": "text", "id": "add_label", "label": "Quick add label", "default": "QUICK ADD" },
+    { "type": "text", "id": "added_label", "label": "Added label", "default": "ADDED ✓" },
+    { "type": "text", "id": "options_label", "label": "Label for products with options", "default": "CHOOSE OPTIONS" },
+    {"type": "header", "content": "Colors", "info": "Leave a color empty to use the theme color."},
+    {"type": "color", "id": "c_bg", "label": "Background", "default": "#f8f4ef"},
+    {"type": "color", "id": "c_heading", "label": "Headings", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_text", "label": "Text", "default": "#1a1a1a"},
+    {"type": "color", "id": "c_card_bg", "label": "Image background", "info": "Behind the product photos. Leave empty for transparent (the section background shows through)."},
+    {"type": "color", "id": "c_btn_bg", "label": "Button", "default": "#a83f2f"},
+    {"type": "color", "id": "c_btn_text", "label": "Button text", "default": "#a83f2f"},
+    {"type": "header", "content": "Typography"},
+    {"type": "select", "id": "t_heading_font", "label": "Heading font", "options": [{"value": "heading", "label": "Theme heading font"}, {"value": "body", "label": "Theme body font"}], "default": "heading"},
+    {"type": "range", "id": "t_heading_scale", "label": "Heading size", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100},
+    {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
+  ],
+  "presets": [{ "name": "BT: Complete the set" }]
+}
+{% endschema %}

@@ -1,0 +1,63 @@
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- render 'btf-style', s: section -%}
+
+{%- assign img = section.settings.image | default: product.media[section.settings.fallback_media].preview_image -%}
+{%- assign asset = section.settings.image_asset -%}
+{%- if section.settings.image != blank -%}{%- assign asset = '' -%}{%- endif -%}
+<div class="btf btf-sand btf-overview btf-anchor" id="{{ section.settings.anchor | handleize }}">
+  <div class="container btf-split">
+    <div class="btf-split__text">
+      {%- if section.settings.eyebrow != blank -%}<div class="btf-eyebrow btf-eyebrow--rule">{{ section.settings.eyebrow | escape }}</div>{%- endif -%}
+      <h2 class="h0">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="prose">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="btf-minis">
+          {%- for block in section.blocks -%}
+            <div {{ block.shopify_attributes }}><span class="h4">{{ block.settings.big | escape }}</span><span>{{ block.settings.small | escape }}</span></div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div>
+      {%- if asset != blank or img -%}
+        {%- if asset != blank -%}{%- assign img = nil -%}{%- endif -%}
+        {%- render 'btf-image', image: img, asset: asset, widths: '500,800,1100,1400', sizes: '(min-width: 1000px) 50vw, 100vw', alt: section.settings.image_alt -%}
+      {%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'btf-placeholder' }}{%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "BT: overview",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor ID", "default": "overview" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE FIRST HEIRLOOM" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Arrive the way <em>they</em> will remember." },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_asset", "label": "Design file", "info": "Used when no image is picked. Clear it to use the product images.", "default": "btf-purple-shade-3.jpg" },
+    { "type": "text", "id": "image_alt", "label": "Image description", "default": "Mother and toddler with the Purple Shade trike on a city street" },
+    { "type": "range", "id": "fallback_media", "label": "If no image, use product image #", "info": "0 = first", "min": 0, "max": 10, "step": 1, "default": 3 },
+    {"type": "header", "content": "Colors", "info": "Leave a color empty to use the theme color."},
+    {"type": "color", "id": "c_bg", "label": "Background", "default": "#d9d0c5"},
+    {"type": "color", "id": "c_heading", "label": "Headings", "default": "#00221c"},
+    {"type": "color", "id": "c_text", "label": "Text", "default": "#00221c"},
+    {"type": "color", "id": "c_eyebrow", "label": "Eyebrow", "default": "#00221c"},
+    {"type": "header", "content": "Typography"},
+    {"type": "select", "id": "t_heading_font", "label": "Heading font", "options": [{"value": "heading", "label": "Theme heading font"}, {"value": "body", "label": "Theme body font"}], "default": "heading"},
+    {"type": "range", "id": "t_heading_scale", "label": "Heading size", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100},
+    {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
+  ],
+  "blocks": [
+    {
+      "type": "mini", "name": "Mini stat", "limit": 3,
+      "settings": [
+        { "type": "text", "id": "big", "label": "Figure", "default": "6 in 1" },
+        { "type": "text", "id": "small", "label": "Caption", "default": "One frame, every stage" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "BT: overview" }]
+}
+{% endschema %}
