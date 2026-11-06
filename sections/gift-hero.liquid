@@ -70,7 +70,7 @@
     background: var(--bth-stage-bg);
     --rw: calc(min(76vw, 1120px, var(--rw-fit, 1120px)) * var(--bth-wheel, 1));
   }
-  #bth-{{ uid }} .bth__bgl { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+  #bth-{{ uid }} .bth__bgl { position: absolute; inset: 0; opacity: 0; }
   #bth-{{ uid }} .bth__bgl:first-child { opacity: 1; }
   #bth-{{ uid }} .bth__bgl--ms img,
   #bth-{{ uid }} .bth__bgl--ms svg { filter: blur(var(--bth-msblur)); transform: scale(1.1); }
@@ -226,6 +226,9 @@
     }
     #bth-{{ uid }} .bth__scrim[data-pos] { background: linear-gradient(0deg, rgba(0,0,0, var(--bth-scrim)) 0%, rgba(0,0,0, calc(var(--bth-scrim) * .55)) 35%, rgba(0,0,0,0) 62%); }
     #bth-{{ uid }} .bth__bgl img { object-position: var(--fp-m, 50% 50%); }
+    /* Phones: no live blur on full-screen photos (the extra darkening stays) — much smoother scrolling */
+    #bth-{{ uid }} .bth__bgl--ms img,
+    #bth-{{ uid }} .bth__bgl--ms svg { filter: none; transform: none; }
     #bth-{{ uid }} .bth__intro-heading { font-size: var(--bth-intro-size-m, 28px); line-height: 1.08; }
     #bth-{{ uid }} .bth__intro-text { font-size: 13px; line-height: 1.55; max-width: 34ch; }
     #bth-{{ uid }} .bth__eyebrow { font-size: 9px; letter-spacing: .24em; }
@@ -254,6 +257,7 @@
   data-step-mobile="{{ section.settings.scroll_per_step_mobile }}"
   data-deg="{{ section.settings.label_spacing }}"
   data-snap="{{ section.settings.snap }}"
+  data-swipe-step="{{ section.settings.swipe_steps }}"
   data-label-range="{{ section.settings.label_range }}"
   data-hide-kicker="{{ section.settings.hide_kicker }}"
   data-auto-offset="{{ section.settings.auto_header_offset }}"
@@ -301,9 +305,9 @@
                     <source media="(max-width: 749px)" srcset="{{ last_m | image_url: width: 600 }} 600w, {{ last_m | image_url: width: 900 }} 900w, {{ last_m | image_url: width: 1300 }} 1300w" sizes="100vw">
                   {%- endif -%}
                   {%- if k == 0 -%}
-                    {{ d_img | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: '', loading: 'eager', fetchpriority: 'high', style: bg_style }}
+                    {{ d_img | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: '', loading: 'eager', fetchpriority: 'high', decoding: 'async', style: bg_style }}
                   {%- else -%}
-                    {{ d_img | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: '', loading: 'lazy', style: bg_style }}
+                    {{ d_img | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: '', loading: 'lazy', decoding: 'async', style: bg_style }}
                   {%- endif -%}
                 </picture>
               {%- else -%}
@@ -510,8 +514,17 @@
         this.textPhase = this.texts.map(function (t) { return parseInt(t.dataset.phase, 10) || 0; });
         this.stepPx = parseInt(this.dataset.step, 10) || 640;
         this.stepDeg = parseFloat(this.dataset.deg) || 24;
-        this.snap = this.dataset.snap === 'true';
-        this.reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var mq = function (q) { return !!(window.matchMedia && window.matchMedia(q).matches); };
+        this.touch = mq('(hover: none) and (pointer: coarse)');
+        this.lite = this.touch || window.innerWidth <= 749;
+        // Snapping fights momentum scrolling on touch screens, so it is desktop-only.
+        this.snap = this.dataset.snap === 'true' && !this.touch;
+        this.reduce = mq('(prefers-reduced-motion: reduce)');
+        this.textLinks = this.texts.map(function (t) { return t.querySelector('a'); });
+        this.copyLinks = this.copies.map(function (c) { return c.querySelector('a'); });
+        // Phones: one swipe = one step (up/left = next, down/right = back), never stopping halfway.
+        this.paged = this.touch && this.dataset.swipeStep !== 'false' && this.n > 1;
+        if (this.paged) this.setupSwipe();
         this.u = 0;
         this.target = 0;
         this.p = 0;
@@ -535,6 +548,8 @@
       }
 
       disconnectedCallback() {
+        clearTimeout(this.settleT);
+        clearTimeout(this.animT);
         window.removeEventListener('scroll', this.onScroll);
         window.removeEventListener('resize', this.onResize);
         window.removeEventListener('load', this.onResize);
@@ -632,7 +647,8 @@
         this.stepPx = phone
           ? parseInt(this.dataset.stepMobile, 10) || 380
           : parseInt(this.dataset.step, 10) || 640;
-        var h = Math.max(phone ? 420 : 480, Math.min(window.innerHeight - off, maxH));
+        var vh = this.touch && this.vh ? this.vh : window.innerHeight;
+        var h = Math.max(phone ? 420 : 480, Math.min(vh - off, maxH));
         this.stage.style.top = off + 'px';
         this.stage.style.height = h + 'px';
         this.pin.style.height = h + (this.n - 1) * this.stepPx + 'px';
@@ -687,9 +703,19 @@
         }
       }
 
-      onResize() {
-        this.stickies = null;
-        this.findStickies();
+      onResize(e) {
+        var w = window.innerWidth;
+        var vh = window.innerHeight;
+        // On phones the address bar slides in and out while scrolling and fires "resize".
+        // Only re-measure when the width changes (rotation) or the height changes a lot.
+        if (e && e.type === 'resize' && this.touch && w === this.lastW && Math.abs(vh - (this.vh || vh)) < 160) return;
+        this.lastW = w;
+        this.vh = vh;
+        this.lite = this.touch || w <= 749;
+        if (this.dataset.autoOffset === 'true') {
+          this.stickies = null;
+          this.findStickies();
+        }
         var off = this.headerOffset();
         this.applySize(off);
         if (this.dataset.autoOffset === 'true') this.fitUnderHeader(off);
@@ -723,6 +749,7 @@
           this.u = this.target;
           this.render(this.u);
         } else if (!this.raf) this.raf = requestAnimationFrame(this.tick);
+        if (this.paged && e) this.pagedScroll(g);
         if (e && this.snap) {
           clearTimeout(this.snapT);
           var self = this;
@@ -730,6 +757,104 @@
             self.snapNow();
           }, 180);
         }
+      }
+
+      // ---------- Phones: step-by-step swiping ----------
+      setupSwipe() {
+        var self = this;
+        var g = null;
+        var last = function () { return self.n - 1; };
+        var stepNow = function () { return Math.round(self.p * last()); };
+        var active = function () {
+          var gg = self.geometry();
+          return gg.moved >= -2 && gg.moved <= gg.total + 2;
+        };
+        var begin = function (t, k) {
+          return { x: t.clientX, y: t.clientY, t: Date.now(), axis: null, captured: false, k: k };
+        };
+        this.addEventListener('touchstart', function (e) {
+          self.fingerDown = true;
+          g = null;
+          if (e.touches.length !== 1 || self.animating) return;
+          if (active()) g = begin(e.touches[0], stepNow());
+        }, { passive: true });
+
+        this.addEventListener('touchmove', function (e) {
+          if (e.touches.length !== 1) return;
+          var t = e.touches[0];
+          // A slow drag that reaches the hero: take over from here.
+          if (!g && !self.animating && active()) {
+            g = begin(t, self.p < 0.5 ? 0 : last());
+            g.axis = 'y';
+            g.captured = true;
+          }
+          if (!g) return;
+          var dx = t.clientX - g.x;
+          var dy = t.clientY - g.y;
+          if (!g.axis) {
+            if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+            g.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+            var fwd = g.axis === 'x' ? dx < 0 : dy < 0;
+            var atEnd = (fwd && g.k >= last()) || (!fwd && g.k <= 0);
+            // Up/down past the first or last step: let the page scroll on normally.
+            if (g.axis === 'y' && atEnd) { g = null; return; }
+            g.captured = true;
+            g.noop = atEnd;
+          }
+          if (g.captured && e.cancelable) e.preventDefault();
+        }, { passive: false });
+
+        var end = function (e) {
+          self.fingerDown = false;
+          if (!g || !g.captured) { g = null; return; }
+          var t = e.changedTouches && e.changedTouches[0];
+          var d = 0;
+          if (t) d = g.axis === 'x' ? t.clientX - g.x : t.clientY - g.y;
+          var quick = Date.now() - g.t < 250;
+          var k = g.k;
+          if (!g.noop && (Math.abs(d) > 40 || (quick && Math.abs(d) > 14))) k = g.k + (d < 0 ? 1 : -1);
+          g = null;
+          self.goStep(k);
+        };
+        this.addEventListener('touchend', end);
+        this.addEventListener('touchcancel', function () { self.fingerDown = false; g = null; self.goStep(stepNow()); });
+      }
+
+      goStep(k) {
+        k = clamp(k, 0, this.n - 1);
+        var gg = this.geometry();
+        var delta = (k / (this.n - 1)) * gg.total - gg.moved;
+        if (Math.abs(delta) < 2) return;
+        var self = this;
+        this.animating = true;
+        this.animTarget = window.scrollY + delta;
+        clearTimeout(this.animT);
+        this.animT = setTimeout(function () { self.animating = false; }, 900);
+        window.scrollTo({ top: this.animTarget, behavior: this.reduce ? 'auto' : 'smooth' });
+      }
+
+      pagedScroll(gg) {
+        var moved = gg.moved;
+        var prev = this.prevMoved;
+        this.prevMoved = moved;
+        if (this.animating) {
+          if (Math.abs(window.scrollY - this.animTarget) < 2) { this.animating = false; clearTimeout(this.animT); }
+          return;
+        }
+        if (this.fingerDown) return;
+        // Momentum carrying the page into the hero: stop on the first (or last) step.
+        if (prev !== undefined) {
+          if (prev < 0 && moved > 2) { this.goStep(0); return; }
+          if (prev > gg.total && moved < gg.total - 2) { this.goStep(this.n - 1); return; }
+        }
+        // Whenever free scrolling stops inside the hero, settle on the nearest step.
+        var self = this;
+        clearTimeout(this.settleT);
+        this.settleT = setTimeout(function () {
+          if (self.fingerDown || self.animating) return;
+          var g2 = self.geometry();
+          if (g2.moved > 2 && g2.moved < g2.total - 2) self.goStep(Math.round((g2.moved / g2.total) * (self.n - 1)));
+        }, 140);
       }
 
       snapNow() {
@@ -755,7 +880,8 @@
       }
 
       render(u) {
-        var blurOn = !this.reduce;
+        var blurOn = !this.reduce && !this.lite;
+        var lite = this.lite;
         var i, d, ad, op, s;
         var n = this.n;
 
@@ -771,7 +897,8 @@
           s = this.bgs[i].style;
           s.opacity = op;
           s.visibility = op > 0.005 ? 'visible' : 'hidden';
-          s.transform = 'scale(' + (1.08 - clamp(u - i, -1, 1) * 0.03) + ')';
+          if (!lite) s.transform = 'scale(' + (1.08 - clamp(u - i, -1, 1) * 0.03) + ')';
+          else if (s.transform) s.transform = '';
         }
 
         // Text slides
@@ -784,10 +911,10 @@
           s.opacity = io;
           s.visibility = io > 0.01 ? 'visible' : 'hidden';
           s.filter = blurOn ? 'blur(' + Math.min(ad * 16, 16) + 'px)' : '';
-          s.marginTop = -d * 40 + 'px';
+          s.translate = '0 ' + -d * 40 + 'px';
           s.pointerEvents = ad < 0.35 ? 'auto' : 'none';
           this.texts[i].setAttribute('aria-hidden', io > 0.5 ? 'false' : 'true');
-          var tl = this.texts[i].querySelector('a');
+          var tl = this.textLinks[i];
           if (tl) tl.tabIndex = ad < 0.5 ? 0 : -1;
           if (this.scrims[i]) this.scrims[i].style.opacity = clamp(1 - ad * 1.4, 0, 1);
           if (this.hint && parseInt(this.hint.dataset.phase, 10) === tp) {
@@ -807,7 +934,7 @@
           var last = clamp((n - 1) - u, 0, 1);
           this.cornerL.style.opacity = (1 - hintOp) * (n > 1 ? Math.max(last, 0) : 0) * 0.85;
         }
-        if (this.ring) this.ring.style.marginBottom = -(1 - E) * 240 + 'px';
+        if (this.ring) this.ring.style.translate = '0 ' + (1 - E) * 240 + 'px';
 
         if (this.kicker) {
           var kOn = this.dataset.hideKicker === 'true' ? 0 : 1;
@@ -838,7 +965,7 @@
           s.transform = 'translateY(' + d * 18 + 'px)';
           s.pointerEvents = ad < 0.35 ? 'auto' : 'none';
           c.setAttribute('aria-hidden', ad < 0.5 ? 'false' : 'true');
-          var link = c.querySelector('a');
+          var link = this.copyLinks[i];
           if (link) link.tabIndex = ad < 0.5 ? 0 : -1;
         }
 
@@ -973,6 +1100,13 @@
       "step": 5,
       "unit": "%",
       "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_steps",
+      "label": "One swipe = one step on phones",
+      "default": true,
+      "info": "Each swipe (up or left for next, down or right for back) moves exactly one step."
     },
     {
       "type": "header",
