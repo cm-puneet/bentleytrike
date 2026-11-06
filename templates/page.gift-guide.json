@@ -266,7 +266,7 @@
         "label_added": "Added to cart",
         "label_sold_out": "Sold out",
         "label_error": "Sorry, that couldn’t be added. Please try again.",
-        "after_add": "stay",
+        "after_add": "cart",
         "columns_desktop": 4,
         "columns_mobile": "2",
         "mobile_layout": "swipe",
