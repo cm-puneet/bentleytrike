@@ -596,30 +596,6 @@
         "t_text_scale": 100
       }
     },
-    "1793729955338a9d5b": {
-      "type": "apps",
-      "blocks": {
-        "okendo_reviews_widget_qB8aaY": {
-          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-          "settings": {
-            "product": "{{product}}",
-            "widget_type": "reviews_widget"
-          }
-        }
-      },
-      "block_order": [
-        "okendo_reviews_widget_qB8aaY"
-      ],
-      "disabled": true,
-      "settings": {
-        "full_width": true,
-        "remove_vertical_spacing": false,
-        "remove_horizontal_spacing": false,
-        "background": "",
-        "background_gradient": "",
-        "text_color": ""
-      }
-    },
     "btf_reviews": {
       "type": "bt-foldable-reviews",
       "blocks": {
@@ -634,7 +610,6 @@
       "block_order": [
         "okendo_reviews_widget_VWLJfa"
       ],
-      "disabled": true,
       "settings": {
         "anchor": "reviews",
         "eyebrow": "FROM THE OWNERS",
@@ -1037,7 +1012,6 @@
     "btf_stages",
     "btf_fold",
     "btf_testimonials",
-    "1793729955338a9d5b",
     "btf_reviews",
     "btf_compare",
     "btf_guarantee",
