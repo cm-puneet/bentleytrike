@@ -992,7 +992,7 @@
         "heading": "Questions, answered",
         "text": "Still deciding? Talk to our parent care team. We reply within one business day.",
         "button_label": "TALK TO US",
-        "button_link": "",
+        "button_link": "shopify://pages/contact-bentley-trike-usa",
         "c_bg": "rgba(0,0,0,0)",
         "c_heading": "#1a1a1a",
         "c_text": "#1a1a1a",
