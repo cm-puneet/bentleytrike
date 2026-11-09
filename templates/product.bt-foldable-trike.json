@@ -47,7 +47,7 @@
         "liquid_Kj9fgP": {
           "type": "liquid",
           "settings": {
-            "liquid": "{% render 'adb-ebf-offer-bianca', product: product, pill: 'BLACK FRIDAY SALE', preorder_note: 'Please note that all Bentley Foldable Stroller/Trike are currently on Pre-order.' %}"
+            "liquid": "{% render 'adb-ebf-offer-bianca', product: product, pill: 'BLACK FRIDAY SALE', preorder_note: 'Please note that all Bentley Foldable Stroller/Trike are currently on Pre-order. Estimated to ship Late November.' %}"
           }
         },
         "bullet_1": {
