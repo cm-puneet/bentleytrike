@@ -764,6 +764,7 @@
         },
         "item_2": {
           "type": "item",
+          "disabled": true,
           "settings": {
             "icon": "picto-return",
             "title": "30-Day Returns",
