@@ -65,7 +65,7 @@
         "liquid_Kj9fgP": {
           "type": "liquid",
           "settings": {
-            "liquid": "{% render 'adb-ebf-offer-bianca', product: product, pill: 'BLACK FRIDAY SALE' %}"
+            "liquid": "{% render 'adb-ebf-offer-bianca', product: product, pill: 'BLACK FRIDAY SALE', preorder_note: 'Please note that all Bentley Foldable Stroller/Trike are currently in Pre-order.' %}"
           }
         },
         "set_1": {

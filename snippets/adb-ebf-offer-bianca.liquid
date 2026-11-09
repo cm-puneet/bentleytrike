@@ -8,6 +8,7 @@
   @param {string} [car_handles] - Free car product handles, comma-separated (one button per car)
   @param {string} [after] - 'drawer', 'cart' or 'checkout' (default drawer)
   @param {string} [pill] - Text of the tab on the top edge (default "BLACK FRIDAY SALE"; '' hides it)
+  @param {string} [preorder_note] - Pre-order line under the % off offer (e.g. on the foldable template); blank hides it
   @param {string} [extras] - Add-on product handles to show, comma-separated (default: the helmet + logo light projector)
   @param {string} [extras_title] - Heading of the add-on row (default "Complete the Bentley experience"; '' hides it)
 
@@ -161,7 +162,23 @@
             </span>
             <span class="bt-ebf__save">SAVE <span data-ebf-save>{{ cur_disc | money }}</span></span>
           </div>
-          <div class="bt-ebf__od"><div class="bt-ebf__note">Black Friday sale price, applied automatically at checkout.</div></div>
+          <div class="bt-ebf__od">
+            {%- if preorder_note != blank -%}
+              {%- comment -%} With the pre-order line below, this note gets an icon too so the two read as a pair. {%- endcomment -%}
+              <div class="bt-ebf__ship">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1"/></svg>
+                <span>Black Friday sale price, applied automatically at checkout.</span>
+              </div>
+            {%- else -%}
+              <div class="bt-ebf__note">Black Friday sale price, applied automatically at checkout.</div>
+            {%- endif -%}
+            {%- if preorder_note != blank -%}
+              <div class="bt-ebf__ship">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 4h14v12H1zM15 9h4l3 3v4h-7"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18.5" cy="18.5" r="1.8"/></svg>
+                <span><b>Pre-order:</b> {{ preorder_note | escape }}</span>
+              </div>
+            {%- endif -%}
+          </div>
         </div>
 
         <div class="bt-ebf__or">OR</div>
