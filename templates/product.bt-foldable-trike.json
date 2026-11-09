@@ -12,24 +12,6 @@
     "main": {
       "type": "bt-foldable-main",
       "blocks": {
-        "bullet_1": {
-          "type": "bullet",
-          "settings": {
-            "text": "Folds with seat and canopy attached"
-          }
-        },
-        "bullet_2": {
-          "type": "bullet",
-          "settings": {
-            "text": "Six modes from 10 months to 6 years"
-          }
-        },
-        "bullet_3": {
-          "type": "bullet",
-          "settings": {
-            "text": "Diamond-quilted seat, 5-point harness, 2-position canopy"
-          }
-        },
         "finish_1": {
           "type": "finish",
           "settings": {
@@ -66,6 +48,24 @@
           "type": "liquid",
           "settings": {
             "liquid": "{% render 'adb-ebf-offer-bianca', product: product, pill: 'BLACK FRIDAY SALE', preorder_note: 'Please note that all Bentley Foldable Stroller/Trike are currently in Pre-order.' %}"
+          }
+        },
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "text": "Folds with seat and canopy attached"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "text": "Six modes from 10 months to 6 years"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "text": "Diamond-quilted seat, 5-point harness, 2-position canopy"
           }
         },
         "set_1": {
@@ -137,14 +137,14 @@
         }
       },
       "block_order": [
-        "bullet_1",
-        "bullet_2",
-        "bullet_3",
         "finish_1",
         "finish_2",
         "finish_3",
         "finish_4",
         "liquid_Kj9fgP",
+        "bullet_1",
+        "bullet_2",
+        "bullet_3",
         "set_1",
         "set_2",
         "set_3",
