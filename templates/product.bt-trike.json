@@ -250,7 +250,7 @@
         "liquid_NAxGmX": {
           "type": "liquid",
           "settings": {
-            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product %}"
+            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: '250', stock_car: 'auto', stock_car_preorder: '250' %}"
           }
         },
         "text_q6Hc7E": {
