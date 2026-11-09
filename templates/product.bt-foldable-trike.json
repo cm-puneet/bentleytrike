@@ -368,6 +368,38 @@
         "t_text_scale": 100
       }
     },
+    "video_XYF7dk": {
+      "type": "video",
+      "blocks": {
+        "play_mwrgcH": {
+          "type": "play",
+          "settings": {}
+        },
+        "heading_eWDbpU": {
+          "type": "heading",
+          "settings": {
+            "text": "",
+            "heading_tag": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "play_mwrgcH",
+        "heading_eWDbpU"
+      ],
+      "name": "Video",
+      "settings": {
+        "full_width": false,
+        "allow_transparent_header": false,
+        "autoplay": false,
+        "video_size": "auto",
+        "video": "shopify://files/videos/final 2 (1).mp4",
+        "external_video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
     "btf_atelier": {
       "type": "bt-foldable-hotspots",
       "blocks": {
@@ -1008,6 +1040,7 @@
     "btf_nav",
     "btf_stats",
     "btf_overview",
+    "video_XYF7dk",
     "btf_atelier",
     "btf_stages",
     "btf_fold",
