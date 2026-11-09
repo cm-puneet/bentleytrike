@@ -54,6 +54,20 @@
   </div>
 </btf-hotspots>
 
+{%- comment -%} Images in the hidden panels start loading once the section is near, so switching shows them straight away. {%- endcomment -%}
+<script>
+  (() => {
+    const root = document.currentScript.previousElementSibling;
+    if (!root || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      root.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
+    }, { rootMargin: '600px 0px' });
+    io.observe(root);
+  })();
+</script>
+
 {% schema %}
 {
   "name": "BT: Atelier hotspots",
