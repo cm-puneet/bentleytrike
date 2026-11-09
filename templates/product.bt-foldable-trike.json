@@ -52,18 +52,21 @@
         },
         "bullet_1": {
           "type": "bullet",
+          "disabled": true,
           "settings": {
             "text": "Folds with seat and canopy attached"
           }
         },
         "bullet_2": {
           "type": "bullet",
+          "disabled": true,
           "settings": {
             "text": "Six modes from 10 months to 6 years"
           }
         },
         "bullet_3": {
           "type": "bullet",
+          "disabled": true,
           "settings": {
             "text": "Diamond-quilted seat, 5-point harness, 2-position canopy"
           }
@@ -120,19 +123,18 @@
             "text": "1–2 years, by region"
           }
         },
-        "trust_3": {
-          "type": "trust",
-          "disabled": true,
-          "settings": {
-            "title": "Free US shipping",
-            "text": "Dispatched in 1–2 days"
-          }
-        },
         "trust_4": {
           "type": "trust",
           "settings": {
-            "title": "30-day returns",
-            "text": "Full refund if unused"
+            "title": "Foldable",
+            "text": "Folds with seat and canopy attached"
+          }
+        },
+        "trust_3": {
+          "type": "trust",
+          "settings": {
+            "title": "Six modes",
+            "text": "from 10 months to 6 years"
           }
         }
       },
@@ -150,8 +152,8 @@
         "set_3",
         "trust_1",
         "trust_2",
-        "trust_3",
-        "trust_4"
+        "trust_4",
+        "trust_3"
       ],
       "settings": {
         "gallery_source": "auto",
