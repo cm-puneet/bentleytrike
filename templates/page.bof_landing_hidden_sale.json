@@ -59,7 +59,7 @@
         "liquid_PkXVwX": {
           "type": "liquid",
           "settings": {
-            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product %}"
+            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: 'auto:250', stock_car: 'auto', stock_car_preorder: 'auto:250' %}"
           }
         },
         "offer_yg6DBx": {
@@ -1856,7 +1856,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_g9ceh6": {
-          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "vlgy6zzuljecp"
           }
