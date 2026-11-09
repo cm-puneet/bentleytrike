@@ -807,6 +807,7 @@
         "video_assembly": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/Assembly (1).mp4",
             "title": "Assembly",
             "text": "Out of the box and ready to ride."
           }
@@ -814,6 +815,7 @@
         "video_transform": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/download (2).mp4",
             "title": "Transformation",
             "text": "From stroller to trike, step by step."
           }
@@ -821,6 +823,7 @@
         "video_fold": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/download (1).mp4",
             "title": "Folding",
             "text": "Fold it flat with the seat and canopy attached."
           }
