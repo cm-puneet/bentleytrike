@@ -137,6 +137,7 @@
         "image_bqCfkD",
         "image_Qb33zB"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "allow_transparent_header": true,
@@ -152,32 +153,33 @@
     },
     "bt_hp_hero_cgend8": {
       "type": "bt-hp-hero",
-      "disabled": true,
       "name": "New: BT Hero + reveal",
       "settings": {
-        "show_intro": true,
-        "intro_once": true,
+        "show_intro": false,
+        "intro_once": false,
         "intro_word": "BENTLEY",
         "intro_top": "Officially licensed by Bentley Motors",
         "intro_bottom": "Trike",
-        "image": "shopify://shop_images/Mom-Mullinertrike-2.1.png",
-        "image_mobile": "shopify://shop_images/Mom-Mullinertrike-2.1_1.png",
-        "overlay": 10,
+        "image": "shopify://shop_images/Mom-Mullinertrike-3.6_ad0d7225-b372-4f4d-9ac0-be3d0d1829bd_a4dee043-84d2-4ffe-9748-f621fb7a8cb9.png",
+        "image_mobile": "shopify://shop_images/Mom-Mullinertrike-2.1_a734607c-dcc0-493d-b9ca-5cc14a69579c_8204f12c-4bb2-47b8-8ab1-fc11e0ff667f.png",
+        "overlay": 0,
         "height": "large",
         "allow_transparent_header": true,
+        "parallax": true,
         "align": "left",
         "heading_width": 50,
         "align_mobile": "left",
-        "heading_1": "Extraordinary journeys",
-        "heading_2": "start young.",
+        "heading_1": "The Bentley Trike",
+        "heading_2": "",
         "meta_1": "The Bentley 6-in-1 Stroller Trike",
-        "meta_2": "Officially licensed by Bentley Motors",
-        "meta_3": "From 6 months",
-        "text": "A stroller you steer today, a trike that's entirely theirs tomorrow — finished in the colours of the cars from Crewe.",
+        "meta_2": "Designed in Collaboration with the Bentley Motor Company.",
+        "meta_3": "",
+        "meta_mobile": true,
+        "text": "",
         "button_1_label": "Shop the Trike",
-        "button_1_link": "",
-        "button_2_label": "See how it grows",
-        "button_2_link": "",
+        "button_1_link": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
+        "button_2_label": "Black Friday Sale",
+        "button_2_link": "shopify://pages/the-bentley-trike-hidden-sale",
         "heading_size": 100,
         "heading_size_mobile": 100,
         "text_color": "#ffffff",
@@ -195,17 +197,17 @@
           "type": "panel",
           "settings": {
             "title": "Bentley Trikes",
-            "text": "The 6-in-1 convertible stroller trike, in eight finishes. From $599.",
+            "text": "",
             "link": "shopify://products/bentley-6-in-1-stroller-trike",
             "link_label": "Shop now",
-            "image": "shopify://shop_images/Onyx_Black_3.png"
+            "image": "shopify://shop_images/Bentley_Trike_1_Normal_View_6518ae57-841b-44fe-acd2-c77c1daf5c3e.png"
           }
         },
         "panel_DCiMq9": {
           "type": "panel",
           "settings": {
             "title": "Ride-On Cars",
-            "text": "Electric ride-on cars modelled on the Mulsanne, Bentayga, Bacalar and EXP 12.",
+            "text": "",
             "link": "shopify://collections/bentley-ride-on-electric-cars",
             "link_label": "Shop now",
             "image": "shopify://shop_images/Electric_Ride_On_Car_-_mobile.png"
@@ -213,12 +215,23 @@
         },
         "panel_LabBwe": {
           "type": "panel",
+          "disabled": true,
           "settings": {
             "title": "Balance Bikes",
             "text": "Your child's first balance bike, with the Bentley wings up front.",
             "link": "shopify://collections/balance-bikes",
             "link_label": "Shop now",
             "image": "shopify://shop_images/Balance_Bikes_mom_1_1.png"
+          }
+        },
+        "panel_x6cr77": {
+          "type": "panel",
+          "settings": {
+            "title": "Folding Bentley Trike",
+            "text": "",
+            "link": "shopify://products/cool-stone-bentley-foldable-tricycle",
+            "link_label": "Shop now",
+            "image": "shopify://shop_images/Foldable_Trike_mom1_8d774cff-6b16-4f18-b466-cd2d9ba6bdfb_6845155e-87ca-4a5f-89ae-8721e7d7b532_36c83923-731a-49a2-b570-c751ca76e278.png"
           }
         },
         "link_GKxCmE": {
@@ -228,7 +241,7 @@
             "text": "Sophisticated styling with the safety features little riders need.",
             "image": "shopify://shop_images/11.png",
             "product": "",
-            "link": ""
+            "link": "shopify://products/bentley-helmet-collection"
           }
         },
         "link_iGeDea": {
@@ -238,7 +251,7 @@
             "text": "Casts the Bentley wings beneath your 6-in-1 Stroller Trike.",
             "image": "shopify://shop_images/BentleyLogoLightProjectorfor6-in-1StrollerTrike.webp",
             "product": "",
-            "link": ""
+            "link": "shopify://products/bentley-logo-light-projector-for-6-in-1-stroller-trike"
           }
         },
         "link_FBWTzy": {
@@ -254,11 +267,21 @@
         "link_GRXWpG": {
           "type": "link",
           "settings": {
+            "title": "Balance Bikes",
+            "text": "Your child's first balance bike, with the Bentley wings up front.",
+            "image": "shopify://shop_images/BentleyBb_Black_990d3dc0-4e48-4193-b1e0-668f93a6d096.png",
+            "product": "",
+            "link": "shopify://products/bentley-balance-bikes"
+          }
+        },
+        "link_HHVQpN": {
+          "type": "link",
+          "settings": {
             "title": "Partner Brands",
             "text": "McLaren scooters & bikes, Baghera ride-on cars and the Rito folding trike.",
             "image": "shopify://shop_images/1938FE_2.jpg",
             "product": "",
-            "link": ""
+            "link": "shopify://collections/baghera-ride-on-cars"
           }
         }
       },
@@ -266,19 +289,20 @@
         "panel_GPFWyq",
         "panel_DCiMq9",
         "panel_LabBwe",
+        "panel_x6cr77",
         "link_GKxCmE",
         "link_iGeDea",
         "link_FBWTzy",
-        "link_GRXWpG"
+        "link_GRXWpG",
+        "link_HHVQpN"
       ],
-      "disabled": true,
       "name": "New: BT Category split",
       "settings": {
         "label": "The Bentley Kids Collection",
         "heading": "Their first",
         "heading_italic": "Bentley.",
         "link_label": "View the full collection",
-        "link_url": "shopify://collections/all",
+        "link_url": "shopify://pages/bentley-collection",
         "mark_word": "BENTLEY",
         "mark_sub": "Kids Collection",
         "desktop_layout": "cards",
@@ -358,6 +382,7 @@
         "heading_xMiJC8",
         "richtext_J9JEki"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "content_width": "small",
@@ -369,7 +394,6 @@
     },
     "bt_hp_statement_wBcEmg": {
       "type": "bt-hp-statement",
-      "disabled": true,
       "name": "New: BT Brand statement",
       "settings": {
         "label": "Officially licensed by Bentley Motors",
@@ -436,6 +460,7 @@
         "collection_XqghJy",
         "collection_qYwLya"
       ],
+      "disabled": true,
       "settings": {
         "heading": "",
         "heading_custom": true,
@@ -650,6 +675,7 @@
       "block_order": [
         "ai_gen_block_2eac822_YKRMWD"
       ],
+      "disabled": true,
       "name": "Product carousel",
       "settings": {}
     },
@@ -904,6 +930,7 @@
       "blocks": {
         "image_Fd36r8": {
           "type": "image",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Benltey_Trike_White_Satin_Media_Grid_-_CA.png",
             "title": "",
@@ -997,6 +1024,7 @@
         "image_UiirXC",
         "image_rkcLX9"
       ],
+      "disabled": true,
       "name": "Media grid",
       "settings": {
         "full_width": true,
@@ -1073,6 +1101,7 @@
         "testimonial_hxNaYr",
         "testimonial_YazCdJ"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "stack_testimonials": false,
@@ -1167,6 +1196,7 @@
         "image_m33Rem",
         "image_fcfwRJ"
       ],
+      "disabled": true,
       "name": "Slideshow",
       "settings": {
         "full_width": false,
@@ -1206,13 +1236,74 @@
     "bt_hp_trike_XhiYRa": {
       "type": "bt-hp-trike",
       "blocks": {
+        "finish_cftiX8": {
+          "type": "finish",
+          "settings": {
+            "product": "cool-stone-bentley-foldable-tricycle",
+            "name": "Cool Crystal",
+            "swatch": "#141414",
+            "group": "3",
+            "floor_shadow": false,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
+          }
+        },
+        "finish_EWb73w": {
+          "type": "finish",
+          "settings": {
+            "product": "purple-bentley-foldable-tricycle",
+            "name": "Purple Shade",
+            "swatch": "#141414",
+            "group": "3",
+            "floor_shadow": false,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
+          }
+        },
+        "finish_PBYjqf": {
+          "type": "finish",
+          "settings": {
+            "product": "gold-bentley-foldable-tricycle",
+            "name": "Hidden Depths",
+            "swatch": "#141414",
+            "group": "3",
+            "floor_shadow": false,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
+          }
+        },
+        "finish_ydeVnG": {
+          "type": "finish",
+          "settings": {
+            "product": "black-bentley-foldable-tricycle",
+            "name": "Metamorphic",
+            "swatch": "#141414",
+            "group": "3",
+            "floor_shadow": false,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
+          }
+        },
         "finish_gk33Fe": {
           "type": "finish",
           "settings": {
             "product": "onyx-black-bentley-stroller-trike",
             "name": "Onyx Black",
             "swatch": "#141414",
-            "group": "1"
+            "group": "1",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_aEtNYP": {
@@ -1221,7 +1312,12 @@
             "product": "white-satin-bentley-6-in-1-stroller-trike",
             "name": "White Satin",
             "swatch": "#edebe9",
-            "group": "1"
+            "group": "1",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_L8zrLf": {
@@ -1230,7 +1326,12 @@
             "product": "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
             "name": "Centennial",
             "swatch": "#827c62",
-            "group": "1"
+            "group": "1",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_NR6WTe": {
@@ -1239,7 +1340,12 @@
             "product": "bentley-mulliner-trike",
             "name": "Mulliner",
             "swatch": "#cfc7ba",
-            "group": "2"
+            "group": "2",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_94zrHL": {
@@ -1248,7 +1354,12 @@
             "product": "fuscia-pink-bentley-stroller-trike",
             "name": "Fuchsia",
             "swatch": "#d14f8a",
-            "group": "1"
+            "group": "1",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_c4jknC": {
@@ -1257,7 +1368,12 @@
             "product": "jetstream-blue-bentley-6-in-1-stroller-trike",
             "name": "Jetstream Blue",
             "swatch": "#dde0e6",
-            "group": "1"
+            "group": "1",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_jYmRFn": {
@@ -1266,7 +1382,12 @@
             "product": "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
             "name": "Cool Stone",
             "swatch": "#496192",
-            "group": "2"
+            "group": "2",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_V3cmPf": {
@@ -1275,7 +1396,12 @@
             "product": "dragon-red-bentley-stroller-trike",
             "name": "Dragon Red",
             "swatch": "#c74642",
-            "group": "2"
+            "group": "2",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_KKLBM4": {
@@ -1284,7 +1410,12 @@
             "product": "spruce-green-6-in-1-stroller-trike",
             "name": "Spruce Green",
             "swatch": "#60837f",
-            "group": "1"
+            "group": "1",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_LzqL3P": {
@@ -1293,7 +1424,12 @@
             "product": "sequin-blue-bentley-stroller-trike",
             "name": "Sequin Blue",
             "swatch": "#293a57",
-            "group": "1"
+            "group": "1",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_qfULdG": {
@@ -1302,7 +1438,12 @@
             "product": "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
             "name": "Mandarin",
             "swatch": "#e17854",
-            "group": "2"
+            "group": "2",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         },
         "finish_F7JbLV": {
@@ -1311,11 +1452,20 @@
             "product": "mulliner-celeste-bentley-6-in-1-stroller-trike",
             "name": "Celeste",
             "swatch": "#8de0d4",
-            "group": "2"
+            "group": "2",
+            "floor_shadow": true,
+            "shadow_y": 0,
+            "shadow_x": 0,
+            "shadow_size": 100,
+            "shadow_strength": 100
           }
         }
       },
       "block_order": [
+        "finish_cftiX8",
+        "finish_EWb73w",
+        "finish_PBYjqf",
+        "finish_ydeVnG",
         "finish_gk33Fe",
         "finish_aEtNYP",
         "finish_L8zrLf",
@@ -1329,7 +1479,6 @@
         "finish_qfULdG",
         "finish_F7JbLV"
       ],
-      "disabled": true,
       "name": "New: BT Trike buy box",
       "settings": {
         "image_number": 1,
@@ -1338,9 +1487,10 @@
         "rating_text": "4.8 · 1,017 reviews",
         "rating_link": "",
         "installment_text": "or 4 payments of [quarter] with Shop Pay",
-        "signature_title": "Signature finishes",
+        "signature_title": "Daily Commuter",
+        "swatch_style": "trike",
         "mulliner_title": "Mulliner finishes",
-        "group_3_title": "Folding finishes",
+        "group_3_title": "Traveler",
         "group_3_name": "Folding",
         "mulliner_tag": "Mulliner",
         "cart_label": "Add to cart",
@@ -1430,7 +1580,6 @@
         "stage_Ckc7AV",
         "stage_7wzwNb"
       ],
-      "disabled": true,
       "name": "New: BT Growth stages",
       "settings": {
         "label": "6-in-1 convertible · From 6 months",
@@ -1513,8 +1662,8 @@
           "type": "note",
           "settings": {
             "number": "II",
-            "title": "Wheels from the cars",
-            "text": "Equipped with high-gloss, mirror-polished alloy wheels featuring chrome-style.",
+            "title": "Lightweight wheels",
+            "text": "Engineered with high-strength composite rims and puncture-proof tread for effortless folding, travel, and smooth strolls.",
             "image": "shopify://shop_images/Replica_Bentley_wheels.jpg",
             "show_for": "2"
           }
@@ -1523,9 +1672,9 @@
           "type": "note",
           "settings": {
             "number": "II",
-            "title": "Wheels from the cars",
-            "text": "Equipped with high-gloss, mirror-polished alloy wheels featuring chrome-style.",
-            "image": "shopify://shop_images/Replica_Bentley_wheels.jpg",
+            "title": "B-badged wheels & brake",
+            "text": "Featuring a 12-inch front and 10-inch rear wheel set with Continental GT styling, paired with an intuitive tap-to-lock foot brake.",
+            "image": "shopify://shop_images/folding_wheels.png",
             "show_for": "3"
           }
         },
@@ -1543,10 +1692,20 @@
           "type": "note",
           "settings": {
             "number": "III",
-            "title": "Anti-slip pedals",
-            "text": "Signature Bentley Mulliner metal sports pedals with anti-slip rubber inlays and machined alloy finishes.",
+            "title": "Mulliner sports pedals",
+            "text": "Engineered with high-shine chrome framing, anti-slip knurled grip inserts, and the iconic ‘B’ badge inspired by Bentley performance cars.",
             "image": "shopify://shop_images/footrest.jpg",
             "show_for": "2"
+          }
+        },
+        "note_fnYtRK": {
+          "type": "note",
+          "settings": {
+            "number": "III",
+            "title": "Mulliner sports pedals",
+            "text": "Engineered with high-shine chrome framing, anti-slip knurled grip inserts, and the iconic ‘B’ badge inspired by Bentley performance cars.",
+            "image": "shopify://shop_images/folding_pedals.png",
+            "show_for": "3"
           }
         },
         "note_QmA7G4": {
@@ -1569,6 +1728,16 @@
             "show_for": "2"
           }
         },
+        "note_Ld8xmP": {
+          "type": "note",
+          "settings": {
+            "number": "IV",
+            "title": "Cabin comfort",
+            "text": "Contrast-stitched quilting, a soft headrest, a 2-position backrest and a 5-point harness with a winged-B buckle.",
+            "image": "shopify://shop_images/folding_cushion.png",
+            "show_for": "3"
+          }
+        },
         "note_xxp3Qg": {
           "type": "note",
           "settings": {
@@ -1577,6 +1746,26 @@
             "text": "Crafted from premium, weather-resistant woven canvas—lightweight, easy to clean, and designed for everyday family essentials.",
             "image": "shopify://shop_images/Elegant_Essentials_Bag.png",
             "show_for": "1"
+          }
+        },
+        "note_N6hndM": {
+          "type": "note",
+          "settings": {
+            "number": "V",
+            "title": "Essential bag",
+            "text": "Tailored in wipe-clean leather with iconic Double Diamond stitching and a polished metal Bentley emblem.",
+            "image": "shopify://shop_images/Handle_bag.jpg",
+            "show_for": "2"
+          }
+        },
+        "note_QqCk99": {
+          "type": "note",
+          "settings": {
+            "number": "V",
+            "title": "Essential bag",
+            "text": "Tailored in wipe-clean leather with iconic Double Diamond stitching and a polished metal Bentley emblem.",
+            "image": "shopify://shop_images/folding_bag.png",
+            "show_for": "3"
           }
         },
         "note_nRdx67": {
@@ -1628,16 +1817,19 @@
         "note_3RL7dF",
         "note_Pw9KKm",
         "note_nyQyyx",
+        "note_fnYtRK",
         "note_QmA7G4",
         "note_h9KtJp",
+        "note_Ld8xmP",
         "note_xxp3Qg",
+        "note_N6hndM",
+        "note_QqCk99",
         "note_nRdx67",
         "spec_UfDNBp",
         "spec_aED89R",
         "spec_KncFeC",
         "spec_hL4XGU"
       ],
-      "disabled": true,
       "name": "New: BT The craft",
       "settings": {
         "label": "The craft",
@@ -1712,6 +1904,7 @@
         "video_ViFVn8",
         "video_8H9HQb"
       ],
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "full_width": true,
@@ -1752,16 +1945,98 @@
         "text_color": ""
       }
     },
-    "174180357643579c9e": {
-      "type": "apps",
-      "disabled": true,
+    "bt_hp_drive_tLhF97": {
+      "type": "bt-hp-drive",
+      "name": "BT First drive",
       "settings": {
-        "full_width": true,
-        "remove_vertical_spacing": false,
-        "remove_horizontal_spacing": false,
-        "background": "",
-        "background_gradient": "",
-        "text_color": ""
+        "image": "shopify://shop_images/Electric_Ride_On_Car_d6fead8f-2af3-4aa0-804e-971db6a126c9.png",
+        "image_mobile": "shopify://shop_images/Electric_Ride_On_Car_-_mobile_f9bcdaa7-9720-4ae2-a3b1-1c584370d2e2.png",
+        "margin_top": 100,
+        "margin_top_mobile": 44,
+        "photo_height": 85,
+        "photo_height_mobile": 520,
+        "layout": "compact",
+        "overlap": 60,
+        "overlap_mobile": 40,
+        "label": "Electric ride-on cars · 3 years+",
+        "heading": "After the trike,",
+        "heading_italic": "the first drive.",
+        "text": "Officially licensed ride-on cars, modelled on the Mulsanne, Bentayga, Bacalar and EXP 12 Speed 6e.",
+        "button_label": "Explore ride-on cars",
+        "button_link": "shopify://collections/bentley-ride-on-electric-cars",
+        "products": [
+          "bentley-bacalar-electric-ride-on-car-for-kids",
+          "bentley-bentayga-electric-ride-on-car-for-kids",
+          "bentley-exp-12-electric-ride-on-speed-car-for-kids",
+          "bentley-mulsanne-electric-ride-on-car-for-kids"
+        ],
+        "strip_words": "Bentley, Electric Ride-On Car for Kids, Ride-On Speed Car for Kids, Ride-On Car for Kids",
+        "add_label": "Add to cart",
+        "added_label": "Added ✓",
+        "after_add": "drawer",
+        "heading_size": 100,
+        "heading_size_mobile": 100,
+        "bg": "#f8f4ef",
+        "ink": "#1a1a1a",
+        "card_bg": "#ffffff",
+        "sand": "#d9d0c5"
+      }
+    },
+    "gift_review_WJATC7": {
+      "type": "gift-review",
+      "blocks": {
+        "review_tYcVV3": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/gold_2f1ea225-7680-4bec-9e7d-477f0eb31cd2.png",
+            "rating": 5,
+            "quote": "Completely replaced our everyday stroller.",
+            "text": "The build quality is astonishing—it feels like a real vehicle, not a plastic toy. Our daughter loves the open view, and it maneuvers like a dream. It has made daily outings our favorite part of the day.",
+            "author": "John L.",
+            "role": "Bentley Trike owner"
+          }
+        },
+        "review_fQGTHU": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2025-04-15_at_6.56.05_PM_1a39d257-db3c-48ce-98c9-c689d1b666c1.png",
+            "rating": 5,
+            "quote": "A fantastic gift that combines style, fun, and comfort.",
+            "text": "“I bought this beautiful balance bike for my son and it has been an absolute joy! Highly recommend!”",
+            "author": "Irina D.",
+            "role": "Balance bike owner"
+          }
+        },
+        "review_nzdUqh": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/orange_6bcb0317-f004-49ef-a9b6-f10e9889c27b.png",
+            "rating": 5,
+            "quote": "So rich and classy — I get so many compliments.",
+            "text": "“Absolutely love this product. I wish I could afford a Bentley, but my daughter definitely can with this stroller!”",
+            "author": "Autumn R.",
+            "role": "Bentley Trike owner"
+          }
+        }
+      },
+      "block_order": [
+        "review_tYcVV3",
+        "review_fQGTHU",
+        "review_nzdUqh"
+      ],
+      "name": "BT Gift Reviews",
+      "settings": {
+        "heading": "In their words",
+        "label": "Notes from Bentley Trike families",
+        "autoplay": 7,
+        "photo_fit": "whole",
+        "height": 860,
+        "blur": 28,
+        "overlay": 40,
+        "text_color": "#ffffff",
+        "bg": "#1a1a1a",
+        "heading_font": "playfair_display_n4",
+        "body_font": "poppins_n4"
       }
     },
     "newsletter_B9ym8W": {
@@ -1769,7 +2044,7 @@
       "name": "Newsletter",
       "settings": {
         "full_width": false,
-        "image": "shopify://shop_images/01_ca_bentley_web_103.png",
+        "image": "shopify://shop_images/9_dea9aa48-574a-488c-a6bc-420fdaf3172c.png",
         "show_icon": false,
         "title": "Join the Bentley Trike  Inner Circle",
         "content": "<p>Get exclusive deals, new launches, and Bentley Trike news delivered straight to your inbox.</p>",
@@ -1778,7 +2053,7 @@
         "background": "#d9d0c5",
         "background_gradient": "",
         "text_color": "#000000",
-        "button_background": "#ffffff",
+        "button_background": "#944139",
         "button_text_color": "#ffffff"
       }
     }
@@ -1806,7 +2081,8 @@
     "bt_hp_craft_YTJPW8",
     "media_with_text_yVqAxc",
     "rich_text_9CaXBf",
-    "174180357643579c9e",
+    "bt_hp_drive_tLhF97",
+    "gift_review_WJATC7",
     "newsletter_B9ym8W"
   ]
 }
