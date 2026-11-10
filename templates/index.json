@@ -1608,7 +1608,7 @@
         "version_3pTKCY": {
           "type": "version",
           "settings": {
-            "title": "Signature",
+            "title": "Daily Commuter",
             "subtitle": "Eight Bentley colours",
             "image": "shopify://shop_images/20190226_PoshBaby_kids1562.png",
             "circle_color": "#1f1f1f",
@@ -1630,12 +1630,12 @@
         "version_Fw9z8m": {
           "type": "version",
           "settings": {
-            "title": "Folding",
+            "title": "Traveler",
             "subtitle": "Folds flat for travel",
             "image": "shopify://shop_images/SilverBentleyFoldableTricycle_d7bc65b9-3512-4665-b6f4-74fcd09a80d2.png",
             "circle_color": "#3a3f45",
             "link": "shopify://products/cool-stone-bentley-foldable-tricycle",
-            "link_label": "Shop Folding"
+            "link_label": "Shop Traveler"
           }
         },
         "note_dje9QB": {
@@ -1833,7 +1833,7 @@
       "name": "New: BT The craft",
       "settings": {
         "label": "The craft",
-        "heading": "Beyond ordinary,",
+        "heading": "Every detail,",
         "heading_italic": "a Bentley detail.",
         "show_picker": true,
         "more_label": "View the detail",

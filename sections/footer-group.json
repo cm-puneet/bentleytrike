@@ -11,6 +11,34 @@
   "type": "footer",
   "name": "Footer group",
   "sections": {
+    "bt_hp_footer_kKTFaJ": {
+      "type": "bt-hp-footer",
+      "name": "BT Smoke footer",
+      "settings": {
+        "wordmark": "BENTLEY",
+        "smoke": true,
+        "glow": true,
+        "explore_title": "Explore",
+        "explore_menu": "bentley-collection",
+        "care_title": "Client care",
+        "care_menu": "footer",
+        "email": "Customer Support",
+        "legal_menu": "customer-support",
+        "news_title": "The inner circle",
+        "news_text": "Exclusive offers, new launches and Bentley Trike news, first.",
+        "news_placeholder": "Your email",
+        "news_button": "Join",
+        "news_success": "Thank you — you're on the list.",
+        "copyright": "Bentley Trike · Officially licensed by Bentley Motors",
+        "right_text": "Canada · CAD",
+        "pad_bottom": 104,
+        "size": "compact",
+        "heading_size": 100,
+        "heading_size_mobile": 85,
+        "bg": "#1a1a1a",
+        "ink": "#f8f4ef"
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -64,6 +92,7 @@
         "links_QC3Mzd",
         "newsletter_aVaDxd"
       ],
+      "disabled": true,
       "settings": {
         "show_social_media": true,
         "show_payment_icons": false,
@@ -76,6 +105,7 @@
     }
   },
   "order": [
+    "bt_hp_footer_kKTFaJ",
     "footer"
   ]
 }
