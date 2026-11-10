@@ -16,11 +16,13 @@
           "type": "title",
           "settings": {
             "heading_tag": "h3"
-          }
+          },
+          "disabled": true
         },
         "badges": {
           "type": "badges",
-          "settings": {}
+          "settings": {},
+          "disabled": true
         },
         "price": {
           "type": "price",
@@ -33,7 +35,8 @@
           "settings": {
             "show_empty": false,
             "show_rating_pos": true
-          }
+          },
+          "disabled": true
         },
         "inventory_Cibqgw": {
           "type": "inventory",
@@ -151,9 +154,17 @@
             "background": "#f2e9e4",
             "text_color": "#1a1a1a"
           }
+        },
+        "bt_title_header": {
+          "type": "bt_title",
+          "settings": {
+            "use_product_badges": true,
+            "eyebrow": ""
+          }
         }
       },
       "block_order": [
+        "bt_title_header",
         "title",
         "badges",
         "price",
