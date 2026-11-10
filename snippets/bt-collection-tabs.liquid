@@ -1,0 +1,51 @@
+{%- comment -%}
+  "BT: collection tabs" block for the theme's product section (e.g. Daily Commuter / Traveller / Mulliner).
+  Same look as the Collection tab blocks of BT: buy box. The tab holding this product is highlighted; the others link to
+  their collection (the tab's link, or its first product in stock).
+  - block: the bt_collections block
+{%- endcomment -%}
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- capture tabs -%}
+  {%- for i in (1..4) -%}
+    {%- liquid
+      assign k_title = 'tab' | append: i | append: '_title'
+      assign k_products = 'tab' | append: i | append: '_products'
+      assign k_link = 'tab' | append: i | append: '_link'
+      assign title = block.settings[k_title]
+      assign list = block.settings[k_products]
+      if title == blank or list == blank or list.size == 0
+        continue
+      endif
+      assign here = false
+      assign low = nil
+      assign go = block.settings[k_link]
+      for p in list
+        if p.id == product.id
+          assign here = true
+        endif
+        if p.available
+          if low == nil or p.price_min < low
+            assign low = p.price_min
+          endif
+          if go == blank
+            assign go = p.url
+          endif
+        endif
+      endfor
+      if go == blank
+        assign go = list.first.url
+      endif
+    -%}
+    {%- if here -%}<span class="btf-coll__tab" aria-current="page">{%- else -%}<a class="btf-coll__tab" href="{{ go }}">{%- endif -%}
+      <b>{{ title | escape }}</b>
+      {%- if block.settings.show_from -%}
+        <small>{%- if low != nil -%}{%- assign low_money = low | money_without_trailing_zeros -%}{{ block.settings.from_text | replace: '[price]', low_money }}{%- else -%}{{ 'product.general.sold_out_button' | t }}{%- endif -%}</small>
+      {%- endif -%}
+    {%- if here -%}</span>{%- else -%}</a>{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if tabs != blank -%}
+  <div class="btf" {{ block.shopify_attributes }}>
+    <nav class="btf-coll" aria-label="{{ block.settings.aria_label | default: 'Collection' | escape }}">{{ tabs }}</nav>
+  </div>
+{%- endif -%}

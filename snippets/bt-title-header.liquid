@@ -1,0 +1,37 @@
+{%- comment -%}
+  "BT: title header" block for the theme's product section: the same header as the foldable buy box
+  (badge, eyebrow and Okendo stars on one row, then the title). Wide screens: stars at the end of the badge row.
+  Narrow screens: the stars follow the title's last word, as on the foldable page.
+  - block: the bt_title block
+{%- endcomment -%}
+{{ 'bt-foldable.css' | asset_url | stylesheet_tag }}
+{%- comment -%} Hyphenated words (e.g. 6-in-1) never break across lines. {%- endcomment -%}
+{%- capture title -%}
+  {%- assign words = product.title | escape | split: ' ' -%}
+  {%- for w in words -%}{%- if w contains '-' -%}<span style="white-space: nowrap">{{ w }}</span>{%- else -%}{{ w }}{%- endif -%}{%- unless forloop.last -%}{{ ' ' }}{%- endunless -%}{%- endfor -%}
+{%- endcapture -%}
+{%- capture stars -%}
+  {%- if block.settings.show_stars -%}
+    <a class="btf-stars" href="#{{ block.settings.stars_anchor | default: 'reviews' }}" aria-label="{{ block.settings.stars_label | escape }}">
+      <div data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></div>
+    </a>
+  {%- endif -%}
+{%- endcapture -%}
+{%- capture badges -%}
+  {%- if block.settings.use_product_badges -%}
+    {%- render 'product-badges', product: product, context: 'product', types: 'custom', class: 'btf-title__product-badges' -%}
+  {%- elsif block.settings.badge != blank -%}
+    <span class="badge">{{ block.settings.badge | escape }}</span>
+  {%- endif -%}
+  {%- if block.settings.eyebrow != blank -%}<span class="text-xs bold btf-buy__eyebrow" style="letter-spacing: .14em">{{ block.settings.eyebrow | escape }}</span>{%- endif -%}
+{%- endcapture -%}
+<div class="btf btf-title" {{ block.shopify_attributes }}>
+  <div class="btf-buy__intro btf-title--wide">
+    <div class="btf-buy__badges">{{ badges }}{{ stars }}</div>
+    <h1 class="{{ block.settings.title_size }}">{{ title }}</h1>
+  </div>
+  <div class="btf-buy__intro btf-title--narrow">
+    {%- if badges != blank -%}<div class="btf-buy__badges">{{ badges }}</div>{%- endif -%}
+    <div class="btf-intro__title"><p class="{{ block.settings.title_size }}" role="heading" aria-level="1">{{ title }}</p> {{ stars }}</div>
+  </div>
+</div>
