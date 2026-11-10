@@ -14,16 +14,19 @@
       "blocks": {
         "title": {
           "type": "title",
+          "disabled": true,
           "settings": {
             "heading_tag": "h3"
           }
         },
         "badges": {
           "type": "badges",
+          "disabled": true,
           "settings": {}
         },
         "rating": {
           "type": "rating",
+          "disabled": true,
           "settings": {
             "show_empty": false,
             "show_rating_pos": true
@@ -152,9 +155,17 @@
             "background": "",
             "text_color": ""
           }
+        },
+        "bt_title_header": {
+          "type": "bt_title",
+          "settings": {
+            "use_product_badges": true,
+            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS"
+          }
         }
       },
       "block_order": [
+        "bt_title_header",
         "title",
         "badges",
         "rating",
@@ -1133,7 +1144,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_J4PA9R": {
-          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "ai02woawxdg1p"
           }
