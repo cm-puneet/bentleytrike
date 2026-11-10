@@ -193,6 +193,7 @@
         "heading_NKCgwn",
         "button_gcfp7d"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "content_width": "large",
@@ -247,6 +248,7 @@
         },
         "offer_TN73fe": {
           "type": "offer",
+          "disabled": true,
           "settings": {
             "text_alignment": "start",
             "icon_position": "aligned",
@@ -305,8 +307,15 @@
             "size_chart_page": ""
           }
         },
+        "liquid_kAGiqi": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: '250', stock_car: 'auto', stock_car_preorder: '250' %}"
+          }
+        },
         "buy_buttons_CnrYW7": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_payment_button": false,
             "show_gift_card_recipient": true,
@@ -322,6 +331,7 @@
         },
         "associated_products_bmKfEi": {
           "type": "associated_products",
+          "disabled": true,
           "settings": {
             "title": "GET THE FULL BENTLEY EXPERIENCE",
             "stack_products": false,
@@ -384,6 +394,7 @@
         "text_AYpNAi",
         "description_Fi7LAQ",
         "variant_picker_Vp6jtR",
+        "liquid_kAGiqi",
         "buy_buttons_CnrYW7",
         "payment_terms_DRPGCQ",
         "associated_products_bmKfEi",
