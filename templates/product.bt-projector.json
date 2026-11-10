@@ -16,18 +16,21 @@
           "type": "title",
           "settings": {
             "heading_tag": "h3"
-          }
+          },
+          "disabled": true
         },
         "badges": {
           "type": "badges",
-          "settings": {}
+          "settings": {},
+          "disabled": true
         },
         "rating": {
           "type": "rating",
           "settings": {
             "show_empty": false,
             "show_rating_pos": true
-          }
+          },
+          "disabled": true
         },
         "price": {
           "type": "price",
@@ -152,9 +155,17 @@
             "background": "#d9d0c5",
             "text_color": "#1c0e29"
           }
+        },
+        "bt_title_header": {
+          "type": "bt_title",
+          "settings": {
+            "use_product_badges": true,
+            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS"
+          }
         }
       },
       "block_order": [
+        "bt_title_header",
         "title",
         "badges",
         "rating",
