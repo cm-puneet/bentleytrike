@@ -179,8 +179,6 @@
       {{ intro_badges | replace: '[stars]', intro_stars }}
       <h1 class="{{ section.settings.title_size }}">{{ product.title | escape }}</h1>
     </div>
-    {%- if theme_pos == 'after_title' -%}{{ theme_blocks }}{%- endif -%}
-
     {%- capture bullets -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'bullet' and block.settings.text != blank -%}
@@ -188,8 +186,36 @@
         {%- endif -%}
       {%- endfor -%}
     {%- endcapture -%}
-    {%- if bullets != blank -%}<ul class="btf-bullets text-sm">{{ bullets }}</ul>{%- endif -%}
-    {%- if theme_pos == 'after_bullets' -%}{{ theme_blocks }}{%- endif -%}
+    {%- comment -%}
+      Bullets follow the editor's block order: they show right after the part of the buy box that the block above
+      the first bullet belongs to (finish picker, theme/app blocks such as Custom Liquid, sets/offers and button, or trust items).
+    {%- endcomment -%}
+    {%- liquid
+      assign bullets_after = 'top'
+      for block in section.blocks
+        case block.type
+          when 'bullet'
+            break
+          when 'finish'
+            assign bullets_after = 'finish'
+          when 'set', 'promo', 'promo_addon'
+            assign bullets_after = 'cta'
+          when 'trust'
+            assign bullets_after = 'trust'
+          else
+            assign bullets_after = 'theme'
+        endcase
+      endfor
+      if bullets_after == 'theme' and theme_pos == 'after_bullets'
+        assign bullets_after = 'top'
+      endif
+    -%}
+    {%- capture bullets_out -%}
+      {%- if bullets != blank -%}<ul class="btf-bullets text-sm">{{ bullets }}</ul>{%- endif -%}
+      {%- if theme_pos == 'after_bullets' -%}{{ theme_blocks }}{%- endif -%}
+    {%- endcapture -%}
+    {%- if theme_pos == 'after_title' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- endif -%}
+    {%- if bullets_after == 'top' -%}{{ bullets_out }}{%- endif -%}
 
     {%- capture finishes -%}
       {%- for block in section.blocks -%}
@@ -223,6 +249,7 @@
         {%- endfor -%}
       {%- endcapture -%}
     {%- endif -%}
+    {%- capture finish_out -%}
     {%- if finishes != blank -%}
       <div class="btf-step" id="choose-finish">
         {%- assign finish_count = finishes | split: 'class="btf-finish"' | size | minus: 1 -%}
@@ -238,6 +265,9 @@
         {%- endif -%}
       </div>
     {%- endif -%}
+    {%- endcapture -%}
+    {{ finish_out }}
+    {%- if bullets_after == 'finish' -%}{{ bullets_out }}{%- endif -%}
 
 
     {%- if theme_pos == 'after_finish' -%}
@@ -247,6 +277,7 @@
       {%- else -%}
         {{ theme_blocks }}
       {%- endif -%}
+      {%- if bullets_after == 'theme' -%}{%- assign bullets_after = 'cta' -%}{%- endif -%}
     {%- endif -%}
 
     {%- comment -%} Same wrapper and button markup as the theme's buy buttons, so the Globo pre-order app finds the form and button. {%- endcomment -%}
@@ -356,6 +387,9 @@
       </payment-terms>
     {%- endif -%}
 
+    {%- comment -%} Bullets placed after the offer or sets come below the installments line. {%- endcomment -%}
+    {%- if bullets_after == 'cta' -%}{{ bullets_out }}{%- endif -%}
+
     {%- if section.settings.show_stock and variant.available -%}
       {%- liquid
         assign stock = ''
@@ -367,7 +401,7 @@
       -%}
       {%- if stock != blank -%}<p class="btf-stock text-sm"><span class="btf-stock__dot"></span>{{ stock | escape }}</p>{%- endif -%}
     {%- endif -%}
-    {%- if theme_pos == 'after_cta' -%}{{ theme_blocks }}{%- endif -%}
+    {%- if theme_pos == 'after_cta' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- endif -%}
 
     {%- comment -%} One popup per set: its accessories with photo, price and option pickers. Choices apply to every set with the same accessory. {%- endcomment -%}
     {%- for block in section.blocks -%}
@@ -428,7 +462,8 @@
       {%- endfor -%}
     {%- endcapture -%}
     {%- if trust != blank -%}<div class="btf-trust">{{ trust }}</div>{%- endif -%}
-    {%- if theme_pos == 'bottom' -%}{{ theme_blocks }}{%- endif -%}
+    {%- if bullets_after == 'trust' -%}{{ bullets_out }}{%- endif -%}
+    {%- if theme_pos == 'bottom' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- endif -%}
   </btf-buy-box>
 </div>
 
