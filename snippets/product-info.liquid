@@ -477,6 +477,12 @@ Supported variables
         {%- when 'bt_finish' -%}
           {%- render 'bt-finish-picker', block: block, product: product -%}
 
+        {%- when 'bt_title' -%}
+          {%- render 'bt-title-header', block: block, product: product -%}
+
+        {%- when 'bt_collections' -%}
+          {%- render 'bt-collection-tabs', block: block, product: product -%}
+
         {%- when 'offer' -%}
           {%- if block.settings.title != blank or block.settings.content != blank -%}
             {%- render 'offer', block: block -%}
