@@ -310,6 +310,7 @@
         },
         "associated_products_YXTBbY": {
           "type": "associated_products",
+          "disabled": true,
           "settings": {
             "title": "COMPLETE THE BENTLEY EXPERIENCE",
             "stack_products": false,
