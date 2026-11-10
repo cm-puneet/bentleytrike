@@ -372,42 +372,50 @@
       var prev = root.querySelector('[data-rv-prev]');
       var next = root.querySelector('[data-rv-next]');
       var items = track.children;
-      var centred = function () {
-        return items[0] && getComputedStyle(items[0]).scrollSnapAlign.indexOf('center') > -1;
-      };
-      // offset of item i from where it would rest when snapped
-      var offset = function (i) {
+      // Positions are measured once (and again only when the size changes), so scrolling
+      // just compares numbers instead of re-measuring every review on every frame.
+      var pos = [], isCentred = false, maxLeft = 0;
+      var measure = function () {
+        isCentred = !!items[0] && getComputedStyle(items[0]).scrollSnapAlign.indexOf('center') > -1;
         var t = track.getBoundingClientRect();
-        var r = items[i].getBoundingClientRect();
-        if (centred()) return r.left + r.width / 2 - (t.left + t.width / 2);
-        return r.left - t.left - (parseFloat(getComputedStyle(track).paddingLeft) || 0);
+        var pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+        var w = track.clientWidth;
+        maxLeft = Math.max(0, track.scrollWidth - w);
+        pos = [];
+        for (var i = 0; i < items.length; i++) {
+          var r = items[i].getBoundingClientRect();
+          var left = r.left - t.left + track.scrollLeft;
+          pos.push(Math.max(0, Math.min(maxLeft, isCentred ? left + r.width / 2 - w / 2 : left - pad)));
+        }
       };
       var current = function () {
-        var best = 0;
-        var dist = Infinity;
-        for (var i = 0; i < items.length; i++) {
-          var d = Math.abs(offset(i));
-          if (d < dist) {
-            dist = d;
-            best = i;
-          }
+        var x = track.scrollLeft, best = 0, dist = Infinity;
+        for (var i = 0; i < pos.length; i++) {
+          var d = Math.abs(pos[i] - x);
+          if (d < dist) { dist = d; best = i; }
         }
         return best;
       };
       var go = function (i) {
         i = Math.max(0, Math.min(items.length - 1, i));
-        track.scrollBy({ left: offset(i), behavior: 'smooth' });
+        track.scrollTo({ left: pos[i] || 0, behavior: 'smooth' });
       };
+      var shown = -1, wasStart = null, wasEnd = null;
       var sync = function () {
-        var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        var x = track.scrollLeft;
+        var atEnd = x >= maxLeft - 4;
         // with several reviews in view the last ones can't snap to the start, so light the last dot at the end
-        var idx = atEnd && !centred() ? items.length - 1 : current();
-        dots.forEach(function (d, i) {
-          if (i === idx) d.setAttribute('aria-current', 'true');
-          else d.removeAttribute('aria-current');
-        });
-        if (prev) prev.disabled = track.scrollLeft < 4;
-        if (next) next.disabled = atEnd;
+        var idx = atEnd && !isCentred ? items.length - 1 : current();
+        if (idx !== shown) {
+          shown = idx;
+          dots.forEach(function (d, i) {
+            if (i === idx) d.setAttribute('aria-current', 'true');
+            else d.removeAttribute('aria-current');
+          });
+        }
+        var atStart = x < 4;
+        if (prev && atStart !== wasStart) { prev.disabled = atStart; wasStart = atStart; }
+        if (next && atEnd !== wasEnd) { next.disabled = atEnd; wasEnd = atEnd; }
       };
       var raf = 0;
       track.addEventListener(
@@ -421,7 +429,13 @@
         },
         { passive: true }
       );
-      window.addEventListener('resize', sync);
+      var rt = 0;
+      var later = function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () { measure(); sync(); }, 120);
+      };
+      if ('ResizeObserver' in window) new ResizeObserver(later).observe(track);
+      else window.addEventListener('resize', later);
       dots.forEach(function (d, i) {
         d.addEventListener('click', function () {
           go(i);
@@ -435,6 +449,7 @@
         next.addEventListener('click', function () {
           go(current() + 1);
         });
+      measure();
       sync();
     }
     function all() {
