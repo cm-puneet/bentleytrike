@@ -136,9 +136,53 @@
             "title": "Six modes",
             "text": "from 10 months to 6 years"
           }
+        },
+        "coll_daily": {
+          "type": "collection",
+          "settings": {
+            "title": "Daily Commuter",
+            "products": [
+              "bentley-6-in-1-stroller-trike",
+              "onyx-black-bentley-stroller-trike",
+              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+              "fuscia-pink-bentley-stroller-trike",
+              "jetstream-blue-bentley-6-in-1-stroller-trike",
+              "spruce-green-6-in-1-stroller-trike",
+              "sequin-blue-bentley-stroller-trike",
+              "white-satin-bentley-6-in-1-stroller-trike",
+              "dragon-red-bentley-stroller-trike"
+            ]
+          }
+        },
+        "coll_traveller": {
+          "type": "collection",
+          "settings": {
+            "title": "Traveller",
+            "products": [
+              "black-bentley-foldable-tricycle",
+              "purple-bentley-foldable-tricycle",
+              "gold-bentley-foldable-tricycle",
+              "cool-stone-bentley-foldable-tricycle"
+            ]
+          }
+        },
+        "coll_mulliner": {
+          "type": "collection",
+          "settings": {
+            "title": "Mulliner",
+            "products": [
+              "bentley-mulliner-trike",
+              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
+              "mulliner-celeste-bentley-6-in-1-stroller-trike"
+            ]
+          }
         }
       },
       "block_order": [
+        "coll_daily",
+        "coll_traveller",
+        "coll_mulliner",
         "finish_1",
         "finish_2",
         "finish_3",
