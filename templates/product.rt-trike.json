@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -5,12 +14,14 @@
       "blocks": {
         "title": {
           "type": "title",
+          "disabled": true,
           "settings": {
             "heading_tag": "h3"
           }
         },
         "badges": {
           "type": "badges",
+          "disabled": true,
           "settings": {}
         },
         "price": {
@@ -21,6 +32,7 @@
         },
         "rating": {
           "type": "rating",
+          "disabled": true,
           "settings": {
             "show_empty": false,
             "show_rating_pos": true
@@ -145,9 +157,17 @@
             "background": "",
             "text_color": ""
           }
+        },
+        "bt_title_header": {
+          "type": "bt_title",
+          "settings": {
+            "use_product_badges": true,
+            "eyebrow": ""
+          }
         }
       },
       "block_order": [
+        "bt_title_header",
         "title",
         "badges",
         "price",
@@ -1230,7 +1250,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_DYwBbD": {
-          "type": "shopify://apps/tolstoy-shoppable-video-quiz/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "bdqu3apahqlpx"
           }
