@@ -10,31 +10,37 @@
 -%}
 
 <style>
-  .bthp-ft{--bthp-hs:var(--bthp-hs-d,1);--bthp-ts:var(--bthp-ts-d,1)}
-  @media (max-width:749px){.bthp-ft{--bthp-hs:var(--bthp-hs-m,1);--bthp-ts:var(--bthp-ts-m,1)}}
-  .bthp-ft{position:relative;overflow:hidden;background:var(--bthp-bg);color:var(--bthp-ink);padding:clamp(24px,3vw,40px) 0 var(--bthp-pb,48px);font-family:var(--text-font-family,Poppins,sans-serif);font-size:calc(13px * var(--bthp-ts, 1));--mx:-999px;--my:-999px}
-  .bthp-smoke{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:blur(22px);opacity:.8}
+  .bthp-ft{--bthp-hs:var(--bthp-hs-d,1)}
+  @media (max-width:749px){.bthp-ft{--bthp-hs:var(--bthp-hs-m,1)}}
+  .bthp-ft{content-visibility:auto;contain-intrinsic-size:auto 640px;position:relative;overflow:hidden;background:var(--bthp-bg);color:var(--bthp-ink);padding:clamp(24px,3vw,40px) 0 var(--bthp-pb,48px);font-family:var(--text-font-family,Poppins,sans-serif);font-size:13px}
+  .bthp-smoke{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.2}
   .bthp-ft__in{position:relative;max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px);box-sizing:border-box}
   .bthp-ft__mark{position:relative;overflow:hidden;padding-top:.04em;user-select:none;-webkit-mask-image:linear-gradient(180deg,#000 52%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(180deg,#000 52%,rgba(0,0,0,0) 100%)}
   .bthp-ft__word{display:flex;justify-content:space-between;margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(64px,16.5vw,250px) * var(--bthp-hs, 1));line-height:.86;color:var(--bthp-ink);opacity:.075}
-  .bthp-ft__word--lit{position:absolute;inset:0;opacity:1;-webkit-mask-image:radial-gradient(circle 300px at var(--mx) var(--my),rgba(0,0,0,.32) 0%,rgba(0,0,0,.1) 45%,rgba(0,0,0,0) 72%);mask-image:radial-gradient(circle 300px at var(--mx) var(--my),rgba(0,0,0,.32) 0%,rgba(0,0,0,.1) 45%,rgba(0,0,0,0) 72%)}
+  /* Glow: a soft spotlight that slides with the mouse. Only its position changes (on the graphics chip), so nothing is redrawn. */
+  .bthp-ft__spot{position:absolute;left:0;top:0;width:600px;height:600px;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .35s ease;will-change:transform;-webkit-mask-image:radial-gradient(circle 300px at 50% 50%,rgba(0,0,0,.32) 0%,rgba(0,0,0,.1) 45%,rgba(0,0,0,0) 72%);mask-image:radial-gradient(circle 300px at 50% 50%,rgba(0,0,0,.32) 0%,rgba(0,0,0,.1) 45%,rgba(0,0,0,0) 72%)}
+  .bthp-ft__spot.is-on{opacity:1}
+  .bthp-ft__spot .bthp-ft__word--lit{position:absolute;left:0;top:0;opacity:1;will-change:transform}
+  @media (hover:none){.bthp-ft__spot{display:none}}
   .bthp-ft__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,2fr) minmax(0,2fr);gap:32px;margin-top:clamp(24px,3vw,40px)}
-  .bthp-ft__k{margin:0;font-size:calc(10px * var(--bthp-ts, 1));font-weight:700;letter-spacing:.26em;text-transform:uppercase;opacity:.82}
+  .bthp-ft__list{display:flex;flex-direction:column;gap:inherit}
+  .bthp-ft__k{margin:0;font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;opacity:.82}
   .bthp-ft__big{display:flex;flex-direction:column;align-items:flex-start}
-  .bthp-ft__big a{font-family:var(--heading-font-family,"Playfair Display",serif);font-size:calc(clamp(30px,2.9vw,44px) * var(--bthp-hs, 1));line-height:1.14;color:var(--bthp-ink);text-decoration:none;transition:opacity .45s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+  .bthp-ft__big a{font-family:var(--heading-font-family,"Playfair Display",serif);font-size:clamp(30px,2.9vw,44px);line-height:1.14;color:var(--bthp-ink);text-decoration:none;transition:opacity .45s ease,transform .6s cubic-bezier(.16,1,.3,1)}
   .bthp-ft__big:hover a{opacity:.32}
   .bthp-ft__big a:hover,.bthp-ft__big a:focus-visible{opacity:1;transform:translateX(10px)}
   .bthp-ft__col{display:flex;flex-direction:column;gap:14px}
-  .bthp-ft__col a{color:var(--bthp-ink);opacity:.86;text-decoration:none;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:calc(17px * var(--bthp-hs, 1));line-height:1.5;transition:opacity .3s ease}
+  .bthp-ft__col a{color:var(--bthp-ink);opacity:.86;text-decoration:none;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:17px;line-height:1.5;transition:opacity .3s ease}
   .bthp-ft__col a:hover{opacity:1}
-  .bthp-ft__p{margin:0;max-width:340px;font-size:calc(13px * var(--bthp-ts, 1));line-height:1.7;opacity:.8}
-  .bthp-ft__form{display:flex;width:100%;max-width:400px;box-shadow:inset 0 -1px 0 rgba(248,244,239,.5)}
-  .bthp-ft__input{flex:1;min-width:0;min-height:52px;padding:0;border:0;border-radius:0;background:transparent;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:calc(17px * var(--bthp-hs, 1));color:var(--bthp-ink);outline-offset:4px}
+  .bthp-ft__p{margin:0;max-width:340px;font-size:13px;line-height:1.7;opacity:.8}
+  .bthp-ft__form{display:flex;width:100%;margin:0;padding:0;max-width:400px;box-shadow:inset 0 -1px 0 rgba(248,244,239,.5)}
+  .bthp-ft form{margin:0;padding:0}
+  .bthp-ft__input{flex:1;min-width:0;min-height:52px;padding:0!important;margin:0;text-indent:0;box-shadow:none!important;-webkit-appearance:none;appearance:none;border:0;border-radius:0;background:transparent;font-family:var(--heading-font-family,"Playfair Display",serif);font-size:17px;color:var(--bthp-ink);outline-offset:4px}
   .bthp-ft__input::placeholder{color:var(--bthp-ink);opacity:.6}
-  .bthp-ft__join{min-height:52px;padding:0 0 0 16px;border:0;background:transparent;color:var(--bthp-ink);cursor:pointer;font-family:inherit;font-size:calc(11px * var(--bthp-ts, 1));font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+  .bthp-ft__join{min-height:52px;padding:0 0 0 16px;border:0;background:transparent;color:var(--bthp-ink);cursor:pointer;font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
   .bthp-ft__join:hover{opacity:.7}
-  .bthp-ft__ok,.bthp-ft__err{margin:0;font-size:calc(13px * var(--bthp-ts, 1))}
-  .bthp-ft__base{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,2fr) minmax(0,2fr);gap:32px;margin-top:clamp(88px,10vw,150px);font-size:calc(10px * var(--bthp-ts, 1));font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.78}
+  .bthp-ft__ok,.bthp-ft__err{margin:0;font-size:13px}
+  .bthp-ft__base{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,2fr) minmax(0,2fr);gap:32px;margin-top:clamp(88px,10vw,150px);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.78}
   .bthp-ft__base a{color:inherit;text-decoration:none}
   .bthp-ft__base a:hover{text-decoration:underline}
   .bthp-ft__legal a+a::before{content:", "}
@@ -44,24 +50,51 @@
     .bthp-ft__in{padding:0 20px}
     .bthp-ft__word{font-size:calc(17vw * var(--bthp-hs, 1))}
     .bthp-ft__grid{grid-template-columns:minmax(0,1fr);gap:22px}
-    .bthp-ft__big a{font-size:calc(28px * var(--bthp-hs, 1))}
+    .bthp-ft__big a{font-size:28px}
     .bthp-ft__base{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:44px}
     .bthp-ft__right{text-align:left}
   }
+  /* Compact size (default): smaller wordmark, tighter spacing, menus side by side on phones */
+  .bthp-ft--compact{padding-top:clamp(18px,2vw,28px)}
+  .bthp-ft--compact .bthp-ft__word{font-size:calc(clamp(56px,11vw,168px) * var(--bthp-hs, 1))}
+  .bthp-ft--compact .bthp-ft__grid{gap:28px;margin-top:clamp(16px,2vw,28px)}
+  .bthp-ft--compact .bthp-ft__big a{font-size:clamp(22px,2vw,30px);line-height:1.22}
+  .bthp-ft--compact .bthp-ft__col{gap:10px}
+  .bthp-ft--compact .bthp-ft__col a{font-size:15px;line-height:1.45}
+  .bthp-ft--compact .bthp-ft__input{min-height:46px;font-size:15px}
+  .bthp-ft--compact .bthp-ft__join{min-height:46px}
+  .bthp-ft--compact .bthp-ft__base{margin-top:clamp(32px,3.6vw,56px)}
+  @media (max-width:749px){
+    .bthp-ft--compact{padding-top:14px}
+    .bthp-ft--compact .bthp-ft__word{font-size:calc(15vw * var(--bthp-hs, 1))}
+    /* Phone: everything open and easy to scan; each group separated by a thin solid line */
+    .bthp-ft--compact .bthp-ft__grid{grid-template-columns:minmax(0,1fr);gap:0;margin-top:16px}
+    .bthp-ft--compact .bthp-ft__k--ex{padding-top:20px;border-top:1px solid rgba(248,244,239,.16)}
+    .bthp-ft--compact .bthp-ft__big{gap:0;padding:12px 0 24px}
+    .bthp-ft--compact .bthp-ft__big a{font-size:22px;line-height:1.4}
+    .bthp-ft--compact .bthp-ft__big a:hover,.bthp-ft--compact .bthp-ft__big a:focus-visible{transform:none}
+    .bthp-ft--compact .bthp-ft__col{gap:12px;padding:20px 0 24px;border-top:1px solid rgba(248,244,239,.16)}
+    .bthp-ft--compact .bthp-ft__list{gap:10px}
+    .bthp-ft--compact .bthp-ft__col a{font-size:16px;line-height:1.4;opacity:.92}
+    .bthp-ft--compact .bthp-ft__news{gap:10px;padding-bottom:0}
+    .bthp-ft--compact .bthp-ft__p{font-size:12px;line-height:1.55}
+    .bthp-ft--compact .bthp-ft__base{grid-template-columns:minmax(0,1fr);gap:6px;margin-top:24px;font-size:9px}
+    .bthp-ft--compact .bthp-ft__legal,.bthp-ft--compact .bthp-ft__right{grid-column:1 / -1}
+  }
 </style>
 
-<div class="bthp-ft" data-bthp-ft data-smoke="{{ s.smoke }}" data-glow="{{ s.glow }}" style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-pb: {{ s.pad_bottom }}px; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }}; --bthp-ts-d: {{ section.settings.text_size | divided_by: 100.0 }}; --bthp-ts-m: {{ section.settings.text_size_mobile | divided_by: 100.0 }};">
+<div class="bthp-ft{% if s.size != 'regular' %} bthp-ft--compact{% endif %}" data-bthp-ft data-smoke="{{ s.smoke }}" data-glow="{{ s.glow }}" style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-pb: {{ s.pad_bottom }}px; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};">
   {%- if s.smoke -%}<canvas class="bthp-smoke" aria-hidden="true"></canvas>{%- endif -%}
   <div class="bthp-ft__in">
     {%- if letters.size > 0 -%}
       <div class="bthp-ft__mark" aria-hidden="true">
         <p class="bthp-ft__word">{%- for l in letters -%}<span>{{ l }}</span>{%- endfor -%}</p>
-        {%- if s.glow -%}<p class="bthp-ft__word bthp-ft__word--lit">{%- for l in letters -%}<span>{{ l }}</span>{%- endfor -%}</p>{%- endif -%}
+        {%- if s.glow -%}<div class="bthp-ft__spot"><p class="bthp-ft__word bthp-ft__word--lit">{%- for l in letters -%}<span>{{ l }}</span>{%- endfor -%}</p></div>{%- endif -%}
       </div>
     {%- endif -%}
 
     <div class="bthp-ft__grid">
-      <p class="bthp-ft__k">{{ s.explore_title }}</p>
+      <p class="bthp-ft__k bthp-ft__k--ex">{{ s.explore_title }}</p>
       <nav class="bthp-ft__big" aria-label="{{ s.explore_title | escape }}">
         {%- for link in s.explore_menu.links -%}
           <a href="{{ link.url }}">{{ link.title }}</a>
@@ -69,12 +102,14 @@
       </nav>
       <div class="bthp-ft__col">
         <p class="bthp-ft__k">{{ s.care_title }}</p>
-        {%- for link in s.care_menu.links -%}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {%- endfor -%}
-        {%- if s.email != blank -%}<a href="mailto:{{ s.email }}">{{ s.email }}</a>{%- endif -%}
+        <div class="bthp-ft__list">
+          {%- for link in s.care_menu.links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+          {%- if s.email != blank -%}<a href="mailto:{{ s.email }}">{{ s.email }}</a>{%- endif -%}
+        </div>
       </div>
-      <div class="bthp-ft__col">
+      <div class="bthp-ft__col bthp-ft__news">
         <p class="bthp-ft__k">{{ s.news_title }}</p>
         {%- if s.news_text != blank -%}<p class="bthp-ft__p">{{ s.news_text }}</p>{%- endif -%}
         {%- assign form_id = 'bthp-news-' | append: section.id -%}
@@ -111,11 +146,23 @@
     window.bthpSmoke = window.bthpSmoke || function (host, cv, opts) {
       opts = opts || {};
       if (!host || !cv || !cv.getContext) return;
-      try { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
+      try {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (window.matchMedia('(hover: none)').matches) { cv.style.display = 'none'; return; }
+      } catch (e) {}
       var ctx = cv.getContext('2d');
       var rgb = opts.rgb || '217,208,197';
       var strength = typeof opts.strength === 'number' ? opts.strength : 1;
-      var SCALE = 0.5, parts = [], raf = 0, visible = false, W = 0, H = 0, t = 0, idle = 0;
+      // One soft puff drawn once, then stamped — no live blur filter needed.
+      var sprite = document.createElement('canvas');
+      sprite.width = sprite.height = 128;
+      var sg = sprite.getContext('2d');
+      var grd = sg.createRadialGradient(64, 64, 0, 64, 64, 64);
+      grd.addColorStop(0, 'rgba(' + rgb + ',1)');
+      grd.addColorStop(0.45, 'rgba(' + rgb + ',0.5)');
+      grd.addColorStop(1, 'rgba(' + rgb + ',0)');
+      sg.fillStyle = grd; sg.fillRect(0, 0, 128, 128);
+      var SCALE = 0.25, parts = [], raf = 0, visible = false, W = 0, H = 0, t = 0, idle = 0;
       var tx = null, ty = null, px = null, py = null, inside = false;
       function size() {
         W = host.offsetWidth; H = host.offsetHeight;
@@ -123,18 +170,19 @@
         ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
       }
       function puff(x, y, vx, vy, r, a) {
-        if (parts.length > 200) parts.shift();
+        if (parts.length > 110) parts.shift();
         parts.push({ x: x, y: y, vx: vx, vy: vy, r: r, r0: r, a: a, life: 1, seed: Math.random() * 1000 });
       }
       function frame() {
         raf = 0;
         if (!visible) return;
         t++;
+        if (!inside && opts.idle && (t & 1)) { raf = requestAnimationFrame(frame); return; }
         if (inside && tx !== null) {
           if (px === null) { px = tx; py = ty; }
           var nx = px + (tx - px) * 0.16, ny = py + (ty - py) * 0.16;
           var dx = nx - px, dy = ny - py, d = Math.sqrt(dx * dx + dy * dy);
-          var steps = Math.min(3, Math.ceil(d / 18));
+          var steps = Math.min(2, Math.ceil(d / 24));
           for (var k = 1; k <= steps; k++) {
             var f = k / steps;
             puff(px + dx * f + (Math.random() - 0.5) * 30, py + dy * f + (Math.random() - 0.5) * 30, dx * 0.03 + (Math.random() - 0.5) * 0.4, dy * 0.03 - 0.15, 46 + Math.random() * 30, 0.6);
@@ -153,10 +201,11 @@
           if (p.life <= 0) { parts.splice(i, 1); continue; }
           p.r = p.r0 + (1 - p.life) * 150;
           var ease = p.life * p.life * (3 - 2 * p.life);
-          var alpha = 0.022 * strength * p.a * ease * Math.min(1, (1 - p.life) * 6 + 0.1);
-          ctx.fillStyle = 'rgba(' + rgb + ',' + alpha.toFixed(4) + ')';
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+          ctx.globalAlpha = Math.min(1, 0.15 * strength * p.a * ease * Math.min(1, (1 - p.life) * 6 + 0.1));
+          var R = p.r + 22;
+          ctx.drawImage(sprite, p.x - R, p.y - R, R * 2, R * 2);
         }
+        ctx.globalAlpha = 1;
         if (parts.length || inside || opts.idle) raf = requestAnimationFrame(frame);
       }
       function move(e) {
@@ -171,25 +220,56 @@
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(frame); }).observe(host);
       } else { visible = true; }
-      host.addEventListener('pointermove', move);
+      host.addEventListener('pointermove', move, { passive: true });
       host.addEventListener('pointerleave', leave);
     };
     document.querySelectorAll('[data-bthp-ft]:not([data-ready])').forEach(function (el) {
       el.setAttribute('data-ready', '');
       var glow = el.getAttribute('data-glow') === 'true';
       var mark = el.querySelector('.bthp-ft__mark');
-      function setPos(x, y) {
-        if (!glow || !mark) return;
+      var spot = el.querySelector('.bthp-ft__spot');
+      var lit = spot && spot.querySelector('.bthp-ft__word--lit');
+      var mx = 0, my = 0, gx = 0, gy = 0, gRaf = 0, sized = false;
+      // Measure the wordmark once (and again only when the page changes size), never on every mouse move.
+      function measure() {
+        if (!mark || !lit) return;
         var r = mark.getBoundingClientRect(), h = el.getBoundingClientRect();
-        el.style.setProperty('--mx', (x - (r.left - h.left)) + 'px');
-        el.style.setProperty('--my', (y - (r.top - h.top)) + 'px');
+        mx = r.left - h.left; my = r.top - h.top;
+        lit.style.width = mark.clientWidth + 'px';
+        lit.style.height = mark.clientHeight + 'px';
+        sized = true;
       }
-      function off() { el.style.setProperty('--mx', '-999px'); el.style.setProperty('--my', '-999px'); }
+      function draw() {
+        gRaf = 0;
+        var x = gx - mx - 300, y = gy - my - 300;
+        spot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+        lit.style.transform = 'translate3d(' + (-x) + 'px,' + (-y) + 'px,0)';
+      }
+      function setPos(x, y) {
+        if (!glow || !spot || !lit) return;
+        if (!sized) measure();
+        gx = x; gy = y;
+        spot.classList.add('is-on');
+        if (!gRaf) gRaf = requestAnimationFrame(draw);
+      }
+      function off() { if (spot) spot.classList.remove('is-on'); }
+      if (glow && spot) {
+        var rt = 0;
+        window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { sized = false; }, 120); }, { passive: true });
+        el.addEventListener('pointerenter', measure);
+      }
       if (el.getAttribute('data-smoke') === 'true') {
-        window.bthpSmoke(el, el.querySelector('.bthp-smoke'), { idle: true, onMove: setPos, onLeave: off });
+        // Resting smoke only drifts while the mouse is over the footer, so it costs nothing otherwise.
+        var opts = { idle: false, onMove: setPos, onLeave: off };
+        el.addEventListener('pointerenter', function () { opts.idle = true; });
+        el.addEventListener('pointerleave', function () { opts.idle = false; });
+        window.bthpSmoke(el, el.querySelector('.bthp-smoke'), opts);
       } else if (glow) {
-        el.addEventListener('pointermove', function (e) { var h = el.getBoundingClientRect(); setPos(e.clientX - h.left, e.clientY - h.top); });
-        el.addEventListener('pointerleave', off);
+        var hx = 0, hy = 0;
+        var where = function () { var h = el.getBoundingClientRect(); hx = h.left; hy = h.top; };
+        el.addEventListener('pointerenter', function () { where(); window.addEventListener('scroll', where, { passive: true }); });
+        el.addEventListener('pointermove', function (e) { setPos(e.clientX - hx, e.clientY - hy); }, { passive: true });
+        el.addEventListener('pointerleave', function () { off(); window.removeEventListener('scroll', where); });
       }
     });
   })();
@@ -220,12 +300,11 @@
     { "type": "header", "content": "Bottom row" },
     { "type": "text", "id": "copyright", "label": "Middle text", "default": "Bentley Trike · Officially licensed by Bentley Motors" },
     { "type": "text", "id": "right_text", "label": "Right text", "default": "United States · USD" },
-    { "type": "range", "id": "pad_bottom", "label": "Space at the bottom", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 104, "info": "Keeps the last row clear of the sticky add-to-cart bar." },
-    { "type": "header", "content": "Text size" },
-    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
-    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
-    { "type": "range", "id": "text_size", "label": "Text size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "Body text, labels and buttons." },
-    { "type": "range", "id": "text_size_mobile", "label": "Text size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "pad_bottom", "label": "Space at the bottom", "min": 24, "max": 160, "step": 8, "unit": "px", "default": 48, "info": "The sticky add-to-cart bar hides itself over the footer, so this can stay small." },
+    { "type": "header", "content": "Size" },
+    { "type": "select", "id": "size", "label": "Footer size", "default": "compact", "options": [{ "value": "compact", "label": "Compact" }, { "value": "regular", "label": "Large" }], "info": "Compact uses a smaller wordmark and tighter spacing, with menus side by side on phones." },
+    { "type": "range", "id": "heading_size", "label": "Wordmark size (desktop)", "min": 50, "max": 150, "step": 5, "unit": "%", "default": 100, "info": "The big wordmark at the top." },
+    { "type": "range", "id": "heading_size_mobile", "label": "Wordmark size (phone)", "min": 50, "max": 150, "step": 5, "unit": "%", "default": 100 },
     { "type": "header", "content": "Colours" },
     { "type": "color", "id": "bg", "label": "Background", "default": "#1a1a1a" },
     { "type": "color", "id": "ink", "label": "Text", "default": "#f8f4ef" }
