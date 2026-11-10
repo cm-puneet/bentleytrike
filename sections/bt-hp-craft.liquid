@@ -57,14 +57,16 @@
   .bthp-crf__back:hover{background:rgba(26,26,26,.92)}
   .bthp-crf__back[hidden]{display:none}
   .bthp-crf__stage .bthp-prod .bthp-f-ph{width:100%;height:100%;opacity:.25;fill:currentColor}
-  .bthp-crf__stage .bthp-prod img{filter:drop-shadow(0 40px 50px rgba(0,0,0,.45))}
+  .bthp-crf__stage .bthp-prod::before{content:"";position:absolute;left:16%;right:16%;bottom:3%;height:14%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,.18) 60%,rgba(0,0,0,0));pointer-events:none}
+  .bthp-crf__stage .bthp-prod img{position:relative}
   .bthp-prod img{display:block;width:100%;height:100%;object-fit:contain}
   .bthp-prod.is-in{animation:bthpProdIn .9s cubic-bezier(.2,.7,.2,1)}
-  @keyframes bthpProdIn{from{opacity:0;transform:translateX(28px) scale(.97)}to{opacity:1;transform:none}}
-  .bthp-sheen{position:absolute;inset:0;pointer-events:none;overflow:hidden;-webkit-mask-image:var(--m);mask-image:var(--m);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;mix-blend-mode:soft-light}
-  .bthp-sheen:not([style*="--m"]){display:none}
-  .bthp-sheen::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,255,255,.85) 50%,rgba(255,255,255,0));transform:translateX(-110%);animation:bthpSheenX 7s ease-in-out infinite}
-  @keyframes bthpSheenX{0%,58%{transform:translateX(-110%)}86%,100%{transform:translateX(260%)}}
+  @keyframes bthpProdIn{from{opacity:0;transform:translate3d(28px,0,0) scale(.97)}to{opacity:1;transform:none}}
+  .bthp-crf .bthp-sheen{position:absolute;inset:0;pointer-events:none;overflow:hidden;-webkit-mask-image:var(--m);mask-image:var(--m);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+  .bthp-crf .bthp-sheen:not([style*="--m"]){display:none}
+  .bthp-crf .bthp-sheen::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,255,255,.5) 50%,rgba(255,255,255,0));transform:translate3d(-110%,0,0)}
+  .bthp-crf .bthp-sheen.is-go::before{animation:bthpCrfSheen 1.9s cubic-bezier(.45,0,.25,1) forwards}
+  @keyframes bthpCrfSheen{from{transform:translate3d(-110%,0,0)}to{transform:translate3d(260%,0,0)}}
   .bthp-crf__pick{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:8px}
   .bthp-crf__row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
   .bthp-crf .bthp-sw{width:44px;height:44px;border-radius:50%;border:0;padding:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(248,244,239,.24);transition:box-shadow .3s ease}
@@ -73,7 +75,7 @@
   .bthp-crf .bthp-sw i{display:block;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
   .bthp-crf__note[hidden]{display:none!important}
   .bthp-crf__col.is-in,.bthp-crf__slider.is-in{animation:bthpNotesIn .6s cubic-bezier(.2,.7,.2,1)}
-  @keyframes bthpNotesIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes bthpNotesIn{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:none}}
   .bthp-crf__vers{display:flex;justify-content:center;gap:clamp(20px,3vw,40px)}
   .bthp-crf__ver{display:flex;flex-direction:column;align-items:center;gap:10px;border:0;padding:0;background:none;color:inherit;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .bthp-crf__vc{position:relative;display:block;width:76px;height:76px;border-radius:50%;padding:5px;box-shadow:inset 0 0 0 1px rgba(248,244,239,.24);transition:box-shadow .3s ease}
@@ -133,7 +135,7 @@
     .bthp-crf__spec span{font-size:9px;letter-spacing:.16em}
   }
   .bthp-off,.bthp-off *,.bthp-off *::before{animation-play-state:paused!important}
-  @media (prefers-reduced-motion:reduce){.bthp-sheen::before,.bthp-prod.is-in,.bthp-crf__col.is-in,.bthp-crf__slider.is-in{animation:none}.bthp-crf__dimg,.bthp-crf__stage .bthp-prod{transition:none}}
+  @media (prefers-reduced-motion:reduce){.bthp-crf .bthp-sheen::before,.bthp-prod.is-in,.bthp-crf__col.is-in,.bthp-crf__slider.is-in{animation:none}.bthp-crf__dimg,.bthp-crf__stage .bthp-prod{transition:none}}
 </style>
 
 <div
@@ -360,6 +362,34 @@
       if (el.getAttribute('data-smoke') === 'true') window.bthpSmoke(el, el.querySelector('.bthp-smoke'), {});
       window.bthpWatch(el);
       var pick = el.querySelector('.bthp-crf__pick');
+      // Light sweep: one pass every few seconds while the trike is on screen, and right after a change.
+      // Nothing animates between passes, and it stops when off screen or when the tab is hidden.
+      var sheenEl = el.querySelector('[data-f-sheen]'), maskOk = false, inView = false, loop = 0;
+      function setMask(im, then) {
+        if (!sheenEl || !im) return;
+        function go() {
+          var u = im.currentSrc || im.src;
+          if (u) { sheenEl.style.setProperty('--m', 'url("' + u + '")'); maskOk = true; }
+          if (then) then();
+        }
+        if (im.complete && im.naturalWidth) go(); else im.addEventListener('load', go, { once: true });
+      }
+      function sweep() {
+        if (!sheenEl || !maskOk || !inView || document.hidden || el.classList.contains('has-detail')) return;
+        sheenEl.classList.remove('is-go'); void sheenEl.offsetWidth; sheenEl.classList.add('is-go');
+      }
+      function stopLoop() { if (loop) { clearInterval(loop); loop = 0; } }
+      function startLoop() { stopLoop(); loop = setInterval(sweep, 6500); }
+      function sweepSoon() { setTimeout(sweep, 350); if (inView) startLoop(); }
+      if (sheenEl) {
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (en) {
+            inView = en[0].isIntersecting;
+            if (inView) { setTimeout(sweep, 600); startLoop(); } else stopLoop();
+          }, { threshold: 0.3 }).observe(sheenEl.parentNode);
+        } else { inView = true; startLoop(); }
+        document.addEventListener('visibilitychange', function () { if (document.hidden) stopLoop(); else if (inView) startLoop(); });
+      }
       // Details: choosing one shows its photo in place of the trike.
       var noteEls = el.querySelectorAll('[data-d]');
       var dimgs = {};
@@ -415,7 +445,6 @@
         var row = el.querySelector('[data-swatches]');
         var cur = -1, shown = -1;
         var stage = el.querySelector('[data-f-stage]');
-        var sheen = el.querySelector('[data-f-sheen]');
         function stageImg() {
           var img = stage && stage.querySelector('.bthp-f-img');
           if (!img && stage) {
@@ -427,20 +456,22 @@
           }
           return img;
         }
-        function syncMask(img) {
-          if (!sheen || !img) return;
-          function go() { var u = img.currentSrc || img.src; if (u) sheen.style.setProperty('--m', 'url("' + u + '")'); }
-          if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, { once: true });
-        }
+        var warmed = {};
+        function warm(i) { var it = items[i]; if (it && it.img && !warmed[it.img]) { var p = new Image(); p.src = it.img; warmed[it.img] = p; } }
         function money(c) { return '$' + (c / 100).toFixed(2).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
         function select(i, user) {
           if (curD !== null && (user || cur !== -1)) showDetail(null);
           cur = i;
           var it = items[i];
           var img = stageImg();
-          if (img && it.img && i !== shown) { img.removeAttribute('srcset'); img.removeAttribute('sizes'); img.src = it.img; shown = i; }
           if (img) img.alt = it.title;
-          syncMask(img);
+          if (img && it.img && i !== shown) {
+            shown = i;
+            var put = function () { if (cur !== i) return; img.removeAttribute('srcset'); img.removeAttribute('sizes'); img.src = it.img; setMask(img, user ? sweepSoon : null); };
+            // Swap only once the new photo is decoded, so the trike never blinks.
+            warm(i); var pre = warmed[it.img];
+            if (pre && pre.decode) pre.decode().then(put, put); else put();
+          } else setMask(img, null);
           var sel = el.querySelector('[data-f-sel]');
           if (sel) sel.textContent = it.label + ' · ' + money(it.price);
           if (row) [].forEach.call(row.children, function (b, k) { b.setAttribute('aria-checked', k === i ? 'true' : 'false'); });
@@ -453,6 +484,8 @@
           b.setAttribute('aria-label', it.label + ', ' + money(it.price));
           var d = document.createElement('i'); d.style.background = it.swatch; b.appendChild(d);
           b.addEventListener('click', function () { select(i, true); });
+          b.addEventListener('pointerenter', function () { warm(i); }, { passive: true });
+          b.addEventListener('touchstart', function () { warm(i); }, { passive: true });
           row.appendChild(b);
         });
         document.addEventListener('bthp:finish', function (e) {
@@ -469,7 +502,6 @@
       function versions(box) {
         var btns = box.querySelectorAll('[data-v]');
         var stage = el.querySelector('[data-f-stage]');
-        var sheen = el.querySelector('[data-f-sheen]');
         var tEl = box.querySelector('[data-v-title]'), sEl = box.querySelector('[data-v-sub]'), lEl = box.querySelector('[data-v-link]');
         var cur = 0;
         function img() {
@@ -482,14 +514,10 @@
           }
           return im;
         }
-        function mask(im) {
-          if (!sheen || !im) return;
-          function go() { var u = im.currentSrc || im.src; if (u) sheen.style.setProperty('--m', 'url("' + u + '")'); }
-          if (im.complete && im.naturalWidth) go(); else im.addEventListener('load', go, { once: true });
-        }
         function warm(b) {
-          if (b._w || !b.getAttribute('data-src')) return; b._w = 1;
+          if (b._w || !b.getAttribute('data-src')) return b._w;
           var p = new Image(); p.sizes = '(max-width: 749px) 230px, 40vw'; p.srcset = b.getAttribute('data-srcset'); p.src = b.getAttribute('data-src');
+          b._w = p; return p;
         }
         function pickV(i, user) {
           var b = btns[i]; if (!b) return;
@@ -506,9 +534,15 @@
           }
           var src = b.getAttribute('data-src');
           if (src) {
-            var im = img();
-            im.sizes = '(max-width: 749px) 230px, 40vw'; im.srcset = b.getAttribute('data-srcset'); im.src = src; im.alt = name;
-            mask(im);
+            var put = function () {
+              if (cur !== i) return;
+              var im = img();
+              im.sizes = '(max-width: 749px) 230px, 40vw'; im.srcset = b.getAttribute('data-srcset'); im.src = src; im.alt = name;
+              setMask(im, user ? sweepSoon : null);
+            };
+            // Swap only once the new photo is decoded, so the trike never blinks.
+            var pre = warm(b);
+            if (user && pre && pre.decode) pre.decode().then(put, put); else put();
           }
           if (stage && user) { stage.classList.remove('is-in'); void stage.offsetWidth; stage.classList.add('is-in'); }
           swapNotes(String(i + 1), user);
@@ -543,7 +577,7 @@
           if (!d) return; e.preventDefault();
           var n = (cur + d + btns.length) % btns.length; pickV(n, true); btns[n].focus();
         });
-        mask(stage && stage.querySelector('.bthp-f-img'));
+        setMask(stage && stage.querySelector('.bthp-f-img'), null);
         el.addEventListener('shopify:block:select', function (e) {
           for (var k = 0; k < btns.length; k++) if (btns[k].contains(e.target) || btns[k] === e.target) { pickV(k, true); break; }
         });

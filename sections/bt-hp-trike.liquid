@@ -5,6 +5,10 @@
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
+  assign mini = false
+  if s.swatch_style == 'trike'
+    assign mini = true
+  endif
   assign uid = section.id | replace: '_', '' | replace: '-', '' | downcase
   assign img_n = s.image_number | minus: 1
   assign idx = 0
@@ -42,11 +46,19 @@
         if img
           assign img_url = img | image_url: width: 1000
         endif
+        assign thumb = b.thumb | default: img
+        assign thumb_url = ''
+        assign thumb_set = ''
+        if mini and thumb
+          assign thumb_url = thumb | image_url: width: 160
+          assign t1 = thumb | image_url: width: 80
+          assign thumb_set = t1 | append: ' 80w, ' | append: thumb_url | append: ' 160w'
+        endif
       -%}
       {%- if idx > 0 -%},{%- endif -%}
       {%- if idx == 0 -%}{%- assign init_img = img -%}{%- endif -%}
-      {"id":{{ v.id | json }},"block":{{ block.id | json }},"label":{{ label | json }},"title":{{ p.title | json }},"price":{{ v.price | json }},"compare":{{ v.compare_at_price | default: 0 | json }},"available":{{ v.available | json }},"img":{{ img_url | json }},"group":{{ group | json }},"gname":{{ gname | json }},"swatch":{{ b.swatch | json }},"url":{{ p.url | append: '?variant=' | append: v.id | json }}}
-      {%- capture sw -%}<button class="bthp-sw" type="button" role="radio" aria-checked="false" aria-label="{{ label | escape }}, {{ v.price | money_without_trailing_zeros | strip_html | escape }}{% unless v.available %} (sold out){% endunless %}" data-i="{{ idx }}"{% unless v.available %} data-soldout{% endunless %} {{ block.shopify_attributes }}><i style="background: {{ b.swatch }};"></i></button>{%- endcapture -%}
+      {"id":{{ v.id | json }},"block":{{ block.id | json }},"label":{{ label | json }},"title":{{ p.title | json }},"price":{{ v.price | json }},"compare":{{ v.compare_at_price | default: 0 | json }},"available":{{ v.available | json }},"img":{{ img_url | json }},"group":{{ group | json }},"gname":{{ gname | json }},"swatch":{{ b.swatch | json }},"thumb":{{ thumb_url | json }},"thumbs":{{ thumb_set | json }},"shadow":{% if b.floor_shadow == false %}false{% else %}true{% endif %},"sx":{{ b.shadow_x | default: 0 }},"sy":{{ b.shadow_y | default: 0 }},"ss":{{ b.shadow_size | default: 100 }},"so":{{ b.shadow_strength | default: 100 }},"url":{{ p.url | append: '?variant=' | append: v.id | json }}}
+      {%- capture sw -%}<button class="bthp-sw" type="button" role="radio" aria-checked="false" aria-label="{{ label | escape }}, {{ v.price | money_without_trailing_zeros | strip_html | escape }}{% unless v.available %} (sold out){% endunless %}" data-i="{{ idx }}"{% unless v.available %} data-soldout{% endunless %} {{ block.shopify_attributes }}><i style="background: {{ b.swatch }};">{% if thumb_url != blank %}<img src="{{ thumb_url }}" srcset="{{ thumb_set }}" sizes="50px" alt="" width="50" height="50" loading="lazy" decoding="async" fetchpriority="low">{% endif %}</i></button>{%- endcapture -%}
       {%- if group == 'Mulliner' -%}
         {%- assign mul_html = mul_html | append: sw -%}
         {%- assign mul_count = mul_count | plus: 1 -%}
@@ -70,16 +82,18 @@
   .bthp-trk__l{position:relative}
   .bthp-trk__stage{position:sticky;top:var(--bthp-top,68px);height:min(calc(100vh - var(--bthp-top,68px)),900px);min-height:560px;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 58%,#ffffff 0%,var(--bthp-stage) 62%,var(--bthp-stage-2) 100%);display:flex;align-items:center;justify-content:center}
   .bthp-trk__ghost{position:absolute;left:28px;right:28px;top:26px;margin:0;font-family:var(--heading-font-family,"Playfair Display",serif);font-style:italic;font-size:clamp(56px,7vw,120px);line-height:.92;color:var(--bthp-ink);opacity:.06;white-space:nowrap;overflow:hidden}
-  .bthp-trk__floor{position:absolute;left:50%;bottom:15%;width:46%;height:26px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(26,26,26,.28),rgba(26,26,26,0));filter:blur(4px)}
+  .bthp-trk__floor{position:absolute;left:50%;bottom:15%;width:46%;height:26px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(26,26,26,.24),rgba(26,26,26,.08) 60%,rgba(26,26,26,0))}
+  .bthp-trk__floor{transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
   .bthp-trk__cap{position:absolute;left:28px;bottom:24px;margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.7}
   .bthp-prod{position:relative;width:min(78%,640px);aspect-ratio:1/1}
   .bthp-prod img{display:block;width:100%;height:100%;object-fit:contain}
   .bthp-prod.is-in{animation:bthpProdIn .9s cubic-bezier(.2,.7,.2,1)}
-  @keyframes bthpProdIn{from{opacity:0;transform:translateX(28px) scale(.97)}to{opacity:1;transform:none}}
-  .bthp-sheen{position:absolute;inset:0;pointer-events:none;overflow:hidden;-webkit-mask-image:var(--m);mask-image:var(--m);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;mix-blend-mode:soft-light}
-  .bthp-sheen:not([style*="--m"]){display:none}
-  .bthp-sheen::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,255,255,.85) 50%,rgba(255,255,255,0));transform:translateX(-110%);animation:bthpSheenX 7s ease-in-out infinite}
-  @keyframes bthpSheenX{0%,58%{transform:translateX(-110%)}86%,100%{transform:translateX(260%)}}
+  @keyframes bthpProdIn{from{opacity:0;transform:translate3d(28px,0,0) scale(.97)}to{opacity:1;transform:none}}
+  .bthp-trk .bthp-sheen{position:absolute;inset:0;pointer-events:none;overflow:hidden;-webkit-mask-image:var(--m);mask-image:var(--m);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+  .bthp-trk .bthp-sheen:not([style*="--m"]){display:none}
+  .bthp-trk .bthp-sheen::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,255,255,.55) 50%,rgba(255,255,255,0));transform:translate3d(-110%,0,0)}
+  .bthp-trk .bthp-sheen.is-go::before{animation:bthpTrkSweep 1.9s cubic-bezier(.45,0,.25,1) forwards}
+  @keyframes bthpTrkSweep{from{transform:translate3d(-110%,0,0)}to{transform:translate3d(260%,0,0)}}
   .bthp-trk__buy{display:flex;flex-direction:column;gap:30px;padding:112px clamp(28px,5vw,96px) 104px;max-width:640px;box-sizing:border-box}
   .bthp-trk__label{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--bthp-accent)}
   .bthp-trk__h{margin:16px 0 0;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(36px,3.6vw,56px) * var(--bthp-hs, 1));line-height:1.02;letter-spacing:-.006em;color:var(--bthp-ink)}
@@ -99,6 +113,15 @@
   .bthp-trk__gh p{margin:0;font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
   .bthp-trk__gh span{font-size:13px;opacity:.72}
   .bthp-sw-row{display:flex;flex-wrap:wrap;gap:8px}
+  /* Mini-trike circles: each circle shows a small photo of that trike instead of a flat colour */
+  .bthp-trk--mini .bthp-sw-row{gap:10px}
+  .bthp-trk--mini .bthp-sw{width:58px;height:58px}
+  .bthp-trk--mini .bthp-sw i{width:50px;height:50px;overflow:hidden;background:#ffffff!important;box-shadow:inset 0 0 0 1px rgba(26,26,26,.08)}
+  .bthp-trk--mini .bthp-sw img{display:block;width:100%;height:100%;object-fit:contain;padding:4px;box-sizing:border-box;transition:transform .35s ease;backface-visibility:hidden}
+  @media (hover:hover){.bthp-trk--mini .bthp-sw:hover img{transform:scale(1.08)}}
+  .bthp-bar.bthp-trk--mini .bthp-sw{width:40px;height:40px}
+  .bthp-bar.bthp-trk--mini .bthp-sw i{width:34px;height:34px}
+  @media (max-width:749px){.bthp-trk--mini .bthp-sw{width:52px;height:52px}.bthp-trk--mini .bthp-sw i{width:44px;height:44px}}
   .bthp-sw{width:44px;height:44px;border-radius:50%;border:0;padding:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(26,26,26,.16);transition:box-shadow .3s ease}
   .bthp-sw:hover{box-shadow:inset 0 0 0 1px rgba(26,26,26,.55)}
   .bthp-sw[aria-checked="true"]{box-shadow:inset 0 0 0 1.5px var(--bthp-ink)}
@@ -125,8 +148,8 @@
   .bthp-trk__more:hover{color:var(--bthp-accent);background-size:30% 1px}
 
   /* Sticky bar (moved to <body> by the script) */
-  .bthp-bar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:#ffffff;box-shadow:0 -1px 0 rgba(26,26,26,.1),0 -18px 40px rgba(26,26,26,.06);transform:translateY(110%);transition:transform .55s cubic-bezier(.2,.7,.2,1);font-family:var(--text-font-family,Poppins,sans-serif);color:var(--bthp-ink)}
-  .bthp-bar.is-on{transform:none}
+  .bthp-bar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:#ffffff;box-shadow:0 -1px 0 rgba(26,26,26,.1),0 -18px 40px rgba(26,26,26,.06);transform:translate3d(0,110%,0);transition:transform .55s cubic-bezier(.2,.7,.2,1),visibility 0s linear .55s;visibility:hidden;font-family:var(--text-font-family,Poppins,sans-serif);color:var(--bthp-ink)}
+  .bthp-bar.is-on{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
   .bthp-bar__row{display:flex;align-items:center;gap:20px;min-height:80px;max-width:1440px;margin:0 auto;padding:0 clamp(16px,4.4vw,64px);box-sizing:border-box}
   .bthp-bar__p{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
   .bthp-bar__img{flex:none;width:56px;height:56px;background:var(--bthp-stage);object-fit:contain}
@@ -157,13 +180,13 @@
     .bthp-bar .bthp-btn{padding:0 18px;font-size:11px;letter-spacing:.16em}
   }
   .bthp-off,.bthp-off *,.bthp-off *::before{animation-play-state:paused!important}
-  @media (prefers-reduced-motion:reduce){.bthp-sheen::before,.bthp-prod.is-in{animation:none}}
+  @media (prefers-reduced-motion:reduce){.bthp-trk .bthp-sheen::before,.bthp-prod.is-in{animation:none}}
 </style>
 
 {%- capture vars -%}--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-accent: {{ s.accent }}; --bthp-tag: {{ s.tag_bg }}; --bthp-stage: {{ s.stage_bg }}; --bthp-stage-2: {{ s.stage_bg | color_darken: 4 }}; --bthp-line: {{ s.ink | color_modify: 'alpha', 0.14 }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-hover: {{ s.button_bg | color_darken: 8 }}; --bthp-btn-text: {{ s.button_text }}; --bthp-stage-m: {{ s.stage_height_mobile }}px; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};{%- endcapture -%}
 
 <div
-  class="bthp-trk"
+  class="bthp-trk{% if mini %} bthp-trk--mini{% endif %}"
   id="buy"
   data-bthp-trike="{{ uid }}"
   data-after="{{ s.after_add }}"
@@ -266,7 +289,7 @@
   </div>
 
   {%- if s.sticky_bar -%}
-    <div class="bthp-bar" data-bar aria-hidden="true" style="{{ vars }}">
+    <div class="bthp-bar{% if mini %} bthp-trk--mini{% endif %}" data-bar aria-hidden="true" style="{{ vars }}">
       <div class="bthp-bar__row">
         <div class="bthp-bar__p">
           {%- if init_img -%}
@@ -356,14 +379,45 @@
       var current = 0, shown = 0;
       var stageImg = el.querySelector('[data-f-stage] .bthp-f-img');
       var sheen = el.querySelector('[data-f-sheen]');
-      function syncMask() {
+      var maskOk = false;
+      function syncMask(then) {
         if (!sheen || !stageImg) return;
-        function go() { var u = stageImg.currentSrc || stageImg.src; if (u) sheen.style.setProperty('--m', 'url("' + u + '")'); }
+        function go() {
+          var u = stageImg.currentSrc || stageImg.src;
+          if (u) { sheen.style.setProperty('--m', 'url("' + u + '")'); maskOk = true; }
+          if (then) then();
+        }
         if (stageImg.complete && stageImg.naturalWidth) go(); else stageImg.addEventListener('load', go, { once: true });
+      }
+      // Light sweep: runs every few seconds while the trike is on screen, and right after a colour change.
+      // Between sweeps nothing animates, and it stops completely when the trike is off screen or the tab is hidden.
+      var inView = false, loop = 0;
+      function sweep() {
+        if (!sheen || !maskOk || !inView || document.hidden) return;
+        sheen.classList.remove('is-go'); void sheen.offsetWidth; sheen.classList.add('is-go');
+      }
+      function startLoop() { stopLoop(); loop = setInterval(sweep, 6500); }
+      function stopLoop() { if (loop) { clearInterval(loop); loop = 0; } }
+      if (sheen) {
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (en) {
+            inView = en[0].isIntersecting;
+            if (inView) { setTimeout(sweep, 600); startLoop(); } else stopLoop();
+          }, { threshold: 0.3 }).observe(sheen.parentNode);
+        } else { inView = true; startLoop(); }
+        document.addEventListener('visibilitychange', function () { if (document.hidden) stopLoop(); else if (inView) startLoop(); });
+      }
+      // Fetch a colour's photo as soon as a finger or mouse heads for its circle, so the swap is instant.
+      var warmed = {};
+      function warm(idx) {
+        var it = items[idx];
+        if (!it || !it.img || warmed[it.img]) return;
+        var im = new Image(); im.src = it.img; warmed[it.img] = im;
       }
       for (var i = 0; i < items.length; i++) { if (items[i].available) { current = i; break; } }
 
       var alive = function () { return document.documentElement.contains(el); };
+      var mini = el.classList.contains('bthp-trk--mini');
       function swatchBtn(it, idx) {
         var b = document.createElement('button');
         b.type = 'button';
@@ -374,6 +428,15 @@
         if (!it.available) b.setAttribute('data-soldout', '');
         var dot = document.createElement('i');
         dot.style.background = it.swatch;
+        if (mini && it.thumb) {
+          // Same small file as the circles above (already downloaded), so the sticky bar adds no new downloads.
+          var t = document.createElement('img');
+          t.alt = ''; t.width = 50; t.height = 50; t.loading = 'lazy'; t.decoding = 'async';
+          t.setAttribute('fetchpriority', 'low');
+          if (it.thumbs) { t.sizes = '50px'; t.srcset = it.thumbs; }
+          t.src = it.thumb;
+          dot.appendChild(t);
+        }
         b.appendChild(dot);
         return b;
       }
@@ -387,9 +450,19 @@
         grp.textContent = lo === hi ? money(lo) : money(lo) + ' – ' + money(hi);
       });
 
+      var floor = el.querySelector('.bthp-trk__floor');
       function select(idx, user) {
         current = idx;
         var it = items[idx];
+        // Some photos (e.g. the folding trike) already include their own shadow.
+        // Each finish can move, resize, soften or hide the shadow (only transform/opacity change, so it stays smooth).
+        if (floor) {
+          var sx = +it.sx || 0, sy = +it.sy || 0, ss = (it.ss == null ? 100 : +it.ss) / 100, so = (it.so == null ? 100 : +it.so) / 100;
+          if (!user) floor.style.transition = 'none';
+          floor.style.transform = 'translate3d(calc(-50% + ' + sx + 'px),' + sy + 'px,0) scale(' + ss + ')';
+          floor.style.opacity = it.shadow === false ? '0' : String(so);
+          if (!user) { void floor.offsetWidth; floor.style.transition = ''; }
+        }
         all('[data-f-label]').forEach(function (n) { n.textContent = it.label; });
         all('[data-f-price]').forEach(function (n) { n.textContent = money(it.price); });
         all('[data-f-compare]').forEach(function (n) { n.textContent = it.compare > it.price ? money(it.compare) : ''; });
@@ -397,14 +470,23 @@
         all('[data-f-tag]').forEach(function (n) { n.hidden = it.group !== 'Mulliner'; });
         var inst = el.getAttribute('data-installment') || '';
         all('[data-f-inst]').forEach(function (n) { n.textContent = inst.replace('[quarter]', money(Math.round(it.price / 4))); });
-        if (it.img && idx !== shown) {
-          all('.bthp-f-img').forEach(function (n) { n.removeAttribute('srcset'); n.removeAttribute('sizes'); n.src = it.img; });
-          shown = idx;
-        }
-        all('.bthp-f-img').forEach(function (n) { n.alt = n.closest('[data-bar]') ? '' : it.title; });
-        syncMask();
         var stage = el.querySelector('[data-f-stage]');
-        if (stage && user) { stage.classList.remove('is-in'); void stage.offsetWidth; stage.classList.add('is-in'); }
+        function swap() {
+          if (current !== idx) return;
+          imgs.forEach(function (n) { n.removeAttribute('srcset'); n.removeAttribute('sizes'); n.src = it.img; n.alt = n.closest('[data-bar]') ? '' : it.title; });
+          shown = idx;
+          syncMask(user ? function () { setTimeout(sweep, 350); if (inView) startLoop(); } : null);
+          if (stage && user) { stage.classList.remove('is-in'); void stage.offsetWidth; stage.classList.add('is-in'); }
+        }
+        if (it.img && idx !== shown) {
+          // Wait until the new photo is decoded, so the trike never blinks or stutters.
+          warm(idx);
+          var pre = warmed[it.img];
+          if (pre && pre.decode) pre.decode().then(swap, swap); else swap();
+        } else {
+          imgs.forEach(function (n) { n.alt = n.closest('[data-bar]') ? '' : it.title; });
+          syncMask();
+        }
         all('.bthp-sw[data-i]').forEach(function (b) { b.setAttribute('aria-checked', parseInt(b.getAttribute('data-i'), 10) === idx ? 'true' : 'false'); });
         var label = el.getAttribute('data-label');
         all('[data-add]').forEach(function (b) {
@@ -413,6 +495,13 @@
         });
         if (user) document.dispatchEvent(new CustomEvent('bthp:finish', { detail: { id: it.id, source: el.getAttribute('data-bthp-trike') } }));
       }
+      var imgs = all('.bthp-f-img');
+      all('.bthp-sw[data-i]').forEach(function (b) {
+        var i2 = parseInt(b.getAttribute('data-i'), 10);
+        b.addEventListener('pointerenter', function () { warm(i2); }, { passive: true });
+        b.addEventListener('touchstart', function () { warm(i2); }, { passive: true });
+        b.addEventListener('focus', function () { warm(i2); });
+      });
       document.addEventListener('shopify:block:select', function (e) {
         if (!alive() || !el.contains(e.target) || !e.target.hasAttribute('data-i')) return;
         select(parseInt(e.target.getAttribute('data-i'), 10), true);
@@ -447,21 +536,36 @@
       if (bn) bn.addEventListener('click', function () { add(bn, 'checkout'); });
 
       if (bar) {
+        // Sticky bar: shows once the buy box has scrolled up out of view, hides near the footer.
+        // Positions are measured only when the page changes size; scrolling just compares two numbers.
         var box = el.querySelector('[data-buybox]');
-        var raf = 0;
-        function check() {
-          raf = 0;
-          var r = box.getBoundingClientRect();
-          var foot = document.querySelector('.shopify-section-group-footer-group, footer');
-          var fr = foot ? foot.getBoundingClientRect() : null;
-          var vh = window.innerHeight || 800;
-          var on = r.bottom < 60 && !(fr && fr.top < vh - 40);
+        var past = false, nearFoot = false, state = null, boxEnd = 0, raf = 0;
+        var barBtns = [].slice.call(bar.querySelectorAll('button'));
+        function apply() {
+          var on = past && !nearFoot;
+          if (on === state) return;
+          state = on;
           bar.classList.toggle('is-on', on);
           bar.setAttribute('aria-hidden', on ? 'false' : 'true');
-          bar.querySelectorAll('button').forEach(function (b) { b.tabIndex = on ? 0 : -1; });
+          barBtns.forEach(function (b) { b.tabIndex = on ? 0 : -1; });
         }
+        function measure() { boxEnd = box.getBoundingClientRect().bottom + window.pageYOffset; check(); }
+        function check() { raf = 0; past = window.pageYOffset > boxEnd - 60; apply(); }
         window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(check); }, { passive: true });
-        check();
+        var mt = 0;
+        function later() { clearTimeout(mt); mt = setTimeout(measure, 120); }
+        if ('ResizeObserver' in window) new ResizeObserver(later).observe(document.body); else window.addEventListener('resize', later);
+        window.addEventListener('load', measure);
+        measure();
+        if ('IntersectionObserver' in window) {
+          // The footer comes later in the page, so look for it once the page has loaded.
+          var watchFoot = function () {
+            var foot = document.querySelector('.shopify-section-group-footer-group, footer');
+            if (foot) new IntersectionObserver(function (en) { nearFoot = en[0].isIntersecting; apply(); }, { rootMargin: '0px 0px -40px 0px' }).observe(foot);
+          };
+          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchFoot); else watchFoot();
+        }
+        apply();
       }
     });
   })();
@@ -483,6 +587,7 @@
     { "type": "url", "id": "rating_link", "label": "Rating link", "info": "Leave empty to scroll to the reviews section." },
     { "type": "text", "id": "installment_text", "label": "Instalments line", "default": "or 4 payments of [quarter] with Shop Pay", "info": "[quarter] becomes a quarter of the price." },
     { "type": "text", "id": "signature_title", "label": "Group 1 title", "default": "Signature finishes" },
+    { "type": "select", "id": "swatch_style", "label": "Circle style", "default": "colour", "options": [{ "value": "colour", "label": "Colour" }, { "value": "trike", "label": "Mini trike photo" }] },
     { "type": "text", "id": "mulliner_title", "label": "Group 2 title", "default": "Mulliner finishes" },
     { "type": "text", "id": "group_3_title", "label": "Group 3 title", "default": "Folding finishes", "info": "Shows only when a Finish block is set to Group 3." },
     { "type": "text", "id": "group_3_name", "label": "Group 3 short name", "default": "Folding", "info": "Used in the caption under the photo, e.g. \"Onyx Black · Folding\"." },
@@ -526,8 +631,15 @@
         { "type": "product", "id": "product", "label": "Product" },
         { "type": "text", "id": "name", "label": "Name shown", "default": "Onyx Black", "info": "Leave empty to use the product title." },
         { "type": "color", "id": "swatch", "label": "Colour circle", "default": "#141414" },
+        { "type": "image_picker", "id": "thumb", "label": "Mini trike photo (optional)", "info": "Shown in the circle when Circle style is set to Mini trike photo. Uses the trike photo if empty. A cut-out on a white or clear background works best." },
         { "type": "select", "id": "group", "label": "Group", "options": [{ "value": "1", "label": "Group 1 (Signature)" }, { "value": "2", "label": "Group 2 (Mulliner)" }, { "value": "3", "label": "Group 3" }], "default": "1" },
-        { "type": "image_picker", "id": "image", "label": "Image (optional)", "info": "Replaces the product photo for this finish." }
+        { "type": "image_picker", "id": "image", "label": "Image (optional)", "info": "Replaces the product photo for this finish." },
+        { "type": "header", "content": "Shadow under the trike" },
+        { "type": "checkbox", "id": "floor_shadow", "label": "Show shadow", "default": true, "info": "Turn off if this photo already has its own shadow." },
+        { "type": "range", "id": "shadow_y", "label": "Move up / down", "min": -120, "max": 120, "step": 4, "unit": "px", "default": 0, "info": "Minus moves it up, toward the wheels." },
+        { "type": "range", "id": "shadow_x", "label": "Move left / right", "min": -120, "max": 120, "step": 4, "unit": "px", "default": 0 },
+        { "type": "range", "id": "shadow_size", "label": "Size", "min": 40, "max": 160, "step": 5, "unit": "%", "default": 100 },
+        { "type": "range", "id": "shadow_strength", "label": "Darkness", "min": 10, "max": 100, "step": 5, "unit": "%", "default": 100 }
       ]
     }
   ],
