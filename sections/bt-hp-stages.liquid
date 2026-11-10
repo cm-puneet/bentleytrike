@@ -42,11 +42,11 @@
   .bthp-stg__arw{width:48px;height:48px;border:0;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1px var(--bthp-ink);color:var(--bthp-ink);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s ease,color .3s ease}
   .bthp-stg__arw:hover{background:var(--bthp-ink);color:var(--bthp-bg)}
   .bthp-stg__time{position:relative;height:1px;margin:22px 0 0;max-width:520px;background:rgba(26,26,26,.14);overflow:hidden}
-  .bthp-stg__time i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--bthp-accent)}
+  .bthp-stg__time i{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--bthp-accent);transform:scaleX(0);transform-origin:0 50%}
   .bthp-stg__time.is-run i{animation:bthpFillA var(--bthp-dur,6s) linear forwards}
   .bthp-stg__time.is-run.is-odd i{animation-name:bthpFillB}
-  @keyframes bthpFillA{to{width:100%}}
-  @keyframes bthpFillB{to{width:100%}}
+  @keyframes bthpFillA{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes bthpFillB{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   .bthp-stg__hint{margin:12px 0 0;max-width:520px;text-align:center;font-size:12px;opacity:.7}
   .bthp-stg__media{position:relative;aspect-ratio:4/5;max-height:780px;overflow:hidden;background:#1a1a1a}
   .bthp-stg__media img,.bthp-stg__media svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity 1.2s ease,transform 6s ease-out}

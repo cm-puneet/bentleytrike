@@ -2,7 +2,10 @@
   BT Homepage — Opening reveal + Hero
   Black screen, BENTLEY wordmark letters appear, the screen splits through the
   wordmark to reveal the hero, then the headline rises in. Hero stays full-screen
-  with a gentle parallax on scroll.
+  with a gentle parallax on scroll (computer only).
+  Speed: every animation moves only transform/opacity (no blur), the scroll effect
+  writes straight to two elements instead of restyling the whole hero, and the
+  intro is removed from the page once it has played.
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
@@ -23,19 +26,22 @@
 <style>
   .bthp-hero{--bthp-hs:var(--bthp-hs-d,1)}
   @media (max-width:749px){.bthp-hero{--bthp-hs:var(--bthp-hs-m,1)}}
-  .bthp-hero{position:relative;height:var(--bthp-h,100vh);height:var(--bthp-h,100svh);min-height:600px;max-height:1000px;overflow:hidden;background:#0b0b0a;color:var(--bthp-text);--y:0}
+  .bthp-hero{position:relative;height:var(--bthp-h,100vh);height:var(--bthp-h,100svh);min-height:600px;max-height:1000px;overflow:hidden;background:#0b0b0a;color:var(--bthp-text)}
   .bthp-hero[data-transparent]{margin-block-start:calc(-1 * var(--header-height, 0px) * var(--section-is-first, 0))}
-  .bthp-hero__media{position:absolute;inset:0;transform:translate3d(0,calc(var(--y) * 16%),0) scale(calc(1 + var(--y) * .06));will-change:transform}
+  .bthp-hero__media{position:absolute;inset:0;backface-visibility:hidden}
+  .bthp-hero.is-px .bthp-hero__media,.bthp-hero.is-px .bthp-hero__in{will-change:transform,opacity}
   .bthp-hero__media img,.bthp-hero__media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pd,50% 50%)}
   .bthp-hero__media .bthp-hero__m{display:none}
   .bthp-hero__photo{animation:bthpHeroIn 4s cubic-bezier(.2,.7,.2,1) both}
+  .bthp-hero.is-done .bthp-hero__photo,.bthp-hero.is-done .bthp-hero__ln>span{animation:none;transform:none}
+  .bthp-hero.is-done .bthp-hero__foot{animation:none;opacity:1}
   .bthp-hero.is-plain .bthp-hero__photo{animation:none}
-  @keyframes bthpHeroIn{0%,42%{transform:scale(1.24)}100%{transform:scale(1)}}
+  @keyframes bthpHeroIn{0%,42%{transform:scale3d(1.24,1.24,1)}100%{transform:scale3d(1,1,1)}}
   .bthp-hero__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,calc(var(--bthp-ov) + .3)) 0%,rgba(0,0,0,calc(var(--bthp-ov) * .3)) 28%,rgba(0,0,0,calc(var(--bthp-ov) * .5)) 50%,rgba(0,0,0,calc(var(--bthp-ov) + .45)) 100%)}
-  .bthp-hero__in{position:absolute;left:0;right:0;bottom:0;padding:0 clamp(20px,4.4vw,64px) clamp(36px,6vh,64px);max-width:1440px;margin:0 auto;box-sizing:border-box;opacity:calc(1 - var(--y) * 1.6);transform:translate3d(0,calc(var(--y) * -70px),0)}
+  .bthp-hero__in{position:absolute;left:0;right:0;bottom:0;padding:0 clamp(20px,4.4vw,64px) clamp(36px,6vh,64px);max-width:1440px;margin:0 auto;box-sizing:border-box}
   .bthp-hero__h{margin:0 0 clamp(28px,4vh,44px);max-width:var(--bthp-hw,50%);font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(52px,6.4vw,112px) * var(--bthp-hs, 1));line-height:.9;letter-spacing:-.02em;color:var(--bthp-text)}
   .bthp-hero__ln{display:block;overflow:hidden;padding:0 .08em .24em;margin:0 -.08em -.24em}
-  .bthp-hero__ln>span{display:block;transform:translateY(160%);animation:bthpLn 1.3s cubic-bezier(.2,.7,.2,1) 3s forwards}
+  .bthp-hero__ln>span{display:block;transform:translate3d(0,160%,0);animation:bthpLn 1.3s cubic-bezier(.2,.7,.2,1) 3s forwards}
   .bthp-hero__ln+.bthp-hero__ln>span{animation-delay:3.16s}
   .bthp-hero.is-plain .bthp-hero__ln>span{animation-delay:.1s}
   .bthp-hero.is-plain .bthp-hero__ln+.bthp-hero__ln>span{animation-delay:.24s}
@@ -79,8 +85,8 @@
   .bthp-intro__p{position:absolute;left:0;right:0;height:50.5%;background:var(--bthp-intro-bg);overflow:hidden;will-change:transform}
   .bthp-intro__p--t{top:0;animation:bthpIpT 3.6s cubic-bezier(.76,0,.24,1) forwards}
   .bthp-intro__p--b{bottom:0;animation:bthpIpB 3.6s cubic-bezier(.76,0,.24,1) forwards}
-  @keyframes bthpIpT{0%,46%{transform:translateY(0)}62%,72%{transform:translateY(-26%)}100%{transform:translateY(-101%)}}
-  @keyframes bthpIpB{0%,46%{transform:translateY(0)}62%,72%{transform:translateY(26%)}100%{transform:translateY(101%)}}
+  @keyframes bthpIpT{0%,46%{transform:translate3d(0,0,0)}62%,72%{transform:translate3d(0,-26%,0)}100%{transform:translate3d(0,-101%,0)}}
+  @keyframes bthpIpB{0%,46%{transform:translate3d(0,0,0)}62%,72%{transform:translate3d(0,26%,0)}100%{transform:translate3d(0,101%,0)}}
   .bthp-intro__m{position:absolute;left:50%;color:var(--bthp-intro-text)}
   .bthp-intro__p--t .bthp-intro__m{bottom:0;transform:translate(-50%,50%)}
   .bthp-intro__p--b .bthp-intro__m{top:0;transform:translate(-50%,-50%)}
@@ -90,8 +96,8 @@
   .bthp-intro__line--r{transform-origin:0 50%}
   @keyframes bthpLine{to{transform:scaleX(1)}}
   .bthp-intro__word{display:flex;font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:clamp(34px,5vw,72px);line-height:1;letter-spacing:.3em;margin-right:-.3em;white-space:nowrap}
-  .bthp-intro__word span{display:inline-block;opacity:0;transform:translateY(36%);filter:blur(8px);animation:bthpL 1s cubic-bezier(.2,.7,.2,1) forwards}
-  @keyframes bthpL{to{opacity:1;transform:none;filter:blur(0)}}
+  .bthp-intro__word span{display:inline-block;opacity:0;transform:translate3d(0,36%,0);animation:bthpL 1s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes bthpL{to{opacity:1;transform:none}}
   .bthp-intro__sub,.bthp-intro__sup{position:absolute;left:0;right:0;margin:0;text-align:center;font-family:var(--text-font-family,Poppins,sans-serif);font-size:9px;font-weight:700;text-transform:uppercase;opacity:0;animation:bthpS .9s ease forwards}
   .bthp-intro__sub{top:calc(100% + 22px);letter-spacing:.62em;margin-right:-.62em;color:var(--bthp-sand);animation-delay:1.2s}
   .bthp-intro__sup{bottom:calc(100% + 22px);letter-spacing:.5em;margin-right:-.5em;color:var(--bthp-intro-text);animation-delay:.9s}
@@ -106,7 +112,11 @@
     .bthp-hero__h{max-width:none}
     .bthp-hero__h{font-size:calc(48px * var(--bthp-hs, 1));margin-bottom:22px}
     .bthp-hero__foot{grid-template-columns:minmax(0,1fr);gap:16px;padding-top:18px}
-    .bthp-hero__meta{display:none}
+    .bthp-hero__meta{gap:6px 16px}
+    .bthp-hero__meta span{font-size:9px;letter-spacing:.2em}
+    .bthp-hero[data-metam="false"] .bthp-hero__meta{display:none}
+    .bthp-hero[data-alm="center"] .bthp-hero__meta{justify-content:center}
+    .bthp-hero[data-alm="right"] .bthp-hero__meta{justify-content:flex-end}
     .bthp-hero__sub{font-size:14px;margin-bottom:16px}
     .bthp-hero__ctas{flex-wrap:nowrap}
     .bthp-hero__btn{flex:1 1 0;padding:0 10px;min-height:50px;font-size:11px;letter-spacing:.14em}
@@ -122,6 +132,8 @@
   class="bthp-hero{% if s.show_intro %} is-intro{% else %} is-plain{% endif %}"
   data-bthp-hero
   data-once="{{ s.intro_once }}"
+  data-metam="{% if s.meta_mobile == false %}false{% else %}true{% endif %}"
+  data-parallax="{% if s.parallax == false %}false{% else %}true{% endif %}"
   data-al="{{ s.align }}"
   data-alm="{{ s.align_mobile }}"
   {% if s.allow_transparent_header %}data-transparent allow-transparent-header{% endif %}
@@ -165,7 +177,7 @@
           {%- if s.image_mobile != blank -%}
             <source media="(max-width: 749px)" sizes="100vw" srcset="{{ img_m | image_url: width: 500 }} 500w, {{ img_m | image_url: width: 750 }} 750w, {{ img_m | image_url: width: 1000 }} 1000w, {{ img_m | image_url: width: 1400 }} 1400w">
           {%- endif -%}
-          {{ img_d | image_url: width: 3000 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000,2600,3000' }}
+          {{ img_d | image_url: width: 2400 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', decoding: 'async', sizes: '100vw', widths: '750,1100,1500,1900,2400' }}
         </picture>
       {%- elsif img_m != blank -%}
         {{ img_m | image_url: width: 1400 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '500,750,1000,1400' }}
@@ -177,7 +189,7 @@
       {%- if vid_d != blank -%}
         {{ vid_d | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-hero__photo bthp-hero__d bthp-v', image_size: '2000x' }}
       {%- elsif img_d != blank -%}
-        {{ img_d | image_url: width: 3000 | image_tag: class: 'bthp-hero__photo bthp-hero__d', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000,2600,3000' }}
+        {{ img_d | image_url: width: 2400 | image_tag: class: 'bthp-hero__photo bthp-hero__d', loading: 'eager', fetchpriority: 'high', decoding: 'async', sizes: '100vw', widths: '750,1100,1500,1900,2400' }}
       {%- else -%}
         {{ 'lifestyle-1' | placeholder_svg_tag: 'bthp-hero__photo bthp-hero__d' }}
       {%- endif -%}
@@ -251,21 +263,40 @@
       }
       if (skip) { el.classList.remove('is-intro'); el.classList.add('is-plain'); }
       var intro = el.querySelector('.bthp-intro');
-      if (intro && !skip) setTimeout(function () { intro.style.display = 'none'; }, 3800);
+      // Remove the intro from the page once it has played, then drop the finished animations.
+      if (intro && !skip) setTimeout(function () { intro.remove(); }, 3800); else if (intro) intro.remove();
+      setTimeout(function () { el.classList.add('is-done'); }, skip ? 1800 : 4800);
 
       window.bthpWatch(el);
-      var raf = 0, near = true;
-      if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { near = en[0].isIntersecting; }).observe(el);
-      function update() {
+      // Scroll effect (computer only): moves the photo and text directly; no work on phones.
+      var media = el.querySelector('.bthp-hero__media'), inner = el.querySelector('.bthp-hero__in');
+      var mq = window.matchMedia('(min-width: 750px) and (hover: hover)');
+      var top = 0, hgt = 1, last = -1, raf = 0, near = true, on = false;
+      function measure() { var r = el.getBoundingClientRect(); top = r.top + window.pageYOffset; hgt = Math.max(r.height, 1); }
+      function paint() {
         raf = 0;
-        if (!near) return;
-        var r = el.getBoundingClientRect();
-        var y = Math.max(0, Math.min(1, -r.top / Math.max(r.height, 1)));
-        el.style.setProperty('--y', y.toFixed(3));
+        if (!on) return;
+        var y = Math.max(0, Math.min(1, (window.pageYOffset - top) / hgt));
+        y = Math.round(y * 500) / 500;
+        if (y === last) return;
+        last = y;
+        media.style.transform = y ? 'translate3d(0,' + (y * 16).toFixed(2) + '%,0) scale(' + (1 + y * .06).toFixed(4) + ')' : '';
+        inner.style.transform = y ? 'translate3d(0,' + (y * -70).toFixed(1) + 'px,0)' : '';
+        inner.style.opacity = y ? Math.max(0, 1 - y * 1.6).toFixed(3) : '';
       }
-      function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      update();
+      function onScroll() { if (on && near && !raf) raf = requestAnimationFrame(paint); }
+      function setup() {
+        var want = el.getAttribute('data-parallax') !== 'false' && mq.matches && !!media && !!inner;
+        if (want === on) { if (on) { measure(); onScroll(); } return; }
+        on = want;
+        el.classList.toggle('is-px', on);
+        if (on) { measure(); window.addEventListener('scroll', onScroll, { passive: true }); paint(); }
+        else { window.removeEventListener('scroll', onScroll); last = -1; if (media) media.style.transform = ''; if (inner) { inner.style.transform = ''; inner.style.opacity = ''; } }
+      }
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { near = en[0].isIntersecting; if (near) onScroll(); }).observe(el);
+      var rt = 0;
+      window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(setup, 150); }, { passive: true });
+      setup();
     });
   })();
 </script>
@@ -290,6 +321,8 @@
     { "type": "range", "id": "overlay", "label": "Darken image", "min": 0, "max": 60, "step": 5, "unit": "%", "default": 10 },
     { "type": "select", "id": "height", "label": "Height (desktop)", "options": [{ "value": "full", "label": "Full screen" }, { "value": "large", "label": "Large" }], "default": "full" },
     { "type": "checkbox", "id": "allow_transparent_header", "label": "Allow transparent header", "info": "Only applies when this section is first on the page.", "default": true },
+    { "type": "header", "content": "Scroll effect" },
+    { "type": "checkbox", "id": "parallax", "label": "Parallax effect", "default": true, "info": "The photo drifts and the text fades as you scroll down. Computer only; phones always stay still." },
     { "type": "header", "content": "Text" },
     { "type": "select", "id": "align", "label": "Text position (desktop)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
     { "type": "range", "id": "heading_width", "label": "Heading width (desktop)", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 50, "info": "How much of the screen width the heading can use before it wraps." },
@@ -299,6 +332,7 @@
     { "type": "text", "id": "meta_1", "label": "Small detail 1", "default": "The Bentley 6-in-1 Stroller Trike" },
     { "type": "text", "id": "meta_2", "label": "Small detail 2", "default": "Officially licensed by Bentley Motors" },
     { "type": "text", "id": "meta_3", "label": "Small detail 3", "default": "From 6 months" },
+    { "type": "checkbox", "id": "meta_mobile", "label": "Show small details on phone", "default": true },
     { "type": "textarea", "id": "text", "label": "Description", "default": "A stroller you steer today, a trike that's entirely theirs tomorrow — finished in the colours of the cars from Crewe." },
     { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "Shop the Trike" },
     { "type": "url", "id": "button_1_link", "label": "Button 1 link", "info": "Leave empty to scroll to the Trike buy box." },
