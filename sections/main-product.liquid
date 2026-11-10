@@ -1323,6 +1323,47 @@ quick buy information in a template, that will be extracted in JS, but ensure it
       ]
     },
     {
+      "type": "bt_title",
+      "name": "BT: title header",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Same header as the foldable page. Put it at the top and hide the Title, Badges and Rating blocks." },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "New", "info": "Leave empty for no badge." },
+        { "type": "checkbox", "id": "use_product_badges", "label": "Use the product's own badges instead", "info": "e.g. Best Seller, from the product's settings.", "default": false },
+        { "type": "text", "id": "eyebrow", "label": "Text next to the badge", "default": "OFFICIALLY LICENSED · BENTLEY MOTORS" },
+        { "type": "select", "id": "title_size", "label": "Title size", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }], "default": "h2" },
+        { "type": "checkbox", "id": "show_stars", "label": "Show Okendo stars", "default": true },
+        { "type": "text", "id": "stars_anchor", "label": "Stars link to section ID", "default": "reviews" },
+        { "type": "text", "id": "stars_label", "label": "Stars link name for screen readers", "default": "Read the reviews" }
+      ]
+    },
+    {
+      "type": "bt_collections",
+      "name": "BT: collection tabs",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_from", "label": "Show \"From\" price", "info": "Hidden on phones.", "default": true },
+        { "type": "text", "id": "from_text", "label": "Price text", "info": "[price] = lowest price of the products in stock", "default": "From [price]" },
+        { "type": "text", "id": "aria_label", "label": "Name for screen readers", "default": "Collection" },
+        { "type": "header", "content": "Tab 1" },
+        { "type": "text", "id": "tab1_title", "label": "Tab name", "default": "Daily Commuter" },
+        { "type": "product_list", "id": "tab1_products", "label": "Products", "limit": 12, "info": "On these products' pages this tab is highlighted. Also used for the \"From\" price." },
+        { "type": "url", "id": "tab1_link", "label": "Tab link", "info": "Leave empty to open the first product in stock from the list." },
+        { "type": "header", "content": "Tab 2" },
+        { "type": "text", "id": "tab2_title", "label": "Tab name", "default": "Traveller" },
+        { "type": "product_list", "id": "tab2_products", "label": "Products", "limit": 12, "info": "On these products' pages this tab is highlighted. Also used for the \"From\" price." },
+        { "type": "url", "id": "tab2_link", "label": "Tab link", "info": "Leave empty to open the first product in stock from the list." },
+        { "type": "header", "content": "Tab 3" },
+        { "type": "text", "id": "tab3_title", "label": "Tab name", "default": "Mulliner" },
+        { "type": "product_list", "id": "tab3_products", "label": "Products", "limit": 12, "info": "On these products' pages this tab is highlighted. Also used for the \"From\" price." },
+        { "type": "url", "id": "tab3_link", "label": "Tab link", "info": "Leave empty to open the first product in stock from the list." },
+        { "type": "header", "content": "Tab 4" },
+        { "type": "text", "id": "tab4_title", "label": "Tab name" },
+        { "type": "product_list", "id": "tab4_products", "label": "Products", "limit": 12, "info": "On these products' pages this tab is highlighted. Also used for the \"From\" price." },
+        { "type": "url", "id": "tab4_link", "label": "Tab link", "info": "Leave empty to open the first product in stock from the list." }
+      ]
+    },
+    {
       "type": "bt_heading",
       "name": "BT: step heading",
       "settings": [

@@ -30,7 +30,7 @@
   assign theme_pos = section.settings.theme_blocks_position
   assign has_theme_blocks = false
   for block in section.blocks
-    unless block.type == 'bullet' or block.type == 'finish' or block.type == 'set' or block.type == 'trust'
+    unless block.type == 'bullet' or block.type == 'finish' or block.type == 'collection' or block.type == 'set' or block.type == 'trust'
       assign has_theme_blocks = true
     endunless
   endfor
@@ -196,7 +196,7 @@
         case block.type
           when 'bullet'
             break
-          when 'finish'
+          when 'finish', 'collection'
             assign bullets_after = 'finish'
           when 'set', 'promo', 'promo_addon'
             assign bullets_after = 'cta'
@@ -249,7 +249,63 @@
         {%- endfor -%}
       {%- endcapture -%}
     {%- endif -%}
+    {%- comment -%}
+      Collection tabs (e.g. Daily Commuter / Traveller / Mulliner): one block per collection. The tab holding this product is
+      selected; the other tabs link to their collection (the tab's link, or its first product in stock).
+    {%- endcomment -%}
+    {%- liquid
+      assign coll_count = 0
+      assign active_coll = ''
+      for block in section.blocks
+        if block.type == 'collection' and block.settings.products.size > 0
+          assign coll_count = coll_count | plus: 1
+          if active_coll == blank
+            for p in block.settings.products
+              if p.id == product.id
+                assign active_coll = block.id
+              endif
+            endfor
+          endif
+        endif
+      endfor
+    -%}
     {%- capture finish_out -%}
+    {%- if coll_count > 0 -%}
+      <div class="btf-colls">
+        <nav class="btf-coll" aria-label="{{ section.settings.coll_label | escape }}">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'collection' and block.settings.products.size > 0 -%}
+              {%- liquid
+                assign low = nil
+                assign go = block.settings.link
+                for p in block.settings.products
+                  if p.available
+                    if low == nil or p.price_min < low
+                      assign low = p.price_min
+                    endif
+                    if go == blank
+                      assign go = p.url
+                    endif
+                  endif
+                endfor
+                if go == blank
+                  assign go = block.settings.products.first.url
+                endif
+              -%}
+              {%- if block.id == active_coll -%}
+                <span class="btf-coll__tab" aria-current="page" {{ block.shopify_attributes }}>
+              {%- else -%}
+                <a class="btf-coll__tab" href="{{ go }}" {{ block.shopify_attributes }}>
+              {%- endif -%}
+                <b>{{ block.settings.title | escape }}</b>
+                {%- if section.settings.coll_show_from -%}
+                  <small>{%- if low != nil -%}{%- assign low_money = low | money_without_trailing_zeros -%}{{ section.settings.coll_from | replace: '[price]', low_money }}{%- else -%}{{ 'product.general.sold_out_button' | t }}{%- endif -%}</small>
+                {%- endif -%}
+              {%- if block.id == active_coll -%}</span>{%- else -%}</a>{%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+    {%- endif -%}
     {%- if finishes != blank -%}
       <div class="btf-step" id="choose-finish">
         {%- assign finish_count = finishes | split: 'class="btf-finish"' | size | minus: 1 -%}
@@ -265,6 +321,7 @@
         {%- endif -%}
       </div>
     {%- endif -%}
+    {%- if coll_count > 0 -%}</div>{%- endif -%}
     {%- endcapture -%}
     {{ finish_out }}
     {%- if bullets_after == 'finish' -%}{{ bullets_out }}{%- endif -%}
@@ -642,6 +699,26 @@
       "default": "1. CHOOSE YOUR FINISH"
     },
     {
+      "type": "checkbox",
+      "id": "coll_show_from",
+      "label": "Show \"From\" price on collection tabs",
+      "info": "Only shows when Collection tab blocks are added. Hidden on phones.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "coll_from",
+      "label": "Collection tab price text",
+      "info": "[price] = lowest price of the products in stock",
+      "default": "From [price]"
+    },
+    {
+      "type": "text",
+      "id": "coll_label",
+      "label": "Collection tabs name for screen readers",
+      "default": "Collection"
+    },
+    {
       "type": "text",
       "id": "set_heading",
       "label": "Set heading",
@@ -802,6 +879,32 @@
     {"type": "range", "id": "t_text_scale", "label": "Text size", "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100}
   ],
   "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection tab",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab name",
+          "default": "Traveller"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "limit": 12,
+          "info": "On these products' pages this tab is selected. Also used for the \"From\" price."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Tab link",
+          "info": "Where the tab goes when clicked. Leave empty to open the first product in stock from the list above."
+        }
+      ]
+    },
     {
       "type": "bullet",
       "name": "Bullet",
