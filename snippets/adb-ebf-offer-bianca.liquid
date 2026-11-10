@@ -139,7 +139,7 @@
             {%- for v in page_p.variants -%}
               {%- if v.available and trike_handles contains page_p.handle -%}{%- continue -%}{%- endif -%}
               {%- assign d = v.price | times: pct | divided_by: 100.0 | round -%}
-              <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" data-qty="{{ v.inventory_quantity }}" data-vname="{{ v.title | escape }}"{% unless v.available %} data-soldout="true"{% endunless %}>{{ page_p.title | escape }}</option>
+              <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" data-qty="{{ v.inventory_quantity }}" data-vname="{{ v.title | escape }}" data-handle="{{ page_p.handle }}"{% unless v.available %} data-soldout="true"{% endunless %}>{{ page_p.title | escape }}</option>
             {%- endfor -%}
           {%- endif -%}
           {%- comment -%} A trike that isn't in trike_handles (e.g. the foldable trikes) is listed first, so the script keeps its own price. {%- endcomment -%}
@@ -148,7 +148,7 @@
               {%- for v in product.variants -%}
                 {%- unless v.available -%}{%- continue -%}{%- endunless -%}
                 {%- assign d = v.price | times: pct | divided_by: 100.0 | round -%}
-                <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" data-qty="{{ v.inventory_quantity }}" data-vname="{{ v.title | escape }}" {% if v.id == first_v.id %}selected{% endif %}>{{ product.title | escape }}</option>
+                <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" data-qty="{{ v.inventory_quantity }}" data-vname="{{ v.title | escape }}" data-handle="{{ product.handle }}" {% if v.id == first_v.id %}selected{% endif %}>{{ product.title | escape }}</option>
               {%- endfor -%}
             {%- endunless -%}
           {%- endif -%}
@@ -162,7 +162,7 @@
             {%- for v in tp.variants -%}
               {%- unless v.available -%}{%- continue -%}{%- endunless -%}
               {%- assign d = v.price | times: pct | divided_by: 100.0 | round -%}
-              <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" data-qty="{{ v.inventory_quantity }}" data-vname="{{ v.title | escape }}" {% if v.id == first_v.id %}selected{% endif %}>{{ tp.title | escape }}</option>
+              <option value="{{ v.id }}" data-price="{{ v.price | money | strip_html | escape }}" data-off="{{ v.price | minus: d | money | strip_html | escape }}" data-save="{{ d | money | strip_html | escape }}" data-qty="{{ v.inventory_quantity }}" data-vname="{{ v.title | escape }}" data-handle="{{ tp.handle }}" {% if v.id == first_v.id %}selected{% endif %}>{{ tp.title | escape }}</option>
             {%- endfor -%}
             {%- if own_colors -%}{%- break -%}{%- endif -%}
           {%- endfor -%}
@@ -335,7 +335,7 @@
             <div class="bt-ebf__note">Automatically added to your cart, free, when you add this trike.</div>
               <div class="bt-ebf__ship">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 4h14v12H1zM15 9h4l3 3v4h-7"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18.5" cy="18.5" r="1.8"/></svg>
-                <span><b>Pre-order:</b> Some <b>Bentley electric cars</b> are on pre-order and will be ready to ship once available. The <b>Bacalar in Black</b> is estimated to ship in early December.</span>
+                <span><b>Pre-order:</b> Some <b>Bentley electric cars</b> are on pre-order and will be ready to ship once available. The <b>Bacalar in Black</b> is estimated to ship at the end of November.</span>
               </div>
               <div class="bt-ebf__ship">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.01"/></svg>
@@ -1657,19 +1657,85 @@
           var setText = function (el, t) {
             if (el && t != null && el.textContent !== t) el.textContent = t;
           };
-          // If the box sits inside a product section, follow that section's colour picker.
+          // Follow the trike picked elsewhere on the page (theme variant picker, a "Choose your finish"
+          // carousel, or ?variant= in the address), so the right colour is the one added to the cart.
+          var hasOpt = function (id) {
+            return id && tSel && tSel.querySelector('option[value="' + String(id).replace(/"/g, '') + '"]') ? String(id) : '';
+          };
+          var colourOf = function (o) {
+            var n = (o.getAttribute('data-vname') || '').trim();
+            if (!n || /^default title$/i.test(n)) n = (o.textContent || '').split(/\s+bentley\b/i)[0];
+            return n.trim().toLowerCase();
+          };
+          var pickFrom = function (el) {
+            // 1) a variant id in the element's attributes, 2) a /products/<handle> link, 3) the colour name in its text or image alt
+            var hops = 0, found = '';
+            for (var n = el; n && n.nodeType === 1 && n !== document.body && hops < 6 && !found; n = n.parentElement, hops++) {
+              if (box.contains(n)) return '';
+              for (var i = 0; i < n.attributes.length && !found; i++) {
+                var a = n.attributes[i];
+                var m = a.value && a.value.match(/\d{3,}/g);
+                if (m) m.forEach(function (x) { if (!found) found = hasOpt(x); });
+                if (!found && /\/products\/([^/?#]+)/.test(a.value)) {
+                  var h = a.value.match(/\/products\/([^/?#]+)/)[1];
+                  var vm = a.value.match(/[?&]variant=(\d+)/);
+                  found = (vm && hasOpt(vm[1])) || '';
+                  if (!found) {
+                    var ho = tSel.querySelector('option[data-handle="' + h + '"]');
+                    if (ho) found = ho.value;
+                  }
+                }
+              }
+            }
+            if (found) return found;
+            var near = el.closest('a, button, label, li, [role="radio"], [role="option"], [class*="swatch"], [class*="item"], [class*="slide"]') || el;
+            if (box.contains(near) || (near.textContent || '').length > 160) return '';
+            var txt = ((near.textContent || '') + ' ' + [].map.call(near.querySelectorAll('img'), function (i) { return i.alt || ''; }).join(' ') + ' ' + (near.getAttribute('aria-label') || '') + ' ' + (near.getAttribute('title') || '') + ' ' + (el.getAttribute('alt') || '')).toLowerCase();
+            var best = '', bl = 0;
+            [].forEach.call(tSel.options, function (o) {
+              var c = colourOf(o);
+              if (c && c.length > bl && txt.indexOf(c) !== -1) { best = o.value; bl = c.length; }
+            });
+            return best;
+          };
           var syncTheme = function () {
             if (!tSel) return;
-            var scope = box.closest('.product-info, product-info, .shopify-section') || document;
-            var inp = scope.querySelector('form[action*="/cart/add"]:not([data-ebf-pay]) [name="id"]');
-            if (!inp && scope !== document) {
-              var bb = scope.querySelector('buy-buttons[form]');
-              var f = bb && document.forms[bb.getAttribute('form')];
-              inp = f && f.querySelector('[name="id"]');
+            var id = '';
+            var vm = location.search.match(/[?&]variant=(\d+)/);
+            if (vm) id = hasOpt(vm[1]);
+            if (!id) {
+              var scope = box.closest('.product-info, product-info, .shopify-section') || document;
+              [scope, document].some(function (sc) {
+                [].some.call(sc.querySelectorAll('form[action*="/cart/add"] [name="id"], buy-buttons [name="id"]'), function (inp) {
+                  if (box.contains(inp)) return false;
+                  id = hasOpt(inp.value);
+                  return !!id;
+                });
+                return !!id;
+              });
             }
-            var id = inp && inp.value;
-            if (id && tSel.value !== id && tSel.querySelector('option[value="' + id + '"]')) tSel.value = id;
+            if (id && tSel.value !== id) tSel.value = id;
           };
+          // A click on another picker on the page: take the trike it points to.
+          document.addEventListener('click', function (e) {
+            var t = e.target;
+            if (!tSel || !t || t.nodeType !== 1 || box.contains(t)) return;
+            var id = pickFrom(t);
+            setTimeout(function () {
+              syncTheme();
+              if (id && tSel.value !== id) tSel.value = id;
+              paint();
+            }, 60);
+          }, true);
+          // Some pickers only change the address bar; check it now and then.
+          var lastUrl = location.href;
+          setInterval(function () {
+            if (location.href === lastUrl) return;
+            lastUrl = location.href;
+            var before = tSel && tSel.value;
+            syncTheme();
+            if (tSel && tSel.value !== before) paint();
+          }, 400);
           var paint = function () {
             var saved = ss(K_OFFER);
             if (saved) {
