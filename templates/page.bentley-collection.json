@@ -207,6 +207,144 @@
         "lazy": true
       }
     },
+    "bt_hp_hero_slides_bw3T6V": {
+      "type": "bt-hp-hero-slides",
+      "blocks": {
+        "slide_Ahpwbn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/6in1-1.png",
+            "image_mobile": "shopify://shop_images/6in1-1-Mobile_c7dac0cc-eadc-4c4c-a558-924ac3072588.png",
+            "heading_1": "Bentley 6-in-1",
+            "heading_2": "Stroller/Trike",
+            "meta_1": "Designed to Grow with Your Child",
+            "meta_2": "Officially licensed by Bentley Motors",
+            "meta_3": "From 6 months",
+            "text": "A stroller you steer today, a trike that's entirely theirs tomorrow — finished in the colours of the cars from Crewe.",
+            "button_1_label": "Shop the Trike",
+            "button_1_link": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
+            "button_2_label": "Black Friday Sale",
+            "button_2_link": "shopify://pages/the-bentley-trike-hidden-sale",
+            "al_desktop": "default",
+            "v_desktop": "default",
+            "v_mobile": "bottom",
+            "al_mobile": "left",
+            "side_dark": 80
+          }
+        },
+        "slide_cc4tiW": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Folding_Bike_1_d54e3eac-3025-40c2-ab3e-4243d591cf2e_bc48ef20-4623-4eac-b28d-1c8d5c41abae.png",
+            "image_mobile": "shopify://shop_images/Folding_Bike_1_Mobile_da3f7b75-f4dd-4068-b127-2dd8c70709b2.png",
+            "heading_1": "Bentley Trike",
+            "heading_2": "Folding",
+            "meta_1": "Effortless compact fold. Built for seamless storage and trunk travel.",
+            "meta_2": "",
+            "meta_3": "",
+            "text": "",
+            "button_1_label": "Shop the Trike",
+            "button_1_link": "shopify://products/black-bentley-foldable-tricycle",
+            "button_2_label": "See how it grows",
+            "button_2_link": "",
+            "al_desktop": "default",
+            "v_desktop": "default",
+            "v_mobile": "split",
+            "al_mobile": "default",
+            "side_dark": 55
+          }
+        },
+        "slide_LCjrnN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Exp_12-1.png",
+            "image_mobile": "shopify://shop_images/Exp_12-1-Mobile_72f26020-dc7a-4f39-a316-9a5cd0231999.png",
+            "heading_1": "Bentley",
+            "heading_2": "Ride-on Car",
+            "meta_1": "Bring Style and Fun to Your Kid's Ride",
+            "meta_2": "",
+            "meta_3": "",
+            "text": "",
+            "button_1_label": "Shop Now",
+            "button_1_link": "shopify://collections/bentley-ride-on-electric-cars",
+            "button_2_label": "",
+            "button_2_link": "",
+            "al_desktop": "default",
+            "v_desktop": "default",
+            "v_mobile": "split",
+            "al_mobile": "default",
+            "side_dark": 70
+          }
+        },
+        "slide_ByNQyn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/BalanceBike_1.png",
+            "image_mobile": "shopify://shop_images/BalanceBike_1-mobile.png",
+            "heading_1": "Bentley",
+            "heading_2": "Balance Bike",
+            "meta_1": "Your Kid's First Balance Bike",
+            "meta_2": "",
+            "meta_3": "",
+            "text": "",
+            "button_1_label": "Shop Now",
+            "button_1_link": "shopify://products/bentley-balance-bikes",
+            "button_2_label": "",
+            "button_2_link": "",
+            "al_desktop": "default",
+            "v_desktop": "default",
+            "v_mobile": "default",
+            "al_mobile": "default",
+            "side_dark": 80
+          }
+        }
+      },
+      "block_order": [
+        "slide_Ahpwbn",
+        "slide_cc4tiW",
+        "slide_LCjrnN",
+        "slide_ByNQyn"
+      ],
+      "disabled": true,
+      "name": "BT Hero slideshow",
+      "settings": {
+        "show_intro": false,
+        "intro_once": false,
+        "intro_word": "BENTLEY",
+        "intro_top": "Officially licensed by Bentley Motors",
+        "intro_bottom": "Trike",
+        "autoplay": false,
+        "speed": 7,
+        "pause_hover": true,
+        "show_pause": true,
+        "show_arrows": true,
+        "show_counter": true,
+        "label": "Bentley Trike highlights",
+        "overlay": 10,
+        "height": "full",
+        "height_mobile": 92,
+        "allow_transparent_header": true,
+        "zoom": true,
+        "parallax": true,
+        "align": "left",
+        "v_desktop": "bottom",
+        "heading_width": 50,
+        "align_mobile": "left",
+        "v_mobile": "bottom",
+        "edge_mobile": 0,
+        "buttons_mobile": "side",
+        "meta_mobile": true,
+        "text_mobile": true,
+        "heading_size": 100,
+        "heading_size_mobile": 100,
+        "text_color": "#ffffff",
+        "accent_color": "#d9d0c5",
+        "button_bg": "#ffffff",
+        "button_text": "#1a1a1a",
+        "intro_bg": "#1a1a1a",
+        "intro_text": "#f8f4ef"
+      }
+    },
     "blocks_tFMcJE": {
       "type": "_blocks",
       "blocks": {
@@ -1559,7 +1697,7 @@
       "type": "apps",
       "blocks": {
         "tolstoy_shoppable_video_quiz_carousel_block_d9wPWX": {
-          "type": "shopify://apps/tolstoy-ads-image-video/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
+          "type": "shopify://apps/tolstoy/blocks/carousel-block/06fa8282-42ff-403e-b67c-1936776aed11",
           "settings": {
             "publishId": "vlgy6zzuljecp"
           }
@@ -1582,6 +1720,7 @@
     "rich_text_7UtMJQ",
     "main",
     "ss_collection_13_fBr3DD",
+    "bt_hp_hero_slides_bw3T6V",
     "blocks_tFMcJE",
     "slideshow_UUQrn3",
     "slideshow_etKJD9",
