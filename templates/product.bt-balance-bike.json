@@ -12,6 +12,18 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "bt_title_header": {
+          "type": "bt_title",
+          "settings": {
+            "badge": "New",
+            "use_product_badges": true,
+            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS",
+            "title_size": "h2",
+            "show_stars": true,
+            "stars_anchor": "reviews",
+            "stars_label": "Read the reviews"
+          }
+        },
         "title": {
           "type": "title",
           "disabled": true,
@@ -95,8 +107,15 @@
             "size_chart_page": ""
           }
         },
+        "liquid_wHH8JJ": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'bt-ebf-offer-30-bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: 'auto:250' %}"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_payment_button": false,
             "show_gift_card_recipient": true,
@@ -148,19 +167,13 @@
         },
         "associated_products_YXTBbY": {
           "type": "associated_products",
+          "disabled": true,
           "settings": {
             "title": "COMPLETE YOUR BENTLEY BIKE",
             "stack_products": false,
             "products_count": 5,
             "background": "",
             "text_color": ""
-          }
-        },
-        "bt_title_header": {
-          "type": "bt_title",
-          "settings": {
-            "use_product_badges": true,
-            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS"
           }
         }
       },
@@ -177,6 +190,7 @@
         "text_q6Hc7E",
         "description",
         "variant_picker",
+        "liquid_wHH8JJ",
         "buy_buttons",
         "offer_TCPYbU",
         "offer_WtbX38",
