@@ -12,6 +12,18 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "bt_title_header": {
+          "type": "bt_title",
+          "settings": {
+            "badge": "New",
+            "use_product_badges": true,
+            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS",
+            "title_size": "h2",
+            "show_stars": true,
+            "stars_anchor": "reviews",
+            "stars_label": "Read the reviews"
+          }
+        },
         "title": {
           "type": "title",
           "disabled": true,
@@ -29,6 +41,10 @@
           "settings": {
             "show_taxes_notice": false
           }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
         },
         "rating": {
           "type": "rating",
@@ -92,8 +108,15 @@
             "size_chart_page": ""
           }
         },
+        "liquid_rJJ3NG": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'bt-ebf-offer-30-bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: 'auto:250' %}"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_payment_button": false,
             "show_gift_card_recipient": true,
@@ -102,10 +125,6 @@
             "payment_button_background": "",
             "payment_button_text_color": ""
           }
-        },
-        "payment_terms": {
-          "type": "payment_terms",
-          "settings": {}
         },
         "offer_TCPYbU": {
           "type": "offer",
@@ -149,19 +168,13 @@
         },
         "associated_products_YXTBbY": {
           "type": "associated_products",
+          "disabled": true,
           "settings": {
             "title": "COMPLETE YOUR BENTLEY RIDE-ON",
             "stack_products": false,
             "products_count": 5,
             "background": "",
             "text_color": ""
-          }
-        },
-        "bt_title_header": {
-          "type": "bt_title",
-          "settings": {
-            "use_product_badges": true,
-            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS"
           }
         }
       },
@@ -170,6 +183,7 @@
         "title",
         "badges",
         "price",
+        "payment_terms",
         "rating",
         "inventory_Cibqgw",
         "product_variations_WFpMqc",
@@ -177,8 +191,8 @@
         "text_q6Hc7E",
         "description",
         "variant_picker",
+        "liquid_rJJ3NG",
         "buy_buttons",
-        "payment_terms",
         "offer_TCPYbU",
         "offer_WtbX38",
         "offer_EWXTY8",
