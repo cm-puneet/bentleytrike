@@ -1493,8 +1493,8 @@
         "signature_title": "Daily Commuter",
         "swatch_style": "trike",
         "mulliner_title": "Mulliner finishes",
-        "group_3_title": "Traveler",
-        "group_3_name": "Folding",
+        "group_3_title": "Folding Traveler",
+        "group_3_name": "Folding Traveler",
         "mulliner_tag": "Mulliner",
         "cart_label": "Add to cart",
         "added_label": "Added ✓",
@@ -1633,12 +1633,12 @@
         "version_Fw9z8m": {
           "type": "version",
           "settings": {
-            "title": "Traveler",
+            "title": "Folding Traveler",
             "subtitle": "Folds flat for travel",
             "image": "shopify://shop_images/SilverBentleyFoldableTricycle_d7bc65b9-3512-4665-b6f4-74fcd09a80d2.png",
             "circle_color": "#3a3f45",
             "link": "shopify://products/cool-stone-bentley-foldable-tricycle",
-            "link_label": "Shop Traveler"
+            "link_label": "Shop Folding Traveler"
           }
         },
         "note_dje9QB": {
