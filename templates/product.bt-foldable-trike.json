@@ -12,6 +12,50 @@
     "main": {
       "type": "bt-foldable-main",
       "blocks": {
+        "coll_daily": {
+          "type": "collection",
+          "settings": {
+            "title": "Daily Commuter",
+            "products": [
+              "bentley-6-in-1-stroller-trike",
+              "onyx-black-bentley-stroller-trike",
+              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+              "fuscia-pink-bentley-stroller-trike",
+              "jetstream-blue-bentley-6-in-1-stroller-trike",
+              "spruce-green-6-in-1-stroller-trike",
+              "sequin-blue-bentley-stroller-trike",
+              "white-satin-bentley-6-in-1-stroller-trike",
+              "dragon-red-bentley-stroller-trike"
+            ],
+            "link": ""
+          }
+        },
+        "coll_traveller": {
+          "type": "collection",
+          "settings": {
+            "title": "Folding Traveler",
+            "products": [
+              "black-bentley-foldable-tricycle",
+              "purple-bentley-foldable-tricycle",
+              "gold-bentley-foldable-tricycle",
+              "cool-stone-bentley-foldable-tricycle"
+            ],
+            "link": ""
+          }
+        },
+        "coll_mulliner": {
+          "type": "collection",
+          "settings": {
+            "title": "Mulliner",
+            "products": [
+              "bentley-mulliner-trike",
+              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
+              "mulliner-celeste-bentley-6-in-1-stroller-trike"
+            ],
+            "link": ""
+          }
+        },
         "finish_1": {
           "type": "finish",
           "settings": {
@@ -136,47 +180,6 @@
             "title": "Six modes",
             "text": "from 10 months to 6 years"
           }
-        },
-        "coll_daily": {
-          "type": "collection",
-          "settings": {
-            "title": "Daily Commuter",
-            "products": [
-              "bentley-6-in-1-stroller-trike",
-              "onyx-black-bentley-stroller-trike",
-              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
-              "fuscia-pink-bentley-stroller-trike",
-              "jetstream-blue-bentley-6-in-1-stroller-trike",
-              "spruce-green-6-in-1-stroller-trike",
-              "sequin-blue-bentley-stroller-trike",
-              "white-satin-bentley-6-in-1-stroller-trike",
-              "dragon-red-bentley-stroller-trike"
-            ]
-          }
-        },
-        "coll_traveller": {
-          "type": "collection",
-          "settings": {
-            "title": "Traveller",
-            "products": [
-              "black-bentley-foldable-tricycle",
-              "purple-bentley-foldable-tricycle",
-              "gold-bentley-foldable-tricycle",
-              "cool-stone-bentley-foldable-tricycle"
-            ]
-          }
-        },
-        "coll_mulliner": {
-          "type": "collection",
-          "settings": {
-            "title": "Mulliner",
-            "products": [
-              "bentley-mulliner-trike",
-              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
-              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
-              "mulliner-celeste-bentley-6-in-1-stroller-trike"
-            ]
-          }
         }
       },
       "block_order": [
@@ -218,6 +221,9 @@
         "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS",
         "title_size": "h2",
         "finish_heading": "1. CHOOSE YOUR FINISH",
+        "coll_show_from": true,
+        "coll_from": "From [price]",
+        "coll_label": "Collection",
         "set_heading": "2. CHOOSE YOUR SET",
         "set_note_off": "Add a set to save up to [percent]%.",
         "set_note_on": "[percent]% set discount applied automatically in your cart.",
