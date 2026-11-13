@@ -43,6 +43,14 @@
   .bthp-cat__img--b{opacity:0}
   .bthp-cat__pan.is-xf .bthp-cat__img{animation:bthpCatA 11s ease-in-out infinite;animation-delay:calc(var(--d,0s) * -1)}
   .bthp-cat__pan.is-xf .bthp-cat__img--b{animation-name:bthpCatB}
+  /* Photo 2 on hover (computer): crossfades in while the mouse is on the card, back out when it leaves */
+  @media (hover:hover) and (pointer:fine){
+    .bthp-cat[data-xf="hover"] .bthp-cat__pan.is-xf .bthp-cat__img{animation:none;transform:none}
+    .bthp-cat[data-xf="hover"] .bthp-cat__img{will-change:auto}
+    .bthp-cat[data-xf="hover"] .bthp-cat__img--b{opacity:0;transition:opacity .8s ease}
+    .bthp-cat[data-xf="hover"] .bthp-cat__pan:hover .bthp-cat__img--b{will-change:opacity}
+    .bthp-cat[data-xf="hover"] .bthp-cat__pan.is-xf:hover .bthp-cat__img--b,.bthp-cat[data-xf="hover"] .bthp-cat__pan.is-xf:focus-visible .bthp-cat__img--b{opacity:1}
+  }
   .bthp-cat__media{background-color:#2a2622;background-size:cover;background-position:center}
   .bthp-cat__img--solo{opacity:1;animation:bthpPanSolo 14s ease-in-out infinite alternate}
   @keyframes bthpCatA{0%{opacity:1;transform:scale(1.04)}42%{opacity:1;transform:scale(1)}50%{opacity:0;transform:scale(1)}92%{opacity:0;transform:scale(1.04)}100%{opacity:1;transform:scale(1.04)}}
@@ -135,6 +143,7 @@
 
 <div
   data-bthp-cat
+  data-xf="{{ s.photo_2_mode | default: 'hover' }}"
   class="bthp-cat{% if minis.size == 0 %} bthp-cat--no-row{% endif %}{% if s.desktop_layout == 'cards' %} bthp-cat--cards{% endif %}"
   style="--bthp-bg: {{ s.bg }}; --bthp-ink: {{ s.ink }}; --bthp-accent: {{ s.accent }}; --bthp-sand: {{ s.sand }}; --bthp-line: {{ s.ink | color_modify: 'alpha', 0.14 }}; --bthp-hover: {{ s.hover_bg }}; --bthp-cols: {{ minis.size | at_least: 1 }}; --bthp-ph: {{ s.panel_height }}vh; --bthp-phm: {{ s.panel_height_mobile }}px; --bthp-gap: {{ s.card_gap }}px; --bthp-pw: {{ pw }}vw; --bthp-tw: {{ tw }}vw; --bthp-rad: {{ s.card_radius }}px; --bthp-mpt: {{ s.mini_space }}px; --bthp-mptm: {{ s.mini_space_mobile }}px; --bthp-mis: {{ s.mini_img_size }}px; --bthp-mism: {{ s.mini_img_size | times: 0.78 | round }}px; --bthp-mfit: {{ s.mini_img_fit }}; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
 >
@@ -254,6 +263,15 @@
         if (a.complete && a.naturalWidth) afterA(); else a.addEventListener('load', afterA, { once: true });
       }
       var pans = el.querySelectorAll('.bthp-cat__pan');
+      var hoverOnly = el.getAttribute('data-xf') === 'hover' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (hoverOnly) {
+        // Computer + hover mode: Photo 2 is only seen on hover, so it downloads when the mouse first enters
+        // this section (a moment before it reaches a card), never for visitors who just scroll past.
+        var once = function () { el.removeEventListener('pointerenter', once); pans.forEach(loadSecond); };
+        el.addEventListener('pointerenter', once);
+        pans.forEach(function (pn) { pn.addEventListener('focus', once); });
+        return;
+      }
       if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (en) {
           if (!en[0].isIntersecting) return;
@@ -282,6 +300,7 @@
     { "type": "header", "content": "Panels" },
     { "type": "text", "id": "mark_word", "label": "Wordmark over panels", "default": "BENTLEY", "info": "Full-width split layout only. Leave empty to hide." },
     { "type": "text", "id": "mark_sub", "label": "Line under wordmark", "default": "Kids Collection" },
+    { "type": "select", "id": "photo_2_mode", "label": "Photo 2 (computer)", "default": "hover", "options": [{ "value": "hover", "label": "Cross-fade when the mouse is on the card" }, { "value": "loop", "label": "Cross-fade by itself on a loop" }], "info": "Phones have no mouse, so there Photo 2 always cross-fades by itself." },
     { "type": "select", "id": "desktop_layout", "label": "Desktop layout", "options": [{ "value": "cards", "label": "Cards with gaps (like phone)" }, { "value": "split", "label": "Full-width split" }], "default": "cards" },
     { "type": "range", "id": "card_gap", "label": "Gap between cards", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16, "info": "Cards layout only." },
     { "type": "range", "id": "card_radius", "label": "Card corner rounding", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 0, "info": "Cards layout only." },
