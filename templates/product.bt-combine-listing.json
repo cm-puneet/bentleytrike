@@ -126,36 +126,44 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "bt_title_header": {
+          "type": "bt_title",
+          "settings": {
+            "badge": "New",
+            "use_product_badges": true,
+            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS",
+            "title_size": "h2",
+            "show_stars": true,
+            "stars_anchor": "reviews",
+            "stars_label": "Read the reviews"
+          }
+        },
         "title": {
           "type": "title",
+          "disabled": true,
           "settings": {
             "heading_tag": "h3"
-          },
-          "disabled": true
+          }
         },
         "badges": {
           "type": "badges",
-          "settings": {},
-          "disabled": true
+          "disabled": true,
+          "settings": {}
         },
         "rating": {
           "type": "rating",
+          "disabled": true,
           "settings": {
             "show_empty": false,
             "show_rating_pos": true
-          },
-          "disabled": true
+          }
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {
             "show_taxes_notice": false
-          },
-          "disabled": true
-        },
-        "payment_terms": {
-          "type": "payment_terms",
-          "settings": {}
+          }
         },
         "offer_hGMrdA": {
           "type": "offer",
@@ -185,13 +193,6 @@
             "text_color": "#000000"
           }
         },
-        "inventory_Cibqgw": {
-          "type": "inventory",
-          "settings": {
-            "low_inventory_threshold": 100
-          },
-          "disabled": true
-        },
         "product_variations_WFpMqc": {
           "type": "product_variations",
           "settings": {
@@ -213,6 +214,46 @@
             "swatch_selector_style": "swatch",
             "variant_image_options": "Color",
             "size_chart_page": ""
+          }
+        },
+        "bt_collection_tabs": {
+          "type": "bt_collections",
+          "settings": {
+            "show_from": true,
+            "from_text": "From [price]",
+            "aria_label": "Collection",
+            "tab1_title": "Daily Commuter",
+            "tab1_products": [
+              "bentley-6-in-1-stroller-trike",
+              "onyx-black-bentley-stroller-trike",
+              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+              "fuscia-pink-bentley-stroller-trike",
+              "jetstream-blue-bentley-6-in-1-stroller-trike",
+              "spruce-green-6-in-1-stroller-trike",
+              "sequin-blue-bentley-stroller-trike",
+              "white-satin-bentley-6-in-1-stroller-trike",
+              "dragon-red-bentley-stroller-trike"
+            ],
+            "tab1_link": "",
+            "tab2_title": "Folding Traveler",
+            "tab2_products": [
+              "black-bentley-foldable-tricycle",
+              "purple-bentley-foldable-tricycle",
+              "gold-bentley-foldable-tricycle",
+              "cool-stone-bentley-foldable-tricycle"
+            ],
+            "tab2_link": "",
+            "tab3_title": "Mulliner",
+            "tab3_products": [
+              "bentley-mulliner-trike",
+              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
+              "mulliner-celeste-bentley-6-in-1-stroller-trike"
+            ],
+            "tab3_link": "",
+            "tab4_title": "",
+            "tab4_products": [],
+            "tab4_link": ""
           }
         },
         "bt_finish_DjknTk": {
@@ -243,6 +284,17 @@
           "type": "liquid",
           "settings": {
             "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: '250', stock_car: 'auto', stock_car_preorder: '250' %}"
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
+        },
+        "inventory_Cibqgw": {
+          "type": "inventory",
+          "disabled": true,
+          "settings": {
+            "low_inventory_threshold": 100
           }
         },
         "text_q6Hc7E": {
@@ -343,44 +395,6 @@
           "disabled": true,
           "settings": {
             "text": "<p>* Please note that some Bentley Electric Cars are currently on pre-order and will ship once stock is available, while certain SKUs of Bentley Trikes will take 6–7 days to ship out.</p>"
-          }
-        },
-        "bt_title_header": {
-          "type": "bt_title",
-          "settings": {
-            "use_product_badges": true,
-            "eyebrow": "OFFICIALLY LICENSED · BENTLEY MOTORS"
-          }
-        },
-        "bt_collection_tabs": {
-          "type": "bt_collections",
-          "settings": {
-            "tab1_title": "Daily Commuter",
-            "tab1_products": [
-              "bentley-6-in-1-stroller-trike",
-              "onyx-black-bentley-stroller-trike",
-              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
-              "fuscia-pink-bentley-stroller-trike",
-              "jetstream-blue-bentley-6-in-1-stroller-trike",
-              "spruce-green-6-in-1-stroller-trike",
-              "sequin-blue-bentley-stroller-trike",
-              "white-satin-bentley-6-in-1-stroller-trike",
-              "dragon-red-bentley-stroller-trike"
-            ],
-            "tab2_title": "Traveller",
-            "tab2_products": [
-              "black-bentley-foldable-tricycle",
-              "purple-bentley-foldable-tricycle",
-              "gold-bentley-foldable-tricycle",
-              "cool-stone-bentley-foldable-tricycle"
-            ],
-            "tab3_title": "Mulliner",
-            "tab3_products": [
-              "bentley-mulliner-trike",
-              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
-              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
-              "mulliner-celeste-bentley-6-in-1-stroller-trike"
-            ]
           }
         }
       },
