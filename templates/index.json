@@ -232,7 +232,8 @@
             "text": "",
             "link": "shopify://products/cool-stone-bentley-foldable-tricycle",
             "link_label": "Shop now",
-            "image": "shopify://shop_images/Foldable_Trike_mom1_8d774cff-6b16-4f18-b466-cd2d9ba6bdfb_6845155e-87ca-4a5f-89ae-8721e7d7b532_36c83923-731a-49a2-b570-c751ca76e278.png"
+            "image": "shopify://shop_images/FoldableTrike_81eb56a3-ac2d-4184-aeb7-647a5f7cc1b5.png",
+            "image_2": "shopify://shop_images/Folded_2b6ff1a2-384d-41c8-845c-f3a2857c86f1.png"
           }
         },
         "link_GKxCmE": {
@@ -306,6 +307,7 @@
         "link_url": "shopify://pages/bentley-collection",
         "mark_word": "BENTLEY",
         "mark_sub": "Kids Collection",
+        "photo_2_mode": "hover",
         "desktop_layout": "cards",
         "card_gap": 16,
         "card_radius": 0,
