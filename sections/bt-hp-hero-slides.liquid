@@ -1,11 +1,11 @@
 {%- comment -%}
-  BT Homepage — Opening reveal + Hero slideshow (v2)
-  Same look as "BT Hero + reveal", with several slides. Each slide has its own
+  BT Homepage — Opening reveal + Hero slideshow
+  Same look as "BT Hero + reveal", but with several slides. Each slide has its own
   photo or video, headline, small details, text and buttons. Slides crossfade with a
   slow zoom; thin progress lines along the bottom show which slide is playing.
-  v2: text can sit at the top, middle or bottom (desktop and phone, per slide if wanted),
-  phone button layouts (side by side / stacked / fit to text), pause button,
-  keyboard arrows, no reveal flash on repeat visits, hidden-size photos never download.
+  Speed: only the slide on screen (and the next one) downloads its photo; every
+  animation moves transform/opacity only; autoplay stops when the hero is off
+  screen or the tab is hidden; videos play only on the slide that is showing.
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
@@ -13,16 +13,12 @@
   assign letters = word | split: ''
   assign slides = section.blocks | where: 'type', 'slide'
   assign n = slides.size
-  assign blank_gif = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-  assign v_d = s.v_desktop | default: 'bottom'
-  assign v_m = s.v_mobile | default: 'bottom'
-  assign btn_m = s.buttons_mobile | default: 'side'
 -%}
 
 <style>
   .bthp-hss{--bthp-hz:var(--bthp-hz-d,1)}
   @media (max-width:749px){.bthp-hss{--bthp-hz:var(--bthp-hz-m,1)}}
-  .bthp-hss{position:relative;height:var(--bthp-h,100vh);height:var(--bthp-h,100svh);min-height:600px;max-height:1000px;overflow:hidden;background:#0b0b0a;color:var(--bthp-text);contain:paint}
+  .bthp-hss{position:relative;height:var(--bthp-h,100vh);height:var(--bthp-h,100svh);min-height:600px;max-height:1000px;overflow:hidden;background:#0b0b0a;color:var(--bthp-text)}
   .bthp-hss[data-transparent]{margin-block-start:calc(-1 * var(--header-height, 0px) * var(--section-is-first, 0))}
   .bthp-hss__track{position:absolute;inset:0;backface-visibility:hidden}
   .bthp-hss.is-px .bthp-hss__track{will-change:transform}
@@ -38,12 +34,7 @@
   .bthp-hss__media img,.bthp-hss__media video,.bthp-hss__media svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pd,50% 50%)}
   .bthp-hss__media .bthp-hss__m{display:none}
   .bthp-hss__shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,calc(var(--bthp-ov) + .3)) 0%,rgba(0,0,0,calc(var(--bthp-ov) * .3)) 28%,rgba(0,0,0,calc(var(--bthp-ov) * .5)) 50%,rgba(0,0,0,calc(var(--bthp-ov) + .5)) 100%)}
-
-  /* Darken behind text (per slide): a soft shadow only where the text sits */
-  .bthp-hss__side{position:absolute;inset:0;z-index:1;pointer-events:none;--a:var(--sd,0);--b:calc(var(--sd,0) * .55)}
-  /* Text area fills the slide; its contents sit at the top, middle or bottom */
-  .bthp-hss__in{position:absolute;z-index:2;inset:0;display:flex;flex-direction:column;justify-content:flex-end;max-width:1440px;margin:0 auto;box-sizing:border-box;pointer-events:none;padding:calc(var(--header-height,90px) + 32px) clamp(20px,4.4vw,64px) calc(clamp(36px,6vh,64px) + 56px)}
-  .bthp-hss__in>*{pointer-events:auto}
+  .bthp-hss__in{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:0 clamp(20px,4.4vw,64px) calc(clamp(36px,6vh,64px) + 56px);max-width:1440px;margin:0 auto;box-sizing:border-box}
   .bthp-hss__h{margin:0 0 clamp(28px,4vh,44px);max-width:var(--bthp-hw,50%);font-family:var(--heading-font-family,"Playfair Display",serif);font-weight:400;font-size:calc(clamp(52px,6.4vw,112px) * var(--bthp-hz, 1));line-height:.9;letter-spacing:-.02em;color:var(--bthp-text)}
   .bthp-hss__ln{display:block;overflow:hidden;padding:0 .08em .24em;margin:0 -.08em -.24em}
   .bthp-hss__ln>span{display:block;transform:translate3d(0,160%,0);transition:transform 0s linear .9s}
@@ -52,18 +43,20 @@
   .bthp-hss__gilt{font-style:italic;background:linear-gradient(180deg,var(--bthp-text) 25%,var(--bthp-sand) 80%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .1em .24em;margin:0 -.1em -.24em}
   .bthp-hss__foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:40px;align-items:end;opacity:0;transform:translate3d(0,16px,0);transition:opacity .4s ease,transform 0s linear .4s}
   .bthp-hss__slide.is-in .bthp-hss__foot{opacity:1;transform:none;transition:opacity 1s ease .6s,transform 1.1s cubic-bezier(.2,.7,.2,1) .6s}
+  @media (min-width:750px){.bthp-hss__foot>div:last-child{grid-column:2}}
+  .bthp-hss__lede{max-width:min(560px,var(--bthp-hw,50%));margin:calc(14px - clamp(28px,4vh,44px)) 0 clamp(24px,3.4vh,36px);font-family:var(--text-font-family,Poppins,sans-serif);font-size:17px;line-height:1.6;opacity:0;transform:translate3d(0,14px,0);transition:opacity .4s ease,transform 0s linear .4s}
+  .bthp-hss__slide.is-in .bthp-hss__lede{opacity:.92;transform:none;transition:opacity 1s ease .5s,transform 1.1s cubic-bezier(.2,.7,.2,1) .5s}
   .bthp-hss__meta{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
   .bthp-hss__meta span{font-family:var(--text-font-family,Poppins,sans-serif);font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;opacity:.85}
   .bthp-hss__sub{margin:0 0 20px;font-family:var(--text-font-family,Poppins,sans-serif);font-size:15px;line-height:1.7;opacity:.92}
   .bthp-hss__ctas{display:flex;flex-wrap:wrap;gap:12px}
-  .bthp-hss__btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 34px;box-sizing:border-box;border-radius:0;font-family:var(--text-font-family,Poppins,sans-serif);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;text-align:center;transition:background .3s ease,color .3s ease,box-shadow .3s ease}
+  .bthp-hss__btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 34px;box-sizing:border-box;border-radius:0;font-family:var(--text-font-family,Poppins,sans-serif);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:background .3s ease,color .3s ease,box-shadow .3s ease}
   .bthp-hss__btn--a{background:var(--bthp-btn-bg);color:var(--bthp-btn-text)}
   .bthp-hss__btn--a:hover{background:var(--bthp-btn-text);color:var(--bthp-btn-bg)}
   .bthp-hss__btn--b{background:transparent;color:var(--bthp-text);box-shadow:inset 0 0 0 1px currentColor}
   .bthp-hss__btn--b:hover{background:var(--bthp-text);color:#1a1a1a}
-  .bthp-hss__btn:focus-visible{outline:1px solid var(--bthp-text);outline-offset:3px}
 
-  /* Controls: counter, one thin progress line per slide, pause, arrows */
+  /* Controls: counter, one thin progress line per slide, arrows */
   .bthp-hss__bar{position:absolute;left:0;right:0;bottom:0;z-index:3;max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.4vw,64px) clamp(28px,4vh,40px);box-sizing:border-box;display:flex;align-items:center;gap:24px;font-family:var(--text-font-family,Poppins,sans-serif);opacity:0;transition:opacity 1s ease}
   .bthp-hss.is-live .bthp-hss__bar{opacity:1}
   .bthp-hss__count{flex:none;font-size:10px;font-weight:700;letter-spacing:.26em;font-variant-numeric:tabular-nums;opacity:.85}
@@ -75,38 +68,28 @@
   .bthp-hss__line.is-done i{transform:none}
   .bthp-hss__line.is-on i{animation:bthpHssA var(--bthp-dur,7s) linear forwards}
   .bthp-hss__line.is-on.is-odd i{animation-name:bthpHssB}
-  .bthp-hss.is-hold .bthp-hss__line.is-on i,.bthp-hss.is-stopped .bthp-hss__line.is-on i,.bthp-hss.bthp-off .bthp-hss__line.is-on i{animation-play-state:paused}
+  .bthp-hss.is-hold .bthp-hss__line.is-on i,.bthp-hss.bthp-off .bthp-hss__line.is-on i{animation-play-state:paused}
   .bthp-hss.is-still .bthp-hss__line.is-on i{animation:none;transform:none}
   @keyframes bthpHssA{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   @keyframes bthpHssB{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   .bthp-hss__arw{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--bthp-text);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4);cursor:pointer;transition:box-shadow .3s ease,background .3s ease}
   .bthp-hss__arw:hover{box-shadow:inset 0 0 0 1px var(--bthp-text)}
   .bthp-hss__arws{flex:none;display:flex;gap:8px}
-  .bthp-hss__pp .bthp-hss__i-play,.bthp-hss.is-stopped .bthp-hss__pp .bthp-hss__i-pause{display:none}
-  .bthp-hss.is-stopped .bthp-hss__pp .bthp-hss__i-play{display:block}
   .bthp-hss__line:focus-visible,.bthp-hss__arw:focus-visible{outline:1px solid var(--bthp-text);outline-offset:3px}
 
-  /* Desktop: text position */
+  /* Alignment */
   @media (min-width:750px){
-    .bthp-hss__foot>div:last-child{grid-column:2}
-    .bthp-hss__slide[data-vd="middle"] .bthp-hss__in{justify-content:center}
-    .bthp-hss__slide[data-vd="top"] .bthp-hss__in{justify-content:flex-start}
-    .bthp-hss__slide[data-vd="split"] .bthp-hss__in{justify-content:space-between}
-    .bthp-hss__slide[data-al="left"] .bthp-hss__side{background:linear-gradient(90deg,rgba(0,0,0,var(--a)) 0%,rgba(0,0,0,var(--b)) 38%,rgba(0,0,0,0) 68%)}
-    .bthp-hss__slide[data-al="right"] .bthp-hss__side{background:linear-gradient(270deg,rgba(0,0,0,var(--a)) 0%,rgba(0,0,0,var(--b)) 38%,rgba(0,0,0,0) 68%)}
-    .bthp-hss__slide[data-al="center"] .bthp-hss__side{background:radial-gradient(ellipse 75% 65% at 50% var(--cy,72%),rgba(0,0,0,var(--a)) 0%,rgba(0,0,0,var(--b)) 45%,rgba(0,0,0,0) 100%)}
-    .bthp-hss__slide[data-vd="middle"] .bthp-hss__side{--cy:50%}
-    .bthp-hss__slide[data-vd="top"] .bthp-hss__side{--cy:30%}
-    .bthp-hss__slide[data-vd="split"] .bthp-hss__side{--cy:50%}
-    .bthp-hss__slide[data-al="center"] .bthp-hss__h{text-align:center;margin-left:auto;margin-right:auto}
-    .bthp-hss__slide[data-al="right"] .bthp-hss__h{text-align:right;margin-left:auto}
-    .bthp-hss__slide[data-al="center"] .bthp-hss__foot,.bthp-hss__slide[data-al="right"] .bthp-hss__foot{display:flex;flex-direction:column;gap:22px}
-    .bthp-hss__slide[data-al="center"] .bthp-hss__foot{align-items:center;text-align:center}
-    .bthp-hss__slide[data-al="right"] .bthp-hss__foot{align-items:flex-end;text-align:right}
-    .bthp-hss__slide[data-al="center"] .bthp-hss__foot>div:last-child,.bthp-hss__slide[data-al="right"] .bthp-hss__foot>div:last-child{max-width:560px}
-    .bthp-hss__slide[data-al="center"] .bthp-hss__meta,.bthp-hss__slide[data-al="right"] .bthp-hss__meta{order:2}
-    .bthp-hss__slide[data-al="center"] .bthp-hss__meta,.bthp-hss__slide[data-al="center"] .bthp-hss__ctas{justify-content:center}
-    .bthp-hss__slide[data-al="right"] .bthp-hss__meta,.bthp-hss__slide[data-al="right"] .bthp-hss__ctas{justify-content:flex-end}
+    .bthp-hss[data-al="center"] .bthp-hss__h{text-align:center;margin-left:auto;margin-right:auto}
+    .bthp-hss[data-al="right"] .bthp-hss__h{text-align:right;margin-left:auto}
+    .bthp-hss[data-al="center"] .bthp-hss__lede{text-align:center;margin-left:auto;margin-right:auto}
+    .bthp-hss[data-al="right"] .bthp-hss__lede{text-align:right;margin-left:auto}
+    .bthp-hss[data-al="center"] .bthp-hss__foot,.bthp-hss[data-al="right"] .bthp-hss__foot{display:flex;flex-direction:column;gap:22px}
+    .bthp-hss[data-al="center"] .bthp-hss__foot{align-items:center;text-align:center}
+    .bthp-hss[data-al="right"] .bthp-hss__foot{align-items:flex-end;text-align:right}
+    .bthp-hss[data-al="center"] .bthp-hss__foot>div:last-child,.bthp-hss[data-al="right"] .bthp-hss__foot>div:last-child{max-width:560px}
+    .bthp-hss[data-al="center"] .bthp-hss__meta,.bthp-hss[data-al="right"] .bthp-hss__meta{order:2}
+    .bthp-hss[data-al="center"] .bthp-hss__meta,.bthp-hss[data-al="center"] .bthp-hss__ctas{justify-content:center}
+    .bthp-hss[data-al="right"] .bthp-hss__meta,.bthp-hss[data-al="right"] .bthp-hss__ctas{justify-content:flex-end}
   }
 
   /* Opening reveal (same as BT Hero + reveal) */
@@ -133,51 +116,34 @@
   .bthp-intro__sup{bottom:calc(100% + 22px);letter-spacing:.5em;margin-right:-.5em;color:var(--bthp-intro-text);animation-delay:.9s}
   @keyframes bthpS{to{opacity:.75}}
 
-  /* Phone */
   @media (max-width:749px){
     .bthp-hss{height:var(--bthp-hmv,92vh);height:var(--bthp-hm,92svh);min-height:340px}
     .bthp-hss__media .bthp-hss__d{display:none}
     .bthp-hss__media .bthp-hss__m{display:block}
     .bthp-hss__media img,.bthp-hss__media video,.bthp-hss__media svg{object-position:var(--pm,50% 50%)}
-    .bthp-hss__in{padding:calc(var(--header-height,64px) + 16px + var(--bthp-edge,0px)) 20px calc(76px + var(--bthp-edge,0px))}
-    .bthp-hss__slide[data-vm="middle"] .bthp-hss__in{justify-content:center}
-    .bthp-hss__slide[data-vm="top"] .bthp-hss__in{justify-content:flex-start}
-    /* Split: heading at the top, details and buttons at the bottom (keeps the middle of the photo clear) */
-    .bthp-hss__slide[data-vm="split"] .bthp-hss__in{justify-content:space-between}
-    /* Phone: text spans the width, so the shadow follows where it sits up/down */
-    .bthp-hss__slide[data-vm="bottom"] .bthp-hss__side{background:linear-gradient(0deg,rgba(0,0,0,var(--a)) 0%,rgba(0,0,0,var(--b)) 35%,rgba(0,0,0,0) 65%)}
-    .bthp-hss__slide[data-vm="top"] .bthp-hss__side{background:linear-gradient(180deg,rgba(0,0,0,var(--a)) 0%,rgba(0,0,0,var(--b)) 35%,rgba(0,0,0,0) 65%)}
-    .bthp-hss__slide[data-vm="middle"] .bthp-hss__side{background:linear-gradient(180deg,rgba(0,0,0,0) 12%,rgba(0,0,0,var(--b)) 32%,rgba(0,0,0,var(--b)) 68%,rgba(0,0,0,0) 88%)}
-    .bthp-hss__slide[data-vm="split"] .bthp-hss__side{background:linear-gradient(180deg,rgba(0,0,0,var(--a)) 0%,rgba(0,0,0,0) 34%,rgba(0,0,0,0) 62%,rgba(0,0,0,var(--a)) 100%)}
+    .bthp-hss__in{padding:0 20px 76px}
     .bthp-hss__h{max-width:none;font-size:calc(48px * var(--bthp-hz, 1));margin-bottom:22px}
+    .bthp-hss__lede{max-width:none;margin:-10px 0 18px;font-size:15px}
     .bthp-hss__foot{grid-template-columns:minmax(0,1fr);gap:16px}
     .bthp-hss__meta{gap:6px 16px}
     .bthp-hss__meta span{font-size:9px;letter-spacing:.2em}
     .bthp-hss[data-metam="false"] .bthp-hss__meta{display:none}
     .bthp-hss[data-subm="false"] .bthp-hss__sub{display:none}
-    .bthp-hss__slide[data-alm="center"] .bthp-hss__in{text-align:center}
-    .bthp-hss__slide[data-alm="right"] .bthp-hss__in{text-align:right}
-    .bthp-hss__slide[data-alm="center"] .bthp-hss__meta,.bthp-hss__slide[data-alm="center"] .bthp-hss__ctas{justify-content:center}
-    .bthp-hss__slide[data-alm="right"] .bthp-hss__meta,.bthp-hss__slide[data-alm="right"] .bthp-hss__ctas{justify-content:flex-end}
+    .bthp-hss[data-alm="center"] .bthp-hss__in{text-align:center}
+    .bthp-hss[data-alm="right"] .bthp-hss__in{text-align:right}
+    .bthp-hss[data-alm="center"] .bthp-hss__meta,.bthp-hss[data-alm="center"] .bthp-hss__ctas{justify-content:center}
+    .bthp-hss[data-alm="right"] .bthp-hss__meta,.bthp-hss[data-alm="right"] .bthp-hss__ctas{justify-content:flex-end}
     .bthp-hss__sub{font-size:14px;margin-bottom:16px}
-    /* Phone buttons: side by side (default) */
-    .bthp-hss__ctas{flex-wrap:nowrap;gap:10px}
-    .bthp-hss__btn{flex:1 1 0;min-width:0;padding:0 10px;min-height:50px;font-size:11px;letter-spacing:.14em}
-    /* Stacked, full width */
-    .bthp-hss[data-btnm="stack"] .bthp-hss__ctas{flex-direction:column}
-    .bthp-hss[data-btnm="stack"] .bthp-hss__btn{flex:none;width:100%}
-    /* Fit to text */
-    .bthp-hss[data-btnm="fit"] .bthp-hss__ctas{flex-wrap:wrap}
-    .bthp-hss[data-btnm="fit"] .bthp-hss__btn{flex:0 0 auto;padding:0 24px}
+    .bthp-hss__ctas{flex-wrap:nowrap}
+    .bthp-hss__btn{flex:1 1 0;padding:0 10px;min-height:50px;font-size:11px;letter-spacing:.14em}
     .bthp-hss__bar{padding:0 20px 22px;gap:14px}
     .bthp-hss__arws{display:none}
-    .bthp-hss__pp{width:36px;height:36px}
     .bthp-intro__line{width:12vw}
   }
   @media (prefers-reduced-motion:reduce){
     .bthp-intro{display:none}
     .bthp-hss__media,.bthp-hss__slide.is-on .bthp-hss__media{transform:none;transition:none}
-    .bthp-hss__ln>span,.bthp-hss__foot{transform:none;opacity:1;transition:none}
+    .bthp-hss__ln>span,.bthp-hss__foot,.bthp-hss__lede{transform:none;opacity:1;transition:none}
   }
 </style>
 
@@ -194,27 +160,13 @@
   data-zoom="{% if s.zoom == false %}false{% else %}true{% endif %}"
   data-al="{{ s.align }}"
   data-alm="{{ s.align_mobile }}"
-  data-btnm="{{ btn_m }}"
   role="region"
   aria-roledescription="carousel"
   aria-label="{{ s.label | escape }}"
   {% if s.allow_transparent_header %}data-transparent allow-transparent-header{% endif %}
-  style="--bthp-text: {{ s.text_color }}; --bthp-sand: {{ s.accent_color }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-text: {{ s.button_text }}; --bthp-ov: {{ s.overlay | divided_by: 100.0 }}; --bthp-intro-bg: {{ s.intro_bg }}; --bthp-intro-text: {{ s.intro_text }};{% if s.height == 'large' %} --bthp-h: 86vh;{% endif %} --bthp-hw: {{ s.heading_width }}%; --bthp-hz-d: {{ s.heading_size | divided_by: 100.0 }}; --bthp-hz-m: {{ s.heading_size_mobile | divided_by: 100.0 }}; --bthp-dur: {{ s.speed }}s; --bthp-hm: {{ s.height_mobile | default: 92 }}svh; --bthp-hmv: {{ s.height_mobile | default: 92 }}vh; --bthp-edge: {{ s.edge_mobile | default: 0 }}px;"
+  style="--bthp-text: {{ s.text_color }}; --bthp-sand: {{ s.accent_color }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-text: {{ s.button_text }}; --bthp-ov: {{ s.overlay | divided_by: 100.0 }}; --bthp-intro-bg: {{ s.intro_bg }}; --bthp-intro-text: {{ s.intro_text }};{% if s.height == 'large' %} --bthp-h: 86vh;{% endif %} --bthp-hw: {{ s.heading_width }}%; --bthp-hz-d: {{ s.heading_size | divided_by: 100.0 }}; --bthp-hz-m: {{ s.heading_size_mobile | divided_by: 100.0 }}; --bthp-dur: {{ s.speed }}s; --bthp-hm: {{ s.height_mobile | default: 92 }}svh; --bthp-hmv: {{ s.height_mobile | default: 92 }}vh;"
 >
   {%- if s.show_intro -%}
-    {%- comment -%} Decide before the first paint whether the reveal plays, so repeat visits never see it flash. {%- endcomment -%}
-    <script>
-      (function () {
-        try {
-          var c = document.currentScript, r = c && c.parentNode;
-          if (!r || !r.classList) return;
-          var ed = !!(window.Shopify && window.Shopify.designMode);
-          var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          var seen = ed ? !!window.__bthpIntroDone : (r.getAttribute('data-once') === 'true' && sessionStorage.getItem('bthp-intro-seen'));
-          if (rm || seen) { r.classList.remove('is-intro'); r.classList.add('is-plain'); r.setAttribute('data-skip', ''); }
-        } catch (e) {}
-      })();
-    </script>
     <div class="bthp-intro" aria-hidden="true">
       {%- for half in (1..2) -%}
         <div class="bthp-intro__p {% if half == 1 %}bthp-intro__p--t{% else %}bthp-intro__p--b{% endif %}">
@@ -237,7 +189,7 @@
     </div>
   {%- endif -%}
 
-  <div class="bthp-hss__track" aria-live="{% if s.autoplay and n > 1 %}off{% else %}polite{% endif %}">
+  <div class="bthp-hss__track">
     {%- for block in slides -%}
       {%- liquid
         assign b = block.settings
@@ -267,25 +219,8 @@
         if first
           assign htag = 'h1'
         endif
-        assign sl_vd = b.v_desktop | default: 'default'
-        if sl_vd == 'default'
-          assign sl_vd = v_d
-        endif
-        assign sl_vm = b.v_mobile | default: 'default'
-        if sl_vm == 'default'
-          assign sl_vm = v_m
-        endif
-        assign sl_al = b.al_desktop | default: 'default'
-        if sl_al == 'default'
-          assign sl_al = s.align | default: 'left'
-        endif
-        assign sl_alm = b.al_mobile | default: 'default'
-        if sl_alm == 'default'
-          assign sl_alm = s.align_mobile | default: 'left'
-        endif
-        assign sl_sd = b.side_dark | default: 0
       -%}
-      <div class="bthp-hss__slide{% if first %} is-on{% endif %}" data-slide="{{ forloop.index0 }}" data-vd="{{ sl_vd }}" data-vm="{{ sl_vm }}" data-al="{{ sl_al }}" data-alm="{{ sl_alm }}" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ n }}"{% unless first %} aria-hidden="true" inert{% endunless %} {{ block.shopify_attributes }}>
+      <div class="bthp-hss__slide{% if first %} is-on{% endif %}" data-slide="{{ forloop.index0 }}" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ n }}"{% unless first %} aria-hidden="true" inert{% endunless %} {{ block.shopify_attributes }}>
         <div class="bthp-hss__media" style="--pd: {{ pos_d }}; --pm: {{ pos_m }};">
           {%- if vid_d == blank and vid_m == blank -%}
             {%- comment -%} Photos: the first slide loads straight away; later slides wait until just before they show. {%- endcomment -%}
@@ -302,34 +237,24 @@
               {{ 'lifestyle-1' | placeholder_svg_tag }}
             {%- endif -%}
           {%- else -%}
-            {%- comment -%}
-              Video: nothing downloads until its slide plays. A fallback photo for the other screen size
-              gets a blank 1px source on the size where it is hidden, so it never downloads there.
-            {%- endcomment -%}
+            {%- comment -%} Video: nothing downloads until its slide plays. {%- endcomment -%}
             {%- if vid_d != blank -%}
               {{ vid_d | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-hss__d bthp-hss__v', image_size: '2000x' }}
             {%- elsif img_d != blank -%}
-              <picture class="bthp-hss__d">
-                <source media="(max-width: 749px)" srcset="{{ blank_gif }}">
-                <img {{ src_attr }}="{{ img_d | image_url: width: 1500 }}" {{ set_attr }}="{{ img_d | image_url: width: 1100 }} 1100w, {{ img_d | image_url: width: 1500 }} 1500w, {{ img_d | image_url: width: 2400 }} 2400w" sizes="100vw" width="{{ img_d.width }}" height="{{ img_d.height }}" alt="{{ img_d.alt | escape }}" decoding="async"{% if first %} fetchpriority="high"{% endif %}>
-              </picture>
+              <img class="bthp-hss__d" {{ src_attr }}="{{ img_d | image_url: width: 1500 }}" {{ set_attr }}="{{ img_d | image_url: width: 1100 }} 1100w, {{ img_d | image_url: width: 1500 }} 1500w, {{ img_d | image_url: width: 2400 }} 2400w" sizes="100vw" width="{{ img_d.width }}" height="{{ img_d.height }}" alt="{{ img_d.alt | escape }}" decoding="async">
             {%- else -%}
               {{ 'lifestyle-1' | placeholder_svg_tag: 'bthp-hss__d' }}
             {%- endif -%}
             {%- if vid_m != blank -%}
               {{ vid_m | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-hss__m bthp-hss__v', image_size: '900x' }}
             {%- elsif img_m != blank -%}
-              <picture class="bthp-hss__m">
-                <source media="(min-width: 750px)" srcset="{{ blank_gif }}">
-                <img {{ src_attr }}="{{ img_m | image_url: width: 1000 }}" {{ set_attr }}="{{ img_m | image_url: width: 500 }} 500w, {{ img_m | image_url: width: 1000 }} 1000w, {{ img_m | image_url: width: 1400 }} 1400w" sizes="100vw" width="{{ img_m.width }}" height="{{ img_m.height }}" alt="{{ img_m.alt | escape }}" decoding="async"{% if first %} fetchpriority="high"{% endif %}>
-              </picture>
+              <img class="bthp-hss__m" {{ src_attr }}="{{ img_m | image_url: width: 1000 }}" {{ set_attr }}="{{ img_m | image_url: width: 500 }} 500w, {{ img_m | image_url: width: 1000 }} 1000w, {{ img_m | image_url: width: 1400 }} 1400w" sizes="100vw" width="{{ img_m.width }}" height="{{ img_m.height }}" alt="{{ img_m.alt | escape }}" decoding="async">
             {%- else -%}
               {{ 'lifestyle-1' | placeholder_svg_tag: 'bthp-hss__m' }}
             {%- endif -%}
           {%- endif -%}
         </div>
         <div class="bthp-hss__shade"></div>
-        {%- if sl_sd > 0 -%}<div class="bthp-hss__side" style="--sd: {{ sl_sd | divided_by: 100.0 }};"></div>{%- endif -%}
         <div class="bthp-hss__in">
           <{{ htag }} class="bthp-hss__h">
             <span class="bthp-hss__ln"><span>{{ b.heading_1 }}</span></span>
@@ -337,26 +262,25 @@
               <span class="bthp-hss__ln"><span class="bthp-hss__gilt">{{ b.heading_2 }}</span></span>
             {%- endif -%}
           </{{ htag }}>
+          {%- if b.subheading != blank -%}<p class="bthp-hss__lede">{{ b.subheading | newline_to_br }}</p>{%- endif -%}
           <div class="bthp-hss__foot">
             {%- if b.meta_1 != blank or b.meta_2 != blank or b.meta_3 != blank -%}
-              <div class="bthp-hss__meta">
-                {%- if b.meta_1 != blank -%}<span>{{ b.meta_1 }}</span>{%- endif -%}
-                {%- if b.meta_2 != blank -%}<span>{{ b.meta_2 }}</span>{%- endif -%}
-                {%- if b.meta_3 != blank -%}<span>{{ b.meta_3 }}</span>{%- endif -%}
-              </div>
-            {%- endif -%}
+<div class="bthp-hss__meta">
+              {%- if b.meta_1 != blank -%}<span>{{ b.meta_1 }}</span>{%- endif -%}
+              {%- if b.meta_2 != blank -%}<span>{{ b.meta_2 }}</span>{%- endif -%}
+              {%- if b.meta_3 != blank -%}<span>{{ b.meta_3 }}</span>{%- endif -%}
+            </div>
+{%- endif -%}
             <div>
               {%- if b.text != blank -%}<p class="bthp-hss__sub">{{ b.text }}</p>{%- endif -%}
-              {%- if b.button_1_label != blank or b.button_2_label != blank -%}
-                <div class="bthp-hss__ctas">
-                  {%- if b.button_1_label != blank -%}
-                    <a class="bthp-hss__btn bthp-hss__btn--a" href="{{ b.button_1_link | default: '#buy' }}">{{ b.button_1_label }}</a>
-                  {%- endif -%}
-                  {%- if b.button_2_label != blank -%}
-                    <a class="bthp-hss__btn bthp-hss__btn--b" href="{{ b.button_2_link | default: '#stages' }}">{{ b.button_2_label }}</a>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
+              <div class="bthp-hss__ctas">
+                {%- if b.button_1_label != blank -%}
+                  <a class="bthp-hss__btn bthp-hss__btn--a" href="{{ b.button_1_link | default: '#buy' }}">{{ b.button_1_label }}</a>
+                {%- endif -%}
+                {%- if b.button_2_label != blank -%}
+                  <a class="bthp-hss__btn bthp-hss__btn--b" href="{{ b.button_2_link | default: '#stages' }}">{{ b.button_2_label }}</a>
+                {%- endif -%}
+              </div>
             </div>
           </div>
         </div>
@@ -372,12 +296,6 @@
           <button class="bthp-hss__line{% if forloop.first %} is-on{% endif %}" type="button" data-go="{{ forloop.index0 }}" aria-label="Show slide {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}><i></i></button>
         {%- endfor -%}
       </div>
-      {%- if s.autoplay and s.show_pause -%}
-        <button class="bthp-hss__arw bthp-hss__pp" type="button" data-pp aria-label="Pause slideshow" aria-pressed="false">
-          <svg class="bthp-hss__i-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          <svg class="bthp-hss__i-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>
-        </button>
-      {%- endif -%}
       {%- if s.show_arrows -%}
         <div class="bthp-hss__arws">
           <button class="bthp-hss__arw" type="button" data-prev aria-label="Previous slide"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -394,28 +312,20 @@
     roots.forEach(function (el) {
       el.setAttribute('data-ready', '');
       var KEY = 'bthp-intro-seen';
-      var edit = !!(window.Shopify && window.Shopify.designMode);
-      var intro = el.querySelector('.bthp-intro');
-      // The small script at the top of the section already decided (before paint) whether to skip the reveal.
-      // Theme editor: the reveal plays once per editor visit, not every time a setting changes.
-      var skip = !intro || el.hasAttribute('data-skip') || el.classList.contains('is-plain') || (edit && !!window.__bthpIntroDone);
-      if (edit && !skip) window.__bthpIntroDone = true;
-      // Everything this slideshow listens to is removed when the theme editor reloads or removes the section.
-      var ac = ('AbortController' in window) ? new AbortController() : null;
-      function opt(o) { o = o || {}; if (ac) o.signal = ac.signal; return o; }
-      var observers = [];
-      if (!skip && el.getAttribute('data-once') === 'true' && !edit) {
-        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      var skip = false;
+      try { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) skip = true; } catch (e) {}
+      if (el.getAttribute('data-once') === 'true' && !(window.Shopify && window.Shopify.designMode)) {
+        try { if (sessionStorage.getItem(KEY)) skip = true; else sessionStorage.setItem(KEY, '1'); } catch (e) {}
       }
-      if (skip) { el.classList.remove('is-intro'); el.classList.add('is-plain'); if (intro) intro.remove(); }
-      else setTimeout(function () { if (intro.parentNode) intro.remove(); }, 3800);
+      if (!el.querySelector('.bthp-intro')) skip = true;
+      if (skip) { el.classList.remove('is-intro'); el.classList.add('is-plain'); }
+      var intro = el.querySelector('.bthp-intro');
+      if (intro && !skip) setTimeout(function () { intro.remove(); }, 3800); else if (intro) intro.remove();
 
       var slides = [].slice.call(el.querySelectorAll('[data-slide]'));
-      if (!slides.length) return;
       var lines = [].slice.call(el.querySelectorAll('[data-go]'));
       var curEl = el.querySelector('[data-cur]');
-      var track = el.querySelector('.bthp-hss__track');
-      var n = slides.length, cur = 0, timer = 0, live = false, seen = true, hold = false, stopped = false;
+      var n = slides.length, cur = 0, timer = 0, live = false, seen = true, hold = false, edit = !!(window.Shopify && window.Shopify.designMode);
       var secs = Math.max(3, parseFloat(el.getAttribute('data-secs')) || 7);
       var auto = el.getAttribute('data-auto') === 'true' && n > 1;
       if (!auto) el.classList.add('is-still');
@@ -432,7 +342,7 @@
       function videos() {
         slides.forEach(function (sl, i) {
           sl.querySelectorAll('video.bthp-hss__v').forEach(function (v) {
-            if (i === cur && seen && !document.hidden && v.offsetParent !== null) {
+            if (i === cur && seen && v.offsetParent !== null) {
               if (v.getAttribute('preload') === 'none') v.setAttribute('preload', 'auto');
               v.muted = true;
               var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
@@ -442,20 +352,20 @@
       }
       function arm() {
         clearTimeout(timer);
-        if (auto && live && seen && !hold && !stopped && !document.hidden) timer = setTimeout(function () { go(cur + 1); }, secs * 1000);
+        if (auto && live && seen && !hold && !document.hidden) timer = setTimeout(function () { go(cur + 1); }, secs * 1000);
       }
       function restartLine() {
         lines.forEach(function (l, i) {
           l.classList.remove('is-on', 'is-odd');
           l.classList.toggle('is-done', i < cur);
-          if (i === cur) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+          if (i === cur) { l.setAttribute('aria-current', 'true'); } else l.removeAttribute('aria-current');
         });
         var l = lines[cur];
         if (l) { void l.offsetWidth; l.classList.add('is-on'); if (cur % 2) l.classList.add('is-odd'); }
       }
       // Fade only once the next photo is decoded (at most ~0.7s wait), so it never fades into a blank.
       function ready(sl, cb) {
-        var im = [].filter.call(sl.querySelectorAll('img'), function (x) { return x.offsetParent !== null; })[0];
+        var im = [].filter.call(sl.querySelectorAll('img'), function (x) { return x.offsetParent !== null || x.closest('picture'); })[0];
         if (!im || !im.decode || (im.complete && im.naturalWidth)) { cb(); return; }
         var done = false, fin = function () { if (!done) { done = true; cb(); } };
         im.decode().then(fin, fin); setTimeout(fin, 700);
@@ -485,8 +395,6 @@
         prime(i + 1);
         arm();
       }
-      // A visitor took control: let screen readers announce slide changes from now on.
-      function manual() { if (track) track.setAttribute('aria-live', 'polite'); }
       function begin() {
         live = true;
         el.classList.add('is-live');
@@ -496,52 +404,52 @@
         if (n > 1) setTimeout(function () { prime(1); }, 1200);
         arm();
       }
-      setTimeout(function () { if (el.isConnected !== false) begin(); }, skip ? 60 : 2900);
+      setTimeout(begin, skip ? 60 : 2900);
 
-      lines.forEach(function (l, i) { l.addEventListener('click', function () { manual(); go(i); }); });
-      var pv = el.querySelector('[data-prev]'), nx = el.querySelector('[data-next]'), pp = el.querySelector('[data-pp]');
-      if (pv) pv.addEventListener('click', function () { manual(); go(cur - 1); });
-      if (nx) nx.addEventListener('click', function () { manual(); go(cur + 1); });
-      if (pp) pp.addEventListener('click', function () {
-        stopped = !stopped;
-        el.classList.toggle('is-stopped', stopped);
-        pp.setAttribute('aria-pressed', stopped ? 'true' : 'false');
-        pp.setAttribute('aria-label', stopped ? 'Play slideshow' : 'Pause slideshow');
-        if (stopped) { clearTimeout(timer); manual(); } else { restartLine(); arm(); }
-      });
-      // Keyboard: left/right arrows while focus is on the slideshow controls.
-      el.addEventListener('keydown', function (e) {
-        if (!e.target.closest || !e.target.closest('.bthp-hss__bar')) return;
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-          e.preventDefault(); manual(); go(cur + (e.key === 'ArrowRight' ? 1 : -1));
-          var l = lines[want]; if (l && e.target.hasAttribute('data-go')) l.focus();
-        }
-      });
+      lines.forEach(function (l, i) { l.addEventListener('click', function () { go(i); }); });
+      var pv = el.querySelector('[data-prev]'), nx = el.querySelector('[data-next]');
+      if (pv) pv.addEventListener('click', function () { go(cur - 1); });
+      if (nx) nx.addEventListener('click', function () { go(cur + 1); });
       // Swipe on phones
       var sx = 0, sy = 0;
       el.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
       el.addEventListener('touchend', function (e) {
         var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) { manual(); go(cur + (dx < 0 ? 1 : -1)); }
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) go(cur + (dx < 0 ? 1 : -1));
       }, { passive: true });
       // Pause while the mouse is on the text, buttons or controls (if set), off screen, or with the tab hidden.
       // (Not the whole hero: it fills the screen, so the mouse is almost always somewhere on it.)
       if (el.getAttribute('data-hover') === 'true') {
         el.querySelectorAll('.bthp-hss__foot, .bthp-hss__h, .bthp-hss__bar').forEach(function (z) {
           z.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'mouse') return; hold = true; el.classList.add('is-hold'); clearTimeout(timer); });
-          z.addEventListener('pointerleave', function (e) { if (e.pointerType !== 'mouse' || !hold) return; hold = false; el.classList.remove('is-hold'); if (live && !stopped) restartLine(); arm(); });
+          z.addEventListener('pointerleave', function (e) { if (e.pointerType !== 'mouse' || !hold) return; hold = false; el.classList.remove('is-hold'); if (live) restartLine(); arm(); });
         });
       }
-      document.addEventListener('visibilitychange', function () {
-        videos();
-        if (document.hidden) clearTimeout(timer); else if (live) { if (!stopped) restartLine(); arm(); }
-      }, opt());
+      document.addEventListener('visibilitychange', function () { if (document.hidden) clearTimeout(timer); else if (live) { restartLine(); arm(); } });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          var was = seen; seen = en[0].isIntersecting;
+          el.classList.toggle('bthp-off', !seen);
+          if (seen && !was && live) restartLine();
+          videos(); arm();
+        }, { rootMargin: '150px 0px' }).observe(el);
+      }
+      // Theme editor: clicking a slide block shows that slide and holds it.
+      if (edit) {
+        document.addEventListener('shopify:block:select', function (e) {
+          var k = slides.indexOf(e.target); if (k < 0) return;
+          hold = true; clearTimeout(timer); go(k); clearTimeout(timer);
+        });
+        document.addEventListener('shopify:block:deselect', function () { hold = false; arm(); });
+      }
 
       // Scroll effect (computer only): moves the slides and fades the text directly; no work on phones.
+      var track = el.querySelector('.bthp-hss__track');
       var bar = el.querySelector('.bthp-hss__bar');
       var mq = window.matchMedia('(min-width: 750px) and (hover: hover)');
       var top = 0, hgt = 1, last = -1, raf = 0, near = true, on = false;
       var allTexts = [].slice.call(el.querySelectorAll('.bthp-hss__in'));
+      function texts() { return allTexts.filter(function (x) { return x.parentNode.classList.contains('is-on'); }); }
       function measure() { var r = el.getBoundingClientRect(); top = r.top + window.pageYOffset; hgt = Math.max(r.height, 1); }
       function paint() {
         raf = 0;
@@ -552,57 +460,26 @@
         last = y;
         track.style.transform = y ? 'translate3d(0,' + (y * 16).toFixed(2) + '%,0) scale(' + (1 + y * .06).toFixed(4) + ')' : '';
         var o = y ? Math.max(0, 1 - y * 1.6).toFixed(3) : '', t = y ? 'translate3d(0,' + (y * -70).toFixed(1) + 'px,0)' : '';
-        var x = slides[cur].querySelector('.bthp-hss__in');
-        allTexts.forEach(function (z) { if (z !== x && z.style.opacity) { z.style.opacity = ''; z.style.transform = ''; } });
-        if (x) { x.style.opacity = o; x.style.transform = t; }
+        texts().forEach(function (x) { x.style.opacity = o; x.style.transform = t; });
         if (bar) bar.style.opacity = o;
       }
       function clear() {
         last = -1; track.style.transform = '';
-        allTexts.forEach(function (x) { x.style.opacity = ''; x.style.transform = ''; });
+        el.querySelectorAll('.bthp-hss__in').forEach(function (x) { x.style.opacity = ''; x.style.transform = ''; });
         if (bar) bar.style.opacity = '';
       }
       function onScroll() { if (on && near && !raf) raf = requestAnimationFrame(paint); }
       function setup() {
-        var wantPx = el.getAttribute('data-parallax') !== 'false' && mq.matches && !!track;
-        if (wantPx === on) { if (on) { measure(); onScroll(); } return; }
-        on = wantPx;
+        var want = el.getAttribute('data-parallax') !== 'false' && mq.matches && !!track;
+        if (want === on) { if (on) { measure(); onScroll(); } return; }
+        on = want;
         el.classList.toggle('is-px', on);
-        if (on) { measure(); window.addEventListener('scroll', onScroll, opt({ passive: true })); paint(); }
+        if (on) { measure(); window.addEventListener('scroll', onScroll, { passive: true }); paint(); }
         else { window.removeEventListener('scroll', onScroll); clear(); }
       }
-
-      // One observer: tracks whether the hero is on (or near) the screen for autoplay, videos and the scroll effect.
-      if ('IntersectionObserver' in window) {
-        var io = new IntersectionObserver(function (en) {
-          var was = seen; seen = near = en[0].isIntersecting;
-          el.classList.toggle('bthp-off', !seen);
-          if (seen && !was && live && !stopped) restartLine();
-          if (near) onScroll();
-          videos(); arm();
-        }, { rootMargin: '150px 0px' });
-        io.observe(el); observers.push(io);
-      }
-      // Theme editor: clicking a slide block shows that slide and holds it.
-      if (edit) {
-        document.addEventListener('shopify:block:select', function (e) {
-          var k = slides.indexOf(e.target); if (k < 0) return;
-          hold = true; clearTimeout(timer); go(k); clearTimeout(timer);
-        }, opt());
-        document.addEventListener('shopify:block:deselect', function (e) {
-          if (slides.indexOf(e.target) < 0) return;
-          hold = false; arm();
-        }, opt());
-        document.addEventListener('shopify:section:unload', function (e) {
-          if (!e.target || !e.target.contains || !e.target.contains(el)) return;
-          clearTimeout(timer); clearTimeout(rt); live = false;
-          if (raf) cancelAnimationFrame(raf);
-          observers.forEach(function (o) { o.disconnect(); });
-          if (ac) ac.abort();
-        }, opt());
-      }
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { near = en[0].isIntersecting; if (near) onScroll(); }).observe(el);
       var rt = 0;
-      window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { setup(); videos(); }, 150); }, opt({ passive: true }));
+      window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { setup(); videos(); }, 150); }, { passive: true });
       setup();
     });
   })();
@@ -625,7 +502,6 @@
     { "type": "checkbox", "id": "autoplay", "label": "Move through slides by itself", "default": true },
     { "type": "range", "id": "speed", "label": "Time on each slide", "min": 4, "max": 12, "step": 1, "unit": "s", "default": 7 },
     { "type": "checkbox", "id": "pause_hover", "label": "Pause while the mouse is on the text or controls", "default": true },
-    { "type": "checkbox", "id": "show_pause", "label": "Show pause button", "default": true, "info": "Lets visitors stop the slides. Recommended for accessibility." },
     { "type": "checkbox", "id": "show_arrows", "label": "Show arrows (computer)", "default": true, "info": "On phones, people swipe or tap the lines." },
     { "type": "checkbox", "id": "show_counter", "label": "Show slide number (01 / 03)", "default": true },
     { "type": "text", "id": "label", "label": "Slideshow name (screen readers)", "default": "Bentley Trike highlights" },
@@ -636,17 +512,12 @@
     { "type": "checkbox", "id": "allow_transparent_header", "label": "Allow transparent header", "info": "Only applies when this section is first on the page.", "default": true },
     { "type": "checkbox", "id": "zoom", "label": "Slow zoom on each photo", "default": true, "info": "Computer only; phones keep the photo still." },
     { "type": "checkbox", "id": "parallax", "label": "Parallax effect", "default": true, "info": "The slides drift and the text fades as you scroll down. Computer only; phones always stay still." },
-    { "type": "header", "content": "Text position (desktop)" },
-    { "type": "select", "id": "align", "label": "Left / right", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
-    { "type": "select", "id": "v_desktop", "label": "Up / down", "options": [{ "value": "top", "label": "Top" }, { "value": "middle", "label": "Middle" }, { "value": "bottom", "label": "Bottom" }, { "value": "split", "label": "Split: heading top, buttons bottom" }], "default": "bottom", "info": "Each slide can override this in its own settings." },
-    { "type": "range", "id": "heading_width", "label": "Heading width", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 50, "info": "How much of the screen width the heading can use before it wraps." },
-    { "type": "header", "content": "Text and buttons (phone)" },
-    { "type": "select", "id": "align_mobile", "label": "Left / right", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
-    { "type": "select", "id": "v_mobile", "label": "Up / down", "options": [{ "value": "top", "label": "Top (under the header)" }, { "value": "middle", "label": "Middle" }, { "value": "bottom", "label": "Bottom" }, { "value": "split", "label": "Split: heading top, buttons bottom" }], "default": "bottom", "info": "Each slide can override this. Use Split when the heading covers the car." },
-    { "type": "range", "id": "edge_mobile", "label": "Extra space from the edge", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0, "info": "Pushes the text further from the top or bottom edge." },
-    { "type": "select", "id": "buttons_mobile", "label": "Buttons layout", "options": [{ "value": "side", "label": "Side by side, equal width" }, { "value": "stack", "label": "Stacked, full width" }, { "value": "fit", "label": "Fit to text" }], "default": "side", "info": "Use Stacked if long button labels look squeezed." },
-    { "type": "checkbox", "id": "meta_mobile", "label": "Show small details", "default": true },
-    { "type": "checkbox", "id": "text_mobile", "label": "Show description", "default": true, "info": "Turn off to keep shorter phone slides uncluttered." },
+    { "type": "header", "content": "Text position" },
+    { "type": "select", "id": "align", "label": "Text position (desktop)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "range", "id": "heading_width", "label": "Heading width (desktop)", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 50, "info": "How much of the screen width the heading can use before it wraps." },
+    { "type": "select", "id": "align_mobile", "label": "Text position (phone)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "checkbox", "id": "meta_mobile", "label": "Show small details on phone", "default": true },
+    { "type": "checkbox", "id": "text_mobile", "label": "Show description on phone", "default": true, "info": "Turn off to keep shorter phone slides uncluttered." },
     { "type": "header", "content": "Heading size" },
     { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
     { "type": "range", "id": "heading_size_mobile", "label": "Heading size (phone)", "min": 70, "max": 150, "step": 5, "unit": "%", "default": 100 },
@@ -669,6 +540,7 @@
         { "type": "video", "id": "video_mobile", "label": "Video (phone, optional)" },
         { "type": "text", "id": "heading_1", "label": "Heading line 1", "default": "Extraordinary journeys" },
         { "type": "text", "id": "heading_2", "label": "Heading line 2 (italic)", "default": "start young." },
+        { "type": "textarea", "id": "subheading", "label": "Text under heading", "info": "Optional. Sits between the heading and the details row." },
         { "type": "text", "id": "meta_1", "label": "Small detail 1", "default": "The Bentley 6-in-1 Stroller Trike" },
         { "type": "text", "id": "meta_2", "label": "Small detail 2", "default": "Officially licensed by Bentley Motors" },
         { "type": "text", "id": "meta_3", "label": "Small detail 3", "default": "From 6 months" },
@@ -676,13 +548,7 @@
         { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "Shop the Trike" },
         { "type": "url", "id": "button_1_link", "label": "Button 1 link", "info": "Leave empty to scroll to the Trike buy box." },
         { "type": "text", "id": "button_2_label", "label": "Button 2 label", "default": "See how it grows" },
-        { "type": "url", "id": "button_2_link", "label": "Button 2 link", "info": "Leave empty to scroll to the growth stages." },
-        { "type": "header", "content": "Text on this slide only" },
-        { "type": "select", "id": "al_desktop", "label": "Left / right (desktop)", "options": [{ "value": "default", "label": "Same as section" }, { "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "default" },
-        { "type": "select", "id": "v_desktop", "label": "Up / down (desktop)", "options": [{ "value": "default", "label": "Same as section" }, { "value": "top", "label": "Top" }, { "value": "middle", "label": "Middle" }, { "value": "bottom", "label": "Bottom" }, { "value": "split", "label": "Split: heading top, buttons bottom" }], "default": "default" },
-        { "type": "select", "id": "v_mobile", "label": "Up / down (phone)", "options": [{ "value": "default", "label": "Same as section" }, { "value": "top", "label": "Top" }, { "value": "middle", "label": "Middle" }, { "value": "bottom", "label": "Bottom" }, { "value": "split", "label": "Split: heading top, buttons bottom" }], "default": "default" },
-        { "type": "select", "id": "al_mobile", "label": "Left / right (phone)", "options": [{ "value": "default", "label": "Same as section" }, { "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "default" },
-        { "type": "range", "id": "side_dark", "label": "Darken behind text", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 0, "info": "Darkens only the side where the text sits, so bright photos stay bright. Try 35 to 50% on light walls." }
+        { "type": "url", "id": "button_2_link", "label": "Button 2 link", "info": "Leave empty to scroll to the growth stages." }
       ]
     }
   ],
