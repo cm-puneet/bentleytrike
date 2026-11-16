@@ -217,11 +217,11 @@
             "image_mobile": "shopify://shop_images/6in1-1-Mobile_c7dac0cc-eadc-4c4c-a558-924ac3072588.png",
             "heading_1": "Bentley 6-in-1",
             "heading_2": "Stroller/Trike",
-            "subheading": "",
+            "subheading": "30% Off or Free Ride-On Car w/ Trike",
             "meta_1": "Designed to Grow with Your Child",
-            "meta_2": "Officially licensed by Bentley Motors",
-            "meta_3": "From 6 months",
-            "text": "A stroller you steer today, a trike that's entirely theirs tomorrow — finished in the colours of the cars from Crewe.",
+            "meta_2": "",
+            "meta_3": "",
+            "text": "",
             "button_1_label": "Shop the Trike",
             "button_1_link": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
             "button_2_label": "Black Friday Sale",
@@ -235,15 +235,15 @@
             "image_mobile": "shopify://shop_images/Folding_Bike_1_Mobile_da3f7b75-f4dd-4068-b127-2dd8c70709b2.png",
             "heading_1": "Bentley Trike",
             "heading_2": "Folding",
-            "subheading": "",
+            "subheading": "30% Off or Free Ride-On Car w/ Trike",
             "meta_1": "Effortless compact fold. Built for seamless storage and trunk travel.",
             "meta_2": "",
             "meta_3": "",
             "text": "",
-            "button_1_label": "Shop the Trike",
-            "button_1_link": "shopify://products/black-bentley-foldable-tricycle",
-            "button_2_label": "See how it grows",
-            "button_2_link": ""
+            "button_1_label": "Black Friday Sale",
+            "button_1_link": "shopify://pages/the-bentley-trike-hidden-sale",
+            "button_2_label": "Shop the Trike",
+            "button_2_link": "shopify://products/black-bentley-foldable-tricycle"
           }
         },
         "slide_LCjrnN": {
@@ -253,7 +253,7 @@
             "image_mobile": "shopify://shop_images/Exp_12-1-Mobile_72f26020-dc7a-4f39-a316-9a5cd0231999.png",
             "heading_1": "Bentley",
             "heading_2": "Ride-on Car",
-            "subheading": "",
+            "subheading": "Get 30% off sitewide",
             "meta_1": "Bring Style and Fun to Your Kid's Ride",
             "meta_2": "",
             "meta_3": "",
@@ -271,7 +271,7 @@
             "image_mobile": "shopify://shop_images/BalanceBike_1-mobile.png",
             "heading_1": "Bentley",
             "heading_2": "Balance Bike",
-            "subheading": "",
+            "subheading": "Get 30% off sitewide",
             "meta_1": "Your Kid's First Balance Bike",
             "meta_2": "",
             "meta_3": "",
@@ -289,7 +289,6 @@
         "slide_LCjrnN",
         "slide_ByNQyn"
       ],
-      "disabled": true,
       "name": "BT Hero slideshow",
       "settings": {
         "show_intro": false,
@@ -520,6 +519,7 @@
         "image_BRCPNt",
         "image_KMeAxL"
       ],
+      "disabled": true,
       "name": "Slideshow",
       "settings": {
         "full_width": true,
