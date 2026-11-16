@@ -267,19 +267,12 @@
             "columns_desktop": 5,
             "columns_mobile": 5,
             "products": [
-              "onyx-black-bentley-stroller-trike",
-              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
               "bentley-mulliner-trike",
-              "fuscia-pink-bentley-stroller-trike",
-              "jetstream-blue-bentley-6-in-1-stroller-trike",
-              "spruce-green-6-in-1-stroller-trike",
-              "sequin-blue-bentley-stroller-trike",
-              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
-              "mulliner-mandarin-bentley-6-in-1-stroller-trike",
               "mulliner-celeste-bentley-6-in-1-stroller-trike",
-              "dragon-red-bentley-stroller-trike"
+              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy"
             ],
-            "labels": "Onyx Black\nCentennial\nMulliner Gold\nFuchsia Pink\nJetstream Blue\nSpruce Green\nSequin Blue\nMulliner Cool Stone\nMulliner Mandarin\nMulliner Celeste\nDragon Red"
+            "labels": "Mulliner Gold\nMulliner Celeste\nMulliner Cool Stone\nMulliner Mandarin"
           }
         },
         "bt_heading_RKE7yN": {
