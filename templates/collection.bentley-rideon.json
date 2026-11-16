@@ -323,9 +323,9 @@
         "full_width": false,
         "content_width": "medium",
         "text_position": "center",
-        "background": "#d9d0c5",
+        "background": "#686562",
         "background_gradient": "",
-        "text_color": "#000000"
+        "text_color": "#FFFFFF"
       }
     },
     "media_with_text_Mgi7df": {
@@ -334,7 +334,7 @@
         "image_9jUyr9": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Mulsanne_UGC2.png",
+            "image": "shopify://shop_images/Mulsanne_1_b42e3f37-1f94-469d-8f27-e873c046efdb.png",
             "media_width": 50,
             "media_position": "start",
             "text_position": "place-self-center text-center",
@@ -345,9 +345,9 @@
             "content": "<p>The Bentley Ride-On Cars collection brings the luxury of modern automotive design to life for young drivers. Each model is a miniature replica of Bentley's iconic vehicles, offering children a stylish, high-end driving experience.</p>",
             "link_text": "",
             "link_url": "",
-            "background": "#d9d0c5",
+            "background": "#686562",
             "background_gradient": "",
-            "text_color": "#000000",
+            "text_color": "#FFFFFF",
             "text_gradient": "",
             "button_background": "",
             "button_text_color": ""
@@ -356,7 +356,7 @@
         "image_NHnBg4": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Bentayga_UGC1.png",
+            "image": "shopify://shop_images/Bacalar_1_b7188270-5d02-4975-9f62-05d4448b2233.png",
             "media_width": 50,
             "media_position": "start",
             "text_position": "place-self-center text-center",
@@ -367,9 +367,9 @@
             "content": "<p>By allowing your child to take the wheel, they develop confidence and essential motor skills, helping build independence and decision-making abilities, all while enjoying a fun and safe driving experience.</p>",
             "link_text": "",
             "link_url": "",
-            "background": "#d9d0c5",
+            "background": "#686562",
             "background_gradient": "",
-            "text_color": "#000000",
+            "text_color": "#FFFFFF",
             "text_gradient": "",
             "button_background": "",
             "button_text_color": ""
@@ -417,9 +417,9 @@
       "settings": {
         "full_width": true,
         "content_size": "medium",
-        "background": "#d9d0c5",
+        "background": "#686562",
         "background_gradient": "",
-        "text_color": "",
+        "text_color": "#FFFFFF",
         "heading_color": "",
         "heading_gradient": "",
         "logo_item_background": "",
@@ -492,7 +492,7 @@
         "image_tbYYem": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/EXPUGC2.png",
+            "image": "shopify://shop_images/Exp12_3.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -539,7 +539,7 @@
         "image_DPE7EB": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BT_Collection_Bentley_Cars.png",
+            "image": "shopify://shop_images/Bentayga_Mom_1_L.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -561,7 +561,7 @@
         "image_bWfFx8": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Bentayga_UGC3.png",
+            "image": "shopify://shop_images/Bacalar_2_64019d80-3c19-41cc-8886-e0268b972128.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -583,7 +583,7 @@
         "image_et8whe": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Ride-on_Cars_Landing_page_1.png",
+            "image": "shopify://shop_images/compressed_Generated_with_Kive.ai_-_Change_only_the_dad_s_coat_to_a_long_black_coat._Keep_the_mom_s_black_coat__both_parents_faces_and_poses__the_child__red_ride-on_car__courtyard__li_0c7f78f4-d801-4c39-bf2a-f5813536f7a0.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
