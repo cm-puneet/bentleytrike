@@ -525,6 +525,72 @@
         "accordion_text_color": ""
       }
     },
+    "slideshow_xC8eMb": {
+      "type": "slideshow",
+      "blocks": {
+        "image_MQVCfF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Bentley_SoHo_003ec9e0-2d2b-48b7-b502-4344819a246e.png",
+            "content_max_width": 860,
+            "mobile_text_position": "place-self-end-center text-center",
+            "desktop_text_position": "sm:place-self-end-center sm:text-center",
+            "subheading": "",
+            "title": "",
+            "heading_tag": "h0",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        },
+        "image_A9YK3Y": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "content_max_width": 780,
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "subheading": "Tell your story",
+            "title": "Slide 2",
+            "heading_tag": "h0",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "button_border": "no",
+            "background": "",
+            "background_gradient": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_MQVCfF",
+        "image_A9YK3Y"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "full_width": true,
+        "allow_transparent_header": true,
+        "show_initial_transition": false,
+        "image_size": "lg",
+        "controls_type": "dots",
+        "transition_type": "fade_with_text",
+        "autoplay": false,
+        "cycle_speed": 6,
+        "background": "#F2F2F2",
+        "background_gradient": ""
+      }
+    },
     "video_jdAKz9": {
       "type": "video",
       "blocks": {
@@ -544,6 +610,7 @@
         "play_wiMKpx",
         "heading_TT7nKU"
       ],
+      "disabled": true,
       "settings": {
         "full_width": true,
         "allow_transparent_header": false,
@@ -1469,7 +1536,7 @@
         "image_zFnQ9k": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BBT_Trike_White_Satin_UGC2.png",
+            "image": "shopify://shop_images/CentennialEdition.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1491,7 +1558,7 @@
         "image_hJwdyw": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BTTrikeMullinerGoldUGC2.png",
+            "image": "shopify://shop_images/Pink_2_76fc8f9a-c39b-4856-8bf9-0ea181cb3810.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1510,10 +1577,10 @@
             "overlay_opacity": 0
           }
         },
-        "image_kkVkJE": {
+        "image_CXWRdr": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BTTrikeSpruceGreenUGC3.png",
+            "image": "shopify://shop_images/Green_2_8308ac91-f268-4958-b792-fd38377c8dba.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1535,7 +1602,7 @@
         "image_QNhJLg": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BTTrikePinkUGC2.png",
+            "image": "shopify://shop_images/red_2_aae729f3-2c62-4a83-bd42-cee65df6ebf0.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1554,10 +1621,10 @@
             "overlay_opacity": 0
           }
         },
-        "image_CXWRdr": {
+        "image_kkVkJE": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BTTrikeOnyxUGC1.png",
+            "image": "shopify://shop_images/Jetstream_Blue_2_282320ba-275a-4c60-8a41-8aa88569e0dc.png",
             "title": "",
             "heading_tag": "h4",
             "link_url": "",
@@ -1580,9 +1647,9 @@
       "block_order": [
         "image_zFnQ9k",
         "image_hJwdyw",
-        "image_kkVkJE",
+        "image_CXWRdr",
         "image_QNhJLg",
-        "image_CXWRdr"
+        "image_kkVkJE"
       ],
       "settings": {
         "full_width": true,
@@ -1882,6 +1949,7 @@
     "rich_text_ijfTqB",
     "main",
     "accordion_content_EGhnWC",
+    "slideshow_xC8eMb",
     "video_jdAKz9",
     "rich_text_xpUPF4",
     "rich_text_8hAWQk",
