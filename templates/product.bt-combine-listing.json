@@ -263,7 +263,7 @@
             "heading": "1. Choose your finish",
             "show_name": true,
             "show_labels": false,
-            "columns_desktop": 5,
+            "columns_desktop": 4,
             "columns_mobile": 5,
             "products": [],
             "labels": ""
