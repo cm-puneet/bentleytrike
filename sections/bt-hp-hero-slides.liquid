@@ -212,8 +212,8 @@
         assign src_attr = 'src'
         assign set_attr = 'srcset'
         unless first
-          assign src_attr = 'data-src'
-          assign set_attr = 'data-srcset'
+          assign src_attr = 'data-bthp-src'
+          assign set_attr = 'data-bthp-srcset'
         endunless
         assign htag = 'h2'
         if first
@@ -330,13 +330,43 @@
       var auto = el.getAttribute('data-auto') === 'true' && n > 1;
       if (!auto) el.classList.add('is-still');
 
-      // Give a slide its real photo just before it is needed (the next slide is primed while the current one plays).
+      // Give a slide its real photo (and start buffering its video) ahead of time.
+      // Own attribute names (data-bthp-src), so the theme's lazy-loading script leaves these alone.
       function prime(i) {
         var sl = slides[(i + n) % n];
         if (!sl || sl._primed) return;
         sl._primed = true;
-        sl.querySelectorAll('[data-srcset]').forEach(function (x) { x.setAttribute('srcset', x.getAttribute('data-srcset')); x.removeAttribute('data-srcset'); });
-        sl.querySelectorAll('[data-src]').forEach(function (x) { x.setAttribute('src', x.getAttribute('data-src')); x.removeAttribute('data-src'); });
+        sl.querySelectorAll('[data-bthp-srcset]').forEach(function (x) { x.setAttribute('srcset', x.getAttribute('data-bthp-srcset')); x.removeAttribute('data-bthp-srcset'); });
+        sl.querySelectorAll('[data-bthp-src]').forEach(function (x) { x.setAttribute('src', x.getAttribute('data-bthp-src')); x.removeAttribute('data-bthp-src'); });
+        sl.querySelectorAll('video.bthp-hss__v').forEach(function (v) {
+          var shown = getComputedStyle(v).display !== 'none';
+          if (shown && v.getAttribute('preload') === 'none') { v.setAttribute('preload', 'auto'); try { v.load(); } catch (e) {} }
+        });
+      }
+      // The media a slide shows on this screen (photo or video), to know when it's ready.
+      function mediaOf(sl) {
+        var list = sl.querySelectorAll('.bthp-hss__media img, .bthp-hss__media video');
+        for (var k = 0; k < list.length; k++) if (getComputedStyle(list[k]).display !== 'none') return list[k];
+        return null;
+      }
+      function isReady(m) {
+        if (!m) return true;
+        if (m.tagName === 'VIDEO') return m.readyState >= 2 || !!m.poster;
+        return m.complete && m.naturalWidth > 0;
+      }
+      // After the first photo is in: load the next slide, then the rest one after another in quiet moments,
+      // so jumping ahead never waits on a download.
+      function warmAll() {
+        var k = 1;
+        function nextOne() {
+          if (k >= n) return;
+          var sl = slides[k++]; prime(slides.indexOf(sl));
+          var m = mediaOf(sl);
+          var after = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(nextOne); };
+          if (!m || isReady(m)) after();
+          else { m.addEventListener(m.tagName === 'VIDEO' ? 'loadeddata' : 'load', after, { once: true }); m.addEventListener('error', after, { once: true }); }
+        }
+        nextOne();
       }
       // Only the slide on screen may play its video.
       function videos() {
@@ -363,12 +393,15 @@
         var l = lines[cur];
         if (l) { void l.offsetWidth; l.classList.add('is-on'); if (cur % 2) l.classList.add('is-odd'); }
       }
-      // Fade only once the next photo is decoded (at most ~0.7s wait), so it never fades into a blank.
+      // Fade only once the next photo has fully arrived, so it never fades into a half-drawn picture.
+      // (Waits at most 4s; then it shows whatever is there.)
       function ready(sl, cb) {
-        var im = [].filter.call(sl.querySelectorAll('img'), function (x) { return x.offsetParent !== null || x.closest('picture'); })[0];
-        if (!im || !im.decode || (im.complete && im.naturalWidth)) { cb(); return; }
+        var m = mediaOf(sl);
         var done = false, fin = function () { if (!done) { done = true; cb(); } };
-        im.decode().then(fin, fin); setTimeout(fin, 700);
+        if (isReady(m)) { if (m && m.decode) m.decode().then(fin, fin); else fin(); return; }
+        m.addEventListener(m.tagName === 'VIDEO' ? 'loadeddata' : 'load', function () { if (m.decode) m.decode().then(fin, fin); else fin(); }, { once: true });
+        m.addEventListener('error', fin, { once: true });
+        setTimeout(fin, 4000);
       }
       var want = -1;
       function go(i) {
@@ -401,7 +434,12 @@
         slides[0].classList.add('is-in');
         restartLine();
         videos();
-        if (n > 1) setTimeout(function () { prime(1); }, 1200);
+        if (n > 1) {
+          var first = mediaOf(slides[0]);
+          var kicked = false;
+          var kick = function () { if (kicked) return; kicked = true; prime(1); if (document.readyState === 'complete') warmAll(); else window.addEventListener('load', warmAll, { once: true }); };
+          if (isReady(first)) kick(); else if (first) { first.addEventListener(first.tagName === 'VIDEO' ? 'loadeddata' : 'load', kick, { once: true }); setTimeout(kick, 3000); } else kick();
+        }
         arm();
       }
       setTimeout(begin, skip ? 60 : 2900);
