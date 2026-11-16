@@ -55,6 +55,7 @@
     },
     "banner": {
       "type": "collection-banner",
+      "disabled": true,
       "settings": {
         "full_width": true,
         "allow_transparent_header": true,
@@ -73,6 +74,46 @@
         "text_color": "#ffffff",
         "overlay_color": "#000000",
         "overlay_opacity": 0
+      }
+    },
+    "bt_hp_hero_6VmLYc": {
+      "type": "bt-hp-hero",
+      "name": "BT Hero + reveal",
+      "settings": {
+        "show_intro": false,
+        "intro_once": false,
+        "intro_word": "BENTLEY",
+        "intro_top": "Officially licensed by Bentley Motors",
+        "intro_bottom": "Trike",
+        "image": "shopify://shop_images/Electric_Ride_On_Car_d6fead8f-2af3-4aa0-804e-971db6a126c9.png",
+        "image_mobile": "shopify://shop_images/Electric_Ride_On_Car_-_mobile_f9bcdaa7-9720-4ae2-a3b1-1c584370d2e2.png",
+        "overlay": 10,
+        "height": "full",
+        "allow_transparent_header": true,
+        "parallax": true,
+        "align": "left",
+        "heading_width": 50,
+        "align_mobile": "left",
+        "heading_1": "Bentley Ride On",
+        "heading_2": "Electric Cars",
+        "subheading": "",
+        "meta_1": "Officially licensed by Bentley Motors",
+        "meta_2": "From 8 months",
+        "meta_3": "",
+        "meta_mobile": true,
+        "text": "Featuring sleek designs, realistic details, and smooth handling, these mini Bentleys bring style and fun to every ride.",
+        "button_1_label": "",
+        "button_1_link": "",
+        "button_2_label": "",
+        "button_2_link": "",
+        "heading_size": 75,
+        "heading_size_mobile": 85,
+        "text_color": "#ffffff",
+        "accent_color": "#d9d0c5",
+        "button_bg": "#ffffff",
+        "button_text": "#1a1a1a",
+        "intro_bg": "#1a1a1a",
+        "intro_text": "#f8f4ef"
       }
     },
     "main": {
@@ -582,6 +623,7 @@
   "order": [
     "slideshow_L4hPWi",
     "banner",
+    "bt_hp_hero_6VmLYc",
     "main",
     "ss_slider_8_RdYQVe",
     "rich_text_UnNFCc",
