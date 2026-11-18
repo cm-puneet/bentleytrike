@@ -59,7 +59,7 @@
         "liquid_PkXVwX": {
           "type": "liquid",
           "settings": {
-            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: 'auto:250', stock_car: 'auto', stock_car_preorder: 'auto:250' %}"
+            "liquid": "{% render 'adb-ebf-offer-Bianca', product: section.settings.product, stock_off: 'auto', stock_preorder: 'auto:250', stock_car: 'auto', stock_car_preorder: 'auto:250', car_preorder_note: 'Some <b>Bentley electric cars</b> are on pre-order and will be ready to ship once available. The <b>Bacalar in Black</b> is estimated to ship Early December.' %}"
           }
         },
         "offer_yg6DBx": {
