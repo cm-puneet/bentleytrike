@@ -10,6 +10,7 @@
   @param {string} [after] - 'drawer', 'cart' or 'checkout' (default drawer)
   @param {string} [pill] - Text of the tab on the top edge (default "BLACK FRIDAY SALE · CHOOSE YOUR OFFER"; '' hides it)
   @param {string} [preorder_note] - Pre-order line under the % off offer (e.g. on the foldable template); blank hides it
+  @param {string} [car_preorder_note] - Pre-order line under the free car offer (HTML allowed, e.g. <b>Bacalar in Black</b>). Not passed = the default text below; '' hides it.
   @param {string} [extras] - Add-on product handles to show, comma-separated (default: the helmet + logo light projector)
   @param {string} [stock_off] - Low-stock line under the % off offer. One number for every trike (e.g. '37'), a number per trike colour (e.g. 'Onyx Black: 37, Mandarin: 22, Cool Stone: 14', or 'Onyx Black: auto' for that colour's real inventory; a plain number in the list is used for any colour not named), or 'auto' for real inventory (shown when 100 or fewer). Blank hides it.
   @param {string} [stock_car] - Low-stock line under the free car offer: same format as stock_off, matched to the car's colour. Blank hides it.
@@ -34,6 +35,10 @@
   endcomment
   assign car_list = car_handles | default: 'bentley-bacalar-electric-ride-on-car-for-kids' | split: ','
   assign car_col = car_color | default: 'black' | downcase
+  assign car_note = car_preorder_note | default: 'Some <b>Bentley electric cars</b> are on pre-order and will be ready to ship once available. The <b>Bacalar in Black</b> is estimated to ship Early December.'
+  if car_preorder_note == ''
+    assign car_note = ''
+  endif
   assign car = nil
   for ch in car_list
     assign cand = all_products[ch]
@@ -333,10 +338,12 @@
               <div class="bt-ebf__dots" role="group" aria-label="Choose your free car color">{{ car_dots }}</div>
             {%- endif -%}
             <div class="bt-ebf__note">Automatically added to your cart, free, when you add this trike.</div>
+              {%- if car_note != blank -%}
               <div class="bt-ebf__ship">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 4h14v12H1zM15 9h4l3 3v4h-7"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18.5" cy="18.5" r="1.8"/></svg>
-                <span><b>Pre-order:</b> Some <b>Bentley electric cars</b> are on pre-order and will be ready to ship once available. The <b>Bacalar in Black</b> is estimated to ship at the end of November.</span>
+                <span><b>Pre-order:</b> {{ car_note }}</span>
               </div>
+              {%- endif -%}
               <div class="bt-ebf__ship">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.01"/></svg>
                 <span><b>Please note:</b> the Free Car offer cannot be combined with any other discount codes or offers, and free shipping does not apply.</span>
