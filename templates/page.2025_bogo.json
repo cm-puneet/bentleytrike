@@ -310,7 +310,7 @@
         "liquid_98BjVy": {
           "type": "liquid",
           "settings": {
-            "liquid": "{% render ‘adb-ebf-offer-bianca-revised’, product: section.settings.product, stock_off: ‘auto’, stock_preorder: ‘auto:250’, stock_car: ‘auto’, stock_car_preorder: ‘auto:250’ %}"
+            "liquid": "{% render 'adb-ebf-offer-bianca-revised', product: section.settings.product, stock_off: 'auto', stock_preorder: 'auto:250', stock_car: 'auto', stock_car_preorder: 'auto:250' %}"
           }
         },
         "liquid_kAGiqi": {
