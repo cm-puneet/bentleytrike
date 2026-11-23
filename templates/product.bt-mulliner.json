@@ -217,46 +217,6 @@
             "selector_style": "variant_image"
           }
         },
-        "bt_collection_tabs": {
-          "type": "bt_collections",
-          "settings": {
-            "show_from": true,
-            "from_text": "From [price]",
-            "aria_label": "Collection",
-            "tab1_title": "Daily Commuter",
-            "tab1_products": [
-              "bentley-6-in-1-stroller-trike",
-              "onyx-black-bentley-stroller-trike",
-              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
-              "fuscia-pink-bentley-stroller-trike",
-              "jetstream-blue-bentley-6-in-1-stroller-trike",
-              "spruce-green-6-in-1-stroller-trike",
-              "sequin-blue-bentley-stroller-trike",
-              "white-satin-bentley-6-in-1-stroller-trike",
-              "dragon-red-bentley-stroller-trike"
-            ],
-            "tab1_link": "",
-            "tab2_title": "Folding Traveler",
-            "tab2_products": [
-              "black-bentley-foldable-tricycle",
-              "purple-bentley-foldable-tricycle",
-              "gold-bentley-foldable-tricycle",
-              "cool-stone-bentley-foldable-tricycle"
-            ],
-            "tab2_link": "",
-            "tab3_title": "Mulliner",
-            "tab3_products": [
-              "bentley-mulliner-trike",
-              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
-              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
-              "mulliner-celeste-bentley-6-in-1-stroller-trike"
-            ],
-            "tab3_link": "",
-            "tab4_title": "",
-            "tab4_products": [],
-            "tab4_link": ""
-          }
-        },
         "bt_finish_RWnXFC": {
           "type": "bt_finish",
           "settings": {
@@ -351,6 +311,46 @@
             "payment_button_text_color": ""
           }
         },
+        "bt_collection_tabs": {
+          "type": "bt_collections",
+          "settings": {
+            "show_from": true,
+            "from_text": "From [price]",
+            "aria_label": "Collection",
+            "tab1_title": "Daily Commuter",
+            "tab1_products": [
+              "bentley-6-in-1-stroller-trike",
+              "onyx-black-bentley-stroller-trike",
+              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+              "fuscia-pink-bentley-stroller-trike",
+              "jetstream-blue-bentley-6-in-1-stroller-trike",
+              "spruce-green-6-in-1-stroller-trike",
+              "sequin-blue-bentley-stroller-trike",
+              "white-satin-bentley-6-in-1-stroller-trike",
+              "dragon-red-bentley-stroller-trike"
+            ],
+            "tab1_link": "",
+            "tab2_title": "Folding Traveler",
+            "tab2_products": [
+              "black-bentley-foldable-tricycle",
+              "purple-bentley-foldable-tricycle",
+              "gold-bentley-foldable-tricycle",
+              "cool-stone-bentley-foldable-tricycle"
+            ],
+            "tab2_link": "",
+            "tab3_title": "Mulliner",
+            "tab3_products": [
+              "bentley-mulliner-trike",
+              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
+              "mulliner-celeste-bentley-6-in-1-stroller-trike"
+            ],
+            "tab3_link": "",
+            "tab4_title": "",
+            "tab4_products": [],
+            "tab4_link": ""
+          }
+        },
         "offer_TCPYbU": {
           "type": "offer",
           "settings": {
@@ -412,7 +412,6 @@
         "offer_WtbX38",
         "offer_TtAFeJ",
         "product_variations_WFpMqc",
-        "bt_collection_tabs",
         "bt_finish_RWnXFC",
         "bt_heading_RKE7yN",
         "liquid_bVzUBe",
@@ -424,6 +423,7 @@
         "description",
         "variant_picker",
         "buy_buttons",
+        "bt_collection_tabs",
         "offer_TCPYbU",
         "offer_EWXTY8",
         "associated_products_YXTBbY",
