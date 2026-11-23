@@ -216,46 +216,6 @@
             "size_chart_page": ""
           }
         },
-        "bt_collection_tabs": {
-          "type": "bt_collections",
-          "settings": {
-            "show_from": true,
-            "from_text": "From [price]",
-            "aria_label": "Collection",
-            "tab1_title": "Daily Commuter",
-            "tab1_products": [
-              "bentley-6-in-1-stroller-trike",
-              "onyx-black-bentley-stroller-trike",
-              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
-              "fuscia-pink-bentley-stroller-trike",
-              "jetstream-blue-bentley-6-in-1-stroller-trike",
-              "spruce-green-6-in-1-stroller-trike",
-              "sequin-blue-bentley-stroller-trike",
-              "white-satin-bentley-6-in-1-stroller-trike",
-              "dragon-red-bentley-stroller-trike"
-            ],
-            "tab1_link": "",
-            "tab2_title": "Folding Traveler",
-            "tab2_products": [
-              "black-bentley-foldable-tricycle",
-              "purple-bentley-foldable-tricycle",
-              "gold-bentley-foldable-tricycle",
-              "cool-stone-bentley-foldable-tricycle"
-            ],
-            "tab2_link": "",
-            "tab3_title": "Mulliner",
-            "tab3_products": [
-              "bentley-mulliner-trike",
-              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
-              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
-              "mulliner-celeste-bentley-6-in-1-stroller-trike"
-            ],
-            "tab3_link": "",
-            "tab4_title": "",
-            "tab4_products": [],
-            "tab4_link": ""
-          }
-        },
         "bt_finish_DjknTk": {
           "type": "bt_finish",
           "settings": {
@@ -347,6 +307,46 @@
             "text_color": "#1c0e29"
           }
         },
+        "bt_collection_tabs": {
+          "type": "bt_collections",
+          "settings": {
+            "show_from": true,
+            "from_text": "From [price]",
+            "aria_label": "Collection",
+            "tab1_title": "Daily Commuter",
+            "tab1_products": [
+              "bentley-6-in-1-stroller-trike",
+              "onyx-black-bentley-stroller-trike",
+              "limited-edition-matte-black-gold-bentley-6-in-1-stroller-trike",
+              "fuscia-pink-bentley-stroller-trike",
+              "jetstream-blue-bentley-6-in-1-stroller-trike",
+              "spruce-green-6-in-1-stroller-trike",
+              "sequin-blue-bentley-stroller-trike",
+              "white-satin-bentley-6-in-1-stroller-trike",
+              "dragon-red-bentley-stroller-trike"
+            ],
+            "tab1_link": "",
+            "tab2_title": "Folding Traveler",
+            "tab2_products": [
+              "black-bentley-foldable-tricycle",
+              "purple-bentley-foldable-tricycle",
+              "gold-bentley-foldable-tricycle",
+              "cool-stone-bentley-foldable-tricycle"
+            ],
+            "tab2_link": "",
+            "tab3_title": "Mulliner",
+            "tab3_products": [
+              "bentley-mulliner-trike",
+              "mulliner-cool-stone-bentley-6-in-1-stroller-trike",
+              "mulliner-mandarin-bentley-6-in-1-stroller-trike-copy",
+              "mulliner-celeste-bentley-6-in-1-stroller-trike"
+            ],
+            "tab3_link": "",
+            "tab4_title": "",
+            "tab4_products": [],
+            "tab4_link": ""
+          }
+        },
         "offer_WtbX38": {
           "type": "offer",
           "settings": {
@@ -416,7 +416,6 @@
         "offer_Krbwa8",
         "product_variations_WFpMqc",
         "variant_picker",
-        "bt_collection_tabs",
         "bt_finish_DjknTk",
         "bt_heading_TtYdRb",
         "quantity_selector",
@@ -428,6 +427,7 @@
         "description",
         "buy_buttons",
         "offer_TCPYbU",
+        "bt_collection_tabs",
         "offer_WtbX38",
         "offer_EWXTY8",
         "associated_products_YXTBbY",
