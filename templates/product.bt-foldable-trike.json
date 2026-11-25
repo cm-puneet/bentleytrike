@@ -261,7 +261,9 @@
         "c_accent": "#a83f2f",
         "t_heading_font": "heading",
         "t_heading_scale": 100,
-        "t_text_scale": 100
+        "t_text_scale": 100,
+        "price_under_title": true,
+        "title_price_size": 25
       }
     },
     "btf_nav": {
