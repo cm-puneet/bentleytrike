@@ -12,6 +12,48 @@
     "main": {
       "type": "bt-foldable-main",
       "blocks": {
+        "finish_1": {
+          "type": "finish",
+          "settings": {
+            "product": "black-bentley-foldable-tricycle",
+            "label": "Metamorphic",
+            "image": "shopify://shop_images/BlackBentleyFoldableTricycle_2.png",
+            "asset": ""
+          }
+        },
+        "finish_2": {
+          "type": "finish",
+          "settings": {
+            "product": "purple-bentley-foldable-tricycle",
+            "label": "Purple Shade",
+            "image": "shopify://shop_images/PurpleBentleyFoldableTricycle_ec2e63e9-5bb3-4df7-841a-7e7d51b04aaf.png",
+            "asset": ""
+          }
+        },
+        "finish_3": {
+          "type": "finish",
+          "settings": {
+            "product": "gold-bentley-foldable-tricycle",
+            "label": "Hidden Depths",
+            "image": "shopify://shop_images/GoldBentleyFoldableTricycle_b8f85282-dd97-4c60-8784-7d954c147ac9.png",
+            "asset": ""
+          }
+        },
+        "finish_4": {
+          "type": "finish",
+          "settings": {
+            "product": "cool-stone-bentley-foldable-tricycle",
+            "label": "Cool Crystal",
+            "image": "shopify://shop_images/SilverBentleyFoldableTricycle_d7bc65b9-3512-4665-b6f4-74fcd09a80d2.png",
+            "asset": ""
+          }
+        },
+        "liquid_Kj9fgP": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% render 'adb-ebf-offer-bianca-revised', product: product, pill: 'BLACK FRIDAY SALE', preorder_note: 'Please note that all Bentley Foldable Stroller/Trike are currently on Pre-order. Estimated to ship Mid December.', stock_car: 'auto', stock_car_preorder: 'auto:250' %}"
+          }
+        },
         "coll_daily": {
           "type": "collection",
           "settings": {
@@ -54,48 +96,6 @@
               "mulliner-celeste-bentley-6-in-1-stroller-trike"
             ],
             "link": ""
-          }
-        },
-        "finish_1": {
-          "type": "finish",
-          "settings": {
-            "product": "black-bentley-foldable-tricycle",
-            "label": "Metamorphic",
-            "image": "shopify://shop_images/BlackBentleyFoldableTricycle_2.png",
-            "asset": ""
-          }
-        },
-        "finish_2": {
-          "type": "finish",
-          "settings": {
-            "product": "purple-bentley-foldable-tricycle",
-            "label": "Purple Shade",
-            "image": "shopify://shop_images/PurpleBentleyFoldableTricycle_ec2e63e9-5bb3-4df7-841a-7e7d51b04aaf.png",
-            "asset": ""
-          }
-        },
-        "finish_3": {
-          "type": "finish",
-          "settings": {
-            "product": "gold-bentley-foldable-tricycle",
-            "label": "Hidden Depths",
-            "image": "shopify://shop_images/GoldBentleyFoldableTricycle_b8f85282-dd97-4c60-8784-7d954c147ac9.png",
-            "asset": ""
-          }
-        },
-        "finish_4": {
-          "type": "finish",
-          "settings": {
-            "product": "cool-stone-bentley-foldable-tricycle",
-            "label": "Cool Crystal",
-            "image": "shopify://shop_images/SilverBentleyFoldableTricycle_d7bc65b9-3512-4665-b6f4-74fcd09a80d2.png",
-            "asset": ""
-          }
-        },
-        "liquid_Kj9fgP": {
-          "type": "liquid",
-          "settings": {
-            "liquid": "{% render 'adb-ebf-offer-bianca-revised', product: product, pill: 'BLACK FRIDAY SALE', preorder_note: 'Please note that all Bentley Foldable Stroller/Trike are currently on Pre-order. Estimated to ship Mid December.', stock_car: 'auto', stock_car_preorder: 'auto:250' %}"
           }
         },
         "bullet_1": {
@@ -187,14 +187,14 @@
         }
       },
       "block_order": [
-        "coll_daily",
-        "coll_traveller",
-        "coll_mulliner",
         "finish_1",
         "finish_2",
         "finish_3",
         "finish_4",
         "liquid_Kj9fgP",
+        "coll_daily",
+        "coll_traveller",
+        "coll_mulliner",
         "bullet_1",
         "bullet_2",
         "bullet_3",
@@ -241,6 +241,8 @@
         "show_cta": false,
         "cta_label": "ADD TO CART",
         "show_installments": true,
+        "price_under_title": true,
+        "title_price_size": 25,
         "show_stock": true,
         "stock_text": "In stock · [count] available",
         "stock_text_untracked": "In stock",
@@ -261,9 +263,7 @@
         "c_accent": "#a83f2f",
         "t_heading_font": "heading",
         "t_heading_scale": 100,
-        "t_text_scale": 100,
-        "price_under_title": true,
-        "title_price_size": 25
+        "t_text_scale": 100
       }
     },
     "btf_nav": {
