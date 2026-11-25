@@ -360,3 +360,7 @@ a.btf-coll__tab:hover { background: rgb(var(--btf-ink) / .06); }
 .btf-title--wide .badge, .btf-title--wide .btf-stars { flex: none; white-space: nowrap; }
 .btf-title--wide .btf-buy__eyebrow { flex: 0 1 auto; min-width: 0; line-height: 1.4; }
 @container (max-width: 640px) { .btf-title--wide:has(.badge) .oke-sr-label-text { display: none; } }
+/* BT: buy box — price under the title (size from the section setting), Shop Pay installments right below it */
+.btf-title-price { display: flex; align-items: baseline; gap: 10px; font-size: var(--btf-title-price, 25px); line-height: 1.2; }
+.btf-title-price s { font-size: .64em; opacity: .6; }
+.btf-title-terms { margin: 0; }

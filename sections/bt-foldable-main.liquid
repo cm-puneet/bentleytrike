@@ -161,6 +161,23 @@
       [stars]
     </div>
   {%- endcapture -%}
+  {%- comment -%} Optional price under the title, with Shop Pay installments right below it (then not repeated lower down). {%- endcomment -%}
+  {%- capture title_price -%}
+    {%- if section.settings.price_under_title -%}
+      <div class="btf-title-price" style="--btf-title-price: {{ section.settings.title_price_size }}px">
+        <span>{{ variant.price | money }}</span>
+        {%- if variant.compare_at_price > variant.price -%}<s>{{ variant.compare_at_price | money }}</s>{%- endif -%}
+      </div>
+      {%- if section.settings.show_installments -%}
+        <payment-terms class="product-info__payment-terms btf-payment-terms btf-title-terms">
+          {%- form 'product', product, id: 'btf-installments-form-[where]' -%}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            {{- form | payment_terms -}}
+          {%- endform -%}
+        </payment-terms>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endcapture -%}
   {%- comment -%}
     Mobile: the badges and title sit above the gallery (the buy box copy is hidden there).
     The badges fill the row on phones, so the stars go at the end of the title's last line instead.
@@ -168,6 +185,7 @@
   <div class="btf-buy__intro btf-intro--mobile">
     {{ intro_badges | replace: '[stars]', '' }}
     <div class="btf-intro__title"><p class="{{ section.settings.title_size }}" role="heading" aria-level="1">{{ product.title | escape }}</p> {{ intro_stars }}</div>
+    {{ title_price | replace: '[where]', 'mobile' }}
   </div>
   <btf-gallery class="btf-gallery-wrap">
     <div class="btf-gallery" aria-label="{{ product.title | escape }}">{{ slides }}</div>
@@ -178,77 +196,8 @@
     <div class="btf-buy__intro btf-intro--desktop">
       {{ intro_badges | replace: '[stars]', intro_stars }}
       <h1 class="{{ section.settings.title_size }}">{{ product.title | escape }}</h1>
+      {{ title_price | replace: '[where]', 'desktop' }}
     </div>
-    {%- capture bullets -%}
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'bullet' and block.settings.text != blank -%}
-          <li {{ block.shopify_attributes }}>{%- render 'icon' with 'success', width: 16, height: 16 -%}<span>{{ block.settings.text | escape }}</span></li>
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endcapture -%}
-    {%- comment -%}
-      Bullets follow the editor's block order: they show right after the part of the buy box that the block above
-      the first bullet belongs to (finish picker, theme/app blocks such as Custom Liquid, sets/offers and button, or trust items).
-    {%- endcomment -%}
-    {%- liquid
-      assign bullets_after = 'top'
-      for block in section.blocks
-        case block.type
-          when 'bullet'
-            break
-          when 'finish', 'collection'
-            assign bullets_after = 'finish'
-          when 'set', 'promo', 'promo_addon'
-            assign bullets_after = 'cta'
-          when 'trust'
-            assign bullets_after = 'trust'
-          else
-            assign bullets_after = 'theme'
-        endcase
-      endfor
-      if bullets_after == 'theme' and theme_pos == 'after_bullets'
-        assign bullets_after = 'top'
-      endif
-    -%}
-    {%- capture bullets_out -%}
-      {%- if bullets != blank -%}<ul class="btf-bullets text-sm">{{ bullets }}</ul>{%- endif -%}
-      {%- if theme_pos == 'after_bullets' -%}{{ theme_blocks }}{%- endif -%}
-    {%- endcapture -%}
-    {%- if theme_pos == 'after_title' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- endif -%}
-    {%- if bullets_after == 'top' -%}{{ bullets_out }}{%- endif -%}
-
-    {%- capture finishes -%}
-      {%- for block in section.blocks -%}
-        {%- assign p = block.settings.product -%}
-        {%- if block.type == 'finish' and p != blank -%}
-          {%- assign thumb = block.settings.image | default: p.featured_media.preview_image -%}
-          {%- assign swatch_asset = block.settings.asset -%}
-          {%- if block.settings.image != blank -%}{%- assign swatch_asset = '' -%}{%- endif -%}
-          <a class="btf-finish" href="{{ p.url }}" {% if p.id == product.id %}aria-current="true"{% endif %} title="{{ block.settings.label | default: p.title | escape }}" {{ block.shopify_attributes }}>
-            {%- if swatch_asset != blank -%}
-              {%- render 'btf-image', asset: swatch_asset, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
-            {%- elsif thumb -%}
-              {%- render 'btf-image', image: thumb, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
-            {%- else -%}<span class="btf-placeholder"></span>{%- endif -%}
-            <span>{{ block.settings.label | default: p.title | escape }}</span>
-          </a>
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endcapture -%}
-    {%- if finishes == blank and product.has_only_default_variant == false -%}
-      {%- comment -%} No finish products picked: the product's own variants become the finish tiles. {%- endcomment -%}
-      {%- capture finishes -%}
-        {%- for v in product.variants -%}
-          {%- assign thumb = v.featured_image | default: product.featured_media.preview_image -%}
-          <a class="btf-finish" href="{{ v.url }}" data-variant-link {% if v.id == variant.id %}aria-current="true"{% endif %} {% unless v.available %}aria-disabled="true"{% endunless %} title="{{ v.title | escape }}">
-            {%- if thumb -%}
-              {%- render 'btf-image', image: thumb, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
-            {%- else -%}<span class="btf-placeholder"></span>{%- endif -%}
-            <span>{{ v.title | escape }}</span>
-          </a>
-        {%- endfor -%}
-      {%- endcapture -%}
-    {%- endif -%}
     {%- comment -%}
       Collection tabs (e.g. Daily Commuter / Traveller / Mulliner): one block per collection. The tab holding this product is
       selected; the other tabs link to their collection (the tab's link, or its first product in stock).
@@ -269,9 +218,34 @@
         endif
       endfor
     -%}
-    {%- capture finish_out -%}
+    {%- comment -%}
+      The tabs follow the editor's block order, like the bullets: they show right after the part of the buy box that the
+      block above the first tab belongs to (bullets, finish picker, theme/app blocks such as Custom Liquid, sets, trust items).
+    {%- endcomment -%}
+    {%- liquid
+      assign tabs_after = 'top'
+      for block in section.blocks
+        case block.type
+          when 'collection'
+            break
+          when 'bullet'
+            assign tabs_after = 'bullets'
+          when 'finish'
+            assign tabs_after = 'finish'
+          when 'set', 'promo', 'promo_addon'
+            assign tabs_after = 'cta'
+          when 'trust'
+            assign tabs_after = 'trust'
+          else
+            assign tabs_after = 'theme'
+        endcase
+      endfor
+      if tabs_after == 'theme' and theme_pos == 'after_bullets'
+        assign tabs_after = 'bullets'
+      endif
+    -%}
+    {%- capture tabs_out -%}
     {%- if coll_count > 0 -%}
-      <div class="btf-colls">
         <nav class="btf-coll" aria-label="{{ section.settings.coll_label | escape }}">
           {%- for block in section.blocks -%}
             {%- if block.type == 'collection' and block.settings.products.size > 0 -%}
@@ -306,6 +280,83 @@
           {%- endfor -%}
         </nav>
     {%- endif -%}
+    {%- endcapture -%}
+    {%- capture bullets -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bullet' and block.settings.text != blank -%}
+          <li {{ block.shopify_attributes }}>{%- render 'icon' with 'success', width: 16, height: 16 -%}<span>{{ block.settings.text | escape }}</span></li>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- comment -%}
+      Bullets follow the editor's block order: they show right after the part of the buy box that the block above
+      the first bullet belongs to (finish picker, theme/app blocks such as Custom Liquid, sets/offers and button, or trust items).
+    {%- endcomment -%}
+    {%- liquid
+      assign bullets_after = 'top'
+      for block in section.blocks
+        case block.type
+          when 'bullet'
+            break
+          when 'collection'
+            assign bullets_after = 'tabs'
+          when 'finish'
+            assign bullets_after = 'finish'
+          when 'set', 'promo', 'promo_addon'
+            assign bullets_after = 'cta'
+          when 'trust'
+            assign bullets_after = 'trust'
+          else
+            assign bullets_after = 'theme'
+        endcase
+      endfor
+      if bullets_after == 'theme' and theme_pos == 'after_bullets'
+        assign bullets_after = 'top'
+      endif
+    -%}
+    {%- capture bullets_out -%}
+      {%- if bullets != blank -%}<ul class="btf-bullets text-sm">{{ bullets }}</ul>{%- endif -%}
+      {%- if theme_pos == 'after_bullets' -%}{{ theme_blocks }}{%- endif -%}
+      {%- if tabs_after == 'bullets' -%}{{ tabs_out }}{%- endif -%}
+    {%- endcapture -%}
+    {%- if bullets_after == 'tabs' -%}{%- capture tabs_out -%}{{ tabs_out }}{{ bullets_out }}{%- endcapture -%}{%- endif -%}
+    {%- if theme_pos == 'after_title' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- if tabs_after == 'theme' -%}{{ tabs_out }}{%- endif -%}{%- endif -%}
+    {%- if bullets_after == 'top' -%}{{ bullets_out }}{%- endif -%}
+    {%- if tabs_after == 'top' -%}{{ tabs_out }}{%- endif -%}
+
+    {%- capture finishes -%}
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- if block.type == 'finish' and p != blank -%}
+          {%- assign thumb = block.settings.image | default: p.featured_media.preview_image -%}
+          {%- assign swatch_asset = block.settings.asset -%}
+          {%- if block.settings.image != blank -%}{%- assign swatch_asset = '' -%}{%- endif -%}
+          <a class="btf-finish" href="{{ p.url }}" {% if p.id == product.id %}aria-current="true"{% endif %} title="{{ block.settings.label | default: p.title | escape }}" {{ block.shopify_attributes }}>
+            {%- if swatch_asset != blank -%}
+              {%- render 'btf-image', asset: swatch_asset, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
+            {%- elsif thumb -%}
+              {%- render 'btf-image', image: thumb, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
+            {%- else -%}<span class="btf-placeholder"></span>{%- endif -%}
+            <span>{{ block.settings.label | default: p.title | escape }}</span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if finishes == blank and product.has_only_default_variant == false -%}
+      {%- comment -%} No finish products picked: the product's own variants become the finish tiles. {%- endcomment -%}
+      {%- capture finishes -%}
+        {%- for v in product.variants -%}
+          {%- assign thumb = v.featured_image | default: product.featured_media.preview_image -%}
+          <a class="btf-finish" href="{{ v.url }}" data-variant-link {% if v.id == variant.id %}aria-current="true"{% endif %} {% unless v.available %}aria-disabled="true"{% endunless %} title="{{ v.title | escape }}">
+            {%- if thumb -%}
+              {%- render 'btf-image', image: thumb, widths: '150,300', sizes: '(min-width: 1040px) 130px, 22vw', alt: '' -%}
+            {%- else -%}<span class="btf-placeholder"></span>{%- endif -%}
+            <span>{{ v.title | escape }}</span>
+          </a>
+        {%- endfor -%}
+      {%- endcapture -%}
+    {%- endif -%}
+    {%- capture finish_out -%}
     {%- if finishes != blank -%}
       <div class="btf-step" id="choose-finish">
         {%- assign finish_count = finishes | split: 'class="btf-finish"' | size | minus: 1 -%}
@@ -321,10 +372,10 @@
         {%- endif -%}
       </div>
     {%- endif -%}
-    {%- if coll_count > 0 -%}</div>{%- endif -%}
     {%- endcapture -%}
     {{ finish_out }}
     {%- if bullets_after == 'finish' -%}{{ bullets_out }}{%- endif -%}
+    {%- if tabs_after == 'finish' -%}{{ tabs_out }}{%- endif -%}
 
 
     {%- if theme_pos == 'after_finish' -%}
@@ -335,6 +386,7 @@
         {{ theme_blocks }}
       {%- endif -%}
       {%- if bullets_after == 'theme' -%}{%- assign bullets_after = 'cta' -%}{%- endif -%}
+      {%- if tabs_after == 'theme' -%}{%- assign tabs_after = 'cta' -%}{%- endif -%}
     {%- endif -%}
 
     {%- comment -%} Same wrapper and button markup as the theme's buy buttons, so the Globo pre-order app finds the form and button. {%- endcomment -%}
@@ -434,7 +486,7 @@
     {%- endform -%}
     </div>
 
-    {%- if section.settings.show_installments -%}
+    {%- if section.settings.show_installments and section.settings.price_under_title == false -%}
       {%- comment -%} Shopify's own Shop Pay Installments banner, as on the live product page (separate form, like the theme's payment terms block). {%- endcomment -%}
       <payment-terms class="product-info__payment-terms btf-payment-terms">
         {%- form 'product', product, id: 'btf-installments-form' -%}
@@ -446,6 +498,7 @@
 
     {%- comment -%} Bullets placed after the offer or sets come below the installments line. {%- endcomment -%}
     {%- if bullets_after == 'cta' -%}{{ bullets_out }}{%- endif -%}
+    {%- if tabs_after == 'cta' -%}{{ tabs_out }}{%- endif -%}
 
     {%- if section.settings.show_stock and variant.available -%}
       {%- liquid
@@ -458,7 +511,7 @@
       -%}
       {%- if stock != blank -%}<p class="btf-stock text-sm"><span class="btf-stock__dot"></span>{{ stock | escape }}</p>{%- endif -%}
     {%- endif -%}
-    {%- if theme_pos == 'after_cta' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- endif -%}
+    {%- if theme_pos == 'after_cta' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- if tabs_after == 'theme' -%}{{ tabs_out }}{%- endif -%}{%- endif -%}
 
     {%- comment -%} One popup per set: its accessories with photo, price and option pickers. Choices apply to every set with the same accessory. {%- endcomment -%}
     {%- for block in section.blocks -%}
@@ -520,7 +573,8 @@
     {%- endcapture -%}
     {%- if trust != blank -%}<div class="btf-trust">{{ trust }}</div>{%- endif -%}
     {%- if bullets_after == 'trust' -%}{{ bullets_out }}{%- endif -%}
-    {%- if theme_pos == 'bottom' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- endif -%}
+    {%- if tabs_after == 'trust' -%}{{ tabs_out }}{%- endif -%}
+    {%- if theme_pos == 'bottom' -%}{{ theme_blocks }}{%- if bullets_after == 'theme' -%}{{ bullets_out }}{%- endif -%}{%- if tabs_after == 'theme' -%}{{ tabs_out }}{%- endif -%}{%- endif -%}
   </btf-buy-box>
 </div>
 
@@ -803,6 +857,23 @@
       "id": "show_installments",
       "label": "Show Shop Pay installments banner",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "price_under_title",
+      "label": "Show price under the title",
+      "info": "The Shop Pay installments banner then shows right under the price instead of lower down.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "title_price_size",
+      "label": "Price size under the title",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 25
     },
     {
       "type": "checkbox",
