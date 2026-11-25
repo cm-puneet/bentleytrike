@@ -61,6 +61,7 @@
           "settings": {
             "product": "black-bentley-foldable-tricycle",
             "label": "Metamorphic",
+            "image": "shopify://shop_images/BlackBentleyFoldableTricycle_2.png",
             "asset": ""
           }
         },
@@ -69,6 +70,7 @@
           "settings": {
             "product": "purple-bentley-foldable-tricycle",
             "label": "Purple Shade",
+            "image": "shopify://shop_images/PurpleBentleyFoldableTricycle_ec2e63e9-5bb3-4df7-841a-7e7d51b04aaf.png",
             "asset": ""
           }
         },
@@ -77,6 +79,7 @@
           "settings": {
             "product": "gold-bentley-foldable-tricycle",
             "label": "Hidden Depths",
+            "image": "shopify://shop_images/GoldBentleyFoldableTricycle_b8f85282-dd97-4c60-8784-7d954c147ac9.png",
             "asset": ""
           }
         },
@@ -85,6 +88,7 @@
           "settings": {
             "product": "cool-stone-bentley-foldable-tricycle",
             "label": "Cool Crystal",
+            "image": "shopify://shop_images/SilverBentleyFoldableTricycle_d7bc65b9-3512-4665-b6f4-74fcd09a80d2.png",
             "asset": ""
           }
         },
