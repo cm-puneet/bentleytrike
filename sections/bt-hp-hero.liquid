@@ -53,12 +53,15 @@
   .bthp-hero.is-plain .bthp-hero__lede{animation-delay:.35s}
   .bthp-hero.is-done .bthp-hero__lede{animation:none;opacity:1}
   @keyframes bthpUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-  @media (min-width:750px){.bthp-hero__foot>div:last-child{grid-column:2}}
+  /* No small details: the buttons sit right under the heading text, lined up with it (no empty column, no line) */
+  .bthp-hero .bthp-hero__foot--solo{display:block;border-top:0;padding-top:0}
+  .bthp-hero__foot--solo .bthp-hero__sub{max-width:560px}
   .bthp-hero__meta{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
   .bthp-hero__meta span{font-family:var(--text-font-family,Poppins,sans-serif);font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;opacity:.85}
   .bthp-hero__sub{margin:0 0 20px;font-family:var(--text-font-family,Poppins,sans-serif);font-size:15px;line-height:1.7;opacity:.92}
   .bthp-hero__ctas{display:flex;flex-wrap:wrap;gap:12px}
   .bthp-hero__btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 34px;box-sizing:border-box;border-radius:0;font-family:var(--text-font-family,Poppins,sans-serif);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:background .3s ease,color .3s ease,box-shadow .3s ease}
+  .bthp-hero__ctas>.bthp-hero__btn:only-child{min-width:min(320px,100%)}
   .bthp-hero__btn--a{background:var(--bthp-btn-bg);color:var(--bthp-btn-text)}
   .bthp-hero__btn--a:hover{background:var(--bthp-btn-text);color:var(--bthp-btn-bg)}
   .bthp-hero__btn--b{background:transparent;color:var(--bthp-text);box-shadow:inset 0 0 0 1px currentColor}
@@ -109,8 +112,42 @@
   .bthp-intro__sup{bottom:calc(100% + 22px);letter-spacing:.5em;margin-right:-.5em;color:var(--bthp-intro-text);animation-delay:.9s}
   @keyframes bthpS{to{opacity:.75}}
 
+  /* Button position (desktop) */
+  @media (min-width:750px){
+    .bthp-hero[data-btnd="under"] .bthp-hero__foot{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+    .bthp-hero[data-btnd="under"] .bthp-hero__foot>div:last-child{max-width:560px}
+    /* Bottom right with no small details: buttons on the right, their bottom level with the last line of text */
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo){display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(32px,5vw,96px);align-content:end}
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__foot--solo,.bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__foot--solo>div{display:contents}
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo)>*,.bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__sub{grid-column:1}
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__h{max-width:none;margin-bottom:0}
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__lede{margin:16px 0 0}
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__sub{max-width:560px;margin:16px 0 0}
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__ctas{grid-column:2;grid-row:1 / span 6;align-self:end;justify-content:flex-end;flex-wrap:nowrap}
+    .bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__sub,.bthp-hero[data-al="left"][data-btnd="right"] .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__ctas{opacity:0;animation:bthpUp 1.1s ease 3.45s forwards}
+    .bthp-hero[data-al="left"][data-btnd="right"].is-plain .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__sub,.bthp-hero[data-al="left"][data-btnd="right"].is-plain .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__ctas{animation-delay:.45s}
+    .bthp-hero[data-al="left"][data-btnd="right"].is-done .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__sub,.bthp-hero[data-al="left"][data-btnd="right"].is-done .bthp-hero__in:has(.bthp-hero__foot--solo) .bthp-hero__ctas{animation:none;opacity:1}
+    /* Beside the heading: buttons on the right, level with the middle of the heading and text */
+    .bthp-hero[data-btnd="beside"] .bthp-hero__in{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(32px,5vw,96px);align-content:end}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__foot,.bthp-hero[data-btnd="beside"] .bthp-hero__foot--solo,.bthp-hero[data-btnd="beside"] .bthp-hero__foot>div:not(.bthp-hero__meta){display:contents}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__in>*,.bthp-hero[data-btnd="beside"] .bthp-hero__meta,.bthp-hero[data-btnd="beside"] .bthp-hero__sub{grid-column:1}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__h{max-width:none}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__meta{margin-top:4px}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__sub{max-width:560px;margin:16px 0 0}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__ctas{grid-column:2;grid-row:1 / span 6;align-self:center;justify-content:flex-end;flex-wrap:nowrap}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__meta{padding-top:20px;border-top:1px solid rgba(255,255,255,.3)}
+    .bthp-hero[data-btnd="beside"] .bthp-hero__meta,.bthp-hero[data-btnd="beside"] .bthp-hero__sub,.bthp-hero[data-btnd="beside"] .bthp-hero__ctas{opacity:0;animation:bthpUp 1.1s ease 3.45s forwards}
+    .bthp-hero[data-btnd="beside"].is-plain .bthp-hero__meta,.bthp-hero[data-btnd="beside"].is-plain .bthp-hero__sub,.bthp-hero[data-btnd="beside"].is-plain .bthp-hero__ctas{animation-delay:.45s}
+    .bthp-hero[data-btnd="beside"].is-done .bthp-hero__meta,.bthp-hero[data-btnd="beside"].is-done .bthp-hero__sub,.bthp-hero[data-btnd="beside"].is-done .bthp-hero__ctas{animation:none;opacity:1}
+    /* Text height (desktop) */
+    .bthp-hero[data-vpd="middle"] .bthp-hero__in,.bthp-hero[data-vpd="top"] .bthp-hero__in{top:0;display:flex;flex-direction:column;padding-top:calc(var(--header-height, 80px) * var(--section-is-first, 0) + 40px);padding-bottom:clamp(36px,6vh,64px)}
+    .bthp-hero[data-vpd="middle"] .bthp-hero__in{justify-content:center}
+    .bthp-hero[data-vpd="top"] .bthp-hero__in{justify-content:flex-start}
+    .bthp-hero[data-vpd="middle"][data-btnd="beside"] .bthp-hero__in{display:grid;align-content:center}
+    .bthp-hero[data-vpd="top"][data-btnd="beside"] .bthp-hero__in{display:grid;align-content:start}
+  }
   @media (max-width:749px){
-    .bthp-hero{height:var(--bthp-hm,92vh);height:var(--bthp-hm,92svh);min-height:540px}
+    .bthp-hero{height:var(--bthp-hmv,92vh);height:var(--bthp-hm,92svh);min-height:340px}
     .bthp-hero__media .bthp-hero__d{display:none}
     .bthp-hero__media .bthp-hero__m{display:block}
     .bthp-hero__media img,.bthp-hero__media video{object-position:var(--pm,50% 50%)}
@@ -125,13 +162,27 @@
     .bthp-hero[data-alm="center"] .bthp-hero__meta{justify-content:center}
     .bthp-hero[data-alm="right"] .bthp-hero__meta{justify-content:flex-end}
     .bthp-hero__sub{font-size:14px;margin-bottom:16px}
-    .bthp-hero__ctas{flex-wrap:nowrap}
-    .bthp-hero__btn{flex:1 1 0;padding:0 10px;min-height:50px;font-size:11px;letter-spacing:.14em}
+    .bthp-hero__ctas{flex-wrap:wrap}
+    .bthp-hero__btn{flex:1 1 auto;white-space:nowrap;padding:0 10px;min-height:50px;font-size:11px;letter-spacing:.14em}
+    .bthp-hero__btn,.bthp-hero__ctas>.bthp-hero__btn:only-child{min-width:0}
     .bthp-intro__line{width:12vw}
+
+    /* Phone layout: the text block can sit at the bottom, middle or top, and the buttons can stay with it or drop to the bottom */
+    .bthp-hero__in{top:0;display:flex;flex-direction:column;justify-content:flex-end;padding-top:calc(var(--header-height, 64px) * var(--section-is-first, 0) + 24px)}
+    .bthp-hero .bthp-hero__foot,.bthp-hero .bthp-hero__foot--solo,.bthp-hero__foot>div:not(.bthp-hero__meta){display:contents}
+    .bthp-hero__meta{margin-bottom:16px}
+    .bthp-hero__meta{padding-top:18px;border-top:1px solid rgba(255,255,255,.3)}
+    .bthp-hero__meta,.bthp-hero__sub,.bthp-hero__ctas{opacity:0;animation:bthpUp 1.1s ease 3.45s forwards}
+    .bthp-hero.is-plain .bthp-hero__meta,.bthp-hero.is-plain .bthp-hero__sub,.bthp-hero.is-plain .bthp-hero__ctas{animation-delay:.45s}
+    .bthp-hero.is-done .bthp-hero__meta,.bthp-hero.is-done .bthp-hero__sub,.bthp-hero.is-done .bthp-hero__ctas{animation:none;opacity:1}
+    .bthp-hero[data-vpm="middle"] .bthp-hero__in{justify-content:center}
+    .bthp-hero[data-vpm="top"] .bthp-hero__in{justify-content:flex-start}
+    .bthp-hero[data-btnm="bottom"] .bthp-hero__ctas{margin-top:auto;padding-top:16px}
+    .bthp-hero[data-btnm="bottom"][data-vpm="middle"] .bthp-hero__h{margin-top:auto}
   }
   @media (prefers-reduced-motion:reduce){
     .bthp-intro{display:none}
-    .bthp-hero__photo,.bthp-hero__ln>span,.bthp-hero__foot,.bthp-hero__lede{animation:none;transform:none;opacity:1}
+    .bthp-hero__photo,.bthp-hero__ln>span,.bthp-hero__foot,.bthp-hero__lede,.bthp-hero__meta,.bthp-hero__sub,.bthp-hero__ctas{animation:none;transform:none;opacity:1}
   }
 </style>
 
@@ -143,8 +194,13 @@
   data-parallax="{% if s.parallax == false %}false{% else %}true{% endif %}"
   data-al="{{ s.align }}"
   data-alm="{{ s.align_mobile }}"
+  data-btnd="{{ s.buttons_desktop | default: 'auto' }}"
+  data-vpd="{{ s.vpos_desktop | default: 'bottom' }}"
+  {%- assign lm = s.layout_mobile | default: 'bottom' -%}
+  data-vpm="{{ lm | split: '-' | first }}"
+  data-btnm="{% if lm contains '-buttons' %}bottom{% else %}with{% endif %}"
   {% if s.allow_transparent_header %}data-transparent allow-transparent-header{% endif %}
-  style="--bthp-text: {{ s.text_color }}; --bthp-sand: {{ s.accent_color }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-text: {{ s.button_text }}; --bthp-ov: {{ s.overlay | divided_by: 100.0 }}; --bthp-intro-bg: {{ s.intro_bg }}; --bthp-intro-text: {{ s.intro_text }};{% if s.height == 'large' %} --bthp-h: 86vh;{% endif %} --bthp-hw: {{ s.heading_width }}%; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
+  style="--bthp-hm: {{ s.height_mobile | default: 92 }}svh; --bthp-hmv: {{ s.height_mobile | default: 92 }}vh; --bthp-text: {{ s.text_color }}; --bthp-sand: {{ s.accent_color }}; --bthp-btn-bg: {{ s.button_bg }}; --bthp-btn-text: {{ s.button_text }}; --bthp-ov: {{ s.overlay | divided_by: 100.0 }}; --bthp-intro-bg: {{ s.intro_bg }}; --bthp-intro-text: {{ s.intro_text }};{% if s.height == 'large' %} --bthp-h: 86vh;{% endif %} --bthp-hw: {{ s.heading_width }}%; --bthp-hs-d: {{ section.settings.heading_size | divided_by: 100.0 }}; --bthp-hs-m: {{ section.settings.heading_size_mobile | divided_by: 100.0 }};"
 >
   {%- if s.show_intro -%}
     <div class="bthp-intro" aria-hidden="true">
@@ -184,7 +240,7 @@
           {%- if s.image_mobile != blank -%}
             <source media="(max-width: 749px)" sizes="100vw" srcset="{{ img_m | image_url: width: 500 }} 500w, {{ img_m | image_url: width: 750 }} 750w, {{ img_m | image_url: width: 1000 }} 1000w, {{ img_m | image_url: width: 1400 }} 1400w">
           {%- endif -%}
-          {{ img_d | image_url: width: 2400 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', decoding: 'async', sizes: '100vw', widths: '750,1100,1500,1900,2400' }}
+          {{ img_d | image_url: width: 2400 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', decoding: 'async', sizes: '100vw', widths: '750,1100,1500,1950,2400' }}
         </picture>
       {%- elsif img_m != blank -%}
         {{ img_m | image_url: width: 1400 | image_tag: class: 'bthp-hero__photo', loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '500,750,1000,1400' }}
@@ -196,7 +252,7 @@
       {%- if vid_d != blank -%}
         {{ vid_d | video_tag: autoplay: false, preload: 'none', loop: true, muted: true, controls: false, playsinline: true, class: 'bthp-hero__photo bthp-hero__d bthp-v', image_size: '2000x' }}
       {%- elsif img_d != blank -%}
-        {{ img_d | image_url: width: 2400 | image_tag: class: 'bthp-hero__photo bthp-hero__d', loading: 'eager', fetchpriority: 'high', decoding: 'async', sizes: '100vw', widths: '750,1100,1500,1900,2400' }}
+        {{ img_d | image_url: width: 2400 | image_tag: class: 'bthp-hero__photo bthp-hero__d', loading: 'lazy', fetchpriority: 'high', decoding: 'async', sizes: '100vw', widths: '750,1100,1500,1950,2400' }}
       {%- else -%}
         {{ 'lifestyle-1' | placeholder_svg_tag: 'bthp-hero__photo bthp-hero__d' }}
       {%- endif -%}
@@ -219,7 +275,7 @@
       {%- endif -%}
     </h1>
     {%- if s.subheading != blank -%}<p class="bthp-hero__lede">{{ s.subheading | newline_to_br }}</p>{%- endif -%}
-    <div class="bthp-hero__foot">
+    <div class="bthp-hero__foot{% if s.meta_1 == blank and s.meta_2 == blank and s.meta_3 == blank %} bthp-hero__foot--solo{% endif %}">
       {%- if s.meta_1 != blank or s.meta_2 != blank or s.meta_3 != blank -%}
 <div class="bthp-hero__meta">
         {%- if s.meta_1 != blank -%}<span>{{ s.meta_1 }}</span>{%- endif -%}
@@ -330,6 +386,7 @@
     { "type": "video", "id": "video_mobile", "label": "Video (phone, optional)" },
     { "type": "range", "id": "overlay", "label": "Darken image", "min": 0, "max": 60, "step": 5, "unit": "%", "default": 10 },
     { "type": "select", "id": "height", "label": "Height (desktop)", "options": [{ "value": "full", "label": "Full screen" }, { "value": "large", "label": "Large" }], "default": "full" },
+    { "type": "range", "id": "height_mobile", "label": "Height (phone)", "min": 40, "max": 100, "step": 2, "unit": "%", "default": 92, "info": "Share of the phone screen the hero fills." },
     { "type": "checkbox", "id": "allow_transparent_header", "label": "Allow transparent header", "info": "Only applies when this section is first on the page.", "default": true },
     { "type": "header", "content": "Scroll effect" },
     { "type": "checkbox", "id": "parallax", "label": "Parallax effect", "default": true, "info": "The photo drifts and the text fades as you scroll down. Computer only; phones always stay still." },
@@ -337,6 +394,9 @@
     { "type": "select", "id": "align", "label": "Text position (desktop)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
     { "type": "range", "id": "heading_width", "label": "Heading width (desktop)", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 50, "info": "How much of the screen width the heading can use before it wraps." },
     { "type": "select", "id": "align_mobile", "label": "Text position (phone)", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "select", "id": "buttons_desktop", "label": "Button position (desktop)", "default": "auto", "options": [{ "value": "auto", "label": "Automatic" }, { "value": "under", "label": "Under the text" }, { "value": "right", "label": "Bottom right" }, { "value": "beside", "label": "Right, beside the heading" }], "info": "Automatic: bottom right when there are small details, under the text when there are none." },
+    { "type": "select", "id": "vpos_desktop", "label": "Text height (desktop)", "default": "bottom", "options": [{ "value": "bottom", "label": "Bottom" }, { "value": "middle", "label": "Middle" }, { "value": "top", "label": "Top" }] },
+    { "type": "select", "id": "layout_mobile", "label": "Text and buttons (phone)", "default": "bottom", "options": [{ "value": "bottom", "label": "All at the bottom" }, { "value": "middle", "label": "All in the middle" }, { "value": "top", "label": "All at the top" }, { "value": "middle-buttons", "label": "Text in the middle, buttons at the bottom" }, { "value": "top-buttons", "label": "Text at the top, buttons at the bottom" }] },
     { "type": "text", "id": "heading_1", "label": "Heading line 1", "default": "Extraordinary journeys" },
     { "type": "text", "id": "heading_2", "label": "Heading line 2 (italic)", "default": "start young." },
     { "type": "textarea", "id": "subheading", "label": "Text under heading", "info": "Optional. Sits between the heading and the thin line." },
