@@ -179,7 +179,7 @@
         "meta_1": "The Bentley 6-in-1 Stroller Trike",
         "meta_2": "Designed in Collaboration with the Bentley Motor Company.",
         "meta_3": "",
-        "meta_mobile": true,
+        "meta_mobile": false,
         "text": "",
         "button_1_label": "Black Friday Sale",
         "button_1_link": "shopify://products/bentley-6-in-1-convertible-stroller-trike",
@@ -189,8 +189,8 @@
         "heading_size_mobile": 100,
         "text_color": "#ffffff",
         "accent_color": "#d9d0c5",
-        "button_bg": "#A83F2F",
-        "button_text": "#FFFFFF",
+        "button_bg": "#a83f2f",
+        "button_text": "#ffffff",
         "intro_bg": "#1a1a1a",
         "intro_text": "#f8f4ef"
       }
